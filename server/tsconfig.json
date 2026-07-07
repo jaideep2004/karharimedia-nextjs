@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "esModuleInterop": true,
+    "strict": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true
+  },
+  "include": ["src/**/*"],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "src/repositories/**/*",
+    "src/services/base.service.impl.ts",
+    "src/services/base.service.ts",
+    "src/services/store/**/*",
+    "src/services/storage/**/*",
+    "src/controllers/storage.controller.ts",
+    "src/routes/storage.routes.ts"
+  ]
+} 

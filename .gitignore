@@ -1,0 +1,52 @@
+# dependencies
+/node_modules
+node_modules/
+/server/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+/server/coverage
+
+# next.js
+/.next/
+/out/
+
+# generated knowledge graph cache
+/graphify-out/cache/
+
+# runtime uploads
+/uploads/
+/server/uploads/
+
+# production
+/build
+/server/dist
+
+# misc
+.DS_Store
+*.pem
+.idea/
+.vscode/
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# local env files
+.env
+.env.*
+.env*.local
+/server/.env
+/server/.env.*
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+private-exports/

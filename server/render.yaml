@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: nextjs-karharimedia-api
+    env: node
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: NODE_ENV
+        value: production
+      - key: CORS_ORIGIN
+        # Replace with your frontend URL when deployed
+        value: https://your-frontend-url.vercel.app
+      - key: MONGODB_URI
+        # Use Render environment variable or secret
+        sync: false 

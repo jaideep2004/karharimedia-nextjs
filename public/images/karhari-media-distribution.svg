@@ -1,0 +1,15 @@
+<svg width="980" height="220" viewBox="0 0 980 220" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Karhari Media Distribution</title>
+  <desc id="desc">Karhari Media Distribution wordmark</desc>
+  <rect width="980" height="220" fill="none"/>
+  <path d="M53 151C80 87 127 52 191 46C139 74 107 111 95 158C82 154 68 152 53 151Z" fill="#00E7FF"/>
+  <path d="M122 166C139 108 177 72 238 58C205 91 187 127 184 166H122Z" fill="#D6D70D"/>
+  <path d="M56 174C100 174 145 178 193 188C146 200 99 199 52 185L56 174Z" fill="#7AD9FF"/>
+  <text x="270" y="93" fill="#DDE70D" font-family="Georgia, 'Times New Roman', serif" font-size="54" font-weight="800" letter-spacing="0">
+    Karhari Media
+  </text>
+  <text x="273" y="156" fill="#D8F7FF" font-family="'Trebuchet MS', Arial, sans-serif" font-size="41" font-weight="800" letter-spacing="8">
+    DISTRIBUTION
+  </text>
+  <line x1="273" y1="176" x2="820" y2="176" stroke="#00E7FF" stroke-width="4" stroke-linecap="round" opacity="0.85"/>
+</svg>
