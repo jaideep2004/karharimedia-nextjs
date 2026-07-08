@@ -189,6 +189,17 @@ export const clearDeliveryLogs = async (req: AuthRequest, res: Response): Promis
   }
 };
 
+export const processAllDeliveries = async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    const result = await dspDeliveryService.processAllQueuedJobs(
+      typeof req.body?.workerId === 'string' ? req.body.workerId : undefined
+    );
+    successResponse(res, result, 'All queued delivery jobs processed');
+  } catch (error) {
+    errorResponse(res, 'Failed to process all delivery jobs', error);
+  }
+};
+
 export const processDueDeliveries = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const maxJobs = req.body?.maxJobs ? Number(req.body.maxJobs) : undefined;

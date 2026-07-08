@@ -6,6 +6,7 @@ import DspWebhookEvent from '../../models/dspWebhookEvent.model';
 import RightsClaim from '../../models/rightsClaim.model';
 import FingerprintMatch from '../../models/fingerprintMatch.model';
 import {
+  DspConnectorContext,
   DspDeliveryOperation,
   DspDeliveryPayload,
   DspDeliveryResult,
@@ -749,15 +750,21 @@ class DspDeliveryService {
 
     try {
       let result;
-      const context = {
+      const context: DspConnectorContext = {
         providerKey: provider.key,
         credentials,
         region: provider.region,
-        config: provider.config,
+        config: { ...provider.config },
         operation: job.operation,
         jobId,
         jobMetadata: job.metadata || {},
       };
+      if (provider.key === 'broma' && context.config?.distributeToAllOutlets && context.jobMetadata?.expandToAllOutlets) {
+        const allOutlets = await listBromaOutlets();
+        if (allOutlets.length > 0) {
+          (context.config as Record<string, unknown>).allBromaOutletIds = allOutlets.map((o) => o.outletId);
+        }
+      }
       if (job.operation === 'deliver') {
         result = await connector.deliver(payloadResult.payload, context);
       } else if (job.operation === 'update' && connector.update) {
@@ -938,6 +945,23 @@ class DspDeliveryService {
         },
       });
     });
+  }
+
+  async processAllQueuedJobs(workerId?: string) {
+    const id = workerId || `backfill:${process.pid}:${Date.now()}`;
+    await this.releaseExpiredLocks();
+    const processed: Array<{ jobId: string; state: string; error?: string }> = [];
+    for (let index = 0; index < 500; index += 1) {
+      const job = await this.claimNextDeliveryJob(id);
+      if (!job) break;
+      const result = await this.processJob(job._id.toString());
+      processed.push({
+        jobId: job._id.toString(),
+        state: result?.state || 'missing',
+        error: result?.errorMessage,
+      });
+    }
+    return { workerId: id, processed };
   }
 
   async processDueDeliveryJobs(input: { maxJobs?: number; workerId?: string; dispatchOnly?: boolean } = {}) {

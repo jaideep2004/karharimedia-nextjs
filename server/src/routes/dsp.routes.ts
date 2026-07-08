@@ -48,6 +48,7 @@ router.get('/deliveries', protect, authorize([UserRole.ADMIN]), dspController.li
 router.get('/deliveries/:jobId', protect, authorize([UserRole.ADMIN]), dspController.getDeliveryById);
 router.post('/deliveries/dispatch', protect, authorize([UserRole.ADMIN]), dspController.dispatchDelivery);
 router.post('/deliveries/process-due', protectAdminOrCronSecret, dspController.processDueDeliveries);
+router.post('/deliveries/process-all', protect, authorize([UserRole.ADMIN]), dspController.processAllDeliveries);
 router.post('/deliveries/:jobId/retry', protect, authorize([UserRole.ADMIN]), dspController.retryDelivery);
 router.post('/deliveries/:jobId/refresh-status', protect, authorize([UserRole.ADMIN]), dspController.refreshDeliveryStatus);
 router.delete('/deliveries/:jobId/logs', protect, authorize([UserRole.ADMIN]), dspController.clearDeliveryLogs);

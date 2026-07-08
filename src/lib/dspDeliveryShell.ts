@@ -4,6 +4,7 @@ import { validateReleaseAssetsForDelivery } from './dspAssetReadiness';
 import { evaluateBromaReleaseReadiness } from './bromaDeliveryReadiness';
 import { hydrateReleasesWithCanonicalTracks } from '@/lib/repositories/tracks';
 import { releasesCollection } from '@/lib/repositories/releases';
+import { ALL_DSP_KEYS } from '@/lib/platforms';
 
 type ReleaseDoc = Record<string, any> & {
   _id: ObjectId;
@@ -305,6 +306,7 @@ export async function createReleaseDeliveryShellJobs(
         bromaStep: 'create_release',
         bromaOutletIds: bromaReadiness.outletIds,
         bromaOutletMappings: bromaReadiness.outletMappings,
+        expandToAllOutlets: ALL_DSP_KEYS.every((key) => rawStores.includes(key)),
         readiness,
         deliverySnapshot: {
           upc: snapshot.payload.upc,

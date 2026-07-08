@@ -11,6 +11,7 @@ import { setupCors } from './middleware/cors.middleware';
 import { PORT, API_PREFIX, UPLOAD_DIR } from './config/constants';
 import settingsController from './controllers/settings.controller';
 import { startDspWorkerScheduler } from './services/dsp/dspWorkerScheduler';
+import { syncBromaOutlets } from './services/dsp/bromaOutlet.service';
 
 // .env already loaded by the side-effect import above
 
@@ -81,6 +82,26 @@ const connectDB = async (): Promise<void> => {
     await settingsController.initializeDefaultSettings();
     console.log('Default settings initialized');
     startDspWorkerScheduler();
+
+    // Auto-sync Broma outlets on startup if enabled
+    if (String(process.env.AUTO_SYNC_BROMA_OUTLETS || '').toLowerCase() === 'true') {
+      void (async () => {
+        try {
+          const DspProvider = mongoose.model('DspProvider');
+          const broma = await DspProvider.findOne({ key: 'broma', enabled: true }).lean();
+          if (broma) {
+            const credentials = (broma as any).credentials || {};
+            const config = (broma as any).config || {};
+            if (config.baseUrl && credentials.__encrypted) {
+              const result = await syncBromaOutlets({ credentials, config });
+              console.log(`Broma outlets auto-synced: ${result.synced} outlets`);
+            }
+          }
+        } catch (error) {
+          console.warn('Broma outlet auto-sync skipped:', error instanceof Error ? error.message : error);
+        }
+      })();
+    }
   } catch (error) {
     console.error('MongoDB connection error:', error);
     process.exit(1);

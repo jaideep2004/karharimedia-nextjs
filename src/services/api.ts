@@ -1174,6 +1174,15 @@ export const adminAPI = {
     }
   },
 
+  processAllDspDeliveries: async (workerId?: string) => {
+    try {
+      const response = await api.post<ApiResponse<any>>('/admin/dsp/deliveries/process-all', { workerId });
+      return response.data;
+    } catch (error) {
+      return handleApiError(error);
+    }
+  },
+
   syncBromaOutlets: async () => {
     try {
       const response = await api.post<ApiResponse<any>>('/admin/broma-outlets-sync');

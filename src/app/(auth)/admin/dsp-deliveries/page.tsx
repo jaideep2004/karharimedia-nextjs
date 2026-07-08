@@ -247,6 +247,7 @@ export default function AdminDspDeliveriesPage() {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [paginationTotal, setPaginationTotal] = useState(0);
   const [processingDue, setProcessingDue] = useState(false);
+  const [processingAll, setProcessingAll] = useState(false);
   const [syncingOutlets, setSyncingOutlets] = useState(false);
   const [savingBroma, setSavingBroma] = useState(false);
   const [refreshingStatusId, setRefreshingStatusId] = useState<string | null>(null);
@@ -374,6 +375,7 @@ export default function AdminDspDeliveriesPage() {
           baseUrl,
           accountId,
           createdCountryId,
+          distributeToAllOutlets: true,
         },
       };
       if (credentialsChanged) {
@@ -485,6 +487,20 @@ export default function AdminDspDeliveriesPage() {
     }
   };
 
+  const handleProcessAll = async () => {
+    try {
+      setProcessingAll(true);
+      const response = await adminAPI.processAllDspDeliveries();
+      const p = response?.data?.processed || [];
+      toast.success(`Processed ${p.length} queued job${p.length === 1 ? '' : 's'} sequentially`);
+      await load();
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Process all failed');
+    } finally {
+      setProcessingAll(false);
+    }
+  };
+
   const handleSyncBromaOutlets = async () => {
     try {
       setSyncingOutlets(true);
@@ -559,6 +575,9 @@ export default function AdminDspDeliveriesPage() {
             </Button>
             <Button startIcon={<PlayArrowIcon />} variant="contained" onClick={handleProcessDue} disabled={processingDue}>
               {processingDue ? 'Processing...' : 'Run Worker'}
+            </Button>
+            <Button startIcon={<PlayArrowIcon />} variant="outlined" color="warning" onClick={handleProcessAll} disabled={processingAll}>
+              {processingAll ? 'Processing All...' : 'Process All'}
             </Button>
             <Button startIcon={<RefreshIcon />} variant="outlined" onClick={load}>
               Refresh

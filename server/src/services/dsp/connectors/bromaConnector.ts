@@ -1005,7 +1005,11 @@ export class BromaConnector extends BaseDspConnector {
     }
 
     if (step === 'update_distribution') {
-      const outletIds = Array.isArray(next.bromaOutletIds) ? next.bromaOutletIds : [];
+      let outletIds = Array.isArray(next.bromaOutletIds) ? next.bromaOutletIds : [];
+      const allOutletIds = config.allBromaOutletIds as string[] | undefined;
+      if (config.distributeToAllOutlets && Array.isArray(allOutletIds) && allOutletIds.length > 0) {
+        outletIds = allOutletIds;
+      }
       if (!outletIds.length) throw new Error('Missing Broma outlet ids');
       const parentOutletIds = filteredParentOutletIds(next, config, outletIds);
       const distributionType = firstString(payload.metadata?.bromaDistributionType, config.bromaDistributionType, config.distributionType, 'asap') || 'asap';
