@@ -7,6 +7,7 @@ import { assignIsrcsToTracks, markIsrcsAssigned } from '@/lib/isrcAllocator';
 import { assignReleaseUpcWithGs1 } from '@/lib/releaseCodeAssignment';
 import { assertBromaReleaseReady } from '@/lib/bromaDeliveryReadiness';
 import { createReleaseDeliveryShellJobs } from '@/lib/dspDeliveryShell';
+import { fetchBackend } from '@/app/api/_lib/backend';
 import {
   appUrl,
   getAdminRecipients,
@@ -174,6 +175,25 @@ export async function PATCH(
         assetReadiness: deliveryReadiness?.assetReadiness,
         defaultCreatedCountryId: defaultCreatedCountryIdForDelivery,
       });
+
+      if (deliveryShell?.jobsCreated > 0) {
+        try {
+          await fetchBackend(
+            '/api/dsp/deliveries/process-due',
+            {
+              method: 'POST',
+              body: JSON.stringify({
+                maxJobs: Math.max(deliveryShell.jobsCreated, 5),
+                dispatchOnly: true,
+                workerId: `approval-flow:${id}`,
+              }),
+            },
+            { requireAuth: true }
+          );
+        } catch (error) {
+          console.warn('DSP auto-process failed:', error instanceof Error ? error.message : error);
+        }
+      }
     }
 
     if (status === 'approved' || status === 'rejected') {
