@@ -167,8 +167,17 @@ export default function AdminDashboard() {
         pendingReleases: 0,
       };
 
-      try {
-        const statsResponse = await adminAPI.getDashboardStats();
+      const [statsResult, usersResult, releasesResult] = await Promise.allSettled([
+        adminAPI.getDashboardStats(),
+        adminAPI.getUsers({ limit: 5, sort: '-createdAt' }),
+        Promise.all([
+          releaseAPI.getReleases({ summary: '1', page: 1, limit: 5 }),
+          releaseAPI.getReleases({ summary: '1', page: 1, limit: 5, status: 'pending' }),
+        ]),
+      ]);
+
+      if (statsResult.status === 'fulfilled') {
+        const statsResponse = statsResult.value;
 
         if (statsResponse.success && statsResponse.data) {
           setStats({
@@ -190,13 +199,13 @@ export default function AdminDashboard() {
         } else {
           setStats(defaultStats);
         }
-      } catch (statsError) {
-        console.error('Error fetching dashboard stats:', statsError);
+      } else {
+        console.error('Error fetching dashboard stats:', statsResult.reason);
         setStats(defaultStats);
       }
 
-      try {
-        const usersResponse = await adminAPI.getUsers({ limit: 5, sort: '-createdAt' });
+      if (usersResult.status === 'fulfilled') {
+        const usersResponse = usersResult.value;
 
         if (usersResponse.success && usersResponse.data) {
           const users = (usersResponse.data as DashboardUsersResponse).users || [];
@@ -209,16 +218,13 @@ export default function AdminDashboard() {
         } else {
           setRecentUsers([]);
         }
-      } catch (usersError) {
-        console.error('Error fetching users:', usersError);
+      } else {
+        console.error('Error fetching users:', usersResult.reason);
         setRecentUsers([]);
       }
 
-      try {
-        const [recentResponse, pendingResponse] = await Promise.all([
-          releaseAPI.getReleases({ summary: '1', page: 1, limit: 5 }),
-          releaseAPI.getReleases({ summary: '1', page: 1, limit: 5, status: 'pending' }),
-        ]);
+      if (releasesResult.status === 'fulfilled') {
+        const [recentResponse, pendingResponse] = releasesResult.value;
 
         setRecentReleases(recentResponse.success && Array.isArray(recentResponse.data)
           ? recentResponse.data as DashboardRelease[]
@@ -239,8 +245,8 @@ export default function AdminDashboard() {
               other: Number(nextCounts.other || 0),
             });
         }
-      } catch (releasesError) {
-        console.error('Error fetching releases:', releasesError);
+      } else {
+        console.error('Error fetching releases:', releasesResult.reason);
         setRecentReleases([]);
         setPendingReleases([]);
       }

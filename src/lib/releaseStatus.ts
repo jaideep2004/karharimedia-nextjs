@@ -2,17 +2,27 @@ export type ReleaseDisplayStatus = 'pending' | 'in_process' | 'approved' | 'reje
 
 const IN_PROCESS_RELEASE_STATUSES = new Set([
   'in_process',
+  'in process',
+  'in-process',
   'processing',
   'uploading_to_broma',
   'broma_moderation',
+  'broma moderation',
+  'under_moderation',
+  'under moderation',
+  'moderation',
   'dsp_processing',
+  'dsp processing',
+  'accepted',
+  'distributed',
+  'in_distribution',
 ]);
 
 export const RELEASE_STATUS_GROUPS: Record<ReleaseDisplayStatus, string[]> = {
-  pending: ['pending', 'pending_review', 'pending review', ''],
+  pending: ['pending', 'pending_review', 'pending review', 'submitted', 'under_review', 'under review', 'review', ''],
   in_process: Array.from(IN_PROCESS_RELEASE_STATUSES),
-  approved: ['approved'],
-  rejected: ['rejected'],
+  approved: ['approved', 'live', 'published', 'delivered', 'processed', 'done', 'active', 'success', 'shipped'],
+  rejected: ['rejected', 'declined', 'failed', 'error', 'cancelled', 'not_ready', 'not ready'],
   other: [],
 };
 
@@ -23,10 +33,10 @@ function rawReleaseStatus(status: unknown) {
 export function getNormalizedReleaseStatus(status: unknown): ReleaseDisplayStatus {
   const value = rawReleaseStatus(status);
 
-  if (!value || value === 'pending' || value === 'pending_review') return 'pending';
+  if (RELEASE_STATUS_GROUPS.pending.includes(value)) return 'pending';
   if (IN_PROCESS_RELEASE_STATUSES.has(value)) return 'in_process';
-  if (value === 'approved') return 'approved';
-  if (value === 'rejected') return 'rejected';
+  if (RELEASE_STATUS_GROUPS.approved.includes(value)) return 'approved';
+  if (RELEASE_STATUS_GROUPS.rejected.includes(value)) return 'rejected';
 
   return 'other';
 }
