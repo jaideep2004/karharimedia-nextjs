@@ -183,7 +183,6 @@ export async function PATCH(
             {
               method: 'POST',
               body: JSON.stringify({
-                maxJobs: Math.max(deliveryShell.jobsCreated, 5),
                 dispatchOnly: true,
                 workerId: `approval-flow:${id}`,
               }),

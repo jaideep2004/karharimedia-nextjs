@@ -9,8 +9,8 @@ const intervalMs = () => {
 };
 
 const maxJobs = () => {
-  const value = Number(process.env.DSP_WORKER_MAX_JOBS || 5);
-  return Number.isFinite(value) ? Math.min(50, Math.max(1, value)) : 5;
+  const value = Number(process.env.DSP_WORKER_MAX_JOBS || 25);
+  return Number.isFinite(value) ? Math.min(50, Math.max(1, value)) : 25;
 };
 
 let timer: NodeJS.Timeout | null = null;

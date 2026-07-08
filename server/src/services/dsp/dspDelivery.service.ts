@@ -36,7 +36,7 @@ import { BromaClient } from './connectors/bromaClient';
 
 const BASE_RETRY_DELAY_MS = 15_000;
 const WORKER_LOCK_MS = 5 * 60_000;
-const DEFAULT_WORKER_BATCH_SIZE = 5;
+const DEFAULT_WORKER_BATCH_SIZE = 25;
 const SENSITIVE_CONFIG_KEYS = new Set(['webhookSecret']);
 const ALLOWED_WEBHOOK_STATES: DspDeliveryState[] = [
   'queued',

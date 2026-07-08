@@ -469,7 +469,7 @@ export default function AdminDspDeliveriesPage() {
   const handleProcessDue = async () => {
     try {
       setProcessingDue(true);
-      const response = await adminAPI.processDueDspDeliveries({ maxJobs: 5, dispatchOnly: true });
+      const response = await adminAPI.processDueDspDeliveries({ dispatchOnly: true });
       const processedItems = response?.data?.processed || [];
       const processed = processedItems.length || 0;
       const issue = processedItems.find((item: any) => ['failed', 'needs_attention'].includes(item.state) && item.error);
