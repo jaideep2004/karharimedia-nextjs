@@ -951,11 +951,10 @@ class DspDeliveryService {
     const id = workerId || `backfill:${process.pid}:${Date.now()}`;
     await this.releaseExpiredLocks();
     const dispatched: Array<{ jobId: string; state: string }> = [];
-    for (let index = 0; index < 500; index += 1) {
-      const job = await this.claimNextDeliveryJob(id);
-      if (!job) break;
-      this.processJobDetached(job._id.toString());
-      dispatched.push({ jobId: job._id.toString(), state: 'processing' });
+    for (let batch = 0; batch < 5; batch += 1) {
+      const result = await this.processDueDeliveryJobs({ maxJobs: 25, workerId: id, dispatchOnly: true });
+      dispatched.push(...result.processed);
+      if (result.processed.length < 25) break;
     }
     return { workerId: id, dispatched };
   }
