@@ -950,18 +950,14 @@ class DspDeliveryService {
   async processAllQueuedJobs(workerId?: string) {
     const id = workerId || `backfill:${process.pid}:${Date.now()}`;
     await this.releaseExpiredLocks();
-    const processed: Array<{ jobId: string; state: string; error?: string }> = [];
+    const dispatched: Array<{ jobId: string; state: string }> = [];
     for (let index = 0; index < 500; index += 1) {
       const job = await this.claimNextDeliveryJob(id);
       if (!job) break;
-      const result = await this.processJob(job._id.toString());
-      processed.push({
-        jobId: job._id.toString(),
-        state: result?.state || 'missing',
-        error: result?.errorMessage,
-      });
+      this.processJobDetached(job._id.toString());
+      dispatched.push({ jobId: job._id.toString(), state: 'processing' });
     }
-    return { workerId: id, processed };
+    return { workerId: id, dispatched };
   }
 
   async processDueDeliveryJobs(input: { maxJobs?: number; workerId?: string; dispatchOnly?: boolean } = {}) {
