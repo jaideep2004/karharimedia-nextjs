@@ -3,10 +3,10 @@ import { connectDB } from '../config/db';
 import { dspDeliveryService } from '../services/dsp/dspDelivery.service';
 
 dotenv.config();
-connectDB();
 
 const backfill = async () => {
   try {
+    await connectDB();
     console.log('Starting Broma status backfill...');
     console.log('This will re-sync all Broma delivery jobs.');
 
