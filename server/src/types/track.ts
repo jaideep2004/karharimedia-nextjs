@@ -12,8 +12,6 @@ export enum ReleaseStatus {
   TAKEDOWN_REQUESTED = 'takedown_requested',
   REMOVED = 'removed',
   REJECTED = 'rejected',
-  RELEASED = 'released',
-  TAKEDOWN = 'takedown'
 }
 
 export enum TrackVersionType {

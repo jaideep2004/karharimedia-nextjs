@@ -100,7 +100,7 @@ export async function PATCH(
         ...update,
         tracks: assignedTracks,
       }, { defaultCreatedCountryId: defaultCreatedCountryIdForDelivery });
-      await replaceReleaseCanonicalTracks(db, existing, assignedTracks);
+      await replaceReleaseCanonicalTracks(db, { ...existing, status: nextReleaseStatus }, assignedTracks);
       await markIsrcsAssigned(
         db,
         assignedTracks.map((track: any) => track.isrc).filter(Boolean),

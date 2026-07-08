@@ -58,6 +58,7 @@ const BROMA_DELIVERED_STATUSES = new Set([
   'success',
   'approved',
   'shipped',
+  'completed',
 ]);
 
 const BROMA_REJECTED_STATUSES = new Set([
@@ -111,7 +112,12 @@ function chooseBromaStatus(...values: unknown[]) {
   );
 }
 
-const findBromaAssetRow = (rows: any[], detail: any) => {
+const findBromaAssetRow = (rows: any[], detail: any, assetId?: string) => {
+  if (assetId) {
+    const exact = rows.find((row) => String(row?.id) === assetId);
+    if (exact) return exact;
+  }
+
   const ean = firstString(detail?.ean, detail?.upc, detail?.catalogue_number);
   if (ean) {
     const exact = rows.find((row) => firstString(row?.ean, row?.upc, row?.catalogue_number) === ean);
@@ -191,7 +197,8 @@ const collectBromaModerationReasons = (moderation: any) => {
 const fetchBromaStatusSnapshot = async (
   client: BromaClient,
   releaseId: string,
-  config: Record<string, unknown>
+  config: Record<string, unknown>,
+  jobMetadata?: Record<string, unknown>
 ): Promise<BromaStatusSnapshot> => {
   const response = await client.getRelease(releaseId);
   const detail = response?.data || response || {};
@@ -209,15 +216,16 @@ const fetchBromaStatusSnapshot = async (
   let source: BromaStatusSnapshot['source'] = 'release_detail';
   let assetRow: any;
 
+  const storedAssetId = firstString(jobMetadata?.bromaAssetId);
   const accountId = firstString(config.accountId, config.account_id);
   const search = firstString(detail?.ean, detail?.upc, detail?.catalogue_number, detail?.title);
-  if (accountId && search) {
+  if (accountId && (search || storedAssetId)) {
     const assets = await client.getAccountReleaseAssets(accountId, {
       search,
       page: 1,
       limit: 10,
     });
-    assetRow = findBromaAssetRow(collectBromaAssetRows(assets), detail);
+    assetRow = findBromaAssetRow(collectBromaAssetRows(assets), detail, storedAssetId);
     const assetStatus = getBromaAssetStatus(assetRow);
     if (assetStatus) {
       normalized = assetStatus;
@@ -225,7 +233,6 @@ const fetchBromaStatusSnapshot = async (
     }
   }
 
-  if (!normalized) normalized = firstBromaReleaseStatus(detail?.step);
   let rejectionReason = cleanBromaUserReason(getBromaRejectionReason(detail, response, assetRow));
   if (BROMA_REJECTED_STATUSES.has(normalized) && accountId && assetRow?.id) {
     try {
@@ -828,7 +835,7 @@ export class BromaConnector extends BaseDspConnector {
     const step = STEP_ORDER.includes(currentStep) ? currentStep : 'create_release';
 
     if (step === 'poll_status' && releaseId) {
-      const snapshot = await fetchBromaStatusSnapshot(client, releaseId, config);
+      const snapshot = await fetchBromaStatusSnapshot(client, releaseId, config, metadata);
       const normalized = snapshot.normalized;
       const live = BROMA_DELIVERED_STATUSES.has(normalized);
       const rejected = BROMA_REJECTED_STATUSES.has(normalized);
@@ -865,7 +872,7 @@ export class BromaConnector extends BaseDspConnector {
   async getDeliveryStatus(externalId: string, context: DspConnectorContext): Promise<DspDeliveryResult> {
     const config = context.config || {};
     const client = new BromaClient({ credentials: context.credentials, config });
-    const snapshot = await fetchBromaStatusSnapshot(client, externalId, config);
+    const snapshot = await fetchBromaStatusSnapshot(client, externalId, config, context.jobMetadata);
     const normalized = snapshot.normalized;
     const delivered = BROMA_DELIVERED_STATUSES.has(normalized);
     const rejected = BROMA_REJECTED_STATUSES.has(normalized);

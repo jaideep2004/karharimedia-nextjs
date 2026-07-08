@@ -8,6 +8,7 @@ import FingerprintMatch from '../../models/fingerprintMatch.model';
 import {
   DspDeliveryOperation,
   DspDeliveryPayload,
+  DspDeliveryResult,
   DspDeliveryState,
   DspIntegrationMode,
   DspReleasePayload,
@@ -643,20 +644,30 @@ class DspDeliveryService {
     const moderationStatus = String(metadata.bromaModerationStatus || '').toLowerCase();
     const bromaRejected = ['rejected', 'declined', 'cancelled', 'failed', 'error', 'not_ready'].includes(moderationStatus);
     if (bromaRejected) releaseStatus = 'rejected';
-    else if (state === 'delivered') releaseStatus = 'approved';
+    else if (state === 'delivered') releaseStatus = 'live';
     else if (step === 'send_moderation') releaseStatus = 'broma_moderation';
     else if (step === 'poll_status') {
       releaseStatus = ['approved', 'live', 'published', 'delivered', 'processed', 'done', 'active', 'success', 'shipped'].includes(moderationStatus)
-        ? 'approved'
+        ? 'live'
         : ['accepted', 'processing', 'distributed', 'in_distribution'].includes(moderationStatus)
         ? 'dsp_processing'
         : 'broma_moderation';
     }
-    else if (step === 'done') releaseStatus = 'approved';
+    else if (step === 'done') releaseStatus = 'live';
     else if (state === 'processing') releaseStatus = 'uploading_to_broma';
     else if (state === 'needs_attention') releaseStatus = 'uploading_to_broma';
 
     if (!releaseStatus) return;
+
+    const TERMINAL_STATUSES = new Set(['live', 'rejected', 'removed', 'takedown_requested']);
+    const existingRelease = await mongoose.connection.collection('releases').findOne(
+      { _id: job.releaseId },
+      { projection: { status: 1 } }
+    );
+    if (existingRelease && TERMINAL_STATUSES.has(existingRelease.status) && !TERMINAL_STATUSES.has(releaseStatus)) {
+      return;
+    }
+
     const releaseUpdate: Record<string, any> = {
       status: releaseStatus,
       updatedAt: new Date(),
@@ -987,22 +998,29 @@ class DspDeliveryService {
     const connector = dspRegistry.get(job.providerKey);
     if (!connector.getDeliveryStatus) throw new Error(`Connector ${job.providerKey} does not support status refresh`);
 
-    const result = await connector.getDeliveryStatus(externalId, {
-      providerKey: providerRecord.provider.key,
-      credentials: providerRecord.credentials,
-      region: providerRecord.provider.region,
-      config: providerRecord.provider.config,
-      operation: job.operation,
-      jobId,
-      jobMetadata: job.metadata || {},
-    });
+    let result: DspDeliveryResult;
+    try {
+      result = await connector.getDeliveryStatus(externalId, {
+        providerKey: providerRecord.provider.key,
+        credentials: providerRecord.credentials,
+        region: providerRecord.provider.region,
+        config: providerRecord.provider.config,
+        operation: job.operation,
+        jobId,
+        jobMetadata: job.metadata || {},
+      });
+    } catch (error) {
+      return this.markJobNeedsAttention(jobId, job, `Broma status refresh failed: ${getErrorMessage(error)}`);
+    }
 
+    const resultMeta = result.metadata || {};
     const nextMetadata = {
       ...metadata,
-      ...(result.metadata || {}),
+      ...resultMeta,
+      bromaAssetId: resultMeta.bromaAssetId ?? metadata.bromaAssetId,
       connectorMetadata: {
         ...(metadata.connectorMetadata || {}),
-        ...(result.metadata || {}),
+        ...resultMeta,
       },
     };
     const successLike = ['processing', 'delivered'].includes(result.state);

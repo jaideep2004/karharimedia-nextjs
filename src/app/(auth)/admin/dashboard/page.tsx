@@ -69,6 +69,7 @@ interface DashboardUser {
   name: string;
   email: string;
   role: 'admin' | 'artist' | string;
+  profilePicture?: string;
   createdAt: string;
 }
 
@@ -79,6 +80,7 @@ interface DashboardRelease {
   status: 'approved' | 'pending' | 'rejected' | string;
   trackCount?: number;
   tracks?: unknown[];
+  artworkUrl?: string;
   updatedAt: string;
 }
 
@@ -731,15 +733,16 @@ export default function AdminDashboard() {
                 >
                   <ListItemAvatar>
                     <Avatar
+                      src={user.profilePicture || undefined}
                       sx={{
                         width: 42,
                         height: 42,
-                        bgcolor: statAccent.primary.bg,
+                        bgcolor: user.profilePicture ? 'transparent' : statAccent.primary.bg,
                         color: statAccent.primary.color,
                         fontWeight: 900,
                       }}
                     >
-                      {user.name.charAt(0).toUpperCase()}
+                      {!user.profilePicture && user.name.charAt(0).toUpperCase()}
                     </Avatar>
                   </ListItemAvatar>
                   <ListItemText
@@ -834,14 +837,16 @@ export default function AdminDashboard() {
                 >
                   <ListItemAvatar>
                     <Avatar
+                      src={release.artworkUrl || undefined}
+                      variant="rounded"
                       sx={{
                         width: 42,
                         height: 42,
-                        bgcolor: statAccent.warning.bg,
+                        bgcolor: release.artworkUrl ? 'transparent' : statAccent.warning.bg,
                         color: statAccent.warning.color,
                       }}
                     >
-                      <MusicNote sx={{ fontSize: 16 }} />
+                      {!release.artworkUrl && <MusicNote sx={{ fontSize: 16 }} />}
                     </Avatar>
                   </ListItemAvatar>
                   <ListItemText
@@ -947,7 +952,7 @@ export default function AdminDashboard() {
                 <Table size="small">
                   <TableHead>
                     <TableRow>
-                      {['Title', 'Artist', 'Status', 'Tracks', 'Updated'].map(header => (
+                      {['Cover', 'Title', 'Artist', 'Status', 'Tracks', 'Updated'].map(header => (
                         <TableCell
                           key={header}
                           sx={{
@@ -982,6 +987,19 @@ export default function AdminDashboard() {
                           },
                         }}
                       >
+                        <TableCell sx={{ width: 48, px: 1.5 }}>
+                          <Avatar
+                            src={release.artworkUrl || undefined}
+                            variant="rounded"
+                            sx={{
+                              width: 36,
+                              height: 36,
+                              bgcolor: release.artworkUrl ? 'transparent' : isDark ? 'rgba(255,255,255,0.06)' : 'rgba(15,23,42,0.06)',
+                            }}
+                          >
+                            {!release.artworkUrl && <MusicNote sx={{ fontSize: 14, opacity: 0.4 }} />}
+                          </Avatar>
+                        </TableCell>
                         <TableCell sx={{ maxWidth: 120 }}>
                           <Typography
                             variant="body2"
