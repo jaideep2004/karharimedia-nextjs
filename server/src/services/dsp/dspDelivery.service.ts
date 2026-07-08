@@ -1000,6 +1000,43 @@ class DspDeliveryService {
     return DeliveryJob.findById(jobId);
   }
 
+  async listBromaDrafts() {
+    const TERMINAL = new Set(['delivered', 'cancelled']);
+    return DeliveryJob.find({
+      providerKey: 'broma',
+      'metadata.bromaReleaseId': { $exists: true, $ne: '' },
+      state: { $nin: [...TERMINAL, 'processing'] },
+      'metadata.bromaStep': { $ne: 'done' },
+    })
+      .sort({ createdAt: -1 })
+      .lean();
+  }
+
+  async retryAllBromaDrafts(workerId?: string) {
+    const id = workerId || `draft-retry:${process.pid}:${Date.now()}`;
+    const drafts = await DeliveryJob.find({
+      providerKey: 'broma',
+      'metadata.bromaReleaseId': { $exists: true, $ne: '' },
+      state: { $in: ['failed', 'needs_attention', 'queued'] },
+      'metadata.bromaStep': { $ne: 'done' },
+    });
+    const retried: string[] = [];
+    for (const job of drafts) {
+      await DeliveryJob.findByIdAndUpdate(job._id, {
+        state: 'queued',
+        deadLettered: false,
+        nextRetryAt: new Date(),
+        $unset: { lockedAt: '', lockedBy: '', lockExpiresAt: '', errorMessage: '' },
+        $push: { events: { state: 'queued', message: 'Bulk draft retry', source: 'system' } },
+      });
+      retried.push(job._id.toString());
+    }
+    const dispatched = retried.length > 0
+      ? (await this.processDueDeliveryJobs({ maxJobs: Math.min(retried.length, 25), workerId: id, dispatchOnly: true })).processed
+      : [];
+    return { retried: retried.length, dispatched: dispatched.length };
+  }
+
   async refreshJobStatus(jobId: string) {
     const job = await DeliveryJob.findById(jobId);
     if (!job) throw new Error('Delivery job not found');

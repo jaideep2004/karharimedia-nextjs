@@ -152,6 +152,25 @@ export const retryDelivery = async (req: AuthRequest, res: Response): Promise<vo
   }
 };
 
+export const listBromaDrafts = async (_req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    const drafts = await dspDeliveryService.listBromaDrafts();
+    successResponse(res, drafts, 'Broma draft jobs fetched');
+  } catch (error) {
+    errorResponse(res, 'Failed to list Broma drafts', error);
+  }
+};
+
+export const retryBromaDrafts = async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    const workerId = typeof req.body?.workerId === 'string' ? req.body.workerId : undefined;
+    const result = await dspDeliveryService.retryAllBromaDrafts(workerId);
+    successResponse(res, result, 'Broma drafts retried');
+  } catch (error) {
+    errorResponse(res, 'Failed to retry Broma drafts', error);
+  }
+};
+
 export const refreshDeliveryStatus = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const job = await dspDeliveryService.refreshJobStatus(req.params.jobId);

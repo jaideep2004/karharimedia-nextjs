@@ -1183,6 +1183,24 @@ export const adminAPI = {
     }
   },
 
+  listBromaDrafts: async () => {
+    try {
+      const response = await api.get<ApiResponse<any>>('/admin/dsp/broma/drafts');
+      return response.data;
+    } catch (error) {
+      return handleApiError(error);
+    }
+  },
+
+  retryAllBromaDrafts: async () => {
+    try {
+      const response = await api.post<ApiResponse<any>>('/admin/dsp/broma/drafts/retry-all');
+      return response.data;
+    } catch (error) {
+      return handleApiError(error);
+    }
+  },
+
   syncBromaOutlets: async () => {
     try {
       const response = await api.post<ApiResponse<any>>('/admin/broma-outlets-sync');

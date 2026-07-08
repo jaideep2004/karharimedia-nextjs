@@ -38,6 +38,8 @@ router.post('/providers/bootstrap-phase1', protect, authorize([UserRole.ADMIN]),
 router.get('/broma/outlets', protect, authorize([UserRole.ADMIN]), dspController.listBromaOutlets);
 router.post('/broma/outlets/sync', protectAdminOrCronSecret, dspController.syncBromaOutlets);
 router.post('/broma/release-statuses/sync', protectAdminOrCronSecret, dspController.syncBromaReleaseStatuses);
+router.get('/broma/drafts', protect, authorize([UserRole.ADMIN]), dspController.listBromaDrafts);
+router.post('/broma/drafts/retry-all', protect, authorize([UserRole.ADMIN]), dspController.retryBromaDrafts);
 router.delete('/broma/drafts/:draftType/:draftId', protect, authorize([UserRole.ADMIN]), dspController.deleteBromaDraft);
 router.get('/broma/statistics/reports', protect, authorize([UserRole.ADMIN]), dspController.listBromaStatisticsReports);
 router.post('/broma/statistics/reports', protectAdminOrCronSecret, dspController.createBromaStatisticsReport);

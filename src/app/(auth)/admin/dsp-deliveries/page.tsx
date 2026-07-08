@@ -20,6 +20,7 @@ import {
   Table,
   TableBody,
   TableCell,
+  TableContainer,
   TableHead,
   TablePagination,
   TableRow,
@@ -32,6 +33,7 @@ import ReplayIcon from '@mui/icons-material/Replay';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import SyncIcon from '@mui/icons-material/Sync';
 import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
+import ListAltIcon from '@mui/icons-material/ListAlt';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { DspLogo } from '@/components/dsp/DspLogo';
@@ -247,7 +249,10 @@ export default function AdminDspDeliveriesPage() {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [paginationTotal, setPaginationTotal] = useState(0);
   const [processingDue, setProcessingDue] = useState(false);
-  const [processingAll, setProcessingAll] = useState(false);
+
+  const [retryingDrafts, setRetryingDrafts] = useState(false);
+  const [bromaDrafts, setBromaDrafts] = useState<any[] | null>(null);
+  const [draftsOpen, setDraftsOpen] = useState(false);
   const [syncingOutlets, setSyncingOutlets] = useState(false);
   const [savingBroma, setSavingBroma] = useState(false);
   const [refreshingStatusId, setRefreshingStatusId] = useState<string | null>(null);
@@ -487,17 +492,33 @@ export default function AdminDspDeliveriesPage() {
     }
   };
 
-  const handleProcessAll = async () => {
+  const handleListBromaDrafts = async () => {
     try {
-      setProcessingAll(true);
-      const response = await adminAPI.processAllDspDeliveries();
-      const p = response?.data?.processed || [];
-      toast.success(`Processed ${p.length} queued job${p.length === 1 ? '' : 's'} sequentially`);
-      await load();
+      setDraftsOpen((o) => !o);
+      if (bromaDrafts === null || draftsOpen) {
+        const res = await adminAPI.listBromaDrafts();
+        const list = res?.data || [];
+        setBromaDrafts(list);
+        if (list.length === 0) toast.success('No incomplete Broma drafts found');
+        else toast.info(`${list.length} incomplete Broma draft${list.length === 1 ? '' : 's'} found`);
+      }
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : 'Process all failed');
+      toast.error(error instanceof Error ? error.message : 'Failed to list drafts');
+    }
+  };
+
+  const handleRetryBromaDrafts = async () => {
+    try {
+      setRetryingDrafts(true);
+      const res = await adminAPI.retryAllBromaDrafts();
+      const r = res?.data || {};
+      toast.success(`Retried ${r.retried || 0} drafts, dispatched ${r.dispatched || 0}`);
+      await load();
+      await handleListBromaDrafts();
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Draft retry failed');
     } finally {
-      setProcessingAll(false);
+      setRetryingDrafts(false);
     }
   };
 
@@ -576,8 +597,11 @@ export default function AdminDspDeliveriesPage() {
             <Button startIcon={<PlayArrowIcon />} variant="contained" onClick={handleProcessDue} disabled={processingDue}>
               {processingDue ? 'Processing...' : 'Run Worker'}
             </Button>
-            <Button startIcon={<PlayArrowIcon />} variant="outlined" color="warning" onClick={handleProcessAll} disabled={processingAll}>
-              {processingAll ? 'Processing All...' : 'Process All'}
+            <Button startIcon={<ListAltIcon />} variant="outlined" color="secondary" onClick={handleListBromaDrafts}>
+              {draftsOpen ? 'Hide Drafts' : 'Broma Drafts'}
+            </Button>
+            <Button startIcon={<ReplayIcon />} variant="contained" color="secondary" onClick={handleRetryBromaDrafts} disabled={retryingDrafts || !bromaDrafts?.length}>
+              {retryingDrafts ? 'Retrying...' : 'Retry All Drafts'}
             </Button>
             <Button startIcon={<RefreshIcon />} variant="outlined" onClick={load}>
               Refresh
@@ -585,6 +609,46 @@ export default function AdminDspDeliveriesPage() {
           </Stack>
         }
       />
+
+      {draftsOpen && (
+        <Collapse in={draftsOpen}>
+          <Paper sx={{ p: { xs: 1.5, md: 2 }, mb: 2.5 }}>
+            <Typography variant="subtitle2" fontWeight={800} gutterBottom>
+              Incomplete Broma Drafts ({bromaDrafts?.length || 0})
+            </Typography>
+            {!bromaDrafts?.length ? (
+              <Typography variant="body2" color="text.secondary">No incomplete drafts found.</Typography>
+            ) : (
+              <TableContainer>
+                <Table size="small">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Release Title</TableCell>
+                      <TableCell>Broma Step</TableCell>
+                      <TableCell>Broma Release ID</TableCell>
+                      <TableCell>State</TableCell>
+                      <TableCell>Created</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {bromaDrafts.map((d: any) => (
+                      <TableRow key={d._id} hover>
+                        <TableCell sx={{ maxWidth: 220, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{d.metadata?.releaseTitle || d.releaseId?.toString()?.slice(-8) || '-'}</TableCell>
+                        <TableCell>{d.metadata?.bromaStep || '-'}</TableCell>
+                        <TableCell sx={{ fontFamily: 'monospace', fontSize: 12 }}>{d.metadata?.bromaReleaseId || '-'}</TableCell>
+                        <TableCell>
+                          <Chip size="small" label={d.state} color={d.state === 'failed' ? 'error' : d.state === 'processing' ? 'info' : d.state === 'delivered' ? 'success' : 'default'} />
+                        </TableCell>
+                        <TableCell>{new Date(d.createdAt).toLocaleDateString()}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            )}
+          </Paper>
+        </Collapse>
+      )}
 
       <Paper sx={{ p: { xs: 1.5, md: 2 }, mb: 2.5 }}>
         <Stack spacing={1.5}>
