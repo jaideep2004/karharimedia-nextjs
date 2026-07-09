@@ -2,6 +2,10 @@ import crypto from 'crypto';
 import mongoose from 'mongoose';
 import DspProvider from '../../models/dspProvider.model';
 import DeliveryJob, { IDeliveryJob } from '../../models/deliveryJob.model';
+
+const syncProgress = new Map<string, { total: number; processed: number; errors: number; current: string; done: boolean; startTime: number }>();
+export function getSyncProgress(id: string) { return syncProgress.get(id) || null; }
+export function clearSyncProgress(id: string) { syncProgress.delete(id); }
 import DspWebhookEvent from '../../models/dspWebhookEvent.model';
 import RightsClaim from '../../models/rightsClaim.model';
 import FingerprintMatch from '../../models/fingerprintMatch.model';
@@ -644,15 +648,24 @@ class DspDeliveryService {
     const step = String(metadata.bromaStep || '');
     const moderationStatus = String(metadata.bromaModerationStatus || '').toLowerCase();
     const bromaRejected = ['rejected', 'declined', 'cancelled', 'failed', 'error', 'not_ready'].includes(moderationStatus);
+    const bromaModeration = ['moderation', 'under_moderation', 'on_moderation', 'pending_moderation'].includes(moderationStatus);
+    const bromaDspProcessing = ['accepted', 'distributed', 'in_distribution', 'processing', 'in_progress', 'inprogress'].includes(moderationStatus);
+
     if (bromaRejected) releaseStatus = 'rejected';
     else if (state === 'delivered') releaseStatus = 'live';
     else if (step === 'send_moderation') releaseStatus = 'broma_moderation';
     else if (step === 'poll_status') {
-      releaseStatus = ['approved', 'live', 'published', 'delivered', 'processed', 'done', 'active', 'success', 'shipped'].includes(moderationStatus)
-        ? 'live'
-        : ['accepted', 'processing', 'distributed', 'in_distribution'].includes(moderationStatus)
-        ? 'dsp_processing'
-        : 'broma_moderation';
+      if (['approved', 'live', 'published', 'delivered', 'processed', 'done', 'active', 'success', 'shipped', 'completed'].includes(moderationStatus)) {
+        releaseStatus = 'live';
+      } else if (bromaModeration) {
+        releaseStatus = 'broma_moderation';
+      } else if (bromaDspProcessing) {
+        releaseStatus = 'dsp_processing';
+      } else if (moderationStatus) {
+        releaseStatus = 'broma_moderation';
+      } else {
+        releaseStatus = 'uploading_to_broma';
+      }
     }
     else if (step === 'done') releaseStatus = 'live';
     else if (state === 'processing') releaseStatus = 'uploading_to_broma';
@@ -660,9 +673,18 @@ class DspDeliveryService {
 
     if (!releaseStatus) return;
 
+    let releaseObjectId: mongoose.Types.ObjectId;
+    if (typeof job.releaseId === 'string' && mongoose.Types.ObjectId.isValid(job.releaseId)) {
+      releaseObjectId = new mongoose.Types.ObjectId(job.releaseId);
+    } else if (job.releaseId instanceof mongoose.Types.ObjectId) {
+      releaseObjectId = job.releaseId;
+    } else {
+      return;
+    }
+
     const TERMINAL_STATUSES = new Set(['live', 'rejected', 'removed', 'takedown_requested']);
     const existingRelease = await mongoose.connection.collection('releases').findOne(
-      { _id: job.releaseId },
+      { _id: releaseObjectId },
       { projection: { status: 1 } }
     );
     if (existingRelease && TERMINAL_STATUSES.has(existingRelease.status) && !TERMINAL_STATUSES.has(releaseStatus)) {
@@ -688,7 +710,7 @@ class DspDeliveryService {
     }
 
     await mongoose.connection.collection('releases').updateOne(
-      { _id: job.releaseId },
+      { _id: releaseObjectId },
       {
         $set: releaseUpdate,
       }
@@ -997,37 +1019,176 @@ class DspDeliveryService {
     return DeliveryJob.findById(jobId);
   }
 
-  async listBromaDrafts() {
+  async diagnoseBromaApi() {
+    const out: Record<string, any> = { checks: [] };
+
+    const providerRecord = await this.getProviderWithDecryptedCredentials('broma');
+    if (!providerRecord || !providerRecord.provider.enabled) {
+      out.error = 'Broma provider not active';
+      return out;
+    }
+
+    const client = new BromaClient({
+      credentials: providerRecord.credentials,
+      config: providerRecord.provider.config || {},
+    });
+
+    out.config = {
+      baseUrl: providerRecord.provider.config?.baseUrl,
+      accountId: providerRecord.provider.config?.accountId,
+      integrationMode: providerRecord.provider.integrationMode,
+    };
+    out.credentialKeys = Object.keys(providerRecord.credentials).filter((k) => k !== 'password');
+
     try {
-      const providerRecord = await this.getProviderWithDecryptedCredentials('broma');
-      if (!providerRecord || !providerRecord.provider.enabled) {
-        return [];
+      const draftsResponse = await client.getDrafts(String(providerRecord.provider.config?.accountId));
+      out.draftsResponse = draftsResponse;
+      out.draftsResponseType = typeof draftsResponse;
+      out.draftsIsArray = Array.isArray(draftsResponse);
+      out.draftsKeys = typeof draftsResponse === 'object' && draftsResponse ? Object.keys(draftsResponse as any) : [];
+      if (typeof draftsResponse === 'object' && draftsResponse) {
+        const data = (draftsResponse as any).data;
+        if (data !== undefined) {
+          out.draftsDataType = typeof data;
+          out.draftsDataIsArray = Array.isArray(data);
+          out.draftsDataKeys = typeof data === 'object' && data ? Object.keys(data) : [];
+          if (Array.isArray(data)) out.draftsDataLength = data.length;
+        }
       }
-      const client = new BromaClient({
-        credentials: providerRecord.credentials,
-        config: providerRecord.provider.config || {},
-      });
-      const response = await client.getDrafts();
-      const rawDrafts = Array.isArray(response?.data) ? response.data
-        : Array.isArray(response?.data?.items) ? response.data.items
-        : Array.isArray(response?.data?.releases) ? response.data.releases
-        : Array.isArray(response?.items) ? response.items
-        : Array.isArray(response?.releases) ? response.releases
-        : Array.isArray(response) ? response
-        : [];
+      out.draftsRawPreview = JSON.stringify(draftsResponse).slice(0, 2000);
+    } catch (error: any) {
+      out.draftsError = error?.message || String(error);
+      out.draftsErrorCode = error?.statusCode;
+      out.draftsErrorBody = error?.responseBody;
+    }
 
-      const draftIds = rawDrafts.map((d: any) => String(d?.id ?? '')).filter(Boolean);
-      const jobs = draftIds.length > 0
-        ? await DeliveryJob.find({
-            providerKey: 'broma',
-            'metadata.bromaReleaseId': { $in: draftIds },
-          }).sort({ createdAt: -1 }).lean()
-        : [];
+    try {
+      const accountId = providerRecord.provider.config?.accountId;
+      if (accountId) {
+        const assetsResponse = await client.getAccountReleaseAssets(String(accountId), { limit: 5 });
+        out.assetsResponsePreview = JSON.stringify(assetsResponse).slice(0, 2000);
+        out.assetsKeys = typeof assetsResponse === 'object' && assetsResponse ? Object.keys(assetsResponse as any) : [];
+      } else {
+        out.assetsSkipped = 'No accountId configured';
+      }
+    } catch (error: any) {
+      out.assetsError = error?.message || String(error);
+    }
 
-      const jobMap = new Map(jobs.map((j) => [String((j.metadata as any)?.bromaReleaseId), j]));
-      const TERMINAL_JOB_STATES = new Set(['delivered', 'cancelled']);
+    try {
+      const accountId = providerRecord.provider.config?.accountId;
+      if (accountId) {
+        const pendingResponse = await client.getAccountReleaseAssets(String(accountId), { limit: 200, moderation_status: 'pending' });
+        const pendingItems = this.extractBromaAssetsList(pendingResponse);
+        out.pendingDraftsCount = pendingItems.length;
+        out.pendingDraftIds = pendingItems.slice(0, 10).map((d: any) => ({ id: d.id, title: d.title, ms: d.moderation_status }));
+      } else {
+        out.pendingDraftsSkipped = 'No accountId configured';
+      }
+    } catch (error: any) {
+      out.pendingDraftsError = error?.message || String(error);
+    }
 
-      return rawDrafts.map((d: any) => {
+    try {
+      const accountId = providerRecord.provider.config?.accountId;
+      if (accountId) {
+        const allAssets = await client.getAccountReleaseAssets(String(accountId), { limit: 200 });
+        const allItems = this.extractBromaAssetsList(allAssets);
+        const pendingLocal = allItems.filter((d: any) => d.moderation_status === 'pending' && !d.deleted_at);
+        out.pendingDraftsLocalCount = pendingLocal.length;
+        out.pendingDraftsLocalIds = pendingLocal.slice(0, 10).map((d: any) => ({ id: d.id, title: d.title, ms: d.moderation_status, statuses: d.statuses }));
+
+        const msBreakdown: Record<string, number> = {};
+        const labelBreakdown: Record<string, number> = {};
+        const statusBreakdown: Record<string, number> = {};
+        for (const item of allItems) {
+          const ms = item.moderation_status ?? '(none)';
+          msBreakdown[ms] = (msBreakdown[ms] || 0) + 1;
+          const lbl = String(item.label_id ?? '?');
+          labelBreakdown[lbl] = (labelBreakdown[lbl] || 0) + 1;
+          if (Array.isArray(item.statuses)) {
+            for (const s of item.statuses) {
+              statusBreakdown[s] = (statusBreakdown[s] || 0) + 1;
+            }
+          }
+          if (item.deleted_at) {
+            statusBreakdown['_deleted'] = (statusBreakdown['_deleted'] || 0) + 1;
+          }
+        }
+        out.moderationStatusBreakdown = msBreakdown;
+        out.labelBreakdown = labelBreakdown;
+        out.statusBreakdown = statusBreakdown;
+      } else {
+        out.pendingDraftsLocalSkipped = 'No accountId configured';
+      }
+    } catch (error: any) {
+      out.pendingDraftsLocalError = error?.message || String(error);
+    }
+
+    const totalJobs = await DeliveryJob.countDocuments({
+      providerKey: 'broma',
+      targetType: 'release',
+      $or: [{ externalId: { $exists: true, $ne: '' } }, { 'metadata.bromaReleaseId': { $exists: true, $ne: '' } }],
+    });
+    out.totalDeliveryJobs = totalJobs;
+
+    return out;
+  }
+
+  private extractBromaAssetsList(response: any): any[] {
+    if (!response || typeof response !== 'object') return [];
+    const root = response as Record<string, any>;
+
+    if (root.status === 'ok') {
+      if (Array.isArray(root.data)) return root.data;
+      if (Array.isArray(root.items)) return root.items;
+      if (root.data && typeof root.data === 'object') {
+        if (Array.isArray(root.data.releases)) return root.data.releases;
+        if (Array.isArray(root.data.items)) return root.data.items;
+      }
+    }
+
+    if (Array.isArray(root.data)) return root.data;
+    if (Array.isArray(root.items)) return root.items;
+    if (Array.isArray(root.releases)) return root.releases;
+
+    return [];
+  }
+
+  async listBromaDrafts(page: number = 1) {
+    const providerRecord = await this.getProviderWithDecryptedCredentials('broma');
+    if (!providerRecord || !providerRecord.provider.enabled) {
+      throw new Error('Broma provider is not active');
+    }
+    const accountId = providerRecord.provider.config?.accountId;
+    if (!accountId) {
+      throw new Error('Broma accountId not configured');
+    }
+
+    const client = new BromaClient({
+      credentials: providerRecord.credentials,
+      config: providerRecord.provider.config || {},
+    });
+
+    const PAGE_SIZE = 10;
+    const firstResponse = await client.getDrafts(String(accountId), { page, limit: PAGE_SIZE });
+    const allDrafts = this.extractBromaAssetsList(firstResponse);
+    const bromaTotal = typeof firstResponse?.total === 'number' ? firstResponse.total : allDrafts.length;
+
+    const draftIds = allDrafts.map((d: any) => String(d?.id ?? '')).filter(Boolean);
+    const jobs = draftIds.length > 0
+      ? await DeliveryJob.find({
+          providerKey: 'broma',
+          'metadata.bromaReleaseId': { $in: draftIds },
+        }).sort({ createdAt: -1 }).lean()
+      : [];
+
+    const jobMap = new Map(jobs.map((j) => [String((j.metadata as any)?.bromaReleaseId), j]));
+    const TERMINAL_JOB_STATES = new Set(['delivered', 'cancelled']);
+
+    return {
+      total: bromaTotal,
+      drafts: allDrafts.map((d: any) => {
         const id = String(d.id ?? '');
         const job = jobMap.get(id);
         return {
@@ -1037,19 +1198,18 @@ class DspDeliveryService {
           jobState: job ? job.state : 'no_job',
           jobId: job ? String(job._id) : null,
           releaseId: job ? String(job.releaseId ?? '') : '',
-          createdAt: d.created_at || d.createdAt,
+          createdAt: d.release_date || d.created_at || d.createdAt,
           completed: TERMINAL_JOB_STATES.has(job?.state || ''),
         };
-      });
-    } catch {
-      return [];
-    }
+      }),
+    };
   }
 
   async retryAllBromaDrafts(workerId?: string) {
     const id = workerId || `draft-retry:${process.pid}:${Date.now()}`;
 
-    const bromaDraftIds = await this.listBromaDrafts();
+    const bromaDraftResult = await this.listBromaDrafts();
+    const bromaDraftIds = bromaDraftResult.drafts;
     const retryable = (bromaDraftIds as Array<Record<string, any>>)
       .filter((d) => d.jobId && !d.completed && d.jobState !== 'processing')
       .map((d) => d.jobId as string);
@@ -1134,47 +1294,61 @@ class DspDeliveryService {
     else update.errorMessage = result.message;
 
     await DeliveryJob.findByIdAndUpdate(jobId, update);
-    await this.updateReleaseLifecycle(job, result.state, nextMetadata);
+    try {
+      await this.updateReleaseLifecycle(job, result.state, nextMetadata);
+    } catch (lifecycleError) {
+      console.error(`[refreshJobStatus] updateReleaseLifecycle failed for job ${jobId}: ${getErrorMessage(lifecycleError)}`);
+    }
     return DeliveryJob.findById(jobId);
   }
 
-  async syncBromaReleaseStatuses(input: { releaseIds?: string[]; limit?: number } = {}) {
-    const limit = Math.min(300, Math.max(1, input.limit || 150));
+  async syncBromaReleaseStatuses(input: { releaseIds?: string[]; limit?: number; skip?: number; syncId?: string } = {}) {
+    const syncId = input.syncId || '';
+    const limitVal = Math.min(2000, Math.max(1, input.limit || 500));
+    const skip = Math.max(0, input.skip || 0);
     const releaseObjectIds = (input.releaseIds || [])
       .filter((id) => mongoose.Types.ObjectId.isValid(id))
       .map((id) => new mongoose.Types.ObjectId(id));
-    const query: Record<string, any> = {
-      providerKey: 'broma',
-      targetType: 'release',
-      $or: [
-        { externalId: { $exists: true, $ne: '' } },
-        { 'metadata.bromaReleaseId': { $exists: true, $ne: '' } },
-      ],
-    };
-    if (releaseObjectIds.length > 0) query.releaseId = { $in: releaseObjectIds };
 
-    const jobs = await DeliveryJob.find(query)
-      .sort({ updatedAt: -1, createdAt: -1 })
-      .limit(limit)
-      .select('_id releaseId state externalId metadata');
+    if (syncId) syncProgress.set(syncId, { total: 0, processed: 0, errors: 0, current: 'Loading jobs…', done: false, startTime: Date.now() });
+
+    const baseQuery: Record<string, any> = { providerKey: 'broma', targetType: 'release' };
+    if (releaseObjectIds.length > 0) baseQuery.releaseId = { $in: releaseObjectIds };
+
+    const jobs = await DeliveryJob.collection.find(baseQuery, {
+      projection: { _id: 1, releaseId: 1, state: 1, externalId: 1, metadata: 1, updatedAt: 1, createdAt: 1 },
+    }).toArray();
+    jobs.sort((a, b) => (b.updatedAt?.getTime() || 0) - (a.updatedAt?.getTime() || 0) || (b.createdAt?.getTime() || 0) - (a.createdAt?.getTime() || 0));
+    const filtered = !releaseObjectIds.length ? jobs.filter((j) => !j.hiddenFromOps && j.metadata?.resetForApproval !== true && !j.deadLettered) : jobs;
+    const paged = filtered.slice(skip, skip + limitVal);
+
+    if (syncId) syncProgress.set(syncId, { total: paged.length, processed: 0, errors: 0, current: 'Starting…', done: false, startTime: syncProgress.get(syncId)?.startTime || Date.now() });
 
     const seenReleaseIds = new Set<string>();
-    const results: Array<{ jobId: string; releaseId?: string; state?: string; status?: string; error?: string }> = [];
+    const results: Array<{ jobId: string; releaseId?: string; state?: string; status?: string; error?: string; previousState?: string }> = [];
 
-    for (const job of jobs) {
+    for (const job of paged) {
       const releaseId = job.releaseId?.toString();
-      if (releaseId && seenReleaseIds.has(releaseId)) continue;
+      if (releaseId && seenReleaseIds.has(releaseId)) {
+        if (syncId) syncProgress.set(syncId, { total: paged.length, processed: results.length, errors: results.filter(r => r.error).length, current: `Skipping duplicate ${releaseId?.slice(-6)}…`, done: false, startTime: syncProgress.get(syncId)?.startTime || Date.now() });
+        continue;
+      }
       if (releaseId) seenReleaseIds.add(releaseId);
 
+      if (syncId) syncProgress.set(syncId, { total: paged.length, processed: results.length, errors: results.filter(r => r.error).length, current: `${job?.state || ''} → checking ${releaseId?.slice(-6) || job._id.toString().slice(-6)}`, done: false, startTime: syncProgress.get(syncId)?.startTime || Date.now() });
+
       try {
+        const previousState = job.state;
         const refreshed = await this.refreshJobStatus(job._id.toString());
         results.push({
           jobId: job._id.toString(),
           releaseId,
+          previousState,
           state: refreshed?.state,
           status: (refreshed?.metadata as Record<string, any> | undefined)?.bromaModerationStatus,
         });
       } catch (error) {
+        console.error(`[syncBromaReleaseStatuses] Job ${job._id} (release ${releaseId}): ${getErrorMessage(error)}`);
         results.push({
           jobId: job._id.toString(),
           releaseId,
@@ -1183,7 +1357,13 @@ class DspDeliveryService {
       }
     }
 
+    if (syncId) {
+      syncProgress.set(syncId, { total: paged.length, processed: results.length, errors: results.filter(r => r.error).length, current: 'Done', done: true, startTime: syncProgress.get(syncId)?.startTime || Date.now() });
+      setTimeout(() => syncProgress.delete(syncId), 60_000);
+    }
+
     return {
+      syncId,
       checked: results.length,
       approved: results.filter((item) => item.state === 'delivered').length,
       rejected: results.filter((item) => item.state === 'needs_attention' && item.status === 'rejected').length,
@@ -1191,6 +1371,184 @@ class DspDeliveryService {
       failed: results.filter((item) => item.error).length,
       results,
     };
+  }
+
+  async cleanupBromaDrafts(input: { action?: 'list' | 'delete_orphans' | 'resume_orphans'; maxDrafts?: number } = {}) {
+    const action = input.action || 'list';
+    const maxDrafts = Math.min(200, Math.max(1, input.maxDrafts || 100));
+
+    const providerRecord = await this.getProviderWithDecryptedCredentials('broma');
+    if (!providerRecord || !providerRecord.provider.enabled) {
+      return { action, error: 'Broma provider not active', deleted: 0, resumed: 0, orphaned: 0, active: 0 };
+    }
+
+    const client = new BromaClient({
+      credentials: providerRecord.credentials,
+      config: providerRecord.provider.config || {},
+    });
+
+    const accountId = providerRecord.provider.config?.accountId;
+    if (!accountId) {
+      return { action, error: 'Broma accountId not configured', deleted: 0, resumed: 0, orphaned: 0, active: 0 };
+    }
+
+    const rawDrafts: any[] = [];
+    const PAGE_SIZE = 100;
+    const firstResp = await client.getDrafts(String(accountId), { page: 1, limit: PAGE_SIZE });
+    const firstBatch = Array.isArray(firstResp?.data) ? firstResp.data : [];
+    if (firstBatch.length === 0) {
+      const result = { action, deleted: 0, resumed: 0, orphaned: 0, active: 0, terminal: 0 };
+      return { ...result, list: this.extractBromaAssetsList(firstResp).slice(0, maxDrafts).map((d: any) => ({ bromaDraftId: d.id, title: d.title })) };
+    }
+    rawDrafts.push(...firstBatch);
+    const totalPages = typeof firstResp?.pages === 'number' ? firstResp.pages : 1;
+    const cleanupMaxPages = Math.min(totalPages, 5);
+    if (cleanupMaxPages > 1) {
+      const pagePromises = [];
+      for (let p = 2; p <= cleanupMaxPages; p++) {
+        pagePromises.push(client.getDrafts(String(accountId), { page: p, limit: PAGE_SIZE }));
+      }
+      const responses = await Promise.all(pagePromises);
+      for (const resp of responses) {
+        const batch = Array.isArray(resp?.data) ? resp.data : [];
+        if (batch.length === 0) continue;
+        rawDrafts.push(...batch);
+        if (rawDrafts.length >= maxDrafts) break;
+      }
+    }
+
+    const drafts = rawDrafts.slice(0, maxDrafts);
+    const draftIds = drafts.map((d: any) => String(d?.id ?? '')).filter(Boolean);
+
+    const jobs = draftIds.length > 0
+      ? await DeliveryJob.find({
+          providerKey: 'broma',
+          'metadata.bromaReleaseId': { $in: draftIds },
+        }).sort({ createdAt: -1 }).lean()
+      : [];
+
+    const jobByBromaId = new Map(jobs.map((j) => [String((j.metadata as any)?.bromaReleaseId), j]));
+    const TERMINAL_STATES = new Set(['delivered', 'cancelled']);
+
+    const orphaned: any[] = [];
+    const activeJobs: any[] = [];
+    const terminalJobs: any[] = [];
+
+    for (const draft of drafts) {
+      const id = String(draft.id ?? '');
+      const job = jobByBromaId.get(id);
+      if (!job) orphaned.push(draft);
+      else if (TERMINAL_STATES.has(job.state)) terminalJobs.push({ draft, job });
+      else activeJobs.push({ draft, job });
+    }
+
+    let deleted = 0;
+    let resumed = 0;
+    const errors: string[] = [];
+
+    if (action === 'delete_orphans') {
+      for (const draft of orphaned) {
+        try {
+          await client.deleteDraft('release', draft.id);
+          deleted++;
+        } catch (error) {
+          errors.push(`Failed to delete draft ${draft.id}: ${getErrorMessage(error)}`);
+        }
+      }
+    }
+
+    if (action === 'delete_orphans') {
+      for (const { draft } of terminalJobs) {
+        try {
+          await client.deleteDraft('release', draft.id);
+          deleted++;
+        } catch (error) {
+          errors.push(`Failed to delete terminal draft ${draft.id}: ${getErrorMessage(error)}`);
+        }
+      }
+    }
+
+    if (action === 'resume_orphans') {
+      const retryIds: string[] = [];
+      for (const { draft, job } of activeJobs) {
+        if (job.state === 'processing' || job.state === 'queued') continue;
+        retryIds.push(String(job._id));
+      }
+      for (const jobId of retryIds) {
+        try {
+          await DeliveryJob.findByIdAndUpdate(jobId, {
+            state: 'queued',
+            deadLettered: false,
+            nextRetryAt: new Date(),
+            $unset: { lockedAt: '', lockedBy: '', lockExpiresAt: '', errorMessage: '' },
+            $push: {
+              events: {
+                state: 'queued',
+                message: 'Resumed from draft cleanup',
+                source: 'system',
+              },
+            },
+          });
+          resumed++;
+        } catch (error) {
+          errors.push(`Failed to resume job ${jobId}: ${getErrorMessage(error)}`);
+        }
+      }
+    }
+
+    return {
+      action,
+      totalDrafts: drafts.length,
+      orphaned: orphaned.length,
+      active: activeJobs.length,
+      terminal: terminalJobs.length,
+      deleted,
+      resumed,
+      errors: errors.slice(0, 10),
+    };
+  }
+
+  async requeueStuckBromaJobs(input: { maxJobs?: number; olderThanMinutes?: number } = {}) {
+    const maxJobs = Math.min(500, Math.max(1, input.maxJobs || 200));
+    const olderThanMinutes = Math.max(5, input.olderThanMinutes || 60);
+    const cutoff = new Date(Date.now() - olderThanMinutes * 60_000);
+
+    const stuckJobs = await DeliveryJob.find({
+      providerKey: 'broma',
+      targetType: 'release',
+      state: { $in: ['processing', 'queued'] },
+      $or: [
+        { nextRetryAt: { $lte: new Date() } },
+        { nextRetryAt: { $exists: false } },
+      ],
+      deadLettered: false,
+      'metadata.resetForApproval': { $ne: true },
+      hiddenFromOps: { $ne: true },
+    })
+      .sort({ updatedAt: 1 })
+      .limit(maxJobs)
+      .select('_id releaseId state metadata updatedAt');
+
+    const requeued: string[] = [];
+    for (const job of stuckJobs) {
+      if (job.state === 'processing' && job.updatedAt && job.updatedAt > cutoff) continue;
+
+      await DeliveryJob.findByIdAndUpdate(job._id, {
+        state: 'queued',
+        nextRetryAt: new Date(),
+        $unset: { lockedAt: '', lockedBy: '', lockExpiresAt: '', errorMessage: '' },
+        $push: {
+          events: {
+            state: 'queued',
+            message: `Auto-requeued (stuck for >${olderThanMinutes}min in ${job.state})`,
+            source: 'system',
+          },
+        },
+      });
+      requeued.push(job._id.toString());
+    }
+
+    return { requeued: requeued.length, jobs: requeued };
   }
 
   async clearJobLogs(jobId: string, actorId?: string) {

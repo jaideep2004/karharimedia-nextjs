@@ -1,7 +1,8 @@
+import crypto from 'crypto';
 import { Response } from 'express';
 import { AuthRequest } from '../middleware/auth.middleware';
 import { errorResponse, successResponse } from '../utils/apiResponse';
-import { dspDeliveryService } from '../services/dsp/dspDelivery.service';
+import { dspDeliveryService, getSyncProgress as getBromaSyncProgress } from '../services/dsp/dspDelivery.service';
 
 export const listProviders = async (_req: AuthRequest, res: Response): Promise<void> => {
   try {
@@ -152,9 +153,19 @@ export const retryDelivery = async (req: AuthRequest, res: Response): Promise<vo
   }
 };
 
-export const listBromaDrafts = async (_req: AuthRequest, res: Response): Promise<void> => {
+export const diagnoseBromaApi = async (_req: AuthRequest, res: Response): Promise<void> => {
   try {
-    const drafts = await dspDeliveryService.listBromaDrafts();
+    const result = await dspDeliveryService.diagnoseBromaApi();
+    successResponse(res, result, 'Broma API diagnostic');
+  } catch (error) {
+    errorResponse(res, 'Diagnostic failed', error);
+  }
+};
+
+export const listBromaDrafts = async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    const page = Math.max(1, Number(req.query.page) || 1);
+    const drafts = await dspDeliveryService.listBromaDrafts(page);
     successResponse(res, drafts, 'Broma draft jobs fetched');
   } catch (error) {
     errorResponse(res, 'Failed to list Broma drafts', error);
@@ -186,10 +197,50 @@ export const syncBromaReleaseStatuses = async (req: AuthRequest, res: Response):
       ? req.body.releaseIds.map((id: unknown) => String(id)).filter(Boolean)
       : undefined;
     const limit = req.body?.limit ? Number(req.body.limit) : undefined;
-    const result = await dspDeliveryService.syncBromaReleaseStatuses({ releaseIds, limit });
-    successResponse(res, result, 'Broma release statuses synced');
+    const skip = req.body?.skip ? Number(req.body.skip) : undefined;
+    const syncId = req.body?.syncId || crypto.randomUUID();
+    // Fire in background — no timeout
+    dspDeliveryService.syncBromaReleaseStatuses({ releaseIds, limit, skip, syncId }).catch((err) =>
+      console.error('[syncBromaReleaseStatuses] Background sync failed:', err)
+    );
+    successResponse(res, { syncId }, 'Broma release statuses sync started');
   } catch (error) {
-    errorResponse(res, 'Failed to sync Broma release statuses', error);
+    console.error('[syncBromaReleaseStatuses] Unhandled error:', error);
+    errorResponse(res, 'Failed to start Broma release statuses sync', error);
+  }
+};
+
+export const getSyncProgress = async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    const syncId = req.params.syncId;
+    if (!syncId) { errorResponse(res, 'syncId required', null); return; }
+    const progress = getBromaSyncProgress(syncId);
+    if (!progress) { successResponse(res, null, 'No sync in progress'); return; }
+    successResponse(res, progress, 'Sync progress');
+  } catch (error) {
+    errorResponse(res, 'Failed to get sync progress', error);
+  }
+};
+
+export const requeueStuckBromaJobs = async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    const maxJobs = req.body?.maxJobs ? Number(req.body.maxJobs) : undefined;
+    const olderThanMinutes = req.body?.olderThanMinutes ? Number(req.body.olderThanMinutes) : undefined;
+    const result = await dspDeliveryService.requeueStuckBromaJobs({ maxJobs, olderThanMinutes });
+    successResponse(res, result, 'Stuck Broma jobs requeued');
+  } catch (error) {
+    errorResponse(res, 'Failed to requeue stuck Broma jobs', error);
+  }
+};
+
+export const cleanupBromaDrafts = async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    const action = req.body?.action === 'delete_orphans' || req.body?.action === 'resume_orphans' ? req.body.action : 'list';
+    const maxDrafts = req.body?.maxDrafts ? Number(req.body.maxDrafts) : undefined;
+    const result = await dspDeliveryService.cleanupBromaDrafts({ action, maxDrafts });
+    successResponse(res, result, 'Broma drafts processed');
+  } catch (error) {
+    errorResponse(res, 'Failed to process Broma drafts', error);
   }
 };
 

@@ -1183,9 +1183,9 @@ export const adminAPI = {
     }
   },
 
-  listBromaDrafts: async () => {
+  listBromaDrafts: async (page?: number) => {
     try {
-      const response = await api.get<ApiResponse<any>>('/admin/dsp/broma/drafts');
+      const response = await api.get<ApiResponse<any>>('/admin/dsp/broma/drafts', { params: { page } });
       return response.data;
     } catch (error) {
       return handleApiError(error);
@@ -1210,9 +1210,27 @@ export const adminAPI = {
     }
   },
 
-  syncBromaReleaseStatuses: async (payload: { releaseIds?: string[]; limit?: number } = {}) => {
+  syncBromaReleaseStatuses: async (payload: { releaseIds?: string[]; limit?: number; skip?: number; syncId?: string } = {}) => {
     try {
       const response = await api.post<ApiResponse<any>>('/admin/broma-release-statuses-sync', payload);
+      return response.data;
+    } catch (error) {
+      return handleApiError(error);
+    }
+  },
+
+  requeueStuckBromaJobs: async (payload: { maxJobs?: number; olderThanMinutes?: number } = {}) => {
+    try {
+      const response = await api.post<ApiResponse<any>>('/admin/broma-requeue-stuck', payload);
+      return response.data;
+    } catch (error) {
+      return handleApiError(error);
+    }
+  },
+
+  cleanupBromaDrafts: async (payload: { action?: 'list' | 'delete_orphans' | 'resume_orphans'; maxDrafts?: number } = {}) => {
+    try {
+      const response = await api.post<ApiResponse<any>>('/admin/broma-drafts-cleanup', payload);
       return response.data;
     } catch (error) {
       return handleApiError(error);

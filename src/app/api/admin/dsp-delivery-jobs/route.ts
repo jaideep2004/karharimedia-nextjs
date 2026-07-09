@@ -19,7 +19,8 @@ export async function GET(req: Request) {
     if (providerKey) query.providerKey = providerKey;
     if (state) query.state = state;
 
-    const [data, total] = await Promise.all([
+    const allJobsQuery = providerKey ? { providerKey } : {};
+    const [data, total, countResults] = await Promise.all([
       db.collection('deliveryjobs')
         .find(query, { projection: { attempts: 0, events: 0 } })
         .sort({ updatedAt: -1, createdAt: -1 })
@@ -27,13 +28,30 @@ export async function GET(req: Request) {
         .limit(limit)
         .toArray(),
       db.collection('deliveryjobs').countDocuments(query),
+      db.collection('deliveryjobs').aggregate([
+        { $match: allJobsQuery },
+        { $group: { _id: '$state', count: { $sum: 1 } } },
+      ]).toArray(),
     ]);
+
+    const counts: Record<string, number> = {};
+    for (const row of countResults) {
+      counts[row._id || 'unknown'] = row.count;
+    }
+    const totalAll = (counts.processing || 0) + (counts.delivered || 0) + (counts.queued || 0) + (counts.failed || 0) + (counts.needs_attention || 0);
 
     return NextResponse.json({
       success: true,
       message: 'Delivery jobs fetched',
       data: {
         data,
+        counts: {
+          all: totalAll,
+          processing: counts.processing || 0,
+          delivered: counts.delivered || 0,
+          failed: (counts.failed || 0) + (counts.needs_attention || 0),
+          queued: counts.queued || 0,
+        },
         pagination: {
           total,
           page,

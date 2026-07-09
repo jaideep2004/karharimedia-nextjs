@@ -10,18 +10,26 @@ const IN_PROCESS_RELEASE_STATUSES = new Set([
   'broma moderation',
   'under_moderation',
   'under moderation',
+  'on_moderation',
+  'on moderation',
+  'pending_moderation',
+  'pending moderation',
   'moderation',
   'dsp_processing',
   'dsp processing',
   'accepted',
   'distributed',
   'in_distribution',
+  'in distribution',
+  'in_progress',
+  'in progress',
+  'inprogress',
 ]);
 
 export const RELEASE_STATUS_GROUPS: Record<ReleaseDisplayStatus, string[]> = {
   pending: ['pending', 'pending_review', 'pending review', 'submitted', 'under_review', 'under review', 'review', ''],
   in_process: Array.from(IN_PROCESS_RELEASE_STATUSES),
-  approved: ['approved', 'live', 'published', 'delivered', 'processed', 'done', 'active', 'success', 'shipped'],
+  approved: ['approved', 'live', 'published', 'delivered', 'processed', 'done', 'active', 'success', 'shipped', 'completed'],
   rejected: ['rejected', 'declined', 'failed', 'error', 'cancelled', 'not_ready', 'not ready'],
   other: [],
 };

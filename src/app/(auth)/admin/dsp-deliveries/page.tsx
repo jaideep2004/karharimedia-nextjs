@@ -1,6 +1,6 @@
 'use client';
 
-import { Fragment, useEffect, useMemo, useState } from 'react';
+import { Fragment, useEffect, useState, useCallback, useMemo } from 'react';
 import {
   Alert,
   Box,
@@ -8,6 +8,10 @@ import {
   Chip,
   Collapse,
   CircularProgress,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   Divider,
   FormControl,
   IconButton,
@@ -16,7 +20,9 @@ import {
   MenuItem,
   Paper,
   Select,
+  Slide,
   Stack,
+  Tab,
   Table,
   TableBody,
   TableCell,
@@ -24,6 +30,7 @@ import {
   TableHead,
   TablePagination,
   TableRow,
+  Tabs,
   TextField,
   Typography,
   Tooltip,
@@ -34,6 +41,13 @@ import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import SyncIcon from '@mui/icons-material/Sync';
 import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
 import ListAltIcon from '@mui/icons-material/ListAlt';
+import CleaningServicesIcon from '@mui/icons-material/CleaningServices';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import CancelIcon from '@mui/icons-material/Cancel';
+import HourglassTopIcon from '@mui/icons-material/HourglassTop';
+import BugReportIcon from '@mui/icons-material/BugReport';
+import SettingsIcon from '@mui/icons-material/Settings';
+import CloseIcon from '@mui/icons-material/Close';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { DspLogo } from '@/components/dsp/DspLogo';
@@ -50,25 +64,11 @@ type Provider = {
   maintenanceMode?: boolean;
   integrationMode?: 'shell' | 'sandbox' | 'live';
   readiness?: string;
-  config?: {
-    baseUrl?: string;
-    accountId?: string | number;
-    createdCountryId?: string;
-  };
+  config?: { baseUrl?: string; accountId?: string | number; createdCountryId?: string };
   configuredCredentialKeys?: string[];
   missingCredentialKeys?: string[];
-  readinessReport?: {
-    state: string;
-    missing: string[];
-    warnings: string[];
-    canDispatch: boolean;
-  };
-  requirement?: {
-    docsStatus: string;
-    docsUrl?: string;
-    payloadStandard: string;
-    readinessChecks: string[];
-  };
+  readinessReport?: { state: string; missing: string[]; warnings: string[]; canDispatch: boolean };
+  requirement?: { docsStatus: string; docsUrl?: string; payloadStandard: string; readinessChecks: string[] };
 };
 
 type DeliveryJob = {
@@ -83,24 +83,12 @@ type DeliveryJob = {
   hiddenFromOps?: boolean;
   errorMessage?: string;
   createdAt: string;
+  updatedAt?: string;
   externalId?: string;
   lockedBy?: string;
   lockExpiresAt?: string;
-  attempts?: Array<{
-    attemptNo: number;
-    status: string;
-    responseCode?: string;
-    responseBody?: unknown;
-    errorMessage?: string;
-    retryable: boolean;
-    createdAt: string;
-  }>;
-  events?: Array<{
-    state: string;
-    message: string;
-    source: string;
-    createdAt: string;
-  }>;
+  attempts?: Array<{ attemptNo: number; status: string; responseCode?: string; responseBody?: unknown; errorMessage?: string; retryable: boolean; createdAt: string }>;
+  events?: Array<{ state: string; message: string; source: string; createdAt: string }>;
   metadata?: {
     releaseTitle?: string;
     payloadHash?: string;
@@ -109,16 +97,13 @@ type DeliveryJob = {
     bromaReleaseId?: string;
     bromaStatusSource?: string;
     bromaLastStatusAt?: string;
+    bromaIsModeration?: boolean;
+    bromaIsDspProcessing?: boolean;
+    bromaRawStatus?: string;
+    bromaErrorDetails?: string;
     bromaOutletIds?: string[];
-    bromaOutletMappings?: Array<{
-      store?: string;
-      outletId?: string;
-      name?: string;
-    }>;
-    deliverySnapshot?: {
-      upc?: string;
-      trackCount?: number;
-    };
+    bromaOutletMappings?: Array<{ store?: string; outletId?: string; name?: string }>;
+    deliverySnapshot?: { upc?: string; trackCount?: number };
   };
   trackId?: { title?: string; artistName?: string; isrc?: string };
 };
@@ -132,29 +117,13 @@ type BromaConfigForm = {
   integrationMode: 'sandbox' | 'live';
 };
 
-type BromaOutlet = {
-  outletId: string;
-  name: string;
-  aliases?: string[];
-  releaseTypes?: string[];
-  active?: boolean;
-  syncedAt?: string;
-};
+type BromaOutlet = { outletId: string; name: string; aliases?: string[]; releaseTypes?: string[]; active?: boolean; syncedAt?: string };
+
+type DraftEntry = { bromaDraftId: string; releaseTitle: string; bromaStep: string; jobState: string; jobId: string | null; releaseId: string; createdAt: string; completed: boolean };
 
 const DEFAULT_BROMA_BASE_URL = 'https://api-rod.broma16.com/api';
 const DEFAULT_BROMA_COUNTRY_ID = '32';
-const BROMA_STEP_ORDER = [
-  'create_release',
-  'upload_recordings',
-  'update_recordings',
-  'add_compositions',
-  'upload_cover',
-  'update_distribution',
-  'send_moderation',
-  'poll_status',
-  'done',
-] as const;
-
+const BROMA_STEP_ORDER = ['create_release', 'upload_recordings', 'update_recordings', 'add_compositions', 'upload_cover', 'update_distribution', 'send_moderation', 'poll_status', 'done'] as const;
 const BROMA_STEP_LABELS: Record<string, string> = {
   create_release: 'Create release',
   upload_recordings: 'Upload audio',
@@ -166,21 +135,7 @@ const BROMA_STEP_LABELS: Record<string, string> = {
   poll_status: 'Broma review',
   done: 'Live/done',
 };
-
-const BROMA_DONE_STATUSES = new Set([
-  'live',
-  'published',
-  'delivered',
-  'processed',
-  'done',
-  'accepted',
-  'active',
-  'success',
-  'moderated',
-  'approved',
-  'shipped',
-]);
-
+const BROMA_DONE_STATUSES = new Set(['live', 'published', 'delivered', 'processed', 'done', 'accepted', 'active', 'success', 'moderated', 'approved', 'shipped', 'completed']);
 const BROMA_BLOCKED_STATUSES = new Set(['rejected', 'declined', 'failed', 'error', 'cancelled', 'not_ready']);
 
 const formatAttemptResponse = (value: unknown) => {
@@ -189,11 +144,7 @@ const formatAttemptResponse = (value: unknown) => {
   return text.length > 900 ? `${text.slice(0, 900)}...` : text;
 };
 
-const normalizeBromaStatusText = (value: unknown) =>
-  String(value || '')
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '_')
-    .replace(/^_+|_+$/g, '');
+const normalizeBromaStatusText = (value: unknown) => String(value || '').toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '');
 
 const humanizeBromaStatus = (value: unknown) => {
   const text = normalizeBromaStatusText(value);
@@ -201,8 +152,7 @@ const humanizeBromaStatus = (value: unknown) => {
   return text.replace(/_/g, ' ').replace(/\b\w/g, (char) => char.toUpperCase());
 };
 
-const getBromaReleaseId = (job: DeliveryJob) =>
-  String(job.externalId || job.metadata?.bromaReleaseId || '').trim();
+const getBromaReleaseId = (job: DeliveryJob) => String(job.externalId || job.metadata?.bromaReleaseId || '').trim();
 
 const getBromaProgress = (job: DeliveryJob) => {
   if (job.providerKey !== 'broma') {
@@ -213,7 +163,6 @@ const getBromaProgress = (job: DeliveryJob) => {
       color: job.state === 'delivered' ? 'success' : ['failed', 'needs_attention'].includes(job.state) ? 'error' : 'primary',
     } as const;
   }
-
   const status = normalizeBromaStatusText(job.metadata?.bromaModerationStatus);
   const step = String(job.metadata?.bromaStep || (getBromaReleaseId(job) ? 'poll_status' : 'create_release'));
   const stepIndex = Math.max(0, BROMA_STEP_ORDER.indexOf(step as (typeof BROMA_STEP_ORDER)[number]));
@@ -222,12 +171,7 @@ const getBromaProgress = (job: DeliveryJob) => {
   const done = job.state === 'delivered' || step === 'done' || BROMA_DONE_STATUSES.has(status);
   const label = status ? humanizeBromaStatus(status) : BROMA_STEP_LABELS[step] || humanizeBromaStatus(job.state);
   const source = job.metadata?.bromaStatusSource ? ` via ${job.metadata.bromaStatusSource}` : '';
-  const checked = job.metadata?.bromaLastStatusAt
-    ? `Checked ${new Date(job.metadata.bromaLastStatusAt).toLocaleString()}${source}`
-    : getBromaReleaseId(job)
-      ? 'Broma status not refreshed yet'
-      : 'Waiting for Broma release id';
-
+  const checked = job.metadata?.bromaLastStatusAt ? `Checked ${new Date(job.metadata.bromaLastStatusAt).toLocaleString()}${source}` : getBromaReleaseId(job) ? 'Broma status not refreshed yet' : 'Waiting for Broma release id';
   return {
     value: done ? 100 : blocked ? Math.max(baseValue, 92) : Math.min(baseValue, 96),
     label,
@@ -235,6 +179,32 @@ const getBromaProgress = (job: DeliveryJob) => {
     color: done ? 'success' : blocked ? 'error' : 'primary',
   } as const;
 };
+
+const StepChip = ({ step }: { step: string }) => {
+  if (!step || step === 'done') return null;
+  const isStuckEarly = step === 'create_release' || step === 'upload_recordings';
+  return (
+    <Chip
+      size="small"
+      label={BROMA_STEP_LABELS[step] || step}
+      color={isStuckEarly ? 'warning' : 'default'}
+      variant={isStuckEarly ? 'filled' : 'outlined'}
+      sx={isStuckEarly ? { animation: 'pulse 2s infinite', '@keyframes pulse': { '0%,100%': { opacity: 1 }, '50%': { opacity: 0.6 } } } : undefined}
+    />
+  );
+};
+
+function MetricCard({ icon, label, value, color }: { icon: React.ReactNode; label: string; value: string | number; color?: string }) {
+  return (
+    <Paper sx={{ p: 2, flex: '1 1 140px', minWidth: 120, bgcolor: color ? `${color}.dark` : undefined }}>
+      <Stack spacing={0.5} alignItems="center">
+        {icon}
+        <Typography variant="h4" fontWeight={800}>{value}</Typography>
+        <Typography variant="caption" color="text.secondary" textAlign="center">{label}</Typography>
+      </Stack>
+    </Paper>
+  );
+}
 
 export default function AdminDspDeliveriesPage() {
   const { isAdmin } = useAdminAuth();
@@ -244,14 +214,18 @@ export default function AdminDspDeliveriesPage() {
   const [bromaOutlets, setBromaOutlets] = useState<BromaOutlet[]>([]);
   const [loading, setLoading] = useState(true);
   const [providerFilter, setProviderFilter] = useState('broma');
-  const [statusFilter, setStatusFilter] = useState('all');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [paginationTotal, setPaginationTotal] = useState(0);
-  const [processingDue, setProcessingDue] = useState(false);
+  const [totalCounts, setTotalCounts] = useState<Record<string, number>>({});
 
+  const [processingDue, setProcessingDue] = useState(false);
   const [retryingDrafts, setRetryingDrafts] = useState(false);
-  const [bromaDrafts, setBromaDrafts] = useState<any[] | null>(null);
+  const [bromaDrafts, setBromaDrafts] = useState<DraftEntry[] | null>(null);
+  const [bromaDraftsTotal, setBromaDraftsTotal] = useState(0);
+  const [draftsLoading, setDraftsLoading] = useState(false);
+  const [draftPage, setDraftPage] = useState(0);
+  const [draftRowsPerPage, setDraftRowsPerPage] = useState(10);
   const [draftsOpen, setDraftsOpen] = useState(false);
   const [syncingOutlets, setSyncingOutlets] = useState(false);
   const [savingBroma, setSavingBroma] = useState(false);
@@ -259,6 +233,19 @@ export default function AdminDspDeliveriesPage() {
   const [clearingLogsId, setClearingLogsId] = useState<string | null>(null);
   const [expandedJobId, setExpandedJobId] = useState<string | null>(null);
   const [loadingJobDetailsId, setLoadingJobDetailsId] = useState<string | null>(null);
+
+  const [configOpen, setConfigOpen] = useState(false);
+  const [releaseTab, setReleaseTab] = useState('all');
+
+  const [requeuing, setRequeuing] = useState(false);
+  const [forceSyncing, setForceSyncing] = useState(false);
+  const [syncProgress, setSyncProgress] = useState<{ total: number; processed: number; errors: number; current: string; done: boolean; startTime: number } | null>(null);
+  const [diagnosing, setDiagnosing] = useState(false);
+  const [diagnoseResult, setDiagnoseResult] = useState<any>(null);
+  const [cleaningUp, setCleaningUp] = useState<'idle' | 'listing' | 'deleting' | 'resuming'>('idle');
+  const [cleanupResult, setCleanupResult] = useState<any>(null);
+  const [draftCleanupOpen, setDraftCleanupOpen] = useState(false);
+
   const [bromaForm, setBromaForm] = useState<BromaConfigForm>({
     baseUrl: DEFAULT_BROMA_BASE_URL,
     accountId: '',
@@ -267,244 +254,269 @@ export default function AdminDspDeliveriesPage() {
     password: '',
     integrationMode: 'sandbox',
   });
+
   const providerMap = useMemo(() => new Map(providers.map((p) => [p.key, p.displayName])), [providers]);
-  const visibleProviders = useMemo(
-    () => {
-      const filtered = providers.filter((provider) => provider.key !== 'mock_dsp');
-      return filtered.some((provider) => provider.key === 'broma')
-        ? filtered
-        : [
-            {
-              key: 'broma',
-              displayName: 'Broma',
-              enabled: false,
-              integrationMode: 'sandbox',
-              configuredCredentialKeys: [],
-              config: {},
-            },
-            ...filtered,
-          ];
-    },
-    [providers]
-  );
-  const bromaProvider = useMemo(() => providers.find((provider) => provider.key === 'broma'), [providers]);
+  const visibleProviders = useMemo(() => {
+    const filtered = providers.filter((p) => p.key !== 'mock_dsp');
+    return filtered.some((p) => p.key === 'broma') ? filtered : [{ key: 'broma', displayName: 'Broma', enabled: false, integrationMode: 'sandbox', configuredCredentialKeys: [], config: {} }, ...filtered];
+  }, [providers]);
+  const bromaProvider = useMemo(() => providers.find((p) => p.key === 'broma'), [providers]);
   const bromaCredentialKeys = bromaProvider?.configuredCredentialKeys || [];
   const hasBromaEmail = bromaCredentialKeys.includes('email');
   const hasBromaPassword = bromaCredentialKeys.includes('password');
-  const load = async () => {
+
+  const totalCountsAll = totalCounts.all ?? jobs.length;
+  const totalCountsProcessing = totalCounts.processing ?? jobs.filter((j) => j.state === 'processing').length;
+  const totalCountsDelivered = totalCounts.delivered ?? jobs.filter((j) => j.state === 'delivered').length;
+  const totalCountsFailed = totalCounts.failed ?? jobs.filter((j) => ['failed', 'needs_attention'].includes(j.state)).length;
+  const totalCountsQueued = totalCounts.queued ?? jobs.filter((j) => j.state === 'queued').length;
+
+  const tabStateFilter = releaseTab === 'failed' ? 'needs_attention' : (['processing', 'delivered', 'queued'].includes(releaseTab) ? releaseTab : '');
+  const tabFilteredJobs = releaseTab === 'drafts' ? [] : jobs;
+
+  const load = useCallback(async () => {
     try {
       setLoading(true);
-      const [providerRes, jobsRes, outletRes] = await Promise.all([
+      const [providerRes, jobsRes] = await Promise.all([
         adminAPI.listDspProviders(),
-        adminAPI.listDspDeliveries({
-          providerKey: providerFilter !== 'all' ? providerFilter : '',
-          state: statusFilter !== 'all' ? statusFilter : '',
-          limit: rowsPerPage,
-          page: page + 1,
-        }),
-        adminAPI.listBromaOutlets(),
+        adminAPI.listDspDeliveries({ providerKey: providerFilter !== 'all' ? providerFilter : '', state: tabStateFilter, limit: rowsPerPage, page: page + 1 }),
       ]);
-
       const nextJobs = jobsRes?.data?.data || [];
       setProviders(providerRes?.data || []);
       setJobs(nextJobs);
       setPaginationTotal(Number(jobsRes?.data?.pagination?.total || nextJobs.length || 0));
+      setTotalCounts(jobsRes?.data?.counts || {});
       setJobDetails({});
-      setBromaOutlets(outletRes?.data || []);
     } catch (error) {
       toast.error(error instanceof Error ? error.message : 'Failed to load DSP data');
     } finally {
       setLoading(false);
     }
-  };
+  }, [providerFilter, page, rowsPerPage, tabStateFilter]);
+
+  const loadDraftsBackground = useCallback(async (pageNum: number = 1) => {
+    setDraftsLoading(true);
+    try {
+      const res = await adminAPI.listBromaDrafts(pageNum);
+      if (res?.data?.drafts) {
+        setBromaDrafts(res.data.drafts);
+        setBromaDraftsTotal(res.data.total ?? res.data.drafts.length);
+      }
+    } catch {
+      // Silently fail — drafts are non-critical
+    } finally {
+      setDraftsLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
-    if (isAdmin) void load();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAdmin, providerFilter, statusFilter, page, rowsPerPage]);
+    if (isAdmin) {
+      void load();
+      void loadDraftsBackground(1);
+    }
+  }, [isAdmin, load, loadDraftsBackground]);
 
   useEffect(() => {
-    setPage(0);
-  }, [providerFilter, statusFilter]);
+    if (isAdmin && releaseTab === 'drafts' && bromaDrafts !== null) {
+      void loadDraftsBackground(draftPage + 1);
+    }
+  }, [draftPage, isAdmin, releaseTab, loadDraftsBackground, bromaDrafts]);
+
+  useEffect(() => { setPage(0); setDraftPage(0); }, [providerFilter, releaseTab]);
 
   useEffect(() => {
     if (!bromaProvider) return;
-    setBromaForm((current) => ({
-      ...current,
-      baseUrl: String(bromaProvider.config?.baseUrl || current.baseUrl || DEFAULT_BROMA_BASE_URL),
-      accountId: bromaProvider.config?.accountId ? String(bromaProvider.config.accountId) : current.accountId,
-      createdCountryId: String(bromaProvider.config?.createdCountryId || current.createdCountryId || DEFAULT_BROMA_COUNTRY_ID),
+    setBromaForm((c) => ({
+      ...c,
+      baseUrl: String(bromaProvider.config?.baseUrl || c.baseUrl || DEFAULT_BROMA_BASE_URL),
+      accountId: bromaProvider.config?.accountId ? String(bromaProvider.config.accountId) : c.accountId,
+      createdCountryId: String(bromaProvider.config?.createdCountryId || c.createdCountryId || DEFAULT_BROMA_COUNTRY_ID),
       integrationMode: bromaProvider.integrationMode === 'live' ? 'live' : 'sandbox',
       password: '',
     }));
   }, [bromaProvider]);
 
+  const handleOpenConfig = useCallback(async () => {
+    setConfigOpen(true);
+    try {
+      const outletRes = await adminAPI.listBromaOutlets();
+      setBromaOutlets(outletRes?.data || []);
+    } catch {
+      // Outlets are non-critical for config dialog
+    }
+  }, []);
+
   const handleSaveBromaConfig = async () => {
-    const baseUrl = bromaForm.baseUrl.trim();
-    const accountId = bromaForm.accountId.trim();
-    const createdCountryId = bromaForm.createdCountryId.trim();
-    const email = bromaForm.email.trim();
-    const password = bromaForm.password.trim();
-    const hasStoredCredentials = hasBromaEmail && hasBromaPassword;
-    const credentialsChanged = Boolean(email || password);
-
-    if (!/^https:\/\/|^http:\/\//i.test(baseUrl)) {
-      toast.error('Broma base URL must start with http:// or https://');
-      return;
-    }
-    if (!accountId) {
-      toast.error('Broma account ID required');
-      return;
-    }
-    if (!createdCountryId || !Number.isInteger(Number(createdCountryId))) {
-      toast.error('Broma created country ID must be a numeric dictionary id');
-      return;
-    }
-    if (!hasStoredCredentials && (!email || !password)) {
-      toast.error('Broma email and password required for first setup');
-      return;
-    }
-    if (credentialsChanged && (!email || !password)) {
-      toast.error('Enter both email and password to update Broma credentials');
-      return;
-    }
-
+    const { baseUrl, accountId, createdCountryId, email, password, integrationMode } = bromaForm;
+    const bt = baseUrl.trim(), ai = accountId.trim(), ci = createdCountryId.trim();
+    const hasStored = hasBromaEmail && hasBromaPassword;
+    const credChanged = Boolean(email || password);
+    if (!/^https?:\/\//i.test(bt)) { toast.error('Broma base URL must start with http:// or https://'); return; }
+    if (!ai) { toast.error('Broma account ID required'); return; }
+    if (!ci || !Number.isInteger(Number(ci))) { toast.error('Broma created country ID must be numeric'); return; }
+    if (!hasStored && (!email || !password)) { toast.error('Email and password required for first setup'); return; }
+    if (credChanged && (!email || !password)) { toast.error('Enter both email and password to update'); return; }
     try {
       setSavingBroma(true);
-      const payload: Parameters<typeof adminAPI.registerDspProvider>[0] = {
-        key: 'broma',
-        displayName: 'Broma',
-        enabled: true,
-        integrationMode: bromaForm.integrationMode,
-        config: {
-          baseUrl,
-          accountId,
-          createdCountryId,
-          distributeToAllOutlets: true,
-        },
-      };
-      if (credentialsChanged) {
-        payload.credentials = { email, password };
-      }
-
+      const payload: any = { key: 'broma', displayName: 'Broma', enabled: true, integrationMode, config: { baseUrl: bt, accountId: ai, createdCountryId: ci, distributeToAllOutlets: true } };
+      if (credChanged) payload.credentials = { email, password };
       await adminAPI.registerDspProvider(payload);
-      setBromaForm((current) => ({ ...current, password: '' }));
+      setBromaForm((c) => ({ ...c, password: '' }));
       toast.success('Broma provider saved');
       await load();
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : 'Broma provider save failed');
-    } finally {
-      setSavingBroma(false);
-    }
+      toast.error(error instanceof Error ? error.message : 'Save failed');
+    } finally { setSavingBroma(false); }
   };
 
   const handleRetry = async (jobId: string) => {
-    try {
-      await adminAPI.retryDspDelivery(jobId);
-      toast.success('Retry queued');
-      await load();
-    } catch (error) {
-      toast.error(error instanceof Error ? error.message : 'Retry failed');
-    }
+    try { await adminAPI.retryDspDelivery(jobId); toast.success('Retry queued'); await load(); }
+    catch (error) { toast.error(error instanceof Error ? error.message : 'Retry failed'); }
   };
 
   const handleToggleJob = async (jobId: string) => {
-    if (expandedJobId === jobId) {
-      setExpandedJobId(null);
-      return;
-    }
-
+    if (expandedJobId === jobId) { setExpandedJobId(null); return; }
     setExpandedJobId(jobId);
     if (jobDetails[jobId]) return;
-
     try {
       setLoadingJobDetailsId(jobId);
       const response = await adminAPI.getDspDelivery(jobId);
-      if (!response?.success || !response?.data) {
-        throw new Error(response?.error || response?.message || 'Failed to load delivery details');
-      }
-      setJobDetails((current) => ({ ...current, [jobId]: response.data }));
+      if (!response?.success || !response?.data) throw new Error(response?.error || response?.message || 'Failed to load details');
+      setJobDetails((c) => ({ ...c, [jobId]: response.data }));
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : 'Failed to load delivery details');
-    } finally {
-      setLoadingJobDetailsId(null);
-    }
+      toast.error(error instanceof Error ? error.message : 'Failed to load details');
+    } finally { setLoadingJobDetailsId(null); }
   };
 
   const handleRefreshStatus = async (jobId: string) => {
     try {
       setRefreshingStatusId(jobId);
       const response = await adminAPI.refreshDspDeliveryStatus(jobId);
-      const state = response?.data?.state || 'updated';
-      const bromaStatus = response?.data?.metadata?.bromaModerationStatus;
-      toast.success(`Broma status loaded: ${bromaStatus || state}`);
+      toast.success(`Broma status: ${response?.data?.metadata?.bromaModerationStatus || response?.data?.state || 'updated'}`);
       await load();
     } catch (error) {
       toast.error(error instanceof Error ? error.message : 'Status refresh failed');
-    } finally {
-      setRefreshingStatusId(null);
-    }
+    } finally { setRefreshingStatusId(null); }
   };
 
   const handleClearLogs = async (jobId: string) => {
-    if (!window.confirm('Clear this delivery log and move the release back to pending?')) return;
+    if (!window.confirm('Clear delivery log and move release back to pending?')) return;
     try {
       setClearingLogsId(jobId);
       const response = await adminAPI.clearDspDeliveryLogs(jobId);
-      setJobs((current) => current.filter((job) => job._id !== jobId));
-      setJobDetails((current) => {
-        const next = { ...current };
-        delete next[jobId];
-        return next;
-      });
+      setJobs((c) => c.filter((j) => j._id !== jobId));
+      setJobDetails((c) => { const n = { ...c }; delete n[jobId]; return n; });
       if (expandedJobId === jobId) setExpandedJobId(null);
-      const result = response?.data || {};
-      if (result.releaseMissing) {
-        toast.warning('Delivery log cleared. Release record no longer exists.');
-      } else if (result.releaseReset) {
-        toast.success('Delivery log cleared. Release moved back to pending.');
-      } else {
-        toast.success('Delivery log cleared.');
-      }
+      const r = response?.data || {};
+      if (r.releaseMissing) toast.warning('Log cleared. Release record gone.');
+      else if (r.releaseReset) toast.success('Log cleared. Release back to pending.');
+      else toast.success('Log cleared.');
     } catch (error) {
       toast.error(error instanceof Error ? error.message : 'Log clear failed');
-    } finally {
-      setClearingLogsId(null);
-    }
+    } finally { setClearingLogsId(null); }
   };
 
   const handleProcessDue = async () => {
     try {
       setProcessingDue(true);
       const response = await adminAPI.processDueDspDeliveries({ dispatchOnly: true });
-      const processedItems = response?.data?.processed || [];
-      const processed = processedItems.length || 0;
-      const issue = processedItems.find((item: any) => ['failed', 'needs_attention'].includes(item.state) && item.error);
-      const processing = processedItems.filter((item: any) => item.state === 'processing').length;
-      if (issue?.error) toast.error(`Broma delivery issue: ${String(issue.error).slice(0, 220)}`);
-      else if (processing > 0) toast.success(`${processing} release${processing === 1 ? '' : 's'} started processing`);
-      else toast.success(`Started ${processed} delivery job${processed === 1 ? '' : 's'}`);
+      const processed = response?.data?.processed || [];
+      const errors = processed.filter((p: any) => ['failed', 'needs_attention'].includes(p.state) && p.error);
+      const processing = processed.filter((p: any) => p.state === 'processing').length;
+      if (errors[0]) toast.error(`Issue: ${String(errors[0].error).slice(0, 220)}`);
+      else if (processing > 0) toast.success(`${processing} started`);
+      else toast.success(`Started ${processed.length}`);
       await load();
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : 'Worker run failed');
-    } finally {
-      setProcessingDue(false);
-    }
+      toast.error(error instanceof Error ? error.message : 'Worker failed');
+    } finally { setProcessingDue(false); }
+  };
+
+  const handleRequeueStuck = async () => {
+    try {
+      setRequeuing(true);
+      const response = await adminAPI.requeueStuckBromaJobs({ maxJobs: 500, olderThanMinutes: 15 });
+      const r = response?.data || {};
+      toast.success(`Re-queued ${r.requeued || 0} stuck jobs`);
+      if (r.requeued > 0) {
+        await adminAPI.processDueDspDeliveries({ dispatchOnly: true, maxJobs: Math.min(r.requeued, 25) });
+      }
+      await load();
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Requeue failed');
+    } finally { setRequeuing(false); }
+  };
+
+  const handleForceSync = async () => {
+    try {
+      setForceSyncing(true);
+      setSyncProgress(null);
+      const syncId = `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+      const response = await adminAPI.syncBromaReleaseStatuses({ limit: 500, syncId });
+      if (!response?.data?.syncId) { toast.error('Failed to start sync'); setForceSyncing(false); return; }
+      let refreshCount = 0;
+      while (true) {
+        await new Promise(r => setTimeout(r, 800));
+        try {
+          const res = await fetch(`/api/admin/broma-release-statuses-sync/${syncId}/progress`, { credentials: 'include' });
+          const json = await res.json();
+          if (json?.data) setSyncProgress(json.data);
+          if (json?.data?.done) break;
+          if (++refreshCount % 5 === 0) { void load(); }
+        } catch { /* polling failed */ }
+      }
+      await load();
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Force sync failed');
+    } finally { setForceSyncing(false); setSyncProgress(null); }
+  };
+
+  const handleDiagnoseApi = async () => {
+    try {
+      setDiagnosing(true);
+      const res = await fetch('/api/admin/dsp/broma/drafts/diagnose', { credentials: 'include' });
+      const json = await res.json();
+      setDiagnoseResult(json);
+      toast.success('API diagnostic complete');
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'API diagnostic failed');
+    } finally { setDiagnosing(false); }
   };
 
   const handleListBromaDrafts = async () => {
+    if (draftsOpen) { setDraftsOpen(false); return; }
     try {
-      setDraftsOpen((o) => !o);
-      if (bromaDrafts === null || draftsOpen) {
-        const res = await adminAPI.listBromaDrafts();
-        const list = res?.data || [];
-        setBromaDrafts(list);
-        if (list.length === 0) toast.success('No incomplete Broma drafts found');
-        else toast.info(`${list.length} incomplete Broma draft${list.length === 1 ? '' : 's'} found`);
+      setCleaningUp('listing');
+      const res = await adminAPI.listBromaDrafts();
+      if (res?.data?.drafts) {
+        setBromaDrafts(res.data.drafts);
+        setBromaDraftsTotal(res.data.total ?? res.data.drafts.length);
       }
+      setDraftsOpen(true);
+      if (!res?.data?.drafts?.length) toast.success('No Broma drafts found');
+      else toast.info(`${res.data.total || res.data.drafts.length} drafts in Broma`);
     } catch (error) {
       toast.error(error instanceof Error ? error.message : 'Failed to list drafts');
-    }
+    } finally { setCleaningUp('idle'); }
+  };
+
+  const handleDraftCleanup = async (action: 'delete_orphans' | 'resume_orphans') => {
+    try {
+      setCleaningUp(action === 'delete_orphans' ? 'deleting' : 'resuming');
+      const label = action === 'delete_orphans' ? 'Cleanup' : 'Resume';
+      const response = await adminAPI.cleanupBromaDrafts({ action, maxDrafts: 200 });
+      setCleanupResult(response?.data);
+      const r = response?.data || {};
+      toast.success(`${label}: ${r.deleted || 0} deleted, ${r.resumed || 0} resumed, ${r.errors?.length || 0} errors`);
+      const draftsRes = await adminAPI.listBromaDrafts();
+      if (draftsRes?.data?.drafts) {
+        setBromaDrafts(draftsRes.data.drafts);
+        setBromaDraftsTotal(draftsRes.data.total ?? draftsRes.data.drafts.length);
+      }
+      setDraftPage(0);
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : `Draft ${action} failed`);
+    } finally { setCleaningUp('idle'); }
   };
 
   const handleRetryBromaDrafts = async () => {
@@ -512,16 +524,17 @@ export default function AdminDspDeliveriesPage() {
       setRetryingDrafts(true);
       const res = await adminAPI.retryAllBromaDrafts();
       const r = res?.data || {};
-      const msg = [`Retried ${r.retried || 0} drafts, dispatched ${r.dispatched || 0}`];
-      if (r.noJobDrafts) msg.push(`${r.noJobDrafts} have no DeliveryJob`);
-      toast.success(msg.join('. '));
+      toast.success([`Retried ${r.retried || 0}`, r.dispatched ? `dispatched ${r.dispatched}` : '', r.noJobDrafts ? `${r.noJobDrafts} no job` : ''].filter(Boolean).join('. '));
       await load();
-      await handleListBromaDrafts();
+      const draftsRes = await adminAPI.listBromaDrafts();
+      if (draftsRes?.data?.drafts) {
+        setBromaDrafts(draftsRes.data.drafts);
+        setBromaDraftsTotal(draftsRes.data.total ?? draftsRes.data.drafts.length);
+      }
+      setDraftPage(0);
     } catch (error) {
       toast.error(error instanceof Error ? error.message : 'Draft retry failed');
-    } finally {
-      setRetryingDrafts(false);
-    }
+    } finally { setRetryingDrafts(false); }
   };
 
   const handleSyncBromaOutlets = async () => {
@@ -529,593 +542,399 @@ export default function AdminDspDeliveriesPage() {
       setSyncingOutlets(true);
       const response = await adminAPI.syncBromaOutlets();
       setBromaOutlets(response?.data?.outlets || []);
-      toast.success(`Synced ${response?.data?.synced || 0} Broma outlet${response?.data?.synced === 1 ? '' : 's'}`);
+      toast.success(`Synced ${response?.data?.synced || 0} outlets`);
       await load();
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : 'Broma outlet sync failed');
-    } finally {
-      setSyncingOutlets(false);
-    }
+      toast.error(error instanceof Error ? error.message : 'Outlet sync failed');
+    } finally { setSyncingOutlets(false); }
   };
 
-  if (isAdmin === null) {
-    return (
-      <Box display="flex" justifyContent="center" alignItems="center" minHeight={420}>
-        <CircularProgress />
-      </Box>
-    );
-  }
-
-  if (isAdmin === false) {
-    return <Alert severity="error">Admin access required</Alert>;
-  }
+  if (isAdmin === null) return <Box display="flex" justifyContent="center" alignItems="center" minHeight={420}><CircularProgress /></Box>;
+  if (isAdmin === false) return <Alert severity="error">Admin access required</Alert>;
 
   return (
     <Box>
       <PremiumHeader
         eyebrow="Broma Delivery Ops"
         title="Mediator Delivery"
-        description="Queue release deliveries through Broma, sync outlets, monitor moderation, and retry failed attempts."
+        description="Monitor delivery pipeline, sync true status from Broma, clean up orphaned drafts, and manage provider configuration."
         action={
           <Stack direction={{ xs: 'column', md: 'row' }} spacing={1} alignItems={{ md: 'center' }}>
-            <FormControl size="small" sx={{ minWidth: 180 }}>
-              <InputLabel id="provider-filter">Provider</InputLabel>
-              <Select
-                labelId="provider-filter"
-                label="Provider"
-                value={providerFilter}
-                onChange={(e) => setProviderFilter(e.target.value)}
-              >
+            <FormControl size="small" sx={{ minWidth: 150 }}>
+              <InputLabel id="pf">Provider</InputLabel>
+              <Select labelId="pf" label="Provider" value={providerFilter} onChange={(e) => setProviderFilter(e.target.value)}>
                 <MenuItem value="all">All providers</MenuItem>
-                {visibleProviders.map((provider) => (
-                  <MenuItem key={provider.key} value={provider.key}>
-                    <Stack direction="row" spacing={1} alignItems="center">
-                      <DspLogo value={provider.key} alt={provider.displayName} size={20} padding={0.25} />
-                      <span>{provider.displayName}</span>
-                    </Stack>
-                  </MenuItem>
-                ))}
+                {visibleProviders.map((p) => <MenuItem key={p.key} value={p.key}><Stack direction="row" spacing={1} alignItems="center"><DspLogo value={p.key} alt={p.displayName} size={20} padding={0.25} /><span>{p.displayName}</span></Stack></MenuItem>)}
               </Select>
             </FormControl>
-            <FormControl size="small" sx={{ minWidth: 180 }}>
-              <InputLabel id="status-filter">Status</InputLabel>
-              <Select
-                labelId="status-filter"
-                label="Status"
-                value={statusFilter}
-                onChange={(e) => setStatusFilter(e.target.value)}
-              >
-                <MenuItem value="all">All states</MenuItem>
-                <MenuItem value="queued">Queued</MenuItem>
-                <MenuItem value="processing">Processing</MenuItem>
-                <MenuItem value="delivered">Delivered</MenuItem>
-                <MenuItem value="failed">Failed</MenuItem>
-                <MenuItem value="needs_attention">Needs Attention</MenuItem>
-              </Select>
-            </FormControl>
-            <Button startIcon={<SyncIcon />} variant="outlined" onClick={handleSyncBromaOutlets} disabled={syncingOutlets}>
-              {syncingOutlets ? 'Syncing...' : 'Sync Outlets'}
-            </Button>
-            <Button startIcon={<PlayArrowIcon />} variant="contained" onClick={handleProcessDue} disabled={processingDue}>
-              {processingDue ? 'Processing...' : 'Run Worker'}
-            </Button>
-            <Button startIcon={<ListAltIcon />} variant="outlined" color="secondary" onClick={handleListBromaDrafts}>
-              {draftsOpen ? 'Hide Drafts' : 'Broma Drafts'}
-            </Button>
-            <Button startIcon={<ReplayIcon />} variant="contained" color="secondary" onClick={handleRetryBromaDrafts} disabled={retryingDrafts || !bromaDrafts?.length}>
-              {retryingDrafts ? 'Retrying...' : 'Retry All Drafts'}
-            </Button>
-            <Button startIcon={<RefreshIcon />} variant="outlined" onClick={load}>
-              Refresh
-            </Button>
+            <Button startIcon={<PlayArrowIcon />} variant="contained" onClick={handleProcessDue} disabled={processingDue}>{processingDue ? 'Working...' : 'Run Worker'}</Button>
+            <Button startIcon={<SyncIcon />} variant="outlined" onClick={handleSyncBromaOutlets} disabled={syncingOutlets}>{syncingOutlets ? 'Syncing...' : 'Sync Outlets'}</Button>
+            <Button startIcon={loading ? <CircularProgress size={16} /> : <RefreshIcon />} variant="outlined" onClick={load} disabled={loading}>{loading ? 'Loading...' : 'Refresh'}</Button>
+            <Button startIcon={<SettingsIcon />} variant="text" onClick={handleOpenConfig}>Configure</Button>
           </Stack>
         }
       />
 
-      {draftsOpen && (
-        <Collapse in={draftsOpen}>
-          <Paper sx={{ p: { xs: 1.5, md: 2 }, mb: 2.5 }}>
-            <Typography variant="subtitle2" fontWeight={800} gutterBottom>
-              Incomplete Broma Drafts ({bromaDrafts?.length || 0})
-            </Typography>
-            {!bromaDrafts?.length ? (
-              <Typography variant="body2" color="text.secondary">No incomplete drafts found.</Typography>
-            ) : (
-              <TableContainer>
-                <Table size="small">
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>Release Title</TableCell>
-                      <TableCell>Broma Step</TableCell>
-                      <TableCell>Broma Draft ID</TableCell>
-                      <TableCell>Status</TableCell>
-                      <TableCell>Created</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {bromaDrafts.map((d: any, i: number) => (
-                      <TableRow key={d.bromaDraftId || i} hover>
-                        <TableCell sx={{ maxWidth: 220, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{d.releaseTitle || d.bromaDraftId?.slice(-8) || '-'}</TableCell>
-                        <TableCell>{d.bromaStep || '-'}</TableCell>
-                        <TableCell sx={{ fontFamily: 'monospace', fontSize: 12 }}>{d.bromaDraftId || '-'}</TableCell>
-                        <TableCell>
-                          {d.completed ? <Chip size="small" label="delivered" color="success" />
-                            : d.jobState === 'no_job' ? <Chip size="small" label="no job" color="warning" variant="outlined" />
-                            : <Chip size="small" label={d.jobState} color={d.jobState === 'failed' ? 'error' : d.jobState === 'processing' ? 'info' : 'default'} />}
-                        </TableCell>
-                        <TableCell>{d.createdAt ? new Date(d.createdAt).toLocaleDateString() : '-'}</TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            )}
-          </Paper>
-        </Collapse>
+      {/* Quick Action Bar */}
+      <Paper sx={{ p: 1.5, mb: 2, display: 'flex', gap: 1, flexWrap: 'wrap', alignItems: 'center' }}>
+        <Button size="small" variant="contained" color="warning" onClick={handleRequeueStuck} disabled={requeuing} startIcon={<ReplayIcon />}>
+          {requeuing ? 'Working...' : 'Requeue Stuck'}
+        </Button>
+        <Button size="small" variant="contained" onClick={handleForceSync} disabled={forceSyncing} startIcon={forceSyncing ? <CircularProgress size={14} /> : <SyncIcon />}>
+          {forceSyncing && syncProgress ? (syncProgress.total > 0 ? `${Math.round((syncProgress.processed / syncProgress.total) * 100)}%` : '0%') : forceSyncing ? 'Syncing...' : 'Force Sync All'}
+        </Button>
+        <Button size="small" variant="text" color="info" onClick={handleDiagnoseApi} disabled={diagnosing} startIcon={<BugReportIcon />}>
+          {diagnosing ? '...' : 'Diagnose API'}
+        </Button>
+      </Paper>
+
+      {forceSyncing && (
+        <Paper sx={{ p: 1.5, mb: 2 }} variant="outlined">
+          <Stack direction="row" spacing={2} alignItems="center">
+            <Box sx={{ position: 'relative', display: 'inline-flex', flexShrink: 0 }}>
+              {syncProgress?.total ? <CircularProgress variant="determinate" size={48} thickness={4} value={(syncProgress.processed / syncProgress.total) * 100} /> : <CircularProgress size={48} />}
+              <Box sx={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Typography variant="body2" fontWeight={800} fontSize={12}>{syncProgress?.total ? `${Math.round((syncProgress.processed / syncProgress.total) * 100)}` : '…'}%</Typography>
+              </Box>
+            </Box>
+            <Box flex={1} minWidth={0}>
+              <Stack direction="row" justifyContent="space-between">
+                <Typography variant="body2" fontWeight={700}>Syncing Broma Statuses</Typography>
+                <Typography variant="caption" color="text.secondary">{syncProgress?.processed ?? 0}/{syncProgress?.total ?? 0}{syncProgress?.errors ? ` (${syncProgress.errors} err)` : ''}</Typography>
+              </Stack>
+              <LinearProgress variant={syncProgress?.total ? 'determinate' : 'indeterminate'} sx={{ my: 0.5 }} value={syncProgress?.total ? (syncProgress.processed / syncProgress.total) * 100 : 0} />
+              <Typography variant="caption" color="text.secondary" noWrap>{syncProgress?.current || 'Starting…'}</Typography>
+            </Box>
+          </Stack>
+        </Paper>
       )}
 
-      <Paper sx={{ p: { xs: 1.5, md: 2 }, mb: 2.5 }}>
-        <Stack spacing={1.5}>
-          <Stack direction={{ xs: 'column', md: 'row' }} spacing={1.25} justifyContent="space-between" alignItems={{ md: 'center' }}>
-            <Box>
-              <Typography variant="subtitle2" fontWeight={800}>
-                Configure Broma
-              </Typography>
-              <Typography variant="caption" color="text.secondary">
-                Credentials are encrypted on the backend and never returned to this screen.
-              </Typography>
-            </Box>
+      {/* API Diagnostic */}
+      {diagnoseResult && (
+        <Paper sx={{ p: { xs: 1.5, md: 2 }, mb: 2.5 }} elevation={3}>
+          <Stack direction="row" justifyContent="space-between" alignItems="center" mb={1}>
+            <Typography variant="subtitle2" fontWeight={800} color="info.main">Broma API Diagnostic</Typography>
+            <Button size="small" variant="text" color="inherit" onClick={() => setDiagnoseResult(null)}>close</Button>
+          </Stack>
+          <Box sx={{ maxHeight: 400, overflow: 'auto', bgcolor: 'grey.900', color: 'limegreen', p: 1.5, borderRadius: 1, fontFamily: 'monospace', fontSize: 12, whiteSpace: 'pre-wrap' }}>
+            {JSON.stringify(diagnoseResult, null, 2)}
+          </Box>
+        </Paper>
+      )}
+
+      {/* Config Dialog */}
+      <Dialog open={configOpen} onClose={() => setConfigOpen(false)} fullWidth maxWidth="sm" TransitionComponent={Slide}>
+        <DialogTitle sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <Stack direction="row" spacing={1} alignItems="center">
+            <SettingsIcon fontSize="small" />
+            <Typography variant="h6" fontWeight={700}>Configure Broma</Typography>
+          </Stack>
+          <IconButton size="small" onClick={() => setConfigOpen(false)}><CloseIcon /></IconButton>
+        </DialogTitle>
+        <DialogContent dividers>
+          <Stack spacing={2.5} pt={1}>
             <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
               <Chip size="small" label={bromaProvider?.enabled ? 'enabled' : 'not enabled'} color={bromaProvider?.enabled ? 'success' : 'default'} />
               <Chip size="small" label={hasBromaEmail ? 'email saved' : 'email missing'} color={hasBromaEmail ? 'success' : 'warning'} variant="outlined" />
               <Chip size="small" label={hasBromaPassword ? 'password saved' : 'password missing'} color={hasBromaPassword ? 'success' : 'warning'} variant="outlined" />
             </Stack>
+            <Alert severity="info" sx={{ py: 0.75 }}>Leave password blank to keep existing encrypted credentials.</Alert>
+            <Stack spacing={1.5}>
+              <TextField size="small" label="Base URL" value={bromaForm.baseUrl} onChange={(e) => setBromaForm((c) => ({ ...c, baseUrl: e.target.value }))} fullWidth name="bromaBaseUrl" autoComplete="off" />
+              <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1.5}>
+                <TextField size="small" label="Account ID" value={bromaForm.accountId} onChange={(e) => setBromaForm((c) => ({ ...c, accountId: e.target.value }))} fullWidth name="bromaAccountId" autoComplete="off" />
+                <TextField size="small" label="Created Country ID" value={bromaForm.createdCountryId} onChange={(e) => setBromaForm((c) => ({ ...c, createdCountryId: e.target.value }))} fullWidth name="bromaCreatedCountryId" autoComplete="off" helperText="India=32" />
+              </Stack>
+              <FormControl fullWidth size="small">
+                <InputLabel id="bmi">Mode</InputLabel>
+                <Select labelId="bmi" label="Mode" value={bromaForm.integrationMode} onChange={(e) => setBromaForm((c) => ({ ...c, integrationMode: e.target.value as BromaConfigForm['integrationMode'] }))}>
+                  <MenuItem value="sandbox">Sandbox</MenuItem>
+                  <MenuItem value="live">Live</MenuItem>
+                </Select>
+              </FormControl>
+            </Stack>
+            <Divider />
+            <Stack spacing={1.5}>
+              <Typography variant="subtitle2" fontWeight={600}>Credentials</Typography>
+              <TextField size="small" label="Broma Email" value={bromaForm.email} onChange={(e) => setBromaForm((c) => ({ ...c, email: e.target.value }))} fullWidth type="email" name="bromaEmail" autoComplete="off" placeholder={hasBromaEmail ? 'Saved. Enter to replace.' : ''} />
+              <TextField size="small" label="Broma Password" value={bromaForm.password} onChange={(e) => setBromaForm((c) => ({ ...c, password: e.target.value }))} fullWidth type="password" name="bromaPassword" autoComplete="new-password" placeholder={hasBromaPassword ? 'Saved. Leave blank to keep.' : ''} />
+            </Stack>
+            <Divider />
+            <Stack spacing={1.5}>
+              <Stack direction="row" spacing={1} alignItems="center">
+                <Typography variant="subtitle2" fontWeight={600}>Synced Outlets</Typography>
+                <Chip size="small" color="primary" variant="outlined" label={`${bromaOutlets.length}`} />
+              </Stack>
+              {bromaOutlets.length === 0
+                ? <Typography variant="caption" color="text.secondary">No outlets synced yet.</Typography>
+                : <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.75, maxHeight: 160, overflow: 'auto'}}>
+                    {bromaOutlets.map((outlet) => (
+                      <Tooltip key={outlet.outletId} title={((outlet.name || '') + ' \u00B7 ' + ((outlet.releaseTypes || []).join(', ') || '') + ' \u00B7 synced ' + (outlet.syncedAt ? new Date(outlet.syncedAt).toLocaleDateString() : '?'))}>
+                        <Chip size="small" label={outlet.name} variant="outlined" />
+                      </Tooltip>
+                    ))}
+                  </Box>
+              }
+            </Stack>
           </Stack>
+        </DialogContent>
+        <DialogActions sx={{ px: 3, py: 2 }}>
+          <Button onClick={() => setConfigOpen(false)} color="inherit">Cancel</Button>
+          <Button variant="contained" onClick={handleSaveBromaConfig} disabled={savingBroma}>{savingBroma ? 'Saving...' : 'Save Broma'}</Button>
+        </DialogActions>
+      </Dialog>
 
-          <Alert severity="info" sx={{ py: 0.75 }}>
-            Leave password blank to keep existing encrypted credentials. Enter email and password together to replace them.
-          </Alert>
 
-          <Stack direction={{ xs: 'column', lg: 'row' }} spacing={1.5}>
-            <TextField
-              size="small"
-              label="Base URL"
-              value={bromaForm.baseUrl}
-              onChange={(e) => setBromaForm((current) => ({ ...current, baseUrl: e.target.value }))}
-              fullWidth
-              name="bromaBaseUrl"
-              autoComplete="off"
-              inputProps={{ 'aria-label': 'Broma API base URL' }}
-            />
-            <TextField
-              size="small"
-              label="Account ID"
-              value={bromaForm.accountId}
-              onChange={(e) => setBromaForm((current) => ({ ...current, accountId: e.target.value }))}
-              fullWidth
-              name="bromaAccountId"
-              autoComplete="off"
-              inputProps={{ 'aria-label': 'Broma account ID' }}
-            />
-            <TextField
-              size="small"
-              label="Created Country ID"
-              value={bromaForm.createdCountryId}
-              onChange={(e) => setBromaForm((current) => ({ ...current, createdCountryId: e.target.value }))}
-              fullWidth
-              name="bromaCreatedCountryId"
-              autoComplete="off"
-              helperText="Use the numeric country id from Broma dictionaries. India is 32."
-              inputProps={{ 'aria-label': 'Broma created country ID' }}
-            />
-            <FormControl fullWidth size="small">
-              <InputLabel id="broma-mode-select">Mode</InputLabel>
-              <Select
-                labelId="broma-mode-select"
-                label="Mode"
-                value={bromaForm.integrationMode}
-                onChange={(e) =>
-                  setBromaForm((current) => ({ ...current, integrationMode: e.target.value as BromaConfigForm['integrationMode'] }))
-                }
-              >
-                <MenuItem value="sandbox">Sandbox</MenuItem>
-                <MenuItem value="live">Live</MenuItem>
-              </Select>
-            </FormControl>
-          </Stack>
-
-          <Stack direction={{ xs: 'column', md: 'row' }} spacing={1.5}>
-            <TextField
-              size="small"
-              label="Broma Email"
-              value={bromaForm.email}
-              onChange={(e) => setBromaForm((current) => ({ ...current, email: e.target.value }))}
-              fullWidth
-              type="email"
-              name="bromaEmail"
-              autoComplete="off"
-              placeholder={hasBromaEmail ? 'Saved. Enter only to replace.' : ''}
-              inputProps={{ 'aria-label': 'Broma email' }}
-            />
-            <TextField
-              size="small"
-              label="Broma Password"
-              value={bromaForm.password}
-              onChange={(e) => setBromaForm((current) => ({ ...current, password: e.target.value }))}
-              fullWidth
-              type="password"
-              name="bromaPassword"
-              autoComplete="new-password"
-              placeholder={hasBromaPassword ? 'Saved. Leave blank to keep.' : ''}
-              inputProps={{ 'aria-label': 'Broma password' }}
-            />
-            <Button
-              variant="contained"
-              onClick={handleSaveBromaConfig}
-              disabled={savingBroma}
-              sx={{ minWidth: { md: 180 }, minHeight: 40 }}
-            >
-              {savingBroma ? 'Saving...' : 'Save Broma'}
-            </Button>
-          </Stack>
-        </Stack>
+      {/* Release Tabs */}
+      <Paper sx={{ mb: 1 }}>
+        <Tabs value={releaseTab} onChange={(_, v) => { setReleaseTab(v); setPage(0); }} variant="scrollable" scrollButtons="auto" sx={{ minHeight: 40, '& .MuiTab-root': { minHeight: 40, py: 0.75 } }}>
+          <Tab value="all" label={<Stack direction="row" spacing={0.5} alignItems="center"><Typography variant="body2">All</Typography><Chip size="small" label={totalCountsAll} variant="outlined" sx={{ height: 18, fontSize: 11 }} /></Stack>} />
+          <Tab value="processing" label={<Stack direction="row" spacing={0.5} alignItems="center"><HourglassTopIcon sx={{ fontSize: 14, color: 'info.main' }} /><Typography variant="body2" fontWeight={600}>{totalCountsProcessing}</Typography><Typography variant="body2" color="text.secondary">Processing</Typography></Stack>} />
+          <Tab value="delivered" label={<Stack direction="row" spacing={0.5} alignItems="center"><CheckCircleIcon sx={{ fontSize: 14, color: 'success.main' }} /><Typography variant="body2" fontWeight={600}>{totalCountsDelivered}</Typography><Typography variant="body2" color="text.secondary">Delivered</Typography></Stack>} />
+          <Tab value="failed" label={<Stack direction="row" spacing={0.5} alignItems="center"><CancelIcon sx={{ fontSize: 14, color: 'error.main' }} /><Typography variant="body2" fontWeight={600}>{totalCountsFailed}</Typography><Typography variant="body2" color="text.secondary">Failed</Typography></Stack>} />
+          <Tab value="queued" label={<Stack direction="row" spacing={0.5} alignItems="center"><ListAltIcon sx={{ fontSize: 14 }} /><Typography variant="body2" fontWeight={600}>{totalCountsQueued}</Typography><Typography variant="body2" color="text.secondary">Queued</Typography></Stack>} />
+          <Tab value="drafts" label={<Stack direction="row" spacing={0.5} alignItems="center"><ListAltIcon sx={{ fontSize: 14 }} /><Typography variant="body2" fontWeight={600}>{bromaDraftsTotal || bromaDrafts?.length || '-'}</Typography><Typography variant="body2" color="text.secondary">Drafts</Typography></Stack>} />
+        </Tabs>
       </Paper>
 
-      <Paper sx={{ p: 2, mb: 3 }}>
-        <Stack spacing={2}>
-          <Stack direction={{ xs: 'column', md: 'row' }} spacing={1} justifyContent="space-between" alignItems={{ md: 'center' }}>
-            <Box>
-              <Typography variant="subtitle2" fontWeight={800}>
-                Synced Broma Outlets
-              </Typography>
-              <Typography variant="caption" color="text.secondary">
-                Active Broma outlet dictionary used when mapping selected stores into one release delivery.
-              </Typography>
-            </Box>
-            <Chip size="small" color="primary" variant="outlined" label={`${bromaOutlets.length} active outlets`} />
+      {/* Content: Jobs Table or Drafts Table */}
+      {releaseTab === 'drafts' ? (
+        <Paper sx={{ p: { xs: 1.5, md: 2 } }}>
+          <Stack direction="row" spacing={1.5} mb={2} justifyContent="space-between" alignItems="center" flexWrap="wrap" useFlexGap>
+            <Typography variant="caption" color="text.secondary">Orphans have no delivery job. Terminal = already delivered/cancelled.</Typography>
+            <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
+              <Button size="small" variant="outlined" color="error" onClick={() => handleDraftCleanup('delete_orphans')} disabled={cleaningUp !== 'idle'} startIcon={<CleaningServicesIcon />}>
+                {cleaningUp === 'deleting' ? 'Deleting...' : 'Delete Orphans'}
+              </Button>
+              <Button size="small" variant="outlined" color="warning" onClick={() => handleDraftCleanup('resume_orphans')} disabled={cleaningUp !== 'idle'} startIcon={<ReplayIcon />}>
+                {cleaningUp === 'resuming' ? 'Resuming...' : 'Resume Drafts'}
+              </Button>
+              <Button size="small" variant="outlined" onClick={handleRetryBromaDrafts} disabled={retryingDrafts || !bromaDrafts?.length}>
+                {retryingDrafts ? 'Retrying...' : 'Retry All'}
+              </Button>
+            </Stack>
           </Stack>
-          {bromaOutlets.length === 0 ? (
-            <Typography variant="caption" color="text.secondary">
-              No synced outlets yet. Click Sync Outlets.
-            </Typography>
+          {cleanupResult && (
+            <Alert severity={cleanupResult.errors?.length ? 'warning' : 'success'} sx={{ mb: 1.5, py: 0.5 }}>
+              {cleanupResult.action === 'delete_orphans' ? 'Cleanup' : 'Resume'} result: {cleanupResult.deleted || 0} deleted, {cleanupResult.resumed || 0} resumed, {cleanupResult.orphaned || 0} orphans, {cleanupResult.active || 0} active, {cleanupResult.terminal || 0} terminal
+              {cleanupResult.errors?.length > 0 && <span>. Errors: {cleanupResult.errors.join('; ')}</span>}
+            </Alert>
+          )}
+          {draftsLoading && !bromaDrafts ? (
+            <Box display="flex" justifyContent="center" py={5}><CircularProgress /></Box>
+          ) : !bromaDrafts?.length ? (
+            <Typography variant="body2" color="text.secondary" py={3} textAlign="center">No drafts found in Broma.</Typography>
           ) : (
-            <Box sx={{ maxHeight: 260, overflow: 'auto' }}>
+            <>{draftsLoading && <LinearProgress sx={{ borderRadius: 0 }} />}<Box sx={{ maxHeight: 480, overflow: 'auto' }}>
               <Table size="small" stickyHeader>
                 <TableHead>
                   <TableRow>
-                    <TableCell>Name</TableCell>
-                    <TableCell>Outlet ID</TableCell>
-                    <TableCell>Release Types</TableCell>
-                    <TableCell>Synced</TableCell>
+                    <TableCell>Title</TableCell>
+                    <TableCell>Step</TableCell>
+                    <TableCell>Broma ID</TableCell>
+                    <TableCell>Status</TableCell>
+                    <TableCell>Draft Issue</TableCell>
+                    <TableCell>Created</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {bromaOutlets.map((outlet) => (
-                    <TableRow key={outlet.outletId}>
-                      <TableCell>
-                        <Typography variant="body2" fontWeight={600}>
-                          {outlet.name}
-                        </Typography>
-                        {!!outlet.aliases?.length && (
-                          <Typography variant="caption" color="text.secondary">
-                            {outlet.aliases.join(', ')}
-                          </Typography>
-                        )}
-                      </TableCell>
-                      <TableCell>{outlet.outletId}</TableCell>
-                      <TableCell>{outlet.releaseTypes?.join(', ') || '-'}</TableCell>
-                      <TableCell>{outlet.syncedAt ? new Date(outlet.syncedAt).toLocaleString() : '-'}</TableCell>
-                    </TableRow>
-                  ))}
+                  {bromaDrafts.slice(draftPage * draftRowsPerPage, draftPage * draftRowsPerPage + draftRowsPerPage).map((d, i) => {
+                    const isOrphan = d.jobState === 'no_job';
+                    const isStuck = d.jobState === 'processing' || d.jobState === 'queued';
+                    const isTerminal = d.completed;
+                    return (
+                      <TableRow key={d.bromaDraftId || i} hover sx={{ opacity: isTerminal ? 0.5 : 1 }}>
+                        <TableCell sx={{ maxWidth: 200, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontWeight: isOrphan ? 700 : undefined }}>{d.releaseTitle || d.bromaDraftId?.slice(-8) || '-'}</TableCell>
+                        <TableCell><StepChip step={d.bromaStep} /></TableCell>
+                        <TableCell sx={{ fontFamily: 'monospace', fontSize: 12 }}>{d.bromaDraftId || '-'}</TableCell>
+                        <TableCell>
+                          {isTerminal ? <Chip size="small" label="delivered" color="success" />
+                            : isOrphan ? <Chip size="small" label="orphan" color="error" variant="filled" />
+                            : <Chip size="small" label={d.jobState} color={d.jobState === 'failed' ? 'error' : d.jobState === 'processing' ? 'info' : 'default'} />}
+                        </TableCell>
+                        <TableCell>
+                          {isOrphan && <Chip size="small" label="no job record" color="warning" variant="outlined" />}
+                          {isStuck && <StepChip step={d.bromaStep} />}
+                        </TableCell>
+                        <TableCell>{d.createdAt ? new Date(d.createdAt).toLocaleDateString() : '-'}</TableCell>
+                      </TableRow>
+                    );
+                  })}
                 </TableBody>
               </Table>
-            </Box>
+            </Box><TablePagination component="div" count={bromaDraftsTotal} page={draftPage} rowsPerPage={draftRowsPerPage} rowsPerPageOptions={[10]} onPageChange={(_, np) => setDraftPage(np)} onRowsPerPageChange={(e) => { setDraftRowsPerPage(Number(e.target.value)); setDraftPage(0); }} /></>
           )}
-        </Stack>
-      </Paper>
-
-      <Paper sx={{ overflow: 'hidden' }}>
-        {loading ? (
-          <Box display="flex" justifyContent="center" py={5}>
-            <CircularProgress />
-          </Box>
-        ) : (
-          <>
-            <Table size="small">
-              <TableHead>
-              <TableRow>
-                <TableCell width={44} />
-                <TableCell>Track</TableCell>
-                <TableCell>Provider</TableCell>
-                <TableCell>Operation</TableCell>
-                <TableCell>Status</TableCell>
-                <TableCell>Broma Progress</TableCell>
-                <TableCell>Retries</TableCell>
-                <TableCell>Error</TableCell>
-                <TableCell>Created</TableCell>
-                <TableCell align="right">Action</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {jobs.map((listJob) => {
-                const job = jobDetails[listJob._id] || listJob;
-                const isExpanded = expandedJobId === listJob._id;
-                const isLoadingDetails = loadingJobDetailsId === listJob._id && !jobDetails[listJob._id];
-                const bromaProgress = getBromaProgress(job);
-                const canRefreshBromaStatus = job.providerKey === 'broma';
-
-                return (
-                <Fragment key={listJob._id}>
+        </Paper>
+      ) : (
+        <Paper sx={{ overflow: 'hidden' }}>
+          {loading ? <Box display="flex" justifyContent="center" py={5}><CircularProgress /></Box> : (
+            <>
+              <Table size="small">
+                <TableHead>
                   <TableRow>
-                    <TableCell>
-                      <Tooltip title={isExpanded ? 'Collapse job details' : 'Expand job details'}>
-                        <IconButton
-                          size="small"
-                          onClick={() => handleToggleJob(listJob._id)}
-                          aria-label={`${isExpanded ? 'Collapse' : 'Expand'} delivery job ${listJob._id}`}
-                        >
-                          {isExpanded ? <KeyboardArrowUpIcon fontSize="small" /> : <KeyboardArrowDownIcon fontSize="small" />}
-                        </IconButton>
-                      </Tooltip>
-                    </TableCell>
-                    <TableCell>
-                      <Typography variant="body2" fontWeight={600}>
-                        {job.targetType === 'release'
-                          ? job.metadata?.releaseTitle || 'Release delivery'
-                          : job.trackId?.title || 'Unknown track'}
-                      </Typography>
-                      <Typography variant="caption" color="text.secondary">
-                        {job.targetType === 'release'
-                          ? `${job.metadata?.deliverySnapshot?.trackCount || 0} tracks${job.metadata?.deliverySnapshot?.upc ? ` | UPC ${job.metadata.deliverySnapshot.upc}` : ''}`
-                          : `${job.trackId?.artistName || 'Unknown artist'} ${job.trackId?.isrc ? `| ${job.trackId.isrc}` : ''}`}
-                      </Typography>
-                    </TableCell>
-                    <TableCell>
-                      <Stack direction="row" spacing={1} alignItems="center">
-                        <DspLogo
-                          value={job.providerKey}
-                          alt={providerMap.get(job.providerKey) || getDspDisplayName(job.providerKey)}
-                          size={26}
-                          padding={0.25}
-                        />
-                        <Typography variant="body2" fontWeight={600}>
-                          {providerMap.get(job.providerKey) || getDspDisplayName(job.providerKey)}
-                        </Typography>
-                      </Stack>
-                    </TableCell>
-                    <TableCell>{job.operation}</TableCell>
-                    <TableCell>
-                      <Chip label={job.state} color={job.state === 'delivered' ? 'success' : job.state === 'failed' ? 'error' : 'default'} size="small" />
-                    </TableCell>
-                    <TableCell sx={{ width: 168, minWidth: 150, maxWidth: 180 }}>
-                      <Stack spacing={0.35}>
-                        <Stack direction="row" spacing={1} alignItems="center" justifyContent="space-between">
-                          <Typography variant="caption" fontWeight={800} noWrap sx={{ fontSize: '0.68rem', maxWidth: 112 }}>
-                            {bromaProgress.label}
-                          </Typography>
-                          <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.68rem', fontVariantNumeric: 'tabular-nums' }}>
-                            {bromaProgress.value}%
-                          </Typography>
-                        </Stack>
-                        <Tooltip title={bromaProgress.detail}>
-                          <LinearProgress
-                            variant="determinate"
-                            value={bromaProgress.value}
-                            color={bromaProgress.color}
-                            sx={{
-                              height: 4,
-                              borderRadius: 999,
-                              bgcolor: 'action.hover',
-                              '& .MuiLinearProgress-bar': { borderRadius: 999 },
-                            }}
-                          />
-                        </Tooltip>
-                      </Stack>
-                    </TableCell>
-                    <TableCell>{job.retryCount}</TableCell>
-                    <TableCell sx={{ maxWidth: 240 }}>
-                      <Typography variant="caption" color={job.errorMessage ? 'error.main' : 'text.secondary'}>
-                        {job.errorMessage || '-'}
-                      </Typography>
-                    </TableCell>
-                    <TableCell>{new Date(job.createdAt).toLocaleString()}</TableCell>
-                    <TableCell align="right">
-                      <Stack direction="row" spacing={0.75} justifyContent="flex-end" alignItems="center">
-                        <Tooltip
-                          title={
-                            canRefreshBromaStatus
-                              ? (getBromaReleaseId(job) ? 'Fetch fresh Broma status' : 'Load latest saved Broma job state')
-                              : 'Broma release id missing. Run worker first.'
-                          }
-                        >
-                          <span>
-                            <IconButton
-                              size="small"
-                              disabled={!canRefreshBromaStatus || refreshingStatusId === job._id}
-                              onClick={() => handleRefreshStatus(job._id)}
-                              aria-label={`Refresh Broma status for delivery job ${job._id}`}
-                            >
-                              {refreshingStatusId === job._id ? <CircularProgress size={18} /> : <RefreshIcon fontSize="small" />}
-                            </IconButton>
-                          </span>
-                        </Tooltip>
-                        <Tooltip title="Clear log and move release back to pending">
-                          <span>
-                            <IconButton
-                              size="small"
-                              color="warning"
-                              disabled={clearingLogsId === job._id}
-                              onClick={() => handleClearLogs(job._id)}
-                              aria-label={`Clear delivery logs for job ${job._id}`}
-                            >
-                              {clearingLogsId === job._id ? <CircularProgress size={18} /> : <DeleteSweepIcon fontSize="small" />}
-                            </IconButton>
-                          </span>
-                        </Tooltip>
-                        <Button
-                          size="small"
-                          variant="outlined"
-                          disabled={!['failed', 'needs_attention'].includes(job.state)}
-                          onClick={() => handleRetry(job._id)}
-                          startIcon={<ReplayIcon />}
-                          aria-label={`Retry delivery job ${job._id}`}
-                        >
-                          Retry
-                        </Button>
-                      </Stack>
-                    </TableCell>
+                    <TableCell width={40} />
+                    <TableCell>Track / Release</TableCell>
+                    <TableCell>Provider</TableCell>
+                    <TableCell>Op</TableCell>
+                    <TableCell>State</TableCell>
+                    <TableCell sx={{ minWidth: 160 }}>Progress</TableCell>
+                    <TableCell>Retry</TableCell>
+                    <TableCell sx={{ maxWidth: 240 }}>Error</TableCell>
+                    <TableCell>Created</TableCell>
+                    <TableCell align="right">Action</TableCell>
                   </TableRow>
-                  <TableRow>
-                    <TableCell colSpan={10} sx={{ p: 0, borderBottom: isExpanded ? undefined : 0 }}>
-                      <Collapse in={isExpanded} timeout="auto" unmountOnExit>
-                        {isLoadingDetails ? (
-                          <Box display="flex" justifyContent="center" py={3} bgcolor="action.hover">
-                            <CircularProgress size={22} />
-                          </Box>
-                        ) : (
-                        <Box sx={{ px: 3, py: 2, bgcolor: 'action.hover' }}>
-                          <Stack direction={{ xs: 'column', md: 'row' }} spacing={2} mb={2}>
-                            <Box>
-                              <Typography variant="overline" color="text.secondary">External ID</Typography>
-                              <Typography variant="body2">{job.externalId || '-'}</Typography>
-                            </Box>
-                            <Box>
-                              <Typography variant="overline" color="text.secondary">Worker</Typography>
-                              <Typography variant="body2">{job.lockedBy || '-'}</Typography>
-                            </Box>
-                            <Box>
-                              <Typography variant="overline" color="text.secondary">Lock Expires</Typography>
-                              <Typography variant="body2">{job.lockExpiresAt ? new Date(job.lockExpiresAt).toLocaleString() : '-'}</Typography>
-                            </Box>
-                            <Box sx={{ minWidth: 0 }}>
-                              <Typography variant="overline" color="text.secondary">Payload Hash</Typography>
-                              <Typography variant="body2" sx={{ wordBreak: 'break-all' }}>{job.metadata?.payloadHash || '-'}</Typography>
-                            </Box>
-                            <Box>
-                              <Typography variant="overline" color="text.secondary">Broma Step</Typography>
-                              <Typography variant="body2">{job.metadata?.bromaStep || '-'}</Typography>
-                            </Box>
-                            <Box>
-                              <Typography variant="overline" color="text.secondary">Broma Status</Typography>
-                              <Typography variant="body2">{job.metadata?.bromaModerationStatus || '-'}</Typography>
-                            </Box>
-                            <Box>
-                              <Typography variant="overline" color="text.secondary">Last Status At</Typography>
-                              <Typography variant="body2">
-                                {job.metadata?.bromaLastStatusAt ? new Date(job.metadata.bromaLastStatusAt).toLocaleString() : '-'}
-                              </Typography>
-                            </Box>
-                          </Stack>
-                          <Box mb={2}>
-                            <Typography variant="overline" color="text.secondary">
-                              Selected Broma Outlets
+                </TableHead>
+                <TableBody>
+                  {tabFilteredJobs.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((listJob) => {
+                    const job = jobDetails[listJob._id] || listJob;
+                    const isExpanded = expandedJobId === listJob._id;
+                    const isLoadingDetails = loadingJobDetailsId === listJob._id && !jobDetails[listJob._id];
+                    const bromaProgress = getBromaProgress(job);
+                    const canRefresh = job.providerKey === 'broma';
+                    const bromaStep = job.metadata?.bromaStep || '';
+                    const isStuckEarly = job.providerKey === 'broma' && job.state === 'processing' && (bromaStep === 'create_release' || bromaStep === 'upload_recordings');
+
+                    return (
+                      <Fragment key={listJob._id}>
+                        <TableRow sx={isStuckEarly ? { bgcolor: (t) => t.palette.mode === 'dark' ? 'rgba(255,152,0,0.08)' : 'rgba(255,152,0,0.04)' } : undefined}>
+                          <TableCell>
+                            <Tooltip title={isExpanded ? 'Collapse' : 'Expand details'}>
+                              <IconButton size="small" onClick={() => handleToggleJob(listJob._id)}>
+                                {isExpanded ? <KeyboardArrowUpIcon fontSize="small" /> : <KeyboardArrowDownIcon fontSize="small" />}
+                              </IconButton>
+                            </Tooltip>
+                          </TableCell>
+                          <TableCell>
+                            <Typography variant="body2" fontWeight={600}>{job.targetType === 'release' ? job.metadata?.releaseTitle || 'Release delivery' : job.trackId?.title || 'Unknown'}</Typography>
+                            <Typography variant="caption" color="text.secondary">
+                              {job.targetType === 'release' ? `${job.metadata?.deliverySnapshot?.trackCount || 0} tracks${job.metadata?.deliverySnapshot?.upc ? ` | ${job.metadata.deliverySnapshot.upc}` : ''}` : `${job.trackId?.artistName || ''}`}
                             </Typography>
-                            <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap mt={0.5}>
-                              {(job.metadata?.bromaOutletMappings || []).map((mapping, index) => (
-                                <Chip
-                                  key={`${job._id}-outlet-${mapping.store || index}-${mapping.outletId || index}`}
-                                  size="small"
-                                  variant="outlined"
-                                  label={`${mapping.store || 'store'} -> ${mapping.name || mapping.outletId || 'outlet'}`}
-                                />
-                              ))}
-                              {(!job.metadata?.bromaOutletMappings || job.metadata.bromaOutletMappings.length === 0) && (
-                                <Typography variant="caption" color="text.secondary">
-                                  No outlet mappings stored.
-                                </Typography>
-                              )}
+                          </TableCell>
+                          <TableCell>
+                            <Stack direction="row" spacing={1} alignItems="center">
+                              <DspLogo value={job.providerKey} alt={providerMap.get(job.providerKey) || getDspDisplayName(job.providerKey)} size={26} padding={0.25} />
+                              <Typography variant="body2" fontWeight={600}>{providerMap.get(job.providerKey) || getDspDisplayName(job.providerKey)}</Typography>
                             </Stack>
-                          </Box>
-                          <Divider sx={{ mb: 2 }} />
-                          <Stack direction={{ xs: 'column', md: 'row' }} spacing={3}>
-                            <Box flex={1} minWidth={0}>
-                              <Typography variant="subtitle2" fontWeight={800} mb={1}>Attempts</Typography>
-                              <Stack spacing={1}>
-                                {(job.attempts || []).slice(-4).map((attempt) => {
-                                  const responseBody = formatAttemptResponse(attempt.responseBody);
-                                  return (
-                                    <Stack key={`${job._id}-attempt-${attempt.attemptNo}`} spacing={0.75}>
-                                      <Stack direction="row" spacing={1} alignItems="center" flexWrap="wrap">
-                                        <Chip size="small" label={`#${attempt.attemptNo}`} variant="outlined" />
-                                        <Chip size="small" label={attempt.status} color={attempt.status === 'success' ? 'success' : 'error'} />
-                                        <Typography variant="caption" color="text.secondary">
-                                          {attempt.responseCode || attempt.errorMessage || '-'}
-                                        </Typography>
-                                      </Stack>
-                                      {responseBody && (
-                                        <Typography
-                                          component="pre"
-                                          variant="caption"
-                                          sx={{
-                                            m: 0,
-                                            p: 1,
-                                            borderRadius: 1,
-                                            bgcolor: 'grey.100',
-                                            color: 'text.secondary',
-                                            whiteSpace: 'pre-wrap',
-                                            wordBreak: 'break-word',
-                                          }}
-                                        >
-                                          {responseBody}
-                                        </Typography>
-                                      )}
+                          </TableCell>
+                          <TableCell>{job.operation}</TableCell>
+                          <TableCell>
+                            <Chip
+                              label={job.state}
+                              color={job.state === 'delivered' ? 'success' : job.state === 'failed' || job.state === 'needs_attention' ? 'error' : job.state === 'processing' ? 'info' : 'default'}
+                              size="small"
+                              variant={isStuckEarly ? 'filled' : 'outlined'}
+                            />
+                          </TableCell>
+                          <TableCell>
+                            <Stack spacing={0.35}>
+                              <Stack direction="row" spacing={1} alignItems="center" justifyContent="space-between">
+                                <Typography variant="caption" fontWeight={800} noWrap sx={{ fontSize: '0.68rem', maxWidth: 120 }}>{bromaProgress.label}</Typography>
+                                <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.68rem', fontVariantNumeric: 'tabular-nums' }}>{bromaProgress.value}%</Typography>
+                              </Stack>
+                              <Tooltip title={bromaProgress.detail}>
+                                <LinearProgress variant="determinate" value={bromaProgress.value} color={bromaProgress.color} sx={{ height: 4, borderRadius: 999, bgcolor: 'action.hover', '& .MuiLinearProgress-bar': { borderRadius: 999 } }} />
+                              </Tooltip>
+                            </Stack>
+                          </TableCell>
+                          <TableCell>{job.retryCount}</TableCell>
+                          <TableCell sx={{ maxWidth: 220 }}>
+                            <Typography variant="caption" color={job.errorMessage ? 'error.main' : 'text.secondary'} sx={{ wordBreak: 'break-word' }}>
+                              {job.metadata?.bromaErrorDetails || job.errorMessage || '-'}
+                            </Typography>
+                          </TableCell>
+                          <TableCell><Typography variant="caption" color="text.secondary">{new Date(job.createdAt).toLocaleString()}</Typography></TableCell>
+                          <TableCell align="right">
+                            <Stack direction="row" spacing={0.5} justifyContent="flex-end" alignItems="center">
+                              <Tooltip title={canRefresh ? 'Fetch fresh Broma status' : 'No Broma ID'}>
+                                <span>
+                                  <IconButton size="small" disabled={!canRefresh || refreshingStatusId === job._id} onClick={() => handleRefreshStatus(job._id)}>
+                                    {refreshingStatusId === job._id ? <CircularProgress size={18} /> : <RefreshIcon fontSize="small" />}
+                                  </IconButton>
+                                </span>
+                              </Tooltip>
+                              <Tooltip title="Clear log, move release to pending">
+                                <span>
+                                  <IconButton size="small" color="warning" disabled={clearingLogsId === job._id} onClick={() => handleClearLogs(job._id)}>
+                                    {clearingLogsId === job._id ? <CircularProgress size={18} /> : <DeleteSweepIcon fontSize="small" />}
+                                  </IconButton>
+                                </span>
+                              </Tooltip>
+                              <Button size="small" variant="outlined" disabled={!['failed', 'needs_attention'].includes(job.state)} onClick={() => handleRetry(job._id)} startIcon={<ReplayIcon />}>Retry</Button>
+                            </Stack>
+                          </TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell colSpan={10} sx={{ p: 0, borderBottom: isExpanded ? undefined : 0 }}>
+                            <Collapse in={isExpanded} timeout="auto" unmountOnExit>
+                              {isLoadingDetails ? <Box display="flex" justifyContent="center" py={3} bgcolor="action.hover"><CircularProgress size={22} /></Box> : (
+                                <Box sx={{ px: 3, py: 2, bgcolor: 'action.hover' }}>
+                                  <Stack direction={{ xs: 'column', md: 'row' }} spacing={2} mb={2} flexWrap="wrap">
+                                    <Box><Typography variant="overline" color="text.secondary">External ID</Typography><Typography variant="body2">{job.externalId || '-'}</Typography></Box>
+                                    <Box><Typography variant="overline" color="text.secondary">Worker</Typography><Typography variant="body2">{job.lockedBy || '-'}</Typography></Box>
+                                    <Box><Typography variant="overline" color="text.secondary">Lock Expires</Typography><Typography variant="body2">{job.lockExpiresAt ? new Date(job.lockExpiresAt).toLocaleString() : '-'}</Typography></Box>
+                                    <Box sx={{ minWidth: 0 }}><Typography variant="overline" color="text.secondary">Payload Hash</Typography><Typography variant="body2" sx={{ wordBreak: 'break-all' }}>{job.metadata?.payloadHash || '-'}</Typography></Box>
+                                    <Box><Typography variant="overline" color="text.secondary">Broma Step</Typography><Typography variant="body2">{job.metadata?.bromaStep || '-'}</Typography></Box>
+                                    <Box><Typography variant="overline" color="text.secondary">Broma Status</Typography><Chip size="small" label={job.metadata?.bromaModerationStatus || '-'} color={BROMA_DONE_STATUSES.has(String(job.metadata?.bromaModerationStatus || '')) ? 'success' : BROMA_BLOCKED_STATUSES.has(String(job.metadata?.bromaModerationStatus || '')) ? 'error' : 'default'} /></Box>
+                                    <Box><Typography variant="overline" color="text.secondary">Last Status At</Typography><Typography variant="body2">{job.metadata?.bromaLastStatusAt ? new Date(job.metadata?.bromaLastStatusAt).toLocaleString() : '-'}</Typography></Box>
+                                    <Box><Typography variant="overline" color="text.secondary">Raw Status</Typography><Typography variant="body2">{job.metadata?.bromaRawStatus || '-'}</Typography></Box>
+                                  </Stack>
+                                  <Box mb={2}>
+                                    <Typography variant="overline" color="text.secondary">Selected Outlets</Typography>
+                                    <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap mt={0.5}>
+                                      {(job.metadata?.bromaOutletMappings || []).map((m, i) => <Chip key={`${job._id}-om-${i}`} size="small" variant="outlined" label={`${m.store || 'store'} -> ${m.name || m.outletId || 'outlet'}`} />)}
+                                      {(!job.metadata?.bromaOutletMappings || !job.metadata?.bromaOutletMappings.length) && <Typography variant="caption" color="text.secondary">None stored.</Typography>}
                                     </Stack>
-                                  );
-                                })}
-                                {(!job.attempts || job.attempts.length === 0) && (
-                                  <Typography variant="caption" color="text.secondary">No attempts yet.</Typography>
-                                )}
-                              </Stack>
-                            </Box>
-                            <Box flex={1.4} minWidth={0}>
-                              <Typography variant="subtitle2" fontWeight={800} mb={1}>Events</Typography>
-                              <Stack spacing={1}>
-                                {(job.events || []).slice(-5).map((event, index) => (
-                                  <Box key={`${job._id}-event-${index}`}>
-                                    <Typography variant="caption" color="text.secondary">
-                                      {new Date(event.createdAt).toLocaleString()} | {event.source} | {event.state}
-                                    </Typography>
-                                    <Typography variant="body2">{event.message}</Typography>
                                   </Box>
-                                ))}
-                                {(!job.events || job.events.length === 0) && (
-                                  <Typography variant="caption" color="text.secondary">No events yet.</Typography>
-                                )}
-                              </Stack>
-                            </Box>
-                          </Stack>
-                        </Box>
-                        )}
-                      </Collapse>
-                    </TableCell>
-                  </TableRow>
-                </Fragment>
-                );
-              })}
-              {jobs.length === 0 && (
-                <TableRow>
-                  <TableCell colSpan={10} align="center">
-                    No delivery jobs yet.
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-            </Table>
-            <TablePagination
-              component="div"
-              count={paginationTotal}
-              page={page}
-              rowsPerPage={rowsPerPage}
-              rowsPerPageOptions={[5, 10, 25, 50]}
-              onPageChange={(_, nextPage) => setPage(nextPage)}
-              onRowsPerPageChange={(event) => {
-                setRowsPerPage(Number(event.target.value));
-                setPage(0);
-              }}
-            />
-          </>
-        )}
-      </Paper>
+                                  <Divider sx={{ mb: 2 }} />
+                                  <Stack direction={{ xs: 'column', md: 'row' }} spacing={3}>
+                                    <Box flex={1} minWidth={0}>
+                                      <Typography variant="subtitle2" fontWeight={800} mb={1}>Attempts</Typography>
+                                      <Stack spacing={1}>
+                                        {(job.attempts || []).slice(-4).map((a) => {
+                                          const body = formatAttemptResponse(a.responseBody);
+                                          return (
+                                            <Stack key={`${job._id}-a-${a.attemptNo}`} spacing={0.75}>
+                                              <Stack direction="row" spacing={1} alignItems="center" flexWrap="wrap">
+                                                <Chip size="small" label={`#${a.attemptNo}`} variant="outlined" />
+                                                <Chip size="small" label={a.status} color={a.status === 'success' ? 'success' : 'error'} />
+                                                <Typography variant="caption" color="text.secondary">{a.responseCode || a.errorMessage || '-'}</Typography>
+                                              </Stack>
+                                              {body && <Typography component="pre" variant="caption" sx={{ m: 0, p: 1, borderRadius: 1, bgcolor: 'grey.100', color: 'text.secondary', whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>{body}</Typography>}
+                                            </Stack>
+                                          );
+                                        })}
+                                        {(!job.attempts || !job.attempts.length) && <Typography variant="caption" color="text.secondary">No attempts yet.</Typography>}
+                                      </Stack>
+                                    </Box>
+                                    <Box flex={1.4} minWidth={0}>
+                                      <Typography variant="subtitle2" fontWeight={800} mb={1}>Events</Typography>
+                                      <Stack spacing={1}>
+                                        {(job.events || []).slice(-8).map((e, i) => (
+                                          <Box key={`${job._id}-e-${i}`}>
+                                            <Typography variant="caption" color="text.secondary">{new Date(e.createdAt).toLocaleString()} | {e.source} | {e.state}</Typography>
+                                            <Typography variant="body2">{e.message}</Typography>
+                                          </Box>
+                                        ))}
+                                        {(!job.events || !job.events.length) && <Typography variant="caption" color="text.secondary">No events.</Typography>}
+                                      </Stack>
+                                    </Box>
+                                  </Stack>
+                                </Box>
+                              )}
+                            </Collapse>
+                          </TableCell>
+                        </TableRow>
+                      </Fragment>
+                    );
+                  })}
+                  {tabFilteredJobs.length === 0 && <TableRow><TableCell colSpan={10} align="center"><Typography variant="body2" color="text.secondary" py={3}>No delivery jobs found for this filter.</Typography></TableCell></TableRow>}
+                </TableBody>
+              </Table>
+              <TablePagination component="div" count={paginationTotal} page={page} rowsPerPage={rowsPerPage} rowsPerPageOptions={[5, 10, 25, 50]} onPageChange={(_, np) => setPage(np)} onRowsPerPageChange={(e) => { setRowsPerPage(Number(e.target.value)); setPage(0); }} />
+            </>
+          )}
+        </Paper>
+      )}
     </Box>
   );
 }

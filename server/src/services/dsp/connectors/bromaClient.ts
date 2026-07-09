@@ -170,8 +170,9 @@ export class BromaClient {
     });
   }
 
-  async getDrafts() {
-    return this.request<any>({ method: 'GET', url: '/draft' });
+  async getDrafts(accountId?: string | number, params: Record<string, unknown> = {}) {
+    const url = accountId ? `/accounts/${accountId}/assets/drafts/all` : '/draft';
+    return this.request<any>({ method: 'GET', url, params });
   }
 
   async getStatisticsOutlets() {

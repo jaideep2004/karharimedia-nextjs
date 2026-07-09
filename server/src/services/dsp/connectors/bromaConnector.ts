@@ -70,6 +70,22 @@ const BROMA_REJECTED_STATUSES = new Set([
   'not_ready',
 ]);
 
+const BROMA_MODERATION_STATUSES = new Set([
+  'moderation',
+  'under_moderation',
+  'on_moderation',
+  'pending_moderation',
+]);
+
+const BROMA_DSP_PROCESSING_STATUSES = new Set([
+  'accepted',
+  'distributed',
+  'in_distribution',
+  'processing',
+  'in_progress',
+  'inprogress',
+]);
+
 type BromaStatusSnapshot = {
   normalized: string;
   source: 'release_detail' | 'asset_list';
@@ -839,20 +855,56 @@ export class BromaConnector extends BaseDspConnector {
       const normalized = snapshot.normalized;
       const live = BROMA_DELIVERED_STATUSES.has(normalized);
       const rejected = BROMA_REJECTED_STATUSES.has(normalized);
+      const inModeration = normalized && BROMA_MODERATION_STATUSES.has(normalized);
+      const inDspProcessing = normalized && BROMA_DSP_PROCESSING_STATUSES.has(normalized);
+
+      let bromaStep: BromaStep;
+      let state: 'delivered' | 'needs_attention' | 'processing';
+      let message: string;
+      let pollIntervalMs: number;
+
+      if (live) {
+        bromaStep = 'done';
+        state = 'delivered';
+        message = `Broma release is ${normalized}`;
+        pollIntervalMs = 0;
+      } else if (rejected) {
+        bromaStep = 'done';
+        state = 'needs_attention';
+        message = `Broma release is ${normalized}`;
+        pollIntervalMs = 0;
+      } else if (inModeration) {
+        bromaStep = 'poll_status';
+        state = 'processing';
+        message = `Broma release in moderation (${normalized})`;
+        pollIntervalMs = Number(config.moderationPollIntervalMs || config.pollIntervalMs || 15 * 60_000);
+      } else if (inDspProcessing) {
+        bromaStep = 'poll_status';
+        state = 'processing';
+        message = `Broma release in distribution (${normalized})`;
+        pollIntervalMs = Number(config.dspPollIntervalMs || config.pollIntervalMs || 30 * 60_000);
+      } else {
+        bromaStep = 'poll_status';
+        state = 'processing';
+        message = normalized ? `Broma status: ${normalized}` : 'Broma release still processing';
+        pollIntervalMs = Number(config.pollIntervalMs || 30 * 60_000);
+      }
+
       return {
-        state: live ? 'delivered' : rejected ? 'needs_attention' : 'processing',
+        state,
         externalId: releaseId,
-        message: live ? `Broma release is ${normalized}` : rejected ? `Broma release is ${normalized}` : 'Broma release still processing',
+        message,
         metadata: {
           ...metadata,
-          bromaStep: live ? 'done' : 'poll_status',
+          bromaStep,
           bromaModerationStatus: normalized || 'processing',
           bromaStatusSource: snapshot.source,
           bromaAssetId: snapshot.assetRow?.id,
           bromaAssetStatuses: snapshot.assetRow?.statuses,
           bromaRejectionReason: rejected ? snapshot.rejectionReason || 'Rejected during moderation' : undefined,
           bromaLastStatusAt: new Date().toISOString(),
-          nextPollAt: live || rejected ? undefined : new Date(Date.now() + Number(config.pollIntervalMs || 30 * 60_000)).toISOString(),
+          bromaRawStatus: snapshot.releaseDetail?.moderation_status || snapshot.assetRow?.moderation_status || undefined,
+          nextPollAt: pollIntervalMs > 0 ? new Date(Date.now() + pollIntervalMs).toISOString() : undefined,
         },
       };
     }
@@ -876,20 +928,30 @@ export class BromaConnector extends BaseDspConnector {
     const normalized = snapshot.normalized;
     const delivered = BROMA_DELIVERED_STATUSES.has(normalized);
     const rejected = BROMA_REJECTED_STATUSES.has(normalized);
+    const inModeration = normalized && BROMA_MODERATION_STATUSES.has(normalized);
+    const inDspProcessing = normalized && BROMA_DSP_PROCESSING_STATUSES.has(normalized);
+
+    let state: 'delivered' | 'needs_attention' | 'processing';
+    if (delivered) state = 'delivered';
+    else if (rejected) state = 'needs_attention';
+    else state = 'processing';
 
     return {
-      state: delivered ? 'delivered' : rejected ? 'needs_attention' : 'processing',
+      state,
       externalId,
       message: normalized ? `Broma status: ${normalized}` : 'Broma status refreshed',
       metadata: {
         bromaReleaseId: externalId,
-        bromaStep: delivered ? 'done' : 'poll_status',
+        bromaStep: delivered || rejected ? 'done' : 'poll_status',
         bromaModerationStatus: normalized || 'processing',
         bromaStatusSource: snapshot.source,
         bromaAssetId: snapshot.assetRow?.id,
         bromaAssetStatuses: snapshot.assetRow?.statuses,
         bromaRejectionReason: rejected ? snapshot.rejectionReason || 'Rejected during moderation' : undefined,
         bromaLastStatusAt: new Date().toISOString(),
+        bromaRawStatus: snapshot.releaseDetail?.moderation_status || snapshot.assetRow?.moderation_status || undefined,
+        bromaIsModeration: inModeration || undefined,
+        bromaIsDspProcessing: inDspProcessing || undefined,
       },
     };
   }
