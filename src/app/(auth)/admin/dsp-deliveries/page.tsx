@@ -221,6 +221,7 @@ export default function AdminDspDeliveriesPage() {
 
   const [processingDue, setProcessingDue] = useState(false);
   const [retryingDrafts, setRetryingDrafts] = useState(false);
+  const [forceProcessing, setForceProcessing] = useState(false);
   const [bromaDrafts, setBromaDrafts] = useState<DraftEntry[] | null>(null);
   const [bromaDraftsTotal, setBromaDraftsTotal] = useState(0);
   const [draftsLoading, setDraftsLoading] = useState(false);
@@ -563,6 +564,24 @@ export default function AdminDspDeliveriesPage() {
     } finally { setRetryingDrafts(false); }
   };
 
+  const handleForceProcess = async () => {
+    try {
+      setForceProcessing(true);
+      const res = await adminAPI.forceProcessBromaDrafts();
+      const r = res?.data || {};
+      toast.success(`Requeued ${r.requeued || 0}, dispatched ${r.dispatched || 0}`);
+      await load();
+      const draftsRes = await adminAPI.listBromaDrafts();
+      if (draftsRes?.data?.drafts) {
+        setBromaDrafts(draftsRes.data.drafts);
+        setBromaDraftsTotal(draftsRes.data.total ?? draftsRes.data.drafts.length);
+      }
+      setDraftPage(0);
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Force process failed');
+    } finally { setForceProcessing(false); }
+  };
+
   const handleSyncBromaOutlets = async () => {
     try {
       setSyncingOutlets(true);
@@ -737,6 +756,9 @@ export default function AdminDspDeliveriesPage() {
               </Button>
               <Button size="small" variant="outlined" onClick={handleRetryBromaDrafts} disabled={retryingDrafts || !bromaDrafts?.length}>
                 {retryingDrafts ? 'Retrying...' : 'Retry All'}
+              </Button>
+              <Button size="small" variant="contained" color="success" onClick={handleForceProcess} disabled={forceProcessing || !bromaDrafts?.length} startIcon={<PlayArrowIcon />}>
+                {forceProcessing ? 'Processing...' : 'Force Process'}
               </Button>
             </Stack>
           </Stack>

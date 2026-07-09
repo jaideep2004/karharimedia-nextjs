@@ -44,6 +44,7 @@ router.post('/broma/drafts/cleanup', protectAdminOrCronSecret, dspController.cle
 router.get('/broma/drafts', protect, authorize([UserRole.ADMIN]), dspController.listBromaDrafts);
 router.get('/broma/drafts/diagnose', protect, authorize([UserRole.ADMIN]), dspController.diagnoseBromaApi);
 router.post('/broma/drafts/retry-all', protect, authorize([UserRole.ADMIN]), dspController.retryBromaDrafts);
+router.post('/broma/drafts/force-process', protect, authorize([UserRole.ADMIN]), dspController.forceProcessBromaDrafts);
 router.delete('/broma/drafts/:draftType/:draftId', protect, authorize([UserRole.ADMIN]), dspController.deleteBromaDraft);
 router.get('/broma/statistics/reports', protect, authorize([UserRole.ADMIN]), dspController.listBromaStatisticsReports);
 router.post('/broma/statistics/reports', protectAdminOrCronSecret, dspController.createBromaStatisticsReport);

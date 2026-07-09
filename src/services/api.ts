@@ -1201,6 +1201,15 @@ export const adminAPI = {
     }
   },
 
+  forceProcessBromaDrafts: async () => {
+    try {
+      const response = await api.post<ApiResponse<any>>('/admin/dsp/broma/drafts/force-process');
+      return response.data;
+    } catch (error) {
+      return handleApiError(error);
+    }
+  },
+
   syncBromaOutlets: async () => {
     try {
       const response = await api.post<ApiResponse<any>>('/admin/broma-outlets-sync');

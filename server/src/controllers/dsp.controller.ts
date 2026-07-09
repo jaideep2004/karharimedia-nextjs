@@ -182,6 +182,15 @@ export const retryBromaDrafts = async (req: AuthRequest, res: Response): Promise
   }
 };
 
+export const forceProcessBromaDrafts = async (_req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    const result = await dspDeliveryService.forceProcessBromaDrafts();
+    successResponse(res, result, 'Broma drafts force-processed');
+  } catch (error) {
+    errorResponse(res, 'Failed to force process Broma drafts', error);
+  }
+};
+
 export const refreshDeliveryStatus = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const job = await dspDeliveryService.refreshJobStatus(req.params.jobId);

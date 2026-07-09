@@ -1262,6 +1262,58 @@ class DspDeliveryService {
     return { retried: retried.length, dispatched: dispatched.length, noJobDrafts };
   }
 
+  async forceProcessBromaDrafts() {
+    const providerRecord = await this.getProviderWithDecryptedCredentials('broma');
+    if (!providerRecord || !providerRecord.provider.enabled) {
+      return { requeued: 0, dispatched: 0, error: 'Broma provider not active' };
+    }
+    const accountId = providerRecord.provider.config?.accountId;
+    if (!accountId) {
+      return { requeued: 0, dispatched: 0, error: 'Broma accountId not configured' };
+    }
+
+    const client = new BromaClient({
+      credentials: providerRecord.credentials,
+      config: providerRecord.provider.config || {},
+    });
+
+    const resp = await client.getDrafts(String(accountId), { page: 1, limit: 1000 });
+    const items = this.extractBromaAssetsList(resp);
+    const draftIds = items.map((d: any) => String(d?.id ?? '')).filter(Boolean);
+
+    if (draftIds.length === 0) return { requeued: 0, dispatched: 0, error: 'No Broma drafts found' };
+
+    const jobs = await DeliveryJob.find({
+      providerKey: 'broma',
+      'metadata.bromaReleaseId': { $in: draftIds },
+      state: { $nin: ['delivered', 'cancelled'] },
+    }).lean();
+
+    if (jobs.length === 0) return { requeued: 0, dispatched: 0, error: 'No active delivery jobs for these drafts' };
+
+    const jobIds = jobs.map((j) => j._id);
+    const now = new Date();
+    await DeliveryJob.updateMany(
+      { _id: { $in: jobIds } },
+      {
+        $set: { state: 'queued', nextRetryAt: now, deadLettered: false },
+        $unset: { lockedAt: '', lockedBy: '', lockExpiresAt: '', errorMessage: '' },
+        $push: { events: { state: 'queued', message: 'Force process requested from drafts panel', source: 'user' } },
+      }
+    );
+
+    const dispatched: Array<{ jobId: string; state: string }> = [];
+    const remaining = [...jobIds];
+    while (remaining.length > 0) {
+      const batch = remaining.splice(0, 25);
+      const result = await this.processDueDeliveryJobs({ maxJobs: batch.length, workerId: `force-process:${process.pid}:${Date.now()}`, dispatchOnly: true });
+      dispatched.push(...result.processed);
+      if (result.processed.length < batch.length) break;
+    }
+
+    return { requeued: jobIds.length, dispatched: dispatched.length };
+  }
+
   async refreshJobStatus(jobId: string) {
     const job = await DeliveryJob.findById(jobId);
     if (!job) throw new Error('Delivery job not found');
