@@ -627,7 +627,13 @@ class DspDeliveryService {
       $unset: { lockedAt: '', lockedBy: '', lockExpiresAt: '' },
       $push: { events: { state: 'needs_attention', message, source: 'system' } },
     });
-    return DeliveryJob.findById(jobId);
+    const updated = await DeliveryJob.findById(jobId);
+    if (updated) {
+      try {
+        await this.updateReleaseLifecycle(job, 'needs_attention', { ...job.metadata, ...(metadata || {}) } as Record<string, any>, message);
+      } catch { /* lifecycle update is best-effort */ }
+    }
+    return updated;
   }
 
   private async failJob(jobId: string, message: string) {
@@ -641,7 +647,7 @@ class DspDeliveryService {
     return DeliveryJob.findById(jobId);
   }
 
-  private async updateReleaseLifecycle(job: IDeliveryJob, state: string, metadata: Record<string, any> = {}) {
+  private async updateReleaseLifecycle(job: IDeliveryJob, state: string, metadata: Record<string, any> = {}, errorMessage?: string) {
     if (job.targetType !== 'release' || !job.releaseId) return;
 
     let releaseStatus: string | null = null;
@@ -669,7 +675,7 @@ class DspDeliveryService {
     }
     else if (step === 'done') releaseStatus = 'live';
     else if (state === 'processing') releaseStatus = 'uploading_to_broma';
-    else if (state === 'needs_attention') releaseStatus = 'uploading_to_broma';
+    else if (state === 'needs_attention') releaseStatus = 'failed';
 
     if (!releaseStatus) return;
 
@@ -707,6 +713,10 @@ class DspDeliveryService {
       releaseUpdate.rejectReason = metadata.bromaRejectionReason || 'Rejected during moderation';
       releaseUpdate.rejectionReason = releaseUpdate.rejectReason;
       releaseUpdate.rejectedAt = new Date();
+    }
+    if (releaseStatus === 'failed' && !bromaRejected) {
+      releaseUpdate.rejectReason = errorMessage || 'Delivery requires attention';
+      releaseUpdate.rejectionReason = releaseUpdate.rejectReason;
     }
 
     await mongoose.connection.collection('releases').updateOne(
@@ -876,7 +886,7 @@ class DspDeliveryService {
       });
 
       if (needsAttention) {
-        await this.updateReleaseLifecycle(job, 'needs_attention', latestMetadata);
+        await this.updateReleaseLifecycle(job, 'needs_attention', latestMetadata, message);
       }
 
       return DeliveryJob.findById(jobId);
@@ -1378,7 +1388,7 @@ class DspDeliveryService {
 
     await DeliveryJob.findByIdAndUpdate(jobId, update);
     try {
-      await this.updateReleaseLifecycle(job, result.state, nextMetadata);
+      await this.updateReleaseLifecycle(job, result.state, nextMetadata, result.state === 'needs_attention' ? result.message : undefined);
     } catch (lifecycleError) {
       console.error(`[refreshJobStatus] updateReleaseLifecycle failed for job ${jobId}: ${getErrorMessage(lifecycleError)}`);
     }

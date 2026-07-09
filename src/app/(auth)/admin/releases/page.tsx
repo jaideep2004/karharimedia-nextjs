@@ -270,15 +270,16 @@ export default function AdminReleasesPage() {
 
   // Get status chip with proper styling
   const getStatusChip = (status: string) => {
-    const statusConfig = {
+    const statusConfig: Record<string, { label: string; color: string; icon: React.ReactNode }> = {
       pending: { label: 'Pending', color: 'warning', icon: <Pending /> },
       in_process: { label: 'In Process', color: 'info', icon: <Sync /> },
       approved: { label: 'Approved', color: 'success', icon: <CheckCircle /> },
       rejected: { label: 'Rejected', color: 'error', icon: <Cancel /> },
+      failed: { label: 'Failed', color: 'error', icon: <Cancel /> },
     };
 
-    const displayStatus = getNormalizedReleaseStatus(status);
-    const config = statusConfig[displayStatus as keyof typeof statusConfig] || {
+    const displayStatus = status === 'failed' ? 'failed' : getNormalizedReleaseStatus(status);
+    const config = statusConfig[displayStatus] || {
       label: getReleaseStatusLabel(status),
       color: 'default',
       icon: null,

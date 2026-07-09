@@ -81,7 +81,8 @@ export enum ReleaseStatus {
   LIVE = 'live',
   TAKEDOWN_REQUESTED = 'takedown_requested',
   REMOVED = 'removed',
-  REJECTED = 'rejected'
+  REJECTED = 'rejected',
+  FAILED = 'failed'
 }
 
 // Payout statuses

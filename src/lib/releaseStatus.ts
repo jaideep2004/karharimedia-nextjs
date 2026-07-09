@@ -50,14 +50,16 @@ export function getNormalizedReleaseStatus(status: unknown): ReleaseDisplayStatu
 }
 
 export function getReleaseStatusLabel(status: unknown) {
+  const value = rawReleaseStatus(status);
+  if (value === 'failed') return 'Failed';
+  if (value === 'rejected') return 'Rejected';
+
   const normalized = getNormalizedReleaseStatus(status);
 
   if (normalized === 'pending') return 'Pending';
   if (normalized === 'in_process') return 'In Process';
   if (normalized === 'approved') return 'Approved';
-  if (normalized === 'rejected') return 'Rejected';
 
-  const value = rawReleaseStatus(status);
   return value
     ? value.replace(/_/g, ' ').replace(/\b\w/g, (letter) => letter.toUpperCase())
     : 'Unknown';

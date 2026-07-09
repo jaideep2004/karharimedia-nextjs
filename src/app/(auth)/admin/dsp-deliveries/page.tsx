@@ -1,6 +1,6 @@
 'use client';
 
-import { Fragment, useEffect, useState, useCallback, useMemo } from 'react';
+import { Fragment, useEffect, useState, useCallback, useMemo, useRef } from 'react';
 import {
   Alert,
   Box,
@@ -244,6 +244,7 @@ export default function AdminDspDeliveriesPage() {
   const [forceSyncing, setForceSyncing] = useState(false);
   const [syncProgress, setSyncProgress] = useState<{ total: number; processed: number; errors: number; current: string; done: boolean; startTime: number } | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
+  const searchTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [diagnosing, setDiagnosing] = useState(false);
   const [diagnoseResult, setDiagnoseResult] = useState<any>(null);
   const [cleaningUp, setCleaningUp] = useState<'idle' | 'listing' | 'deleting' | 'resuming'>('idle');
@@ -278,12 +279,16 @@ export default function AdminDspDeliveriesPage() {
   const tabStateFilter = releaseTab === 'failed' ? 'needs_attention' : (['processing', 'delivered', 'queued'].includes(releaseTab) ? releaseTab : '');
   const tabFilteredJobs = releaseTab === 'drafts' ? [] : jobs;
 
+  const searchTermRef = useRef(searchTerm);
+  searchTermRef.current = searchTerm;
+
   const load = useCallback(async () => {
     try {
       setLoading(true);
+      const term = searchTermRef.current;
       const [providerRes, jobsRes] = await Promise.all([
         adminAPI.listDspProviders(),
-        adminAPI.listDspDeliveries({ providerKey: providerFilter !== 'all' ? providerFilter : '', state: tabStateFilter, search: searchTerm, limit: rowsPerPage, page: page + 1 }),
+        adminAPI.listDspDeliveries({ providerKey: providerFilter !== 'all' ? providerFilter : '', state: tabStateFilter, search: term, limit: rowsPerPage, page: page + 1 }),
       ]);
       const nextJobs = jobsRes?.data?.data || [];
       setProviders(providerRes?.data || []);
@@ -296,7 +301,9 @@ export default function AdminDspDeliveriesPage() {
     } finally {
       setLoading(false);
     }
-  }, [providerFilter, page, rowsPerPage, tabStateFilter, searchTerm]);
+  }, [providerFilter, page, rowsPerPage, tabStateFilter]);
+
+  useEffect(() => () => { if (searchTimer.current) clearTimeout(searchTimer.current); }, []);
 
   const loadDraftsBackground = useCallback(async () => {
     setDraftsLoading(true);
@@ -635,8 +642,19 @@ export default function AdminDspDeliveriesPage() {
           size="small"
           placeholder="Search by title, release ID, UPC…"
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          onKeyDown={(e) => { if (e.key === 'Enter') load(); }}
+          onChange={(e) => {
+            setSearchTerm(e.target.value);
+            setPage(0);
+            if (searchTimer.current) clearTimeout(searchTimer.current);
+            searchTimer.current = setTimeout(() => load(), 400);
+          }}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              if (searchTimer.current) clearTimeout(searchTimer.current);
+              setPage(0);
+              load();
+            }
+          }}
           slotProps={{ input: { startAdornment: <InputAdornment position="start"><SearchIcon fontSize="small" /></InputAdornment> } }}
           sx={{ minWidth: 240, flex: { xs: '1 1 100%', sm: '0 1 auto' } }}
         />

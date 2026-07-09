@@ -1097,7 +1097,7 @@ export default function AdminReleaseDetailPage() {
               )}
             </Box>
             
-            {release.status === "rejected" && rejectedReason && (
+            {(release.status === "rejected" || release.status === "failed") && rejectedReason && (
               <Card 
                 elevation={0} 
                 sx={{ 
@@ -1141,7 +1141,7 @@ export default function AdminReleaseDetailPage() {
                     Reject
                   </Button>
                 )}
-                {release.status === 'rejected' && (
+                {['rejected', 'failed'].includes(release.status) && (
                   <Button
                     variant="outlined"
                     color="error"
