@@ -294,16 +294,16 @@ export default function AdminDspDeliveriesPage() {
     }
   }, [providerFilter, page, rowsPerPage, tabStateFilter]);
 
-  const loadDraftsBackground = useCallback(async (pageNum: number = 1) => {
+  const loadDraftsBackground = useCallback(async () => {
     setDraftsLoading(true);
     try {
-      const res = await adminAPI.listBromaDrafts(pageNum);
+      const res = await adminAPI.listBromaDrafts();
       if (res?.data?.drafts) {
         setBromaDrafts(res.data.drafts);
         setBromaDraftsTotal(res.data.total ?? res.data.drafts.length);
       }
-    } catch {
-      // Silently fail — drafts are non-critical
+    } catch (e) {
+      console.error('[Drafts] Failed to load:', e);
     } finally {
       setDraftsLoading(false);
     }
@@ -312,15 +312,15 @@ export default function AdminDspDeliveriesPage() {
   useEffect(() => {
     if (isAdmin) {
       void load();
-      void loadDraftsBackground(1);
+      void loadDraftsBackground();
     }
   }, [isAdmin, load, loadDraftsBackground]);
 
   useEffect(() => {
-    if (isAdmin && releaseTab === 'drafts' && bromaDrafts !== null) {
-      void loadDraftsBackground(draftPage + 1);
+    if (isAdmin && releaseTab === 'drafts') {
+      void loadDraftsBackground();
     }
-  }, [draftPage, isAdmin, releaseTab, loadDraftsBackground, bromaDrafts]);
+  }, [isAdmin, releaseTab, loadDraftsBackground]);
 
   useEffect(() => { setPage(0); setDraftPage(0); }, [providerFilter, releaseTab]);
 

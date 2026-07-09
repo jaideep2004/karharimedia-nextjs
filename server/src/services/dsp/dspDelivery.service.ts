@@ -1155,7 +1155,7 @@ class DspDeliveryService {
     return [];
   }
 
-  async listBromaDrafts(page: number = 1) {
+  async listBromaDrafts(page?: number) {
     const providerRecord = await this.getProviderWithDecryptedCredentials('broma');
     if (!providerRecord || !providerRecord.provider.enabled) {
       throw new Error('Broma provider is not active');
@@ -1170,39 +1170,38 @@ class DspDeliveryService {
       config: providerRecord.provider.config || {},
     });
 
-    const PAGE_SIZE = 10;
-    const firstResponse = await client.getDrafts(String(accountId), { page, limit: PAGE_SIZE });
-    const allDrafts = this.extractBromaAssetsList(firstResponse);
-    const bromaTotal = typeof firstResponse?.total === 'number' ? firstResponse.total : allDrafts.length;
+    const resp = await client.getDrafts(String(accountId), { page: 1, limit: 1000 });
+    const items = this.extractBromaAssetsList(resp);
+    const ids = items.map((d: any) => String(d?.id ?? '')).filter(Boolean);
+    const bromaTotal = typeof resp?.total === 'number' ? resp.total : items.length;
 
-    const draftIds = allDrafts.map((d: any) => String(d?.id ?? '')).filter(Boolean);
-    const jobs = draftIds.length > 0
-      ? await DeliveryJob.find({
-          providerKey: 'broma',
-          'metadata.bromaReleaseId': { $in: draftIds },
-        }).sort({ createdAt: -1 }).lean()
+    const jobs = ids.length > 0
+      ? await DeliveryJob.find({ providerKey: 'broma', 'metadata.bromaReleaseId': { $in: ids } }).sort({ createdAt: -1 }).lean()
       : [];
-
     const jobMap = new Map(jobs.map((j) => [String((j.metadata as any)?.bromaReleaseId), j]));
     const TERMINAL_JOB_STATES = new Set(['delivered', 'cancelled']);
 
-    return {
-      total: bromaTotal,
-      drafts: allDrafts.map((d: any) => {
-        const id = String(d.id ?? '');
-        const job = jobMap.get(id);
-        return {
-          bromaDraftId: id,
-          releaseTitle: d.title || d.name || '',
-          bromaStep: job ? (job.metadata as any)?.bromaStep : '-',
-          jobState: job ? job.state : 'no_job',
-          jobId: job ? String(job._id) : null,
-          releaseId: job ? String(job.releaseId ?? '') : '',
-          createdAt: d.release_date || d.created_at || d.createdAt,
-          completed: TERMINAL_JOB_STATES.has(job?.state || ''),
-        };
-      }),
-    };
+    const sorted = items.map((d: any) => {
+      const id = String(d.id ?? '');
+      const job = jobMap.get(id);
+      return {
+        bromaDraftId: id,
+        releaseTitle: d.title || d.name || '',
+        bromaStep: job ? (job.metadata as any)?.bromaStep : '-',
+        jobState: job ? job.state : 'no_job',
+        jobId: job ? String(job._id) : null,
+        releaseId: job ? String(job.releaseId ?? '') : '',
+        createdAt: d.release_date || d.created_at || d.createdAt,
+        completed: TERMINAL_JOB_STATES.has(job?.state || ''),
+      };
+    });
+
+    if (page) {
+      const PAGE = 10;
+      const start = (page - 1) * PAGE;
+      return { total: sorted.length, drafts: sorted.slice(start, start + PAGE) };
+    }
+    return { total: sorted.length, drafts: sorted };
   }
 
   async retryAllBromaDrafts(workerId?: string) {
@@ -1222,26 +1221,8 @@ class DspDeliveryService {
       config: providerRecord.provider.config || {},
     });
 
-    const rawDrafts: any[] = [];
-    const PAGE_SIZE = 100;
-    const firstResp = await client.getDrafts(String(accountId), { page: 1, limit: PAGE_SIZE });
-    const firstBatch = Array.isArray(firstResp?.data) ? firstResp.data : [];
-    if (firstBatch.length > 0) rawDrafts.push(...firstBatch);
-    const totalPages = Math.min(typeof firstResp?.pages === 'number' ? firstResp.pages : 1, 10);
-    if (totalPages > 1) {
-      const pagePromises = [];
-      for (let p = 2; p <= totalPages; p++) {
-        pagePromises.push(client.getDrafts(String(accountId), { page: p, limit: PAGE_SIZE }));
-      }
-      const responses = await Promise.all(pagePromises);
-      for (const resp of responses) {
-        const batch = Array.isArray(resp?.data) ? resp.data : [];
-        if (batch.length === 0) continue;
-        rawDrafts.push(...batch);
-      }
-    }
-
-    const bromaDraftIds = this.extractBromaAssetsList({ data: rawDrafts, total: firstResp?.total ?? rawDrafts.length, current_page: 1, pages: totalPages });
+    const resp = await client.getDrafts(String(accountId), { page: 1, limit: 1000 });
+    const bromaDraftIds = this.extractBromaAssetsList(resp);
     const draftIds = bromaDraftIds.map((d: any) => String(d?.id ?? '')).filter(Boolean);
     const jobs = draftIds.length > 0
       ? await DeliveryJob.find({
@@ -1443,32 +1424,9 @@ class DspDeliveryService {
       return { action, error: 'Broma accountId not configured', deleted: 0, resumed: 0, orphaned: 0, active: 0 };
     }
 
-    const rawDrafts: any[] = [];
-    const PAGE_SIZE = 100;
-    const firstResp = await client.getDrafts(String(accountId), { page: 1, limit: PAGE_SIZE });
-    const firstBatch = Array.isArray(firstResp?.data) ? firstResp.data : [];
-    if (firstBatch.length === 0) {
-      const result = { action, deleted: 0, resumed: 0, orphaned: 0, active: 0, terminal: 0 };
-      return { ...result, list: this.extractBromaAssetsList(firstResp).slice(0, maxDrafts).map((d: any) => ({ bromaDraftId: d.id, title: d.title })) };
-    }
-    rawDrafts.push(...firstBatch);
-    const totalPages = typeof firstResp?.pages === 'number' ? firstResp.pages : 1;
-    const cleanupMaxPages = Math.min(totalPages, 5);
-    if (cleanupMaxPages > 1) {
-      const pagePromises = [];
-      for (let p = 2; p <= cleanupMaxPages; p++) {
-        pagePromises.push(client.getDrafts(String(accountId), { page: p, limit: PAGE_SIZE }));
-      }
-      const responses = await Promise.all(pagePromises);
-      for (const resp of responses) {
-        const batch = Array.isArray(resp?.data) ? resp.data : [];
-        if (batch.length === 0) continue;
-        rawDrafts.push(...batch);
-        if (rawDrafts.length >= maxDrafts) break;
-      }
-    }
-
-    const drafts = rawDrafts.slice(0, maxDrafts);
+    const resp = await client.getDrafts(String(accountId), { page: 1, limit: 1000 });
+    const allItems = this.extractBromaAssetsList(resp);
+    const drafts = allItems.slice(0, maxDrafts);
     const draftIds = drafts.map((d: any) => String(d?.id ?? '')).filter(Boolean);
 
     const jobs = draftIds.length > 0

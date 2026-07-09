@@ -164,7 +164,7 @@ export const diagnoseBromaApi = async (_req: AuthRequest, res: Response): Promis
 
 export const listBromaDrafts = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
-    const page = Math.max(1, Number(req.query.page) || 1);
+    const page = req.query.page ? Math.max(1, Number(req.query.page)) : undefined;
     const drafts = await dspDeliveryService.listBromaDrafts(page);
     successResponse(res, drafts, 'Broma draft jobs fetched');
   } catch (error) {
