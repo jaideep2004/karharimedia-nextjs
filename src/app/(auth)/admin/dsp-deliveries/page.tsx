@@ -512,7 +512,9 @@ export default function AdminDspDeliveriesPage() {
       setRetryingDrafts(true);
       const res = await adminAPI.retryAllBromaDrafts();
       const r = res?.data || {};
-      toast.success(`Retried ${r.retried || 0} drafts, dispatched ${r.dispatched || 0}`);
+      const msg = [`Retried ${r.retried || 0} drafts, dispatched ${r.dispatched || 0}`];
+      if (r.noJobDrafts) msg.push(`${r.noJobDrafts} have no DeliveryJob`);
+      toast.success(msg.join('. '));
       await load();
       await handleListBromaDrafts();
     } catch (error) {
@@ -625,21 +627,23 @@ export default function AdminDspDeliveriesPage() {
                     <TableRow>
                       <TableCell>Release Title</TableCell>
                       <TableCell>Broma Step</TableCell>
-                      <TableCell>Broma Release ID</TableCell>
-                      <TableCell>State</TableCell>
+                      <TableCell>Broma Draft ID</TableCell>
+                      <TableCell>Status</TableCell>
                       <TableCell>Created</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {bromaDrafts.map((d: any) => (
-                      <TableRow key={d._id} hover>
-                        <TableCell sx={{ maxWidth: 220, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{d.metadata?.releaseTitle || d.releaseId?.toString()?.slice(-8) || '-'}</TableCell>
-                        <TableCell>{d.metadata?.bromaStep || '-'}</TableCell>
-                        <TableCell sx={{ fontFamily: 'monospace', fontSize: 12 }}>{d.metadata?.bromaReleaseId || '-'}</TableCell>
+                    {bromaDrafts.map((d: any, i: number) => (
+                      <TableRow key={d.bromaDraftId || i} hover>
+                        <TableCell sx={{ maxWidth: 220, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{d.releaseTitle || d.bromaDraftId?.slice(-8) || '-'}</TableCell>
+                        <TableCell>{d.bromaStep || '-'}</TableCell>
+                        <TableCell sx={{ fontFamily: 'monospace', fontSize: 12 }}>{d.bromaDraftId || '-'}</TableCell>
                         <TableCell>
-                          <Chip size="small" label={d.state} color={d.state === 'failed' ? 'error' : d.state === 'processing' ? 'info' : d.state === 'delivered' ? 'success' : 'default'} />
+                          {d.completed ? <Chip size="small" label="delivered" color="success" />
+                            : d.jobState === 'no_job' ? <Chip size="small" label="no job" color="warning" variant="outlined" />
+                            : <Chip size="small" label={d.jobState} color={d.jobState === 'failed' ? 'error' : d.jobState === 'processing' ? 'info' : 'default'} />}
                         </TableCell>
-                        <TableCell>{new Date(d.createdAt).toLocaleDateString()}</TableCell>
+                        <TableCell>{d.createdAt ? new Date(d.createdAt).toLocaleDateString() : '-'}</TableCell>
                       </TableRow>
                     ))}
                   </TableBody>

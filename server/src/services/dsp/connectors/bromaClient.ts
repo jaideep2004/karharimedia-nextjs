@@ -162,8 +162,16 @@ export class BromaClient {
     return response.data as T;
   }
 
-  async getOutlets() {
-    return this.request<any>({ method: 'GET', url: '/dictionaries/outlets' });
+  async getOutlets(releaseTypeId?: number) {
+    return this.request<any>({
+      method: 'GET',
+      url: '/dictionaries/outlets',
+      params: releaseTypeId ? { release_type_id: releaseTypeId } : undefined,
+    });
+  }
+
+  async getDrafts() {
+    return this.request<any>({ method: 'GET', url: '/draft' });
   }
 
   async getStatisticsOutlets() {

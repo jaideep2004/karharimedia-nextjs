@@ -760,10 +760,7 @@ class DspDeliveryService {
         jobMetadata: job.metadata || {},
       };
       if (provider.key === 'broma' && context.config?.distributeToAllOutlets && context.jobMetadata?.expandToAllOutlets) {
-        const allOutlets = await listBromaOutlets();
-        if (allOutlets.length > 0) {
-          (context.config as Record<string, unknown>).allBromaOutletIds = allOutlets.map((o) => o.outletId);
-        }
+        (context.config as Record<string, unknown>).expandToAllOutlets = true;
       }
       if (job.operation === 'deliver') {
         result = await connector.deliver(payloadResult.payload, context);
@@ -1001,40 +998,80 @@ class DspDeliveryService {
   }
 
   async listBromaDrafts() {
-    const TERMINAL = new Set(['delivered', 'cancelled']);
-    return DeliveryJob.find({
-      providerKey: 'broma',
-      'metadata.bromaReleaseId': { $exists: true, $ne: '' },
-      state: { $nin: [...TERMINAL, 'processing'] },
-      'metadata.bromaStep': { $ne: 'done' },
-    })
-      .sort({ createdAt: -1 })
-      .lean();
+    try {
+      const providerRecord = await this.getProviderWithDecryptedCredentials('broma');
+      if (!providerRecord || !providerRecord.provider.enabled) {
+        return [];
+      }
+      const client = new BromaClient({
+        credentials: providerRecord.credentials,
+        config: providerRecord.provider.config || {},
+      });
+      const response = await client.getDrafts();
+      const rawDrafts = Array.isArray(response?.data) ? response.data
+        : Array.isArray(response?.data?.items) ? response.data.items
+        : Array.isArray(response?.data?.releases) ? response.data.releases
+        : Array.isArray(response?.items) ? response.items
+        : Array.isArray(response?.releases) ? response.releases
+        : Array.isArray(response) ? response
+        : [];
+
+      const draftIds = rawDrafts.map((d: any) => String(d?.id ?? '')).filter(Boolean);
+      const jobs = draftIds.length > 0
+        ? await DeliveryJob.find({
+            providerKey: 'broma',
+            'metadata.bromaReleaseId': { $in: draftIds },
+          }).sort({ createdAt: -1 }).lean()
+        : [];
+
+      const jobMap = new Map(jobs.map((j) => [String((j.metadata as any)?.bromaReleaseId), j]));
+      const TERMINAL_JOB_STATES = new Set(['delivered', 'cancelled']);
+
+      return rawDrafts.map((d: any) => {
+        const id = String(d.id ?? '');
+        const job = jobMap.get(id);
+        return {
+          bromaDraftId: id,
+          releaseTitle: d.title || d.name || '',
+          bromaStep: job ? (job.metadata as any)?.bromaStep : '-',
+          jobState: job ? job.state : 'no_job',
+          jobId: job ? String(job._id) : null,
+          releaseId: job ? String(job.releaseId ?? '') : '',
+          createdAt: d.created_at || d.createdAt,
+          completed: TERMINAL_JOB_STATES.has(job?.state || ''),
+        };
+      });
+    } catch {
+      return [];
+    }
   }
 
   async retryAllBromaDrafts(workerId?: string) {
     const id = workerId || `draft-retry:${process.pid}:${Date.now()}`;
-    const drafts = await DeliveryJob.find({
-      providerKey: 'broma',
-      'metadata.bromaReleaseId': { $exists: true, $ne: '' },
-      state: { $in: ['failed', 'needs_attention', 'queued'] },
-      'metadata.bromaStep': { $ne: 'done' },
-    });
+
+    const bromaDraftIds = await this.listBromaDrafts();
+    const retryable = (bromaDraftIds as Array<Record<string, any>>)
+      .filter((d) => d.jobId && !d.completed && d.jobState !== 'processing')
+      .map((d) => d.jobId as string);
+
     const retried: string[] = [];
-    for (const job of drafts) {
-      await DeliveryJob.findByIdAndUpdate(job._id, {
+    for (const jobId of retryable) {
+      await DeliveryJob.findByIdAndUpdate(jobId, {
         state: 'queued',
         deadLettered: false,
         nextRetryAt: new Date(),
         $unset: { lockedAt: '', lockedBy: '', lockExpiresAt: '', errorMessage: '' },
         $push: { events: { state: 'queued', message: 'Bulk draft retry', source: 'system' } },
       });
-      retried.push(job._id.toString());
+      retried.push(jobId);
     }
+
+    const noJob = (bromaDraftIds as Array<Record<string, any>>).filter((d) => !d.jobId).length;
     const dispatched = retried.length > 0
       ? (await this.processDueDeliveryJobs({ maxJobs: Math.min(retried.length, 25), workerId: id, dispatchOnly: true })).processed
       : [];
-    return { retried: retried.length, dispatched: dispatched.length };
+
+    return { retried: retried.length, dispatched: dispatched.length, noJobDrafts: noJob };
   }
 
   async refreshJobStatus(jobId: string) {

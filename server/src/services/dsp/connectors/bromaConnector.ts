@@ -1006,9 +1006,20 @@ export class BromaConnector extends BaseDspConnector {
 
     if (step === 'update_distribution') {
       let outletIds = Array.isArray(next.bromaOutletIds) ? next.bromaOutletIds : [];
-      const allOutletIds = config.allBromaOutletIds as string[] | undefined;
-      if (config.distributeToAllOutlets && Array.isArray(allOutletIds) && allOutletIds.length > 0) {
-        outletIds = allOutletIds;
+      if (config.distributeToAllOutlets && config.expandToAllOutlets) {
+        const releaseTypeId = requireBromaInteger(next.bromaReleaseTypeId, 'Broma release type id');
+        const remote = await client.getOutlets(releaseTypeId);
+        const raw = Array.isArray(remote?.data) ? remote.data
+          : Array.isArray(remote?.data?.items) ? remote.data.items
+          : Array.isArray(remote?.data?.outlets) ? remote.data.outlets
+          : Array.isArray(remote?.items) ? remote.items
+          : Array.isArray(remote?.outlets) ? remote.outlets
+          : Array.isArray(remote) ? remote
+          : [];
+        outletIds = raw
+          .map((r: any) => bromaInteger(r?.id ?? r?.outlet_id))
+          .filter((id: number | undefined): id is number => id !== undefined && id > 0);
+        if (!outletIds.length) throw new Error('No valid Broma outlets returned for this release type');
       }
       if (!outletIds.length) throw new Error('Missing Broma outlet ids');
       const parentOutletIds = filteredParentOutletIds(next, config, outletIds);
