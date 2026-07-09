@@ -447,6 +447,31 @@ export default function AdminDspDeliveriesPage() {
     } finally { setRequeuing(false); }
   };
 
+  useEffect(() => {
+    const stored = sessionStorage.getItem('bromaSyncId');
+    if (stored && isAdmin) {
+      setForceSyncing(true);
+      setSyncProgress(null);
+      const poll = async () => {
+        let refreshCount = 0;
+        while (true) {
+          await new Promise(r => setTimeout(r, 800));
+          try {
+            const res = await fetch(`/api/admin/broma-release-statuses-sync/${stored}/progress`, { credentials: 'include' });
+            const json = await res.json();
+            if (json?.data) setSyncProgress(json.data);
+            if (json?.data?.done) { sessionStorage.removeItem('bromaSyncId'); break; }
+            if (++refreshCount % 5 === 0) { void load(); }
+          } catch { sessionStorage.removeItem('bromaSyncId'); break; }
+        }
+        await load();
+        setForceSyncing(false);
+        setSyncProgress(null);
+      };
+      poll();
+    }
+  }, [isAdmin]);
+
   const handleForceSync = async () => {
     try {
       setForceSyncing(true);
@@ -454,6 +479,7 @@ export default function AdminDspDeliveriesPage() {
       const syncId = `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
       const response = await adminAPI.syncBromaReleaseStatuses({ limit: 500, syncId });
       if (!response?.data?.syncId) { toast.error('Failed to start sync'); setForceSyncing(false); return; }
+      sessionStorage.setItem('bromaSyncId', syncId);
       let refreshCount = 0;
       while (true) {
         await new Promise(r => setTimeout(r, 800));
@@ -461,14 +487,14 @@ export default function AdminDspDeliveriesPage() {
           const res = await fetch(`/api/admin/broma-release-statuses-sync/${syncId}/progress`, { credentials: 'include' });
           const json = await res.json();
           if (json?.data) setSyncProgress(json.data);
-          if (json?.data?.done) break;
+          if (json?.data?.done) { sessionStorage.removeItem('bromaSyncId'); break; }
           if (++refreshCount % 5 === 0) { void load(); }
-        } catch { /* polling failed */ }
+        } catch { sessionStorage.removeItem('bromaSyncId'); break; }
       }
       await load();
     } catch (error) {
       toast.error(error instanceof Error ? error.message : 'Force sync failed');
-    } finally { setForceSyncing(false); setSyncProgress(null); }
+    } finally { setForceSyncing(false); setSyncProgress(null); sessionStorage.removeItem('bromaSyncId'); }
   };
 
   const handleDiagnoseApi = async () => {

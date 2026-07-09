@@ -121,6 +121,7 @@ export async function listReleasesWithTracks(
   const releases = await releasesCollection(db)
     .find(query)
     .sort({ createdAt: -1 })
+    .allowDiskUse(true)
     .toArray();
 
   return hydrateReleasesWithCanonicalTracks(db, releases);
@@ -335,19 +336,23 @@ export async function listReleasesPage(
   const [rows, total, groupedCounts] = await Promise.all([
     options.summary
       ? collection
-          .aggregate<Record<string, any>>([
-            { $match: query },
-            { $sort: { createdAt: -1 } },
-            { $skip: skip },
-            { $limit: limit },
-            { $project: summaryProjection },
-          ])
+          .aggregate<Record<string, any>>(
+            [
+              { $match: query },
+              { $sort: { createdAt: -1 } },
+              { $skip: skip },
+              { $limit: limit },
+              { $project: summaryProjection },
+            ],
+            { allowDiskUse: true }
+          )
           .toArray()
       : collection
           .find(query)
           .sort({ createdAt: -1 })
           .skip(skip)
           .limit(limit)
+          .allowDiskUse(true)
           .toArray(),
     collection.countDocuments(query),
     collection
