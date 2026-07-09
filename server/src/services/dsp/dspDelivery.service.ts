@@ -1208,11 +1208,59 @@ class DspDeliveryService {
   async retryAllBromaDrafts(workerId?: string) {
     const id = workerId || `draft-retry:${process.pid}:${Date.now()}`;
 
-    const bromaDraftResult = await this.listBromaDrafts();
-    const bromaDraftIds = bromaDraftResult.drafts;
-    const retryable = (bromaDraftIds as Array<Record<string, any>>)
-      .filter((d) => d.jobId && !d.completed && d.jobState !== 'processing')
-      .map((d) => d.jobId as string);
+    const providerRecord = await this.getProviderWithDecryptedCredentials('broma');
+    if (!providerRecord || !providerRecord.provider.enabled) {
+      return { retried: 0, dispatched: 0, noJobDrafts: 0, error: 'Broma provider not active' };
+    }
+    const accountId = providerRecord.provider.config?.accountId;
+    if (!accountId) {
+      return { retried: 0, dispatched: 0, noJobDrafts: 0, error: 'Broma accountId not configured' };
+    }
+
+    const client = new BromaClient({
+      credentials: providerRecord.credentials,
+      config: providerRecord.provider.config || {},
+    });
+
+    const rawDrafts: any[] = [];
+    const PAGE_SIZE = 100;
+    const firstResp = await client.getDrafts(String(accountId), { page: 1, limit: PAGE_SIZE });
+    const firstBatch = Array.isArray(firstResp?.data) ? firstResp.data : [];
+    if (firstBatch.length > 0) rawDrafts.push(...firstBatch);
+    const totalPages = Math.min(typeof firstResp?.pages === 'number' ? firstResp.pages : 1, 10);
+    if (totalPages > 1) {
+      const pagePromises = [];
+      for (let p = 2; p <= totalPages; p++) {
+        pagePromises.push(client.getDrafts(String(accountId), { page: p, limit: PAGE_SIZE }));
+      }
+      const responses = await Promise.all(pagePromises);
+      for (const resp of responses) {
+        const batch = Array.isArray(resp?.data) ? resp.data : [];
+        if (batch.length === 0) continue;
+        rawDrafts.push(...batch);
+      }
+    }
+
+    const bromaDraftIds = this.extractBromaAssetsList({ data: rawDrafts, total: firstResp?.total ?? rawDrafts.length, current_page: 1, pages: totalPages });
+    const draftIds = bromaDraftIds.map((d: any) => String(d?.id ?? '')).filter(Boolean);
+    const jobs = draftIds.length > 0
+      ? await DeliveryJob.find({
+          providerKey: 'broma',
+          'metadata.bromaReleaseId': { $in: draftIds },
+        }).sort({ createdAt: -1 }).lean()
+      : [];
+    const jobMap = new Map(jobs.map((j) => [String((j.metadata as any)?.bromaReleaseId), j]));
+    const TERMINAL_JOB_STATES = new Set(['delivered', 'cancelled']);
+
+    const retryable: string[] = [];
+    let noJobDrafts = 0;
+    for (const d of bromaDraftIds) {
+      const idStr = String(d.id ?? '');
+      const job = jobMap.get(idStr);
+      if (!job) { noJobDrafts++; continue; }
+      if (TERMINAL_JOB_STATES.has(job.state) || job.state === 'processing') continue;
+      retryable.push(String(job._id));
+    }
 
     const retried: string[] = [];
     for (const jobId of retryable) {
@@ -1226,12 +1274,11 @@ class DspDeliveryService {
       retried.push(jobId);
     }
 
-    const noJob = (bromaDraftIds as Array<Record<string, any>>).filter((d) => !d.jobId).length;
     const dispatched = retried.length > 0
       ? (await this.processDueDeliveryJobs({ maxJobs: Math.min(retried.length, 25), workerId: id, dispatchOnly: true })).processed
       : [];
 
-    return { retried: retried.length, dispatched: dispatched.length, noJobDrafts: noJob };
+    return { retried: retried.length, dispatched: dispatched.length, noJobDrafts };
   }
 
   async refreshJobStatus(jobId: string) {
@@ -1304,22 +1351,26 @@ class DspDeliveryService {
 
   async syncBromaReleaseStatuses(input: { releaseIds?: string[]; limit?: number; skip?: number; syncId?: string } = {}) {
     const syncId = input.syncId || '';
-    const limitVal = Math.min(2000, Math.max(1, input.limit || 500));
+    const maxLimit = Math.max(1, input.limit ?? 10_000);
     const skip = Math.max(0, input.skip || 0);
     const releaseObjectIds = (input.releaseIds || [])
       .filter((id) => mongoose.Types.ObjectId.isValid(id))
       .map((id) => new mongoose.Types.ObjectId(id));
 
-    if (syncId) syncProgress.set(syncId, { total: 0, processed: 0, errors: 0, current: 'Loading jobs…', done: false, startTime: Date.now() });
+    if (syncId) syncProgress.set(syncId, { total: 0, processed: 0, errors: 0, current: 'Counting jobs…', done: false, startTime: Date.now() });
 
     const baseQuery: Record<string, any> = { providerKey: 'broma', targetType: 'release' };
     if (releaseObjectIds.length > 0) baseQuery.releaseId = { $in: releaseObjectIds };
 
-    const jobs = await DeliveryJob.collection.find(baseQuery, {
-      projection: { _id: 1, releaseId: 1, state: 1, externalId: 1, metadata: 1, updatedAt: 1, createdAt: 1 },
-    }).toArray();
+    const [totalCount, jobs] = await Promise.all([
+      DeliveryJob.collection.countDocuments(baseQuery),
+      DeliveryJob.collection.find(baseQuery, {
+        projection: { _id: 1, releaseId: 1, state: 1, externalId: 1, metadata: 1, updatedAt: 1, createdAt: 1, hiddenFromOps: 1, deadLettered: 1 },
+      }).toArray(),
+    ]);
     jobs.sort((a, b) => (b.updatedAt?.getTime() || 0) - (a.updatedAt?.getTime() || 0) || (b.createdAt?.getTime() || 0) - (a.createdAt?.getTime() || 0));
     const filtered = !releaseObjectIds.length ? jobs.filter((j) => !j.hiddenFromOps && j.metadata?.resetForApproval !== true && !j.deadLettered) : jobs;
+    const limitVal = Math.min(maxLimit, filtered.length);
     const paged = filtered.slice(skip, skip + limitVal);
 
     if (syncId) syncProgress.set(syncId, { total: paged.length, processed: 0, errors: 0, current: 'Starting…', done: false, startTime: syncProgress.get(syncId)?.startTime || Date.now() });

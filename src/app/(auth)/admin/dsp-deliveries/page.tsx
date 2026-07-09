@@ -477,7 +477,7 @@ export default function AdminDspDeliveriesPage() {
       setForceSyncing(true);
       setSyncProgress(null);
       const syncId = `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
-      const response = await adminAPI.syncBromaReleaseStatuses({ limit: 500, syncId });
+      const response = await adminAPI.syncBromaReleaseStatuses({ limit: 10000, syncId });
       if (!response?.data?.syncId) { toast.error('Failed to start sync'); setForceSyncing(false); return; }
       sessionStorage.setItem('bromaSyncId', syncId);
       let refreshCount = 0;

@@ -108,6 +108,7 @@ DeliveryJobSchema.index({ providerKey: 1, state: 1, createdAt: -1 });
 DeliveryJobSchema.index({ providerKey: 1, hiddenFromOps: 1, createdAt: -1 });
 DeliveryJobSchema.index({ state: 1, nextRetryAt: 1, priority: 1, createdAt: 1 });
 DeliveryJobSchema.index({ lockExpiresAt: 1, state: 1 });
+DeliveryJobSchema.index({ providerKey: 1, targetType: 1 });
 DeliveryJobSchema.index({ providerKey: 1, trackId: 1, operation: 1 });
 DeliveryJobSchema.index({ providerKey: 1, releaseId: 1, operation: 1 });
 
