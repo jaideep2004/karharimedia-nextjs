@@ -851,6 +851,23 @@ export class BromaConnector extends BaseDspConnector {
     const step = STEP_ORDER.includes(currentStep) ? currentStep : 'create_release';
 
     if (step === 'poll_status' && releaseId) {
+      if (!metadata.bromaModerationSentAt) {
+        await client.sendModeration(releaseId);
+        const pollIntervalMs = Number(config.moderationPollIntervalMs || config.pollIntervalMs || 15 * 60_000);
+        return {
+          state: 'processing',
+          externalId: releaseId,
+          message: 'Release sent to Broma moderation',
+          metadata: {
+            ...metadata,
+            bromaStep: 'poll_status',
+            bromaModerationSentAt: new Date().toISOString(),
+            bromaModerationStatus: 'moderation_pending',
+            bromaLastStatusAt: new Date().toISOString(),
+            nextPollAt: new Date(Date.now() + pollIntervalMs).toISOString(),
+          },
+        };
+      }
       const snapshot = await fetchBromaStatusSnapshot(client, releaseId, config, metadata);
       const normalized = snapshot.normalized;
       const live = BROMA_DELIVERED_STATUSES.has(normalized);
