@@ -1101,6 +1101,7 @@ class DspDeliveryService {
         const msBreakdown: Record<string, number> = {};
         const labelBreakdown: Record<string, number> = {};
         const statusBreakdown: Record<string, number> = {};
+        const assetsByLabel: Record<string, Array<{ id: number; title: string; moderation_status: string; ean?: string; release_type_id?: number; release_date?: string; statuses?: string[] }>> = {};
         for (const item of allItems) {
           const ms = item.moderation_status ?? '(none)';
           msBreakdown[ms] = (msBreakdown[ms] || 0) + 1;
@@ -1114,10 +1115,21 @@ class DspDeliveryService {
           if (item.deleted_at) {
             statusBreakdown['_deleted'] = (statusBreakdown['_deleted'] || 0) + 1;
           }
+          if (!assetsByLabel[lbl]) assetsByLabel[lbl] = [];
+          assetsByLabel[lbl].push({
+            id: item.id,
+            title: item.title,
+            moderation_status: item.moderation_status,
+            ean: item.ean,
+            release_type_id: item.release_type_id,
+            release_date: item.release_date,
+            statuses: item.statuses,
+          });
         }
         out.moderationStatusBreakdown = msBreakdown;
         out.labelBreakdown = labelBreakdown;
         out.statusBreakdown = statusBreakdown;
+        out.assetsByLabel = assetsByLabel;
       } else {
         out.pendingDraftsLocalSkipped = 'No accountId configured';
       }

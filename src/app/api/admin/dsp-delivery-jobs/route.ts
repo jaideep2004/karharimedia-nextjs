@@ -15,11 +15,31 @@ export async function GET(req: Request) {
     const state = url.searchParams.get('state') || '';
     const page = Math.max(1, Number(url.searchParams.get('page') || 1));
     const limit = Math.min(100, Math.max(1, Number(url.searchParams.get('limit') || 20)));
+    const search = url.searchParams.get('search') || '';
     const query: Record<string, any> = {};
     if (providerKey) query.providerKey = providerKey;
     if (state) query.state = state;
+    if (search) {
+      const escaped = search.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      query.$or = [
+        { releaseId: { $regex: escaped, $options: 'i' } },
+        { 'metadata.releaseTitle': { $regex: escaped, $options: 'i' } },
+        { externalId: { $regex: escaped, $options: 'i' } },
+        { providerJobId: { $regex: escaped, $options: 'i' } },
+      ];
+    }
 
-    const allJobsQuery = providerKey ? { providerKey } : {};
+    const allJobsQuery: Record<string, any> = {};
+    if (providerKey) allJobsQuery.providerKey = providerKey;
+    if (search) {
+      const escaped = search.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      allJobsQuery.$or = [
+        { releaseId: { $regex: escaped, $options: 'i' } },
+        { 'metadata.releaseTitle': { $regex: escaped, $options: 'i' } },
+        { externalId: { $regex: escaped, $options: 'i' } },
+        { providerJobId: { $regex: escaped, $options: 'i' } },
+      ];
+    }
     const [data, total, countResults] = await Promise.all([
       db.collection('deliveryjobs')
         .find(query, { projection: { attempts: 0, events: 0 } })

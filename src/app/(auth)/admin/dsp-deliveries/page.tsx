@@ -15,6 +15,7 @@ import {
   Divider,
   FormControl,
   IconButton,
+  InputAdornment,
   InputLabel,
   LinearProgress,
   MenuItem,
@@ -48,6 +49,7 @@ import HourglassTopIcon from '@mui/icons-material/HourglassTop';
 import BugReportIcon from '@mui/icons-material/BugReport';
 import SettingsIcon from '@mui/icons-material/Settings';
 import CloseIcon from '@mui/icons-material/Close';
+import SearchIcon from '@mui/icons-material/Search';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { DspLogo } from '@/components/dsp/DspLogo';
@@ -241,6 +243,7 @@ export default function AdminDspDeliveriesPage() {
   const [requeuing, setRequeuing] = useState(false);
   const [forceSyncing, setForceSyncing] = useState(false);
   const [syncProgress, setSyncProgress] = useState<{ total: number; processed: number; errors: number; current: string; done: boolean; startTime: number } | null>(null);
+  const [searchTerm, setSearchTerm] = useState('');
   const [diagnosing, setDiagnosing] = useState(false);
   const [diagnoseResult, setDiagnoseResult] = useState<any>(null);
   const [cleaningUp, setCleaningUp] = useState<'idle' | 'listing' | 'deleting' | 'resuming'>('idle');
@@ -280,7 +283,7 @@ export default function AdminDspDeliveriesPage() {
       setLoading(true);
       const [providerRes, jobsRes] = await Promise.all([
         adminAPI.listDspProviders(),
-        adminAPI.listDspDeliveries({ providerKey: providerFilter !== 'all' ? providerFilter : '', state: tabStateFilter, limit: rowsPerPage, page: page + 1 }),
+        adminAPI.listDspDeliveries({ providerKey: providerFilter !== 'all' ? providerFilter : '', state: tabStateFilter, search: searchTerm, limit: rowsPerPage, page: page + 1 }),
       ]);
       const nextJobs = jobsRes?.data?.data || [];
       setProviders(providerRes?.data || []);
@@ -293,7 +296,7 @@ export default function AdminDspDeliveriesPage() {
     } finally {
       setLoading(false);
     }
-  }, [providerFilter, page, rowsPerPage, tabStateFilter]);
+  }, [providerFilter, page, rowsPerPage, tabStateFilter, searchTerm]);
 
   const loadDraftsBackground = useCallback(async () => {
     setDraftsLoading(true);
@@ -628,6 +631,15 @@ export default function AdminDspDeliveriesPage() {
         <Button size="small" variant="contained" onClick={handleForceSync} disabled={forceSyncing} startIcon={forceSyncing ? <CircularProgress size={14} /> : <SyncIcon />}>
           {forceSyncing && syncProgress ? (syncProgress.total > 0 ? `${Math.round((syncProgress.processed / syncProgress.total) * 100)}%` : '0%') : forceSyncing ? 'Syncing...' : 'Force Sync All'}
         </Button>
+        <TextField
+          size="small"
+          placeholder="Search by title, release ID, UPC…"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          onKeyDown={(e) => { if (e.key === 'Enter') load(); }}
+          slotProps={{ input: { startAdornment: <InputAdornment position="start"><SearchIcon fontSize="small" /></InputAdornment> } }}
+          sx={{ minWidth: 240, flex: { xs: '1 1 100%', sm: '0 1 auto' } }}
+        />
         <Button size="small" variant="text" color="info" onClick={handleDiagnoseApi} disabled={diagnosing} startIcon={<BugReportIcon />}>
           {diagnosing ? '...' : 'Diagnose API'}
         </Button>
