@@ -1302,16 +1302,7 @@ class DspDeliveryService {
       }
     );
 
-    const dispatched: Array<{ jobId: string; state: string }> = [];
-    const remaining = [...jobIds];
-    while (remaining.length > 0) {
-      const batch = remaining.splice(0, 25);
-      const result = await this.processDueDeliveryJobs({ maxJobs: batch.length, workerId: `force-process:${process.pid}:${Date.now()}`, dispatchOnly: true });
-      dispatched.push(...result.processed);
-      if (result.processed.length < batch.length) break;
-    }
-
-    return { requeued: jobIds.length, dispatched: dispatched.length };
+    return { requeued: jobIds.length, dispatched: 0, message: 'Jobs requeued — scheduler will process them automatically' };
   }
 
   async refreshJobStatus(jobId: string) {

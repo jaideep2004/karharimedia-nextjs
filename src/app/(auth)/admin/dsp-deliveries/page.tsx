@@ -569,7 +569,7 @@ export default function AdminDspDeliveriesPage() {
       setForceProcessing(true);
       const res = await adminAPI.forceProcessBromaDrafts();
       const r = res?.data || {};
-      toast.success(`Requeued ${r.requeued || 0}, dispatched ${r.dispatched || 0}`);
+      toast.success(`Requeued ${r.requeued || 0} — scheduler will process them automatically`);
       await load();
       const draftsRes = await adminAPI.listBromaDrafts();
       if (draftsRes?.data?.drafts) {
