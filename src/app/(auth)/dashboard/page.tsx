@@ -29,7 +29,7 @@ import { useAuth } from '@/context/AppContext';
 import { trackAPI, releaseAPI } from '@/services/api';
 import AuthGuard from '@/components/AuthGuard';
 import { PremiumHeader } from '@/components/premium/PremiumSurface';
-import { getNormalizedReleaseStatus } from '@/lib/releaseStatus';
+import { getNormalizedReleaseStatus, getReleaseStatusLabel } from '@/lib/releaseStatus';
 
 // Types
 interface Track {
@@ -204,13 +204,14 @@ function DashboardPage() {
   ];
 
   const getStatusChip = (status: string) => {
-    const map: Record<string, { color: string; bg: string; label: string }> = {
-      approved: { color: '#10b981', bg: isDark ? 'rgba(16,185,129,0.12)' : 'rgba(16,185,129,0.08)', label: 'Approved' },
-      in_process: { color: '#0ea5e9', bg: isDark ? 'rgba(14,165,233,0.14)' : 'rgba(14,165,233,0.09)', label: 'In Process' },
-      pending: { color: '#f59e0b', bg: isDark ? 'rgba(245,158,11,0.12)' : 'rgba(245,158,11,0.08)', label: 'Pending' },
-      rejected: { color: '#ef4444', bg: isDark ? 'rgba(239,68,68,0.12)' : 'rgba(239,68,68,0.08)', label: 'Rejected' },
+    const map: Record<string, { color: string; bg: string }> = {
+      approved: { color: '#10b981', bg: isDark ? 'rgba(16,185,129,0.12)' : 'rgba(16,185,129,0.08)' },
+      in_process: { color: '#0ea5e9', bg: isDark ? 'rgba(14,165,233,0.14)' : 'rgba(14,165,233,0.09)' },
+      pending: { color: '#f59e0b', bg: isDark ? 'rgba(245,158,11,0.12)' : 'rgba(245,158,11,0.08)' },
+      rejected: { color: '#ef4444', bg: isDark ? 'rgba(239,68,68,0.12)' : 'rgba(239,68,68,0.08)' },
     };
     const s = map[getNormalizedReleaseStatus(status)] || map.pending;
+    const label = getReleaseStatusLabel(status);
     return (
       <Box
         sx={{
@@ -221,7 +222,7 @@ function DashboardPage() {
         }}
       >
         <Box sx={{ width: 6, height: 6, borderRadius: '50%', bgcolor: s.color }} />
-        {s.label}
+        {label}
       </Box>
     );
   };

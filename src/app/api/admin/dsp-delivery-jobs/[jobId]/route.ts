@@ -31,3 +31,28 @@ export async function GET(
     return NextResponse.json({ success: false, message, data: null }, { status: message === 'Authentication required' ? 401 : 500 });
   }
 }
+
+export async function DELETE(
+  _req: Request,
+  { params }: { params: Promise<{ jobId: string }> }
+) {
+  const { jobId } = await params;
+  try {
+    const user = await getCurrentBackendUser();
+    if (user.role !== 'admin' && user.role !== 'subadmin') {
+      return NextResponse.json({ success: false, message: 'Admin access required', data: null }, { status: 403 });
+    }
+    if (!ObjectId.isValid(jobId)) {
+      return NextResponse.json({ success: false, message: 'Delivery job not found', data: null }, { status: 404 });
+    }
+    const { db } = await connectToDatabase();
+    const job = await db.collection('deliveryjobs').findOneAndDelete({ _id: new ObjectId(jobId) });
+    if (!job) {
+      return NextResponse.json({ success: false, message: 'Delivery job not found', data: null }, { status: 404 });
+    }
+    return NextResponse.json({ success: true, message: 'Delivery job deleted permanently' });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : 'Failed to delete delivery job';
+    return NextResponse.json({ success: false, message, data: null }, { status: 500 });
+  }
+}

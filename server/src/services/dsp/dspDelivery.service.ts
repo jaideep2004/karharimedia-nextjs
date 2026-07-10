@@ -1029,6 +1029,154 @@ class DspDeliveryService {
     return DeliveryJob.findById(jobId);
   }
 
+  async retryIndividualJob(jobId: string) {
+    const job = await DeliveryJob.findById(jobId);
+    if (!job) throw new Error('Delivery job not found');
+    if (job.targetType !== 'release' || !job.releaseId) {
+      throw new Error('Only release delivery jobs can be retried individually');
+    }
+
+    const bromaReleaseId = job.metadata?.bromaReleaseId;
+
+    if (bromaReleaseId) {
+      try {
+        await this.deleteBromaDraft({ draftType: 'release', draftId: String(bromaReleaseId) });
+      } catch (error: any) {
+        console.warn(`[retryIndividualJob] Delete Broma draft ${bromaReleaseId} failed (proceeding): ${error?.message}`);
+      }
+    }
+
+    const release = await mongoose.connection.collection('releases').findOne({ _id: job.releaseId });
+    if (!release) throw new Error('Release not found');
+
+    const tracks = Array.isArray(release.tracks) ? release.tracks : [];
+    const stores = Array.isArray(release.stores) ? release.stores : [];
+    const genre = release.genre || release.metadata?.genre || tracks[0]?.genre;
+    const catalogNumber = release.catalogNumber || release.catalog_number || release.upc || String(release._id);
+    const rightsholder = release.label || release.pLine || release.cLine || release.metadata?.label || 'Self-Released';
+    const createdCountryId = release.createdCountryId || release.created_country_id || release.metadata?.createdCountryId;
+
+    const payload = {
+      releaseId: String(release._id),
+      releaseTitle: release.releaseTitle || release.title || 'Untitled Release',
+      upc: release.upc,
+      primaryArtist: release.primaryArtist || release.artist || release.artistName,
+      label: rightsholder,
+      genre,
+      language: release.language,
+      releaseDate: release.releaseDate,
+      stores,
+      tracks: tracks.map((track: any, index: number) => ({
+        id: String(track._id || track.id || track.isrc || track.title || `${release._id}:${index}`),
+        title: track.title,
+        artistName: track.artistName || track.primaryArtist || release.primaryArtist,
+        version: track.version || track.subtitle,
+        isrc: track.isrc,
+        upc: track.upc || release.upc,
+        genre: track.genre,
+        explicit: track.explicit,
+        releaseDate: track.releaseDate || release.releaseDate,
+        audioFile: track.audioUrl || track.fileUrl || track.audioFile,
+        artwork: track.artworkUrl || track.artwork || release.artworkUrl || release.artwork,
+        duration: track.duration,
+        contributors: track.contributors || track.rightsHolders || [],
+        composers: track.composers || [],
+        lyricists: track.lyricists || [],
+        publishers: track.publishers || [],
+        metadata: {
+          subtitle: track.subtitle,
+          version: track.version,
+          catalogNumber: track.catalogNumber || catalogNumber,
+          createdDate: track.createdDate || track.created_date,
+          originalReleaseDate: track.originalReleaseDate || track.original_release_date || release.originalReleaseDate,
+          createdCountryId: track.createdCountryId || createdCountryId,
+          producer: track.producer || release.producer || rightsholder,
+          featuredArtist: track.featuredArtist || track.featuring,
+          label: rightsholder,
+        },
+      })),
+      territories: release.territories || ['WORLD'],
+      assetChecks: release.deliveryAssetReadiness?.checks || [],
+      metadata: {
+        artwork: release.artworkUrl || release.artwork,
+        releaseType: release.releaseType,
+        catalogNumber,
+        createdDate: release.createdDate || release.created_date,
+        originalReleaseDate: release.originalReleaseDate || release.original_release_date,
+        createdCountryId,
+        producer: release.producer || rightsholder,
+        featuring: release.featuring || release.metadata?.featuring,
+        pline: release.pline || release.pLine,
+        cline: release.cline || release.cLine,
+        bromaOutletIds: release.bromaReadiness?.outletIds || [],
+        bromaOutletMappings: release.bromaReadiness?.outletMappings || [],
+      },
+    };
+
+    const payloadHash = crypto.createHash('sha256').update(JSON.stringify(payload)).digest('hex');
+
+    const prevVersion = Number((job.metadata as Record<string, any>)?.snapshotVersion || 1);
+
+    const snapshot = {
+      releaseId: release._id,
+      version: prevVersion + 1,
+      providerKeys: ['broma'],
+      payload,
+      payloadHash,
+      createdBy: 'system:retry-individual',
+      createdAt: new Date(),
+    };
+    const insertResult = await mongoose.connection.collection('releaseDeliverySnapshots').insertOne(snapshot);
+
+    await DeliveryJob.findByIdAndUpdate(jobId, {
+      state: 'queued',
+      snapshotId: insertResult.insertedId,
+      deadLettered: false,
+      nextRetryAt: new Date(),
+      $unset: {
+        lockedAt: '',
+        lockedBy: '',
+        lockExpiresAt: '',
+        errorMessage: '',
+        externalId: '',
+        'metadata.bromaReleaseId': '',
+        'metadata.bromaRecordingIds': '',
+        'metadata.bromaStep': '',
+        'metadata.bromaCoverUploaded': '',
+        'metadata.bromaModerationSentAt': '',
+        'metadata.bromaModerationStatus': '',
+        'metadata.bromaLastStatusAt': '',
+        'metadata.bromaRawStatus': '',
+        'metadata.bromaAdditionalReleaseIds': '',
+        'metadata.bromaAdditionalReleaseSkippedAt': '',
+        'metadata.bromaOutletIds': '',
+        'metadata.bromaOutletMappings': '',
+        'metadata.lastProviderError': '',
+        'metadata.bromaReleaseTypeId': '',
+        'metadata.bromaErrorDetails': '',
+        'metadata.bromaAssetId': '',
+        'metadata.bromaAssetStatuses': '',
+        'metadata.bromaRejectionReason': '',
+        'metadata.bromaStatusSource': '',
+        'metadata.bromaTakedownMode': '',
+        'metadata.bromaTakedownRequestedAt': '',
+        'metadata.nextPollAt': '',
+        'metadata.payloadHash': '',
+        'metadata.connectorMetadata': '',
+        'metadata.metadataWarnings': '',
+      },
+      $push: {
+        events: {
+          state: 'queued',
+          message: 'Manual retry with data rebuild: Broma draft deleted, snapshot rebuilt with current release data',
+          source: 'user',
+        },
+      },
+    });
+
+    return DeliveryJob.findById(jobId);
+  }
+
   async diagnoseBromaApi() {
     const out: Record<string, any> = { checks: [] };
 
@@ -1192,10 +1340,11 @@ class DspDeliveryService {
       config: providerRecord.provider.config || {},
     });
 
-    const resp = await client.getDrafts(String(accountId), { page: 1, limit: 1000 });
-    const items = this.extractBromaAssetsList(resp);
-    const ids = items.map((d: any) => String(d?.id ?? '')).filter(Boolean);
-    const bromaTotal = typeof resp?.total === 'number' ? resp.total : items.length;
+    const firstPage = await client.getDrafts(String(accountId));
+    const bromaTotal = typeof firstPage?.total === 'number' ? firstPage.total : 0;
+    const allItems = this.extractBromaAssetsList(firstPage);
+
+    const ids = allItems.map((d: any) => String(d?.id ?? '')).filter(Boolean);
 
     const jobs = ids.length > 0
       ? await DeliveryJob.find({ providerKey: 'broma', 'metadata.bromaReleaseId': { $in: ids } }).sort({ createdAt: -1 }).lean()
@@ -1203,7 +1352,7 @@ class DspDeliveryService {
     const jobMap = new Map(jobs.map((j) => [String((j.metadata as any)?.bromaReleaseId), j]));
     const TERMINAL_JOB_STATES = new Set(['delivered', 'cancelled']);
 
-    const sorted = items.map((d: any) => {
+    const sorted = allItems.map((d: any) => {
       const id = String(d.id ?? '');
       const job = jobMap.get(id);
       return {
@@ -1221,9 +1370,9 @@ class DspDeliveryService {
     if (page) {
       const PAGE = 10;
       const start = (page - 1) * PAGE;
-      return { total: sorted.length, drafts: sorted.slice(start, start + PAGE) };
+      return { total: bromaTotal, drafts: sorted.slice(start, start + PAGE) };
     }
-    return { total: sorted.length, drafts: sorted };
+    return { total: bromaTotal, drafts: sorted };
   }
 
   async retryAllBromaDrafts(workerId?: string) {

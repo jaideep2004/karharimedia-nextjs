@@ -32,7 +32,7 @@ import { DspLogo } from '@/components/dsp/DspLogo';
 import RouteTabs from '@/components/navigation/RouteTabs';
 import { getDspDisplayName } from '@/lib/platforms';
 import { useAuth } from '@/context/AppContext';
-import { getNormalizedReleaseStatus } from '@/lib/releaseStatus';
+import { getNormalizedReleaseStatus, getReleaseStatusLabel } from '@/lib/releaseStatus';
 
 const RELEASE_DRAFT_PREFIX = 'karharimedia.releaseDraft.v1.';
 const RELEASE_DRAFT_BACKUP_KEY = `${RELEASE_DRAFT_PREFIX}latest`;
@@ -282,9 +282,7 @@ function ReleasesContent() {
       rejected: { color: '#ef4444', bg: isDark ? 'rgba(239,68,68,0.12)' : 'rgba(239,68,68,0.08)' },
     };
     const s = map[normalized] || map.pending;
-    const label = status
-      ? status.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
-      : 'Unknown';
+    const label = getReleaseStatusLabel(status);
     return (
       <Box
         sx={{

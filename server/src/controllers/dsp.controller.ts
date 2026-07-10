@@ -153,6 +153,15 @@ export const retryDelivery = async (req: AuthRequest, res: Response): Promise<vo
   }
 };
 
+export const retryIndividualDelivery = async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    const job = await dspDeliveryService.retryIndividualJob(req.params.jobId);
+    successResponse(res, job, 'Individual delivery retry with data rebuild completed');
+  } catch (error) {
+    errorResponse(res, 'Failed to retry individual delivery job', error);
+  }
+};
+
 export const diagnoseBromaApi = async (_req: AuthRequest, res: Response): Promise<void> => {
   try {
     const result = await dspDeliveryService.diagnoseBromaApi();

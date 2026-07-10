@@ -1147,6 +1147,15 @@ export const adminAPI = {
     }
   },
 
+  retryIndividualDspDelivery: async (jobId: string) => {
+    try {
+      const response = await api.post<ApiResponse<any>>(`/admin/dsp/deliveries/${jobId}/retry-individual`);
+      return response.data;
+    } catch (error) {
+      return handleApiError(error);
+    }
+  },
+
   refreshDspDeliveryStatus: async (jobId: string) => {
     try {
       const response = await api.post<ApiResponse<any>>(`/admin/dsp-delivery-jobs/${jobId}/refresh-status`);
@@ -1177,6 +1186,15 @@ export const adminAPI = {
   processAllDspDeliveries: async (workerId?: string) => {
     try {
       const response = await api.post<ApiResponse<any>>('/admin/dsp/deliveries/process-all', { workerId });
+      return response.data;
+    } catch (error) {
+      return handleApiError(error);
+    }
+  },
+
+  deleteDspDelivery: async (jobId: string) => {
+    try {
+      const response = await api.delete<ApiResponse<any>>(`/admin/dsp-delivery-jobs/${jobId}`);
       return response.data;
     } catch (error) {
       return handleApiError(error);

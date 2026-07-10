@@ -46,7 +46,7 @@ import {
 } from '@/lib/acrCloud';
 import { getDspDisplayName } from '@/lib/platforms';
 import PremiumAudioPlayer from '@/components/audio/PremiumAudioPlayer';
-import { getReleaseRejectionReason } from '@/lib/releaseStatus';
+import { getReleaseRejectionReason, getNormalizedReleaseStatus, getReleaseStatusLabel } from '@/lib/releaseStatus';
 
 type Track = {
   _id?: string;
@@ -122,11 +122,13 @@ const formatDuration = (value?: string | number) => {
 };
 
 const getStatusStyle = (status?: string, isDark = false) => {
+  const normalized = status ? getNormalizedReleaseStatus(status) : 'pending';
+  const label = status ? getReleaseStatusLabel(status) : 'Pending';
   const map: Record<string, { color: string; bg: string; label: string; icon: any }> = {
     approved: {
       color: '#10b981',
       bg: isDark ? 'rgba(16,185,129,0.13)' : 'rgba(16,185,129,0.08)',
-      label: 'Approved',
+      label,
       icon: <CheckCircle sx={{ fontSize: 15 }} />,
     },
     pending: {
@@ -142,7 +144,7 @@ const getStatusStyle = (status?: string, isDark = false) => {
       icon: <ErrorOutline sx={{ fontSize: 15 }} />,
     },
   };
-  return map[status || 'pending'] || map.pending;
+  return map[normalized] || map.pending;
 };
 
 function ReleaseDetailPage() {

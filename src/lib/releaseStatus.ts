@@ -58,7 +58,9 @@ export function getReleaseStatusLabel(status: unknown) {
 
   if (normalized === 'pending') return 'Pending';
   if (normalized === 'in_process') return 'In Process';
+  if (value === 'live') return 'Delivered';
   if (normalized === 'approved') return 'Approved';
+  if (normalized === 'rejected') return 'Rejected';
 
   return value
     ? value.replace(/_/g, ' ').replace(/\b\w/g, (letter) => letter.toUpperCase())

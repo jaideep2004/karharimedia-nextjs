@@ -14,7 +14,7 @@ export async function GET(req: Request) {
     const providerKey = url.searchParams.get('providerKey') || '';
     const state = url.searchParams.get('state') || '';
     const page = Math.max(1, Number(url.searchParams.get('page') || 1));
-    const limit = Math.min(100, Math.max(1, Number(url.searchParams.get('limit') || 20)));
+    const limit = Math.min(100, Math.max(1, Number(url.searchParams.get('limit') || 100)));
     const search = url.searchParams.get('search') || '';
     const query: Record<string, any> = {};
     if (providerKey) query.providerKey = providerKey;
@@ -40,10 +40,9 @@ export async function GET(req: Request) {
         { providerJobId: { $regex: escaped, $options: 'i' } },
       ];
     }
-    const [data, total, countResults] = await Promise.all([
+    const [rawData, total, countResults] = await Promise.all([
       db.collection('deliveryjobs')
         .find(query, { projection: { attempts: 0, events: 0 } })
-        .sort({ updatedAt: -1, createdAt: -1 })
         .skip((page - 1) * limit)
         .limit(limit)
         .toArray(),
@@ -53,6 +52,11 @@ export async function GET(req: Request) {
         { $group: { _id: '$state', count: { $sum: 1 } } },
       ]).toArray(),
     ]);
+    const data = rawData.sort((a, b) => {
+      const tA = a.updatedAt ? new Date(a.updatedAt).valueOf() : (a.createdAt ? new Date(a.createdAt).valueOf() : 0);
+      const tB = b.updatedAt ? new Date(b.updatedAt).valueOf() : (b.createdAt ? new Date(b.createdAt).valueOf() : 0);
+      return tB - tA;
+    });
 
     const counts: Record<string, number> = {};
     for (const row of countResults) {

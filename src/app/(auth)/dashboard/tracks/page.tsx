@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import {
   Alert,
@@ -19,10 +19,10 @@ import {
   Typography,
   useTheme,
 } from '@mui/material';
+import { getNormalizedReleaseStatus, getReleaseStatusLabel } from '@/lib/releaseStatus';
 import { Album, CloudUpload, Pause, PlayArrow, Search } from '@mui/icons-material';
 import AuthGuard from '@/components/AuthGuard';
 import { PremiumHeader, premiumSurfaceSx } from '@/components/premium/PremiumSurface';
-import RouteTabs from '@/components/navigation/RouteTabs';
 import { trackAPI } from '@/services/api';
 
 type TrackRow = {
@@ -97,12 +97,6 @@ function TracksContent() {
 
   useEffect(() => () => audio?.pause(), [audio]);
 
-  const activeCounts = useMemo(() => ({
-    total: counts.all,
-    approved: counts.approved,
-    pending: counts.pending,
-  }), [counts]);
-
   const togglePlay = (row: TrackRow) => {
     if (!row.audioUrl) return;
     if (playing === row.id) {
@@ -127,17 +121,6 @@ function TracksContent() {
         action={<Button component={Link} href="/dashboard/upload" variant="contained" startIcon={<CloudUpload />}>
           Create New Release
         </Button>}
-      />
-
-      <RouteTabs
-        ariaLabel="release catalog sections"
-        items={[
-          { label: 'All Releases', href: '/dashboard/releases' },
-          { label: 'Pending', href: '/dashboard/releases?status=pending' },
-          { label: 'Approved', href: '/dashboard/releases?status=approved' },
-          { label: 'Rejected', href: '/dashboard/releases?status=rejected' },
-          { label: 'Tracks', href: '/dashboard/tracks' },
-        ]}
       />
 
       <Paper
@@ -184,43 +167,6 @@ function TracksContent() {
           />
         </Stack>
       </Paper>
-
-      <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(3, 1fr)' }, gap: 1.5, mb: 2.5 }}>
-        {[
-          ['Total tracks', activeCounts.total, '#4f46e5'],
-          ['Approved', activeCounts.approved, '#10b981'],
-          ['Pending review', activeCounts.pending, '#f59e0b'],
-        ].map(([label, value, color]) => (
-          <Paper
-            key={label}
-            elevation={0}
-            sx={{
-              ...premiumSurfaceSx(theme),
-              p: 2,
-              minHeight: 112,
-              borderRadius: '24px',
-              position: 'relative',
-              '&::after': {
-                content: '""',
-                position: 'absolute',
-                left: 18,
-                right: 18,
-                bottom: 0,
-                height: 3,
-                borderRadius: 99,
-                bgcolor: String(color),
-              },
-            }}
-          >
-            <Typography variant="body2" color="text.secondary" fontWeight={850}>
-              {String(label)}
-            </Typography>
-            <Typography variant="h4" fontWeight={950} sx={{ mt: 1, fontSize: { xs: '1.75rem', md: '2rem' } }}>
-              {String(value)}
-            </Typography>
-          </Paper>
-        ))}
-      </Box>
 
       {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
 
@@ -272,7 +218,7 @@ function TracksContent() {
               </Typography>
               <Typography color="text.secondary" sx={{ fontSize: '0.86rem' }}>{row.isrc || 'No ISRC'}</Typography>
               <Typography color="text.secondary" sx={{ fontSize: '0.86rem' }}>{formatDate(row.releaseDate)}</Typography>
-              <Chip label={row.status || 'pending'} size="small" color={row.status === 'approved' ? 'success' : row.status === 'rejected' ? 'error' : 'warning'} sx={{ height: 26, maxWidth: 112 }} />
+              <Chip label={getReleaseStatusLabel(row.status)} size="small" color={getNormalizedReleaseStatus(row.status) === 'approved' ? 'success' : getNormalizedReleaseStatus(row.status) === 'rejected' ? 'error' : 'warning'} sx={{ height: 26, maxWidth: 112 }} />
             </Box>
           ))
         )}

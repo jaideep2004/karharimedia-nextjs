@@ -50,6 +50,7 @@ import BugReportIcon from '@mui/icons-material/BugReport';
 import SettingsIcon from '@mui/icons-material/Settings';
 import CloseIcon from '@mui/icons-material/Close';
 import SearchIcon from '@mui/icons-material/Search';
+import BuildIcon from '@mui/icons-material/Build';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { DspLogo } from '@/components/dsp/DspLogo';
@@ -216,16 +217,13 @@ export default function AdminDspDeliveriesPage() {
   const [bromaOutlets, setBromaOutlets] = useState<BromaOutlet[]>([]);
   const [loading, setLoading] = useState(true);
   const [providerFilter, setProviderFilter] = useState('broma');
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [paginationTotal, setPaginationTotal] = useState(0);
   const [totalCounts, setTotalCounts] = useState<Record<string, number>>({});
 
   const [processingDue, setProcessingDue] = useState(false);
   const [retryingDrafts, setRetryingDrafts] = useState(false);
   const [forceProcessing, setForceProcessing] = useState(false);
   const [bromaDrafts, setBromaDrafts] = useState<DraftEntry[] | null>(null);
-  const [bromaDraftsTotal, setBromaDraftsTotal] = useState(0);
+  const [bromaDraftsTotal, setBromaDraftsTotal] = useState<number | null>(null);
   const [draftsLoading, setDraftsLoading] = useState(false);
   const [draftPage, setDraftPage] = useState(0);
   const [draftRowsPerPage, setDraftRowsPerPage] = useState(10);
@@ -234,6 +232,8 @@ export default function AdminDspDeliveriesPage() {
   const [savingBroma, setSavingBroma] = useState(false);
   const [refreshingStatusId, setRefreshingStatusId] = useState<string | null>(null);
   const [clearingLogsId, setClearingLogsId] = useState<string | null>(null);
+  const [retryingIndividualId, setRetryingIndividualId] = useState<string | null>(null);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
   const [expandedJobId, setExpandedJobId] = useState<string | null>(null);
   const [loadingJobDetailsId, setLoadingJobDetailsId] = useState<string | null>(null);
 
@@ -288,12 +288,11 @@ export default function AdminDspDeliveriesPage() {
       const term = searchTermRef.current;
       const [providerRes, jobsRes] = await Promise.all([
         adminAPI.listDspProviders(),
-        adminAPI.listDspDeliveries({ providerKey: providerFilter !== 'all' ? providerFilter : '', state: tabStateFilter, search: term, limit: rowsPerPage, page: page + 1 }),
+        adminAPI.listDspDeliveries({ providerKey: providerFilter !== 'all' ? providerFilter : '', state: tabStateFilter, search: term, limit: 50, page: 1 }),
       ]);
       const nextJobs = jobsRes?.data?.data || [];
       setProviders(providerRes?.data || []);
       setJobs(nextJobs);
-      setPaginationTotal(Number(jobsRes?.data?.pagination?.total || nextJobs.length || 0));
       setTotalCounts(jobsRes?.data?.counts || {});
       setJobDetails({});
     } catch (error) {
@@ -301,7 +300,7 @@ export default function AdminDspDeliveriesPage() {
     } finally {
       setLoading(false);
     }
-  }, [providerFilter, page, rowsPerPage, tabStateFilter]);
+  }, [providerFilter, tabStateFilter]);
 
   useEffect(() => () => { if (searchTimer.current) clearTimeout(searchTimer.current); }, []);
 
@@ -315,17 +314,27 @@ export default function AdminDspDeliveriesPage() {
       }
     } catch (e) {
       console.error('[Drafts] Failed to load:', e);
+      toast.error(e instanceof Error ? e.message : 'Failed to load Broma drafts');
     } finally {
       setDraftsLoading(false);
     }
   }, []);
 
   useEffect(() => {
-    if (isAdmin) {
-      void load();
-      void loadDraftsBackground();
-    }
-  }, [isAdmin, load, loadDraftsBackground]);
+    if (!isAdmin) return;
+    void load();
+  }, [isAdmin, load]);
+
+  useEffect(() => {
+    if (!isAdmin || releaseTab !== 'processing') return;
+    const id = setInterval(() => load(), 15000);
+    return () => clearInterval(id);
+  }, [isAdmin, releaseTab, load]);
+
+  useEffect(() => {
+    if (!isAdmin) return;
+    void loadDraftsBackground();
+  }, [isAdmin, loadDraftsBackground]);
 
   useEffect(() => {
     if (isAdmin && releaseTab === 'drafts') {
@@ -333,7 +342,7 @@ export default function AdminDspDeliveriesPage() {
     }
   }, [isAdmin, releaseTab, loadDraftsBackground]);
 
-  useEffect(() => { setPage(0); setDraftPage(0); }, [providerFilter, releaseTab]);
+  useEffect(() => { setDraftPage(0); }, [providerFilter, releaseTab]);
 
   useEffect(() => {
     if (!bromaProvider) return;
@@ -385,6 +394,19 @@ export default function AdminDspDeliveriesPage() {
     catch (error) { toast.error(error instanceof Error ? error.message : 'Retry failed'); }
   };
 
+  const handleRetryIndividual = async (jobId: string) => {
+    setRetryingIndividualId(jobId);
+    try {
+      await adminAPI.retryIndividualDspDelivery(jobId);
+      toast.success('Fix & Retry: Broma draft recreated with current data');
+      await load();
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Fix & Retry failed');
+    } finally {
+      setRetryingIndividualId(null);
+    }
+  };
+
   const handleToggleJob = async (jobId: string) => {
     if (expandedJobId === jobId) { setExpandedJobId(null); return; }
     setExpandedJobId(jobId);
@@ -425,6 +447,20 @@ export default function AdminDspDeliveriesPage() {
     } catch (error) {
       toast.error(error instanceof Error ? error.message : 'Log clear failed');
     } finally { setClearingLogsId(null); }
+  };
+
+  const handleDeleteJob = async (jobId: string) => {
+    if (!window.confirm('Permanently delete this delivery job?')) return;
+    setDeletingId(jobId);
+    try {
+      await adminAPI.deleteDspDelivery(jobId);
+      setJobs((c) => c.filter((j) => j._id !== jobId));
+      setJobDetails((c) => { const n = { ...c }; delete n[jobId]; return n; });
+      if (expandedJobId === jobId) setExpandedJobId(null);
+      toast.success('Delivery job deleted permanently');
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Delete failed');
+    } finally { setDeletingId(null); }
   };
 
   const handleProcessDue = async () => {
@@ -644,14 +680,12 @@ export default function AdminDspDeliveriesPage() {
           value={searchTerm}
           onChange={(e) => {
             setSearchTerm(e.target.value);
-            setPage(0);
             if (searchTimer.current) clearTimeout(searchTimer.current);
             searchTimer.current = setTimeout(() => load(), 400);
           }}
           onKeyDown={(e) => {
             if (e.key === 'Enter') {
               if (searchTimer.current) clearTimeout(searchTimer.current);
-              setPage(0);
               load();
             }
           }}
@@ -762,13 +796,13 @@ export default function AdminDspDeliveriesPage() {
 
       {/* Release Tabs */}
       <Paper sx={{ mb: 1 }}>
-        <Tabs value={releaseTab} onChange={(_, v) => { setReleaseTab(v); setPage(0); }} variant="scrollable" scrollButtons="auto" sx={{ minHeight: 40, '& .MuiTab-root': { minHeight: 40, py: 0.75 } }}>
+        <Tabs value={releaseTab} onChange={(_, v) => { setReleaseTab(v); }} variant="scrollable" scrollButtons="auto" sx={{ minHeight: 40, '& .MuiTab-root': { minHeight: 40, py: 0.75 } }}>
           <Tab value="all" label={<Stack direction="row" spacing={0.5} alignItems="center"><Typography variant="body2">All</Typography><Chip size="small" label={totalCountsAll} variant="outlined" sx={{ height: 18, fontSize: 11 }} /></Stack>} />
           <Tab value="processing" label={<Stack direction="row" spacing={0.5} alignItems="center"><HourglassTopIcon sx={{ fontSize: 14, color: 'info.main' }} /><Typography variant="body2" fontWeight={600}>{totalCountsProcessing}</Typography><Typography variant="body2" color="text.secondary">Processing</Typography></Stack>} />
           <Tab value="delivered" label={<Stack direction="row" spacing={0.5} alignItems="center"><CheckCircleIcon sx={{ fontSize: 14, color: 'success.main' }} /><Typography variant="body2" fontWeight={600}>{totalCountsDelivered}</Typography><Typography variant="body2" color="text.secondary">Delivered</Typography></Stack>} />
           <Tab value="failed" label={<Stack direction="row" spacing={0.5} alignItems="center"><CancelIcon sx={{ fontSize: 14, color: 'error.main' }} /><Typography variant="body2" fontWeight={600}>{totalCountsFailed}</Typography><Typography variant="body2" color="text.secondary">Failed</Typography></Stack>} />
           <Tab value="queued" label={<Stack direction="row" spacing={0.5} alignItems="center"><ListAltIcon sx={{ fontSize: 14 }} /><Typography variant="body2" fontWeight={600}>{totalCountsQueued}</Typography><Typography variant="body2" color="text.secondary">Queued</Typography></Stack>} />
-          <Tab value="drafts" label={<Stack direction="row" spacing={0.5} alignItems="center"><ListAltIcon sx={{ fontSize: 14 }} /><Typography variant="body2" fontWeight={600}>{bromaDraftsTotal || bromaDrafts?.length || '-'}</Typography><Typography variant="body2" color="text.secondary">Drafts</Typography></Stack>} />
+          <Tab value="drafts" label={<Stack direction="row" spacing={0.5} alignItems="center"><ListAltIcon sx={{ fontSize: 14 }} /><Typography variant="body2" fontWeight={600}>{draftsLoading ? '-' : bromaDraftsTotal ?? bromaDrafts?.length ?? '-'}</Typography><Typography variant="body2" color="text.secondary">Drafts</Typography></Stack>} />
         </Tabs>
       </Paper>
 
@@ -840,7 +874,7 @@ export default function AdminDspDeliveriesPage() {
                   })}
                 </TableBody>
               </Table>
-            </Box><TablePagination component="div" count={bromaDraftsTotal} page={draftPage} rowsPerPage={draftRowsPerPage} rowsPerPageOptions={[10]} onPageChange={(_, np) => setDraftPage(np)} onRowsPerPageChange={(e) => { setDraftRowsPerPage(Number(e.target.value)); setDraftPage(0); }} /></>
+            </Box><TablePagination component="div" count={bromaDraftsTotal ?? 0} page={draftPage} rowsPerPage={draftRowsPerPage} rowsPerPageOptions={[10]} onPageChange={(_, np) => setDraftPage(np)} onRowsPerPageChange={(e) => { setDraftRowsPerPage(Number(e.target.value)); setDraftPage(0); }} /></>
           )}
         </Paper>
       ) : (
@@ -863,7 +897,7 @@ export default function AdminDspDeliveriesPage() {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {tabFilteredJobs.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((listJob) => {
+                  {tabFilteredJobs.map((listJob) => {
                     const job = jobDetails[listJob._id] || listJob;
                     const isExpanded = expandedJobId === listJob._id;
                     const isLoadingDetails = loadingJobDetailsId === listJob._id && !jobDetails[listJob._id];
@@ -937,7 +971,15 @@ export default function AdminDspDeliveriesPage() {
                                   </IconButton>
                                 </span>
                               </Tooltip>
+                              <Tooltip title="Delete Broma draft & rebuild snapshot with current release data">
+                                <span>
+                                  <Button size="small" color="warning" variant="outlined" disabled={!['failed', 'needs_attention'].includes(job.state) || retryingIndividualId === job._id} onClick={() => handleRetryIndividual(job._id)} startIcon={retryingIndividualId === job._id ? <CircularProgress size={14} /> : <BuildIcon />}>Fix & Retry</Button>
+                                </span>
+                              </Tooltip>
                               <Button size="small" variant="outlined" disabled={!['failed', 'needs_attention'].includes(job.state)} onClick={() => handleRetry(job._id)} startIcon={<ReplayIcon />}>Retry</Button>
+                              {['failed', 'needs_attention'].includes(job.state) && (
+                                <Button size="small" variant="outlined" color="error" disabled={deletingId === job._id} onClick={() => handleDeleteJob(job._id)} startIcon={deletingId === job._id ? <CircularProgress size={14} /> : undefined}>Delete</Button>
+                              )}
                             </Stack>
                           </TableCell>
                         </TableRow>
@@ -1008,7 +1050,6 @@ export default function AdminDspDeliveriesPage() {
                   {tabFilteredJobs.length === 0 && <TableRow><TableCell colSpan={10} align="center"><Typography variant="body2" color="text.secondary" py={3}>No delivery jobs found for this filter.</Typography></TableCell></TableRow>}
                 </TableBody>
               </Table>
-              <TablePagination component="div" count={paginationTotal} page={page} rowsPerPage={rowsPerPage} rowsPerPageOptions={[5, 10, 25, 50]} onPageChange={(_, np) => setPage(np)} onRowsPerPageChange={(e) => { setRowsPerPage(Number(e.target.value)); setPage(0); }} />
             </>
           )}
         </Paper>
