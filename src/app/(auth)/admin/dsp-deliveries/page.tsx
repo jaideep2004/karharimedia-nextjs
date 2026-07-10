@@ -302,6 +302,22 @@ export default function AdminDspDeliveriesPage() {
     }
   }, [providerFilter, tabStateFilter]);
 
+  const silentRefresh = useCallback(async () => {
+    try {
+      const term = searchTermRef.current;
+      const [providerRes, jobsRes] = await Promise.all([
+        adminAPI.listDspProviders(),
+        adminAPI.listDspDeliveries({ providerKey: providerFilter !== 'all' ? providerFilter : '', state: tabStateFilter, search: term, limit: 50, page: 1 }),
+      ]);
+      const nextJobs = jobsRes?.data?.data || [];
+      setProviders(providerRes?.data || []);
+      setJobs(nextJobs);
+      setTotalCounts(jobsRes?.data?.counts || {});
+    } catch {
+      // silent — no spinner, no toast
+    }
+  }, [providerFilter, tabStateFilter]);
+
   useEffect(() => () => { if (searchTimer.current) clearTimeout(searchTimer.current); }, []);
 
   const loadDraftsBackground = useCallback(async () => {
@@ -327,9 +343,9 @@ export default function AdminDspDeliveriesPage() {
 
   useEffect(() => {
     if (!isAdmin || releaseTab !== 'processing') return;
-    const id = setInterval(() => load(), 15000);
+    const id = setInterval(() => silentRefresh(), 150000);
     return () => clearInterval(id);
-  }, [isAdmin, releaseTab, load]);
+  }, [isAdmin, releaseTab, silentRefresh]);
 
   useEffect(() => {
     if (!isAdmin) return;
