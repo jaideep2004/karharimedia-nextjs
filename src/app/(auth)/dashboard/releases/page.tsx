@@ -32,17 +32,10 @@ import { DspLogo } from '@/components/dsp/DspLogo';
 import RouteTabs from '@/components/navigation/RouteTabs';
 import { getDspDisplayName } from '@/lib/platforms';
 import { useAuth } from '@/context/AppContext';
+import { getNormalizedReleaseStatus } from '@/lib/releaseStatus';
 
 const RELEASE_DRAFT_PREFIX = 'karharimedia.releaseDraft.v1.';
 const RELEASE_DRAFT_BACKUP_KEY = `${RELEASE_DRAFT_PREFIX}latest`;
-
-const getNormalizedReleaseStatus = (status?: string) => {
-  if (status === 'pending_review') return 'pending';
-  if (['uploading_to_broma', 'broma_moderation', 'dsp_processing'].includes(String(status || ''))) {
-    return 'in_process';
-  }
-  return status || 'pending';
-};
 
 const getDraftArtist = (draft: any) => {
   const firstTrack = Array.isArray(draft?.trackInfos) ? draft.trackInfos[0] : null;
@@ -280,14 +273,18 @@ function ReleasesContent() {
     Number(release.trackCount ?? (Array.isArray(release.tracks) ? release.tracks.length : 0));
 
   const getStatusChip = (status: string) => {
-    const map: Record<string, { color: string; bg: string; label: string }> = {
-      draft: { color: '#94a3b8', bg: isDark ? 'rgba(148,163,184,0.14)' : 'rgba(100,116,139,0.10)', label: 'Draft' },
-      approved: { color: '#10b981', bg: isDark ? 'rgba(16,185,129,0.12)' : 'rgba(16,185,129,0.08)', label: 'Approved' },
-      in_process: { color: '#0ea5e9', bg: isDark ? 'rgba(14,165,233,0.14)' : 'rgba(14,165,233,0.09)', label: 'In Process' },
-      pending: { color: '#f59e0b', bg: isDark ? 'rgba(245,158,11,0.12)' : 'rgba(245,158,11,0.08)', label: 'Pending' },
-      rejected: { color: '#ef4444', bg: isDark ? 'rgba(239,68,68,0.12)' : 'rgba(239,68,68,0.08)', label: 'Rejected' },
+    const normalized = getNormalizedReleaseStatus(status);
+    const map: Record<string, { color: string; bg: string }> = {
+      draft: { color: '#94a3b8', bg: isDark ? 'rgba(148,163,184,0.14)' : 'rgba(100,116,139,0.10)' },
+      approved: { color: '#10b981', bg: isDark ? 'rgba(16,185,129,0.12)' : 'rgba(16,185,129,0.08)' },
+      in_process: { color: '#0ea5e9', bg: isDark ? 'rgba(14,165,233,0.14)' : 'rgba(14,165,233,0.09)' },
+      pending: { color: '#f59e0b', bg: isDark ? 'rgba(245,158,11,0.12)' : 'rgba(245,158,11,0.08)' },
+      rejected: { color: '#ef4444', bg: isDark ? 'rgba(239,68,68,0.12)' : 'rgba(239,68,68,0.08)' },
     };
-    const s = map[getNormalizedReleaseStatus(status)] || map.pending;
+    const s = map[normalized] || map.pending;
+    const label = status
+      ? status.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
+      : 'Unknown';
     return (
       <Box
         sx={{
@@ -298,7 +295,7 @@ function ReleasesContent() {
         }}
       >
         <Box sx={{ width: 6, height: 6, borderRadius: '50%', bgcolor: s.color }} />
-        {s.label}
+        {label}
       </Box>
     );
   };
