@@ -275,6 +275,7 @@ export default function AdminDspDeliveriesPage() {
   const totalCountsDelivered = totalCounts.delivered ?? jobs.filter((j) => j.state === 'delivered').length;
   const totalCountsFailed = totalCounts.failed ?? jobs.filter((j) => ['failed', 'needs_attention'].includes(j.state)).length;
   const totalCountsQueued = totalCounts.queued ?? jobs.filter((j) => j.state === 'queued').length;
+  const totalCountsBsonFailed = totalCounts.bsonDepthFailed ?? jobs.filter((j) => (j.metadata as any)?.bsonDepthFixed).length;
 
   const tabStateFilter = releaseTab === 'failed' ? 'needs_attention' : (['processing', 'delivered', 'queued'].includes(releaseTab) ? releaseTab : '');
   const tabFilteredJobs = releaseTab === 'drafts' ? [] : jobs;
@@ -288,7 +289,14 @@ export default function AdminDspDeliveriesPage() {
       const term = searchTermRef.current;
       const [providerRes, jobsRes] = await Promise.all([
         adminAPI.listDspProviders(),
-        adminAPI.listDspDeliveries({ providerKey: providerFilter !== 'all' ? providerFilter : '', state: tabStateFilter, search: term, limit: 50, page: 1 }),
+        adminAPI.listDspDeliveries({
+          providerKey: providerFilter !== 'all' ? providerFilter : '',
+          state: tabStateFilter,
+          search: term,
+          limit: releaseTab === 'bson_failed' ? 500 : 50,
+          page: 1,
+          ...(releaseTab === 'bson_failed' ? { bsonDepthFixed: 'true' } : {}),
+        }),
       ]);
       const nextJobs = jobsRes?.data?.data || [];
       setProviders(providerRes?.data || []);
@@ -300,14 +308,21 @@ export default function AdminDspDeliveriesPage() {
     } finally {
       setLoading(false);
     }
-  }, [providerFilter, tabStateFilter]);
+  }, [providerFilter, tabStateFilter, releaseTab]);
 
   const silentRefresh = useCallback(async () => {
     try {
       const term = searchTermRef.current;
       const [providerRes, jobsRes] = await Promise.all([
         adminAPI.listDspProviders(),
-        adminAPI.listDspDeliveries({ providerKey: providerFilter !== 'all' ? providerFilter : '', state: tabStateFilter, search: term, limit: 50, page: 1 }),
+        adminAPI.listDspDeliveries({
+          providerKey: providerFilter !== 'all' ? providerFilter : '',
+          state: tabStateFilter,
+          search: term,
+          limit: releaseTab === 'bson_failed' ? 500 : 50,
+          page: 1,
+          ...(releaseTab === 'bson_failed' ? { bsonDepthFixed: 'true' } : {}),
+        }),
       ]);
       const nextJobs = jobsRes?.data?.data || [];
       setProviders(providerRes?.data || []);
@@ -316,7 +331,7 @@ export default function AdminDspDeliveriesPage() {
     } catch {
       // silent — no spinner, no toast
     }
-  }, [providerFilter, tabStateFilter]);
+  }, [providerFilter, tabStateFilter, releaseTab]);
 
   useEffect(() => () => { if (searchTimer.current) clearTimeout(searchTimer.current); }, []);
 
@@ -817,6 +832,7 @@ export default function AdminDspDeliveriesPage() {
           <Tab value="processing" label={<Stack direction="row" spacing={0.5} alignItems="center"><HourglassTopIcon sx={{ fontSize: 14, color: 'info.main' }} /><Typography variant="body2" fontWeight={600}>{totalCountsProcessing}</Typography><Typography variant="body2" color="text.secondary">Processing</Typography></Stack>} />
           <Tab value="delivered" label={<Stack direction="row" spacing={0.5} alignItems="center"><CheckCircleIcon sx={{ fontSize: 14, color: 'success.main' }} /><Typography variant="body2" fontWeight={600}>{totalCountsDelivered}</Typography><Typography variant="body2" color="text.secondary">Delivered</Typography></Stack>} />
           <Tab value="failed" label={<Stack direction="row" spacing={0.5} alignItems="center"><CancelIcon sx={{ fontSize: 14, color: 'error.main' }} /><Typography variant="body2" fontWeight={600}>{totalCountsFailed}</Typography><Typography variant="body2" color="text.secondary">Failed</Typography></Stack>} />
+          <Tab value="bson_failed" label={<Stack direction="row" spacing={0.5} alignItems="center"><BugReportIcon sx={{ fontSize: 14, color: 'warning.main' }} /><Typography variant="body2" fontWeight={600}>{totalCountsBsonFailed}</Typography><Typography variant="body2" color="text.secondary">BSON Failed</Typography></Stack>} />
           <Tab value="queued" label={<Stack direction="row" spacing={0.5} alignItems="center"><ListAltIcon sx={{ fontSize: 14 }} /><Typography variant="body2" fontWeight={600}>{totalCountsQueued}</Typography><Typography variant="body2" color="text.secondary">Queued</Typography></Stack>} />
           <Tab value="drafts" label={<Stack direction="row" spacing={0.5} alignItems="center"><ListAltIcon sx={{ fontSize: 14 }} /><Typography variant="body2" fontWeight={600}>{draftsLoading ? '-' : bromaDraftsTotal ?? bromaDrafts?.length ?? '-'}</Typography><Typography variant="body2" color="text.secondary">Drafts</Typography></Stack>} />
         </Tabs>

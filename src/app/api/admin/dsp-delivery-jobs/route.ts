@@ -14,11 +14,16 @@ export async function GET(req: Request) {
     const providerKey = url.searchParams.get('providerKey') || '';
     const state = url.searchParams.get('state') || '';
     const page = Math.max(1, Number(url.searchParams.get('page') || 1));
-    const limit = Math.min(100, Math.max(1, Number(url.searchParams.get('limit') || 100)));
+    const limit = Math.min(500, Math.max(1, Number(url.searchParams.get('limit') || 100)));
     const search = url.searchParams.get('search') || '';
+    const bsonDepthFixed = url.searchParams.get('bsonDepthFixed') === 'true';
     const query: Record<string, any> = {};
     if (providerKey) query.providerKey = providerKey;
     if (state) query.state = state;
+    if (bsonDepthFixed) {
+      query['metadata.bsonDepthFixed'] = true;
+      query.state = 'failed';
+    }
     if (search) {
       const escaped = search.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       query.$or = [
@@ -40,7 +45,7 @@ export async function GET(req: Request) {
         { providerJobId: { $regex: escaped, $options: 'i' } },
       ];
     }
-    const [rawData, total, countResults] = await Promise.all([
+    const [rawData, total, countResults, bsonCount] = await Promise.all([
       db.collection('deliveryjobs')
         .find(query, { projection: { attempts: 0, events: 0 } })
         .skip((page - 1) * limit)
@@ -51,6 +56,7 @@ export async function GET(req: Request) {
         { $match: allJobsQuery },
         { $group: { _id: '$state', count: { $sum: 1 } } },
       ]).toArray(),
+      db.collection('deliveryjobs').countDocuments({ 'metadata.bsonDepthFixed': true }),
     ]);
     const data = rawData.sort((a, b) => {
       const tA = a.updatedAt ? new Date(a.updatedAt).valueOf() : (a.createdAt ? new Date(a.createdAt).valueOf() : 0);
@@ -75,6 +81,7 @@ export async function GET(req: Request) {
           delivered: counts.delivered || 0,
           failed: (counts.failed || 0) + (counts.needs_attention || 0),
           queued: counts.queued || 0,
+          bsonDepthFailed: bsonCount,
         },
         pagination: {
           total,

@@ -93,6 +93,7 @@ async function fixBatch(db, ids) {
     bulk.find({ _id: id }).updateOne({
       $set: {
         'metadata.connectorMetadata': flatCm,
+        'metadata.bsonDepthFixed': true,
         state: 'failed',
         deadLettered: false,
       },
