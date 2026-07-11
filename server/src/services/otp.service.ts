@@ -25,7 +25,7 @@ export async function sendAmazeSmsOtp(phoneNumber: string, otp: string): Promise
     return;
   }
 
-  const body = `Your OTP for Karhari Media Distribution Login is ${otp}. It is valid for ${OTP_TTL_MINUTES} minutes. Do not share this OTP.`;
+  const body = `Your OTP for Single Audio Login is ${otp}. It is valid for ${OTP_TTL_MINUTES} minutes. Do not share this OTP.`;
   const url = new URL(baseUrl);
   url.searchParams.set('key', apiKey);
   url.searchParams.set('from', process.env.AMAZE_SMS_SENDER_ID || 'SNGLAU');
