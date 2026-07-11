@@ -33,12 +33,12 @@ router.get(
 );
 
 /**
- * @route   GET /api/royalties/monthly
+ * @route   GET /api/royalties/reports
  * @desc    Get monthly royalty report
  * @access  Private
  */
 router.get(
-  '/monthly',
+  '/reports',
   protect,
   royaltyController.getMonthlyReport
 );

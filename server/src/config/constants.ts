@@ -173,6 +173,20 @@ export enum PaymentMethod {
 
 export const MINIMUM_PAYOUT_USD = 100;
 
+// Broma delivery status sets (shared between connector and lifecycle update)
+export const BROMA_DELIVERED_STATUSES = new Set([
+  'live', 'published', 'delivered', 'approved', 'processed', 'done', 'active', 'success', 'shipped', 'completed',
+]);
+export const BROMA_REJECTED_STATUSES = new Set([
+  'rejected', 'declined', 'failed', 'error', 'cancelled', 'not_ready',
+]);
+export const BROMA_MODERATION_STATUSES = new Set([
+  'moderation', 'under_moderation', 'on_moderation', 'pending_moderation',
+]);
+export const BROMA_DSP_PROCESSING_STATUSES = new Set([
+  'accepted', 'distributed', 'in_distribution', 'processing', 'in_progress', 'inprogress',
+]);
+
 // Stores
 export const STORES = [
   '7digital',

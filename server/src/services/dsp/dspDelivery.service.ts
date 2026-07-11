@@ -38,6 +38,12 @@ import {
   refreshBromaStatisticsReport,
 } from './bromaStatistics.service';
 import { BromaClient } from './connectors/bromaClient';
+import {
+  BROMA_DELIVERED_STATUSES,
+  BROMA_REJECTED_STATUSES,
+  BROMA_MODERATION_STATUSES,
+  BROMA_DSP_PROCESSING_STATUSES,
+} from '../../config/constants';
 
 const BASE_RETRY_DELAY_MS = 15_000;
 const WORKER_LOCK_MS = 5 * 60_000;
@@ -653,15 +659,15 @@ class DspDeliveryService {
     let releaseStatus: string | null = null;
     const step = String(metadata.bromaStep || '');
     const moderationStatus = String(metadata.bromaModerationStatus || '').toLowerCase();
-    const bromaRejected = ['rejected', 'declined', 'cancelled', 'failed', 'error', 'not_ready'].includes(moderationStatus);
-    const bromaModeration = ['moderation', 'under_moderation', 'on_moderation', 'pending_moderation'].includes(moderationStatus);
-    const bromaDspProcessing = ['accepted', 'distributed', 'in_distribution', 'processing', 'in_progress', 'inprogress'].includes(moderationStatus);
+    const bromaRejected = BROMA_REJECTED_STATUSES.has(moderationStatus);
+    const bromaModeration = BROMA_MODERATION_STATUSES.has(moderationStatus);
+    const bromaDspProcessing = BROMA_DSP_PROCESSING_STATUSES.has(moderationStatus);
 
     if (bromaRejected) releaseStatus = 'rejected';
     else if (state === 'delivered') releaseStatus = 'live';
     else if (step === 'send_moderation') releaseStatus = 'broma_moderation';
     else if (step === 'poll_status') {
-      if (['approved', 'live', 'published', 'delivered', 'processed', 'done', 'active', 'success', 'shipped', 'completed'].includes(moderationStatus)) {
+      if (BROMA_DELIVERED_STATUSES.has(moderationStatus)) {
         releaseStatus = 'live';
       } else if (bromaModeration) {
         releaseStatus = 'broma_moderation';
@@ -710,13 +716,11 @@ class DspDeliveryService {
       },
     };
     if (bromaRejected) {
-      releaseUpdate.rejectReason = metadata.bromaRejectionReason || 'Rejected during moderation';
-      releaseUpdate.rejectionReason = releaseUpdate.rejectReason;
+      releaseUpdate.rejectionReason = metadata.bromaRejectionReason || 'Rejected during moderation';
       releaseUpdate.rejectedAt = new Date();
     }
     if (releaseStatus === 'failed' && !bromaRejected) {
-      releaseUpdate.rejectReason = errorMessage || 'Delivery requires attention';
-      releaseUpdate.rejectionReason = releaseUpdate.rejectReason;
+      releaseUpdate.rejectionReason = errorMessage || 'Delivery requires attention';
     }
 
     await mongoose.connection.collection('releases').updateOne(
@@ -808,6 +812,7 @@ class DspDeliveryService {
       const successLike = ['processing', 'delivered'].includes(finalState);
       const connectorMetadata = result.metadata || {};
       const nextRetryAt = finalState === 'processing' ? asDate(connectorMetadata.nextPollAt) : undefined;
+      const { connectorMetadata: _strippedNested, ...connectorDelta } = connectorMetadata;
       const completionUpdate: Record<string, any> = {
         state: finalState,
         externalId: result.externalId,
@@ -815,7 +820,7 @@ class DspDeliveryService {
         metadata: {
           ...job.metadata,
           ...connectorMetadata,
-          connectorMetadata,
+          connectorMetadata: connectorDelta,
           metadataWarnings: payloadResult.warnings,
         },
         $unset: { lockedAt: '', lockedBy: '', lockExpiresAt: '' },
@@ -1509,14 +1514,12 @@ class DspDeliveryService {
     }
 
     const resultMeta = result.metadata || {};
+    const { connectorMetadata: _strippedNested, ...freshResultMeta } = resultMeta;
     const nextMetadata = {
       ...metadata,
       ...resultMeta,
       bromaAssetId: resultMeta.bromaAssetId ?? metadata.bromaAssetId,
-      connectorMetadata: {
-        ...(metadata.connectorMetadata || {}),
-        ...resultMeta,
-      },
+      connectorMetadata: freshResultMeta,
     };
     const successLike = ['processing', 'delivered'].includes(result.state);
     const update: Record<string, any> = {

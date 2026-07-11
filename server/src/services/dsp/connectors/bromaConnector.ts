@@ -2,6 +2,12 @@ import { BaseDspConnector } from './baseConnector';
 import { BromaClient } from './bromaClient';
 import { DspCapability, DspConnectorContext, DspDeliveryPayload, DspDeliveryResult, DspReleasePayload, DspTrackPayload } from '../../../types/dsp';
 import DeliveryJob from '../../../models/deliveryJob.model';
+import {
+  BROMA_DELIVERED_STATUSES,
+  BROMA_REJECTED_STATUSES,
+  BROMA_MODERATION_STATUSES,
+  BROMA_DSP_PROCESSING_STATUSES,
+} from '../../../config/constants';
 
 type BromaStep =
   | 'create_release'
@@ -48,43 +54,6 @@ const firstBromaReleaseStatus = (...values: unknown[]) => {
   return '';
 };
 
-const BROMA_DELIVERED_STATUSES = new Set([
-  'live',
-  'published',
-  'delivered',
-  'processed',
-  'done',
-  'active',
-  'success',
-  'approved',
-  'shipped',
-  'completed',
-]);
-
-const BROMA_REJECTED_STATUSES = new Set([
-  'rejected',
-  'declined',
-  'failed',
-  'error',
-  'cancelled',
-  'not_ready',
-]);
-
-const BROMA_MODERATION_STATUSES = new Set([
-  'moderation',
-  'under_moderation',
-  'on_moderation',
-  'pending_moderation',
-]);
-
-const BROMA_DSP_PROCESSING_STATUSES = new Set([
-  'accepted',
-  'distributed',
-  'in_distribution',
-  'processing',
-  'in_progress',
-  'inprogress',
-]);
 
 type BromaStatusSnapshot = {
   normalized: string;
@@ -843,7 +812,8 @@ export class BromaConnector extends BaseDspConnector {
   async deliver(payload: DspDeliveryPayload, context: DspConnectorContext): Promise<DspDeliveryResult> {
     if (!('releaseId' in payload)) return { state: 'failed', message: 'Broma accepts release deliveries only' };
 
-    const metadata = { ...(context.jobMetadata || {}) } as Record<string, any>;
+    const { connectorMetadata: _cm, ...restMetadata } = { ...(context.jobMetadata || {}) } as Record<string, any>;
+    const metadata = restMetadata;
     const config = context.config || {};
     const client = new BromaClient({ credentials: context.credentials, config });
     const currentStep = (metadata.bromaStep || 'create_release') as BromaStep;
@@ -974,7 +944,8 @@ export class BromaConnector extends BaseDspConnector {
   }
 
   async takedown(payload: DspDeliveryPayload, context: DspConnectorContext): Promise<DspDeliveryResult> {
-    const metadata = { ...(context.jobMetadata || {}) };
+    const { connectorMetadata: _cm, ...restMetadata } = { ...(context.jobMetadata || {}) };
+    const metadata = restMetadata;
     const externalId = metadata.bromaReleaseId ? String(metadata.bromaReleaseId) : undefined;
     return {
       state: 'needs_attention',
