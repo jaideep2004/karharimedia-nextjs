@@ -452,12 +452,38 @@ export default function AdminDspDeliveriesPage() {
 
     for (const job of bsonJobs) {
       const title = job.metadata?.releaseTitle || job.releaseId || job._id;
-      setBsonRetryProgress({ current: successes + errors + 1, total: bsonJobs.length, currentTitle: title || '', errors, successes });
+      const index = successes + errors;
+      setBsonRetryProgress({ current: index + 1, total: bsonJobs.length, currentTitle: `${title} (queuing...)`, errors, successes });
 
       try {
         await adminAPI.retryIndividualDspDelivery(job._id);
-        successes++;
-        toast.success(`${title}: Fix & Retry successful`);
+
+        let currentState = 'queued';
+        let pollCount = 0;
+        const maxPolls = 180;
+
+        while (currentState === 'queued' && pollCount < maxPolls) {
+          await new Promise((r) => setTimeout(r, 5000));
+          pollCount++;
+          try {
+            const res = await adminAPI.getDspDelivery(job._id);
+            currentState = res?.data?.state || 'queued';
+          } catch {
+            // polling error, retry on next interval
+          }
+          setBsonRetryProgress((prev) => prev ? { ...prev, currentTitle: `${title} (${currentState}${pollCount > 1 ? ', waiting...' : ''})` } : null);
+        }
+
+        if (currentState === 'queued') {
+          errors++;
+          toast.error(`${title}: Queued but not processed within 15 min`);
+        } else if (['failed', 'needs_attention'].includes(currentState)) {
+          errors++;
+          toast.error(`${title}: ${currentState}`);
+        } else {
+          successes++;
+          toast.success(`${title}: ${currentState}`);
+        }
       } catch (error) {
         errors++;
         toast.error(`${title}: ${error instanceof Error ? error.message : 'Fix & Retry failed'}`);
