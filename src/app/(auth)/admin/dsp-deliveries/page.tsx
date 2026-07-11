@@ -233,6 +233,8 @@ export default function AdminDspDeliveriesPage() {
   const [refreshingStatusId, setRefreshingStatusId] = useState<string | null>(null);
   const [clearingLogsId, setClearingLogsId] = useState<string | null>(null);
   const [retryingIndividualId, setRetryingIndividualId] = useState<string | null>(null);
+  const [retryingAllBson, setRetryingAllBson] = useState(false);
+  const [bsonRetryProgress, setBsonRetryProgress] = useState<{ current: number; total: number; currentTitle: string; errors: number; successes: number } | null>(null);
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [expandedJobId, setExpandedJobId] = useState<string | null>(null);
   const [loadingJobDetailsId, setLoadingJobDetailsId] = useState<string | null>(null);
@@ -437,6 +439,36 @@ export default function AdminDspDeliveriesPage() {
       setRetryingIndividualId(null);
     }
   };
+
+  const handleRetryAllBson = useCallback(async () => {
+    const bsonJobs = jobs.filter((j) => (j.metadata as any)?.bsonDepthFixed);
+    if (!bsonJobs.length) return;
+
+    setRetryingAllBson(true);
+    setBsonRetryProgress({ current: 0, total: bsonJobs.length, currentTitle: '', errors: 0, successes: 0 });
+
+    let errors = 0;
+    let successes = 0;
+
+    for (const job of bsonJobs) {
+      const title = job.metadata?.releaseTitle || job.releaseId || job._id;
+      setBsonRetryProgress({ current: successes + errors + 1, total: bsonJobs.length, currentTitle: title || '', errors, successes });
+
+      try {
+        await adminAPI.retryIndividualDspDelivery(job._id);
+        successes++;
+        toast.success(`${title}: Fix & Retry successful`);
+      } catch (error) {
+        errors++;
+        toast.error(`${title}: ${error instanceof Error ? error.message : 'Fix & Retry failed'}`);
+      }
+    }
+
+    setBsonRetryProgress((prev) => prev ? { ...prev, currentTitle: 'Complete' } : null);
+    await load();
+    setRetryingAllBson(false);
+    toast.success(`BSON Retry All complete: ${successes} succeeded, ${errors} failed`);
+  }, [jobs]);
 
   const handleToggleJob = async (jobId: string) => {
     if (expandedJobId === jobId) { setExpandedJobId(null); return; }
@@ -837,6 +869,33 @@ export default function AdminDspDeliveriesPage() {
           <Tab value="drafts" label={<Stack direction="row" spacing={0.5} alignItems="center"><ListAltIcon sx={{ fontSize: 14 }} /><Typography variant="body2" fontWeight={600}>{draftsLoading ? '-' : bromaDraftsTotal ?? bromaDrafts?.length ?? '-'}</Typography><Typography variant="body2" color="text.secondary">Drafts</Typography></Stack>} />
         </Tabs>
       </Paper>
+
+      {releaseTab === 'bson_failed' && (
+        <Paper sx={{ mb: 1, p: 1.5 }}>
+          {retryingAllBson && bsonRetryProgress ? (
+            <Stack spacing={1}>
+              <Stack direction="row" justifyContent="space-between" alignItems="center">
+                <Typography variant="caption" fontWeight={600} noWrap sx={{ maxWidth: '70%' }}>
+                  {bsonRetryProgress.currentTitle ? `${bsonRetryProgress.current}/${bsonRetryProgress.total}: ${bsonRetryProgress.currentTitle}` : `Initializing...`}
+                </Typography>
+                <Typography variant="caption" color={bsonRetryProgress.errors > 0 ? 'error.main' : 'text.secondary'}>
+                  ✓ {bsonRetryProgress.successes}  ✗ {bsonRetryProgress.errors}
+                </Typography>
+              </Stack>
+              <LinearProgress variant="determinate" value={(bsonRetryProgress.current / bsonRetryProgress.total) * 100} />
+            </Stack>
+          ) : (
+            <Stack direction="row" justifyContent="space-between" alignItems="center">
+              <Typography variant="body2" color="text.secondary">
+                {totalCountsBsonFailed} BSON-depth failed jobs ready for retry
+              </Typography>
+              <Button size="small" variant="contained" color="warning" onClick={handleRetryAllBson} disabled={!totalCountsBsonFailed} startIcon={<ReplayIcon />}>
+                Retry All BSON
+              </Button>
+            </Stack>
+          )}
+        </Paper>
+      )}
 
       {/* Content: Jobs Table or Drafts Table */}
       {releaseTab === 'drafts' ? (
