@@ -56,7 +56,7 @@ export async function GET(req: Request) {
         { $match: allJobsQuery },
         { $group: { _id: '$state', count: { $sum: 1 } } },
       ]).toArray(),
-      db.collection('deliveryjobs').countDocuments({ 'metadata.bsonDepthFixed': true }),
+      db.collection('deliveryjobs').countDocuments({ state: 'failed', 'metadata.bsonDepthFixed': true }),
     ]);
     const data = rawData.sort((a, b) => {
       const tA = a.updatedAt ? new Date(a.updatedAt).valueOf() : (a.createdAt ? new Date(a.createdAt).valueOf() : 0);
