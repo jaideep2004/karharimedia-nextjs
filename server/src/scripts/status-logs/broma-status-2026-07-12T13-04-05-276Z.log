@@ -1,0 +1,1578 @@
+[2026-07-12T13:04:05.278Z] === Broma Deep Status Audit ===
+[2026-07-12T13:04:05.278Z] Started: 2026-07-12T13:04:05.276Z
+[2026-07-12T13:04:05.278Z] 
+1: Connecting to MongoDB...
+[2026-07-12T13:04:06.190Z] 2: Fetching remaining Broma delivery jobs...
+[2026-07-12T13:04:07.063Z]    Total jobs: 1018
+[2026-07-12T13:04:07.064Z]    processing: 250
+[2026-07-12T13:04:07.064Z]    delivered: 540
+[2026-07-12T13:04:07.064Z]    cancelled: 71
+[2026-07-12T13:04:07.064Z]    failed: 157
+[2026-07-12T13:04:07.064Z]    BSON depth fixed: 371 (151 still failed)
+[2026-07-12T13:04:07.064Z] 
+3: Logging into Broma...
+[2026-07-12T13:04:08.822Z]    Login OK
+[2026-07-12T13:04:08.822Z] 
+4: Fetching Broma DRAFTS...
+[2026-07-12T13:04:13.354Z]    Broma drafts total: 530
+[2026-07-12T13:04:13.355Z] 
+5: Fetching Broma RELEASES...
+[2026-07-12T13:04:27.528Z]    Broma releases total: 1869
+[2026-07-12T13:04:27.529Z] 
+6: Broma RELEASES moderation status breakdown:
+[2026-07-12T13:04:27.530Z]    approved: 1361
+[2026-07-12T13:04:27.530Z]    rejected: 503
+[2026-07-12T13:04:27.530Z]    pending: 5
+[2026-07-12T13:04:27.530Z] 
+   → "Pending" (matches dashboard ~110): 5
+[2026-07-12T13:04:27.530Z] 
+   Broma DRAFTS breakdown (step/status):
+[2026-07-12T13:04:27.530Z]    step=: 530
+[2026-07-12T13:04:27.531Z] 
+8: Cross-referencing...
+[2026-07-12T13:04:27.533Z] 
+9: === CATEGORY BREAKDOWN ===
+[2026-07-12T13:04:27.533Z]    IN_BROMA_DRAFTS: 367
+[2026-07-12T13:04:27.533Z]    NOT_IN_BROMA: 594
+[2026-07-12T13:04:27.533Z]    NO_BROMA_ID: 30
+[2026-07-12T13:04:27.533Z]    LIVE_ON_BROMA: 27
+[2026-07-12T13:04:27.533Z] 
+8: === DETAILED BREAKDOWNS ===
+[2026-07-12T13:04:27.533Z] 
+--- LIVE ON BROMA (27) ---
+[2026-07-12T13:04:27.533Z]    Ye Aayine Jo Tumhe Kam Pasand Karte Hai  | bid=18296434 | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.533Z]    Nepali Hami | bid=18296430 | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.533Z]    Allah Di Kassam | bid=18296426 | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.533Z]    Bidesh Jane Mayalu | bid=18296422 | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.534Z]    Birata Ko Chino | bid=18296418 | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.534Z]    Chari Udyo Badal Chuna Lai | bid=18296414 | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.534Z]    China | bid=18296410 | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.534Z]    Musu Musu Hasi Deuna | bid=18296406 | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.534Z]    Chiya Bari Ma | bid=18296400 | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.534Z]    Dadaima Mela Lagecha | bid=18296396 | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.534Z]    Deurali Ma Batas Chalyo | bid=18296392 | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.534Z]    Deurali Ukali Chadhera | bid=18296388 | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.534Z]    Muglan Hera Jadai Chu | bid=18296384 | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.534Z]    Gairi Khet Ko Sirai Hanyo | bid=18296360 | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.534Z]    Gajalule Ankhai Chhopne | bid=18296356 | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.534Z]    Manchhe Ko Maya Yeha | bid=18296341 | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.534Z]    Mayaluko Maya Mitho | bid=18296337 | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.534Z]    Zindagi Ki Talash Mein | bid=18296331 | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.534Z]    Aisa Lagta Hai Jaise | bid=18296327 | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.534Z]    Banma Kasturi | bid=18296319 | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.534Z]    Basa Sundari | bid=18296315 | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.534Z]    Ab Hain Neend | bid=18296287 | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.534Z]    Aakashai Ma Chil Udyo Fanana | bid=18296283 | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.534Z]    Ae Mere Dil Bata Kya Bura | bid=18296279 | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.534Z]    Aakashaima Chil Udyo Dharti Ma Chaya | bid=18296275 | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.534Z]    Aba Yo Baato Mero Ho | bid=18296265 | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.534Z]    Ab Hain Neend Kise | bid=18296187 | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.534Z] 
+--- IN BROMA DRAFTS (367) ---
+[2026-07-12T13:04:27.534Z]    Koi Mere Dil Da Haal | bid=46437 | step= | mod=draft | ourState=processing
+[2026-07-12T13:04:27.534Z]    Hadh Kar Dil | bid=46491 | step= | mod=draft | ourState=processing
+[2026-07-12T13:04:27.534Z]    Ae Dil Kahin Se Unko | bid=46492 | step= | mod=draft | ourState=processing
+[2026-07-12T13:04:27.534Z]    Armaan Hamare | bid=46494 | step= | mod=draft | ourState=processing
+[2026-07-12T13:04:27.534Z]    Aap Ki Nazron Ne | bid=46493 | step= | mod=draft | ourState=processing
+[2026-07-12T13:04:27.534Z]    Aankh Churaaye | bid=46496 | step= | mod=draft | ourState=processing
+[2026-07-12T13:04:27.534Z]    Gori Hai Kalaiyan | bid=46498 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.535Z]    Sheeshe Ka Tha Dil Mera | bid=46499 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.535Z]    Aankh Milakar Loot Liya Dil | bid=46536 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.535Z]    Aa Jao Meri Tamanna | bid=46501 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.535Z]    Dil ko tera intezar reh gaya | bid=46502 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.535Z]    Ek Pardesi Mera Dil Le Gaya | bid=46503 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.535Z]    Hamne Tumko Dil Ye De Diya | bid=46510 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.535Z]    Has Mat Yaar Nazar Lag Jayegi | bid=46508 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.535Z]    Itna Na Mujhse Tu Pyar Badha | bid=46509 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.535Z]    Jab Tu Najar Se Najar | bid=46512 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.535Z]    Jabse Tujhko Dekha Hai | bid=46511 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.535Z]    Jeena Yahan Marna Yahan | bid=46292 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.535Z]    Kesariya | bid=46519 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.535Z]    Koi Haseena Jab Rooth Jati Hai To | bid=46513 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.535Z]    Mera Mann Dole Mera Tan Dole | bid=46514 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.535Z]    Mera Mann | bid=46518 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.535Z]    Mere Mehboob Qayamat Hogi | bid=46515 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.535Z]    Mere Mehboob | bid=46516 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.535Z]    Panchi Sur Mein Gate Hai | bid=46528 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.535Z]    Mujhe Teri Mohabbat Ka | bid=46527 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.535Z]    Panchi Sur Mein Gate | bid=46529 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.535Z]    Mujhe Teri | bid=46531 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.535Z]    Aaj Phir Jeene | bid=46533 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.535Z]    Panchi Sur Mein | bid=46532 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.535Z]    Aane Se Tere Mehke Din | bid=46534 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.535Z]    Sach keh raha hai deewana | bid=46273 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.535Z]    Aankhein Khuli Ho Yah Band | bid=46270 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.535Z]    Pardesi Pardesi | bid=46268 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.535Z]    Safar aur dhundh | bid=46266 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.535Z]    Sajna Mere Dil Ye Tera | bid=46264 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.535Z]    Sanam Re | bid=46262 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.535Z]    Aap Jo Mere Meet Naa Hote | bid=46261 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.535Z]    Solah Baras Ki Baali Umar Ko Salam | bid=46256 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.535Z]    Aap Ki Nazron Ne Samjha | bid=46253 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.535Z]    Teri Yaadon Ka Safar | bid=46252 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.535Z]    Aasan Nahi Yahan | bid=46250 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.535Z]    Thehre Hue Paani Mein | bid=46249 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.535Z]    Adhi Adhi Raat | bid=46247 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.535Z]    Tumse Mila Jo Pyar Mujhe | bid=46244 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.536Z]    Pehle Kabhi Na | bid=46243 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.536Z]    Tune O Rangile Kaisa Jaadu Kiya | bid=46242 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.536Z]    Aisaa Lagataa Hai | bid=46241 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.536Z]    Pehli Pehli Baar x Dil Deewana | bid=46847 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.536Z]    Tune O Rangile | bid=46848 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.536Z]    Akhmedov | bid=46849 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.536Z]    Amplifier | bid=46850 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.536Z]    Pehli Pehli Baar | bid=46851 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.536Z]    Baarish Ki Pyaas | bid=46853 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.536Z]    Baarish | bid=46854 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.536Z]    Phool gulab ka khilta | bid=46855 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.536Z]    Bahut Pyar Karte Hain Tumko | bid=46856 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.536Z]    Bandeya | bid=46857 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.536Z]    Phool Gulab Ka | bid=46858 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.536Z]    Bansuriya Ab Yehi Pukare | bid=46859 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.536Z]    Baras Ki Baali Umar | bid=46860 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.536Z]    Beete lamhe | bid=46861 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.536Z]    Bewafa | bid=46862 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.536Z]    Bhooli Bisri Prem Kahani | bid=46863 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.536Z]    Bindiya Chamkegi Chudi Khankegi | bid=46864 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.536Z]    Chaahat | bid=46865 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.536Z]    Phool Jaisi Muskaan | bid=46866 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.536Z]    Phool Main bheju | bid=46867 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.536Z]    Chale To Kaat Hi Jayegi Safar | bid=46868 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.536Z]    Chahun Main Ya Naa | bid=46869 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.536Z]    Phoolon Ke Mausam | bid=46870 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.536Z]    Chhodenge Na Hum Tera Sath | bid=46871 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.536Z]    Chhupana Bhi Nahi Aata | bid=46872 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.536Z]    Pyaar Gum Hai | bid=46873 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.536Z]    Chupke Se Pyar Hua Hai | bid=46874 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.536Z]    Pyaar Ki Kasthi Mein | bid=46877 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.536Z]    Darkhaast | bid=46878 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.536Z]    Pyaar Ki Kasthi | bid=46879 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.536Z]    Deewana Kar Raha Hai | bid=46880 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.536Z]     Ritin animation | bid=46881 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.536Z]    Pyar Ka Ehsaa | bid=46882 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.536Z]    Dhoop Mein Nikla Na Karo Roop Ki Rani | bid=46883 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.536Z]    Pyar Ka Ehsaas | bid=46884 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.537Z]    Dhun | bid=46885 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.537Z]    Pyar Kahe Banaya Ram | bid=46886 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.537Z]    Phool Jaisi Muskaan | bid=46887 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.537Z]    Raah Me Unse Mulakat | bid=46888 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.537Z]    Kandhe mile se Thana chaudar | bid=46875 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.537Z]    Raat Ko Aaunga | bid=46889 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.537Z]    Ram Kasam Delhi Sarkar | bid=46147 | step= | mod=draft | ourState=processing
+[2026-07-12T13:04:27.537Z]    Ram Kasam Delhi | bid=46890 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.537Z]    Rangdar Ke | bid=46142 | step= | mod=draft | ourState=processing
+[2026-07-12T13:04:27.537Z]    Rangdar Se Sikh Rangdari | bid=46891 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.537Z]    Rishta Pyar Ka Na | bid=46892 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.537Z]    Rote Rote Yun Hi Raat | bid=46893 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.537Z]    Rote Rote yun hi | bid=46894 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.537Z]    Ruk Re Tareniya | bid=46895 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.537Z]    Saat Samund | bid=46896 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.537Z]    Saat Samundar | bid=46897 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.537Z]    Shaam Hai Dhuan Dhuan | bid=46899 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.537Z]    Sham hai dhuan sa hawa | bid=46900 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.537Z]    Sun Meri Sheh | bid=46901 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.537Z]    Deurali Ukali Chadhera | bid=46117 | step= | mod=draft | ourState=delivered
+[2026-07-12T13:04:27.537Z]    Gairi Khet Ko Sirai Hanyo | bid=46116 | step= | mod=draft | ourState=delivered
+[2026-07-12T13:04:27.537Z]    Gajalule Ankhai Chhopne | bid=46114 | step= | mod=draft | ourState=delivered
+[2026-07-12T13:04:27.537Z]    Manchhe Ko Maya Yeha | bid=46112 | step= | mod=draft | ourState=delivered
+[2026-07-12T13:04:27.537Z]    Aisa Lagta Hai Jaise | bid=46110 | step= | mod=draft | ourState=delivered
+[2026-07-12T13:04:27.537Z]    Zindagi Ki Talash Mein | bid=46108 | step= | mod=draft | ourState=delivered
+[2026-07-12T13:04:27.537Z]    Mayaluko Maya Mitho | bid=46107 | step= | mod=draft | ourState=delivered
+[2026-07-12T13:04:27.537Z]    Muglan Hera Jadai Chu | bid=46103 | step= | mod=draft | ourState=delivered
+[2026-07-12T13:04:27.537Z]    Musu Musu Hasi Deuna | bid=46104 | step= | mod=draft | ourState=delivered
+[2026-07-12T13:04:27.537Z]    Allah Di Kassam | bid=46102 | step= | mod=draft | ourState=delivered
+[2026-07-12T13:04:27.537Z]    Deurali Ma Batas Chalyo | bid=46078 | step= | mod=draft | ourState=delivered
+[2026-07-12T13:04:27.537Z]    Dadaima Mela Lagecha | bid=46074 | step= | mod=draft | ourState=delivered
+[2026-07-12T13:04:27.537Z]    Chiya Bari Ma | bid=46073 | step= | mod=draft | ourState=delivered
+[2026-07-12T13:04:27.538Z]    China | bid=46072 | step= | mod=draft | ourState=delivered
+[2026-07-12T13:04:27.538Z]    Birata Ko Chino | bid=46071 | step= | mod=draft | ourState=delivered
+[2026-07-12T13:04:27.538Z]    Bidesh Jane Mayalu | bid=46069 | step= | mod=draft | ourState=delivered
+[2026-07-12T13:04:27.538Z]    Basa Sundari | bid=46065 | step= | mod=draft | ourState=delivered
+[2026-07-12T13:04:27.538Z]    Banma Kasturi | bid=46061 | step= | mod=draft | ourState=delivered
+[2026-07-12T13:04:27.538Z]    Aba Yo Baato Mero Ho | bid=46056 | step= | mod=draft | ourState=delivered
+[2026-07-12T13:04:27.538Z]    Aakashaima Chil Udyo Dharti Ma Chaya | bid=46054 | step= | mod=draft | ourState=delivered
+[2026-07-12T13:04:27.538Z]    Ae Mere Dil Bata Kya Bura | bid=46052 | step= | mod=draft | ourState=delivered
+[2026-07-12T13:04:27.538Z]    Ab Hain Neend | bid=46051 | step= | mod=draft | ourState=delivered
+[2026-07-12T13:04:27.538Z]    Ab Hain Neend Kise | bid=46050 | step= | mod=draft | ourState=delivered
+[2026-07-12T13:04:27.538Z]    Aaj RuswaTari Galiyon | bid=46044 | step= | mod=draft | ourState=delivered
+[2026-07-12T13:04:27.538Z]    Aaj Pahli Daar dil | bid=46042 | step= | mod=draft | ourState=delivered
+[2026-07-12T13:04:27.538Z]    Sham Hai Dhuan | bid=46876 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.538Z]    Shuru Ho Rahi Hai | bid=46903 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.538Z]    Sona Ke Sikadiya | bid=46904 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.538Z]    Sona Kitna Sona Hai | bid=46905 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.538Z]    Sun Meri Shehzadi | bid=46906 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.538Z]    Sweet Sixteen Dreams | bid=46907 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.538Z]    Sykkeen kutsu kaikuu | bid=46908 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.538Z]    Tera Pallu Sarka Jaye | bid=46910 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.538Z]    Tera Pallu Sarka | bid=46911 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.538Z]    Tere Bahoon Me | bid=46912 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.538Z]    Tere Bina Jeen | bid=46913 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.538Z]    Tere Bina Jeena | bid=46914 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.538Z]    Tere Bina Zindegi | bid=46915 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.538Z]    Tere Dil Mein Mujhe | bid=46916 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.538Z]    Tere Dil Mein | bid=46918 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.538Z]    Tere Mere Beech Men | bid=46919 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.538Z]    Teri Mohabbat Meri | bid=46920 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.538Z]    Teri Payal Baji Jahan | bid=46921 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.538Z]    Teri Payal Baji | bid=46922 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.538Z]    AGAR TUM SATH HO | bid=46923 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.538Z]    Jahan Tum Ho | bid=46924 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.538Z]    Janmo Janam | bid=46925 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.538Z]    Jhooth Bole Kauwa Kaate | bid=46927 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.538Z]    Jidhar Dekhti Hoon Udhar Tum Hi Tum Ho | bid=46928 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.538Z]    AIRPLANE | bid=46929 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.538Z]    Jahan Tum Ho | bid=46930 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.539Z]    Jhooth Bole Kauwa Kaate | bid=46931 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.539Z]    Jhooth Bole Kauwa Kaate | bid=46932 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.539Z]    Akela | bid=46933 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.539Z]    Akela17  | bid=46934 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.539Z]    Jidhar Dekhti Hu | bid=46935 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.539Z]    Jind Le Gaya Wo Dil Ka Jaani | bid=46936 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.539Z]    Jo Bhi Kasme Khai Thi Humne | bid=46937 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.539Z]    AMPLIFIER | bid=46938 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.539Z]    Jo Bhi Kasmein | bid=46939 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.539Z]    AM Thoughts | bid=46940 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.539Z]    Jo Tere Sang Kati Rate | bid=46941 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.539Z]    Julf Ghaneri Shaam | bid=46942 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.539Z]    ANKAHI BAATEIN | bid=45961 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.539Z]    Just Come | bid=45959 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.539Z]    ANKAHI Modi Bihari ke Laika | bid=45957 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.539Z]    Kaanta Laaga | bid=45955 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.539Z]    ANKAHI Rap Baatein | bid=45953 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.539Z]    Kabhi Bhula Kabhi Yaad Kiya | bid=45952 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.539Z]    ARSH | bid=45951 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.539Z]    Kabhi Jo Baadal Barse | bid=45948 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.539Z]    Kabhi Na Kabhi | bid=45947 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.539Z]    Kabhi Shaam Dhale To Mere | bid=45945 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.539Z]    Kabhi Shaam Dhale | bid=45942 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.540Z]    Kabhi To Paas Mere Aao | bid=45939 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.540Z]    Kah Doon Tumhe | bid=45938 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.540Z]    Kahan Ho Tum Chale Aao | bid=45937 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.540Z]    Kaho Na Kaho | bid=45934 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.540Z]    Kaise Baani | bid=45932 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.540Z]    Kaisi Abhagan Bani Suhagan | bid=45929 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.540Z]    Kajara Behkega | bid=45927 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.540Z]    Kanta Laga Teri Beri Ke Niche | bid=45926 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.540Z]    Pyar Bewafa | bid=45925 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.540Z]    Keh Doon Tumhe | bid=45918 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.540Z]    Kehdoon Tumhe Ya Chup Rahoon | bid=45916 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.540Z]    AUR IS DIL MEIN | bid=45914 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.540Z]    Kehta Hai Dil | bid=45913 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.540Z]    AZUL | bid=45910 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.540Z]    Baatcheet | bid=45908 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.540Z]    Keya Hua Yev Mujhe Keya Hua | bid=45907 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.540Z]    Khairiyat | bid=45906 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.541Z]    Khoya Khoya Chand | bid=45905 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.541Z]    Khud Ko Tere | bid=45901 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.541Z]    Baazigar Mashupj | bid=45898 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.541Z]    Khuda Aur Mohabbat | bid=45897 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.541Z]    Babu Sona Rap | bid=45896 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.541Z]    Khuda Jaane | bid=45894 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.541Z]    Kitna Pyar Karte Hain Sanam | bid=45891 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.541Z]    Babu Sonja Rap | bid=45890 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.541Z]    Koi Aaye Mera Dill Thaamle | bid=45887 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.541Z]    Badhta Chal | bid=45886 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.541Z]    Koi Sehri Babu | bid=45885 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.541Z]    BAJIS EP | bid=45883 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.541Z]    Kora Kagaz Tha Ye Man Mera | bid=45879 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.541Z]    BEDARDEYA | bid=45878 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.541Z]    Kuch Na Kaho | bid=45876 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.541Z]    BEWAFA TU NIKALI | bid=45874 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.541Z]    Lagti Ho | bid=45872 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.541Z]    BEWAFA | bid=45870 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.541Z]    Bihar Ki Sachai | bid=45868 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.541Z]    Bihar Pagla pagl | bid=45866 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.541Z]    Bihar Pagla Pagli | bid=45865 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.541Z]    BLACK MONEY | bid=45858 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.541Z]    BLEED US | bid=45857 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.541Z]    BROKEN Modi Rap | bid=45855 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.541Z]    BROKEN | bid=45853 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.541Z]    CASH FLOW | bid=45852 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.541Z]    Chahat | bid=45851 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.541Z]    CHAHUNGA MAIN | bid=45849 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.541Z]    CHALA KALTI | bid=45848 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.541Z]    Chhitara Jaba Tu  | bid=45846 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.541Z]    CHINA KI MAAL | bid=45844 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.541Z]    Chumma Rap Tera | bid=45841 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.541Z]    Chumma Rap | bid=45838 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.541Z]    Chummai Rap | bid=45836 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.541Z]    CHUSAMBA | bid=45834 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.541Z]    COME CLOSER | bid=45833 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.541Z]    DAGAG | bid=45830 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.541Z]    Dard Aur Dava | bid=45828 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.541Z]    Dard Aur Zeher | bid=45826 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.542Z]    Dard ki dawal | bid=45825 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.542Z]    Dard Or Pyal | bid=45823 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.542Z]    Dard Or Pyar  | bid=45818 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.542Z]    DARD OR PYAR | bid=45815 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.542Z]    Kya Khoob Lagti Ho | bid=45814 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.542Z]    Kya Khoob | bid=45812 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.542Z]    Kya Tumhe Pata Hai Ye Gulshan | bid=45811 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.542Z]    La Isla Bonita | bid=45809 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.542Z]    Labon Ko | bid=45807 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.542Z]    Lag Ja Gale | bid=45805 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.542Z]    Leke Pehla Pehla Pyar | bid=45804 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.542Z]    Leke Pehla Pyar | bid=45803 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.542Z]    Tere Bina Ye Saam Adhoori | bid=45744 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.542Z]    Mere Darde Dil Ki Dawa | bid=45755 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.542Z]    Crystal Beat | bid=45753 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.542Z]    Darkdrive | bid=45752 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.542Z]    Maine Aansuon Se Sekha Hai | bid=45754 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.542Z]    Tujhe Maanga Tha | bid=46846 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.542Z]    Tujhko Mirchi | bid=46845 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.542Z]    Tum Mere Baad Mohabbat | bid=46843 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.542Z]    Dil Ka Kya Karen Saheb | bid=46831 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.542Z]    Dil Ke Badle Sanam | bid=46830 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.542Z]    Dil Ne Tujhko Pukara Female | bid=46829 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.542Z]    Dreaming | bid=46736 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.542Z]    Gale Lag Ja | bid=46739 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.542Z]    Gore Rang Pe Na Itna Gumaan Kar | bid=46737 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.542Z]    Gori Tera Gaon Bada Pyara | bid=46842 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.542Z]    Humein Tumse Pyar Kitna | bid=46838 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.542Z]    Ishq Ki Gali | bid=46833 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.542Z]    Jahaan Tum Ho | bid=46832 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.542Z]    Panna Ki Tamanna | bid=46828 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.542Z]    Mohabbat Pyar  | bid=46827 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.542Z]    Yaad Rakhna Mujhe | bid=46826 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.542Z]    O Rani Teri Kahani | bid=46825 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.543Z]    Dil ki baatein bhi | bid=46823 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.543Z]    Dil ki baaton ke hazaron | bid=46822 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.543Z]    Dil Laga Liya Maine Tumse Pyaar Karke | bid=46821 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.543Z]    Gawah Hai Chand Tare | bid=46819 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.543Z]    Dil Tera Deewana | bid=46637 | step= | mod=draft | ourState=processing | BSON_FIXED
+[2026-07-12T13:04:27.543Z]    Hum Lakh Chupaye Pyaar | bid=46818 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.543Z]    Dil ki har dhadkan | bid=46817 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.543Z]    Dil ki yeh dhadkan | bid=46816 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.543Z]    Dil ko ek aasmaan banaya hai | bid=46815 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.543Z]    Dil Kone Mein | bid=46814 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.543Z]    Dil Laga Liya Maine | bid=46813 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.543Z]    Dil Maang Raha Hai | bid=46812 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.543Z]    Dil Mein Dard Sa Jaga Hai | bid=46811 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.543Z]    Dil mein jo baatein | bid=46738 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.543Z]    Dil Mein jo ek daag | bid=46810 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.543Z]    Dil Mere Na Aur Intezaar | bid=46809 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.543Z]    Dil Ne Dil Se Iqra | bid=46808 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.543Z]    Dil Ne Dil Se Iqrar | bid=46807 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.543Z]    Dil se chheda | bid=46806 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.543Z]    Dil se dil ka rishta | bid=46805 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.543Z]    Dil Tera Deewana | bid=46804 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.543Z]    Dilon ke raaste se | bid=46803 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.543Z]    Dilwa Le Gaile Raja | bid=46802 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.543Z]    Dilwa Le Gaile Raja | bid=46801 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.543Z]    Dilwa Le Gaile | bid=46800 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.543Z]    Dilwale Jo Rumal Mein | bid=46799 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.543Z]    Dilwale Jo Rumal | bid=46798 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.543Z]    Hadh Kar Di Aapne | bid=46797 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.543Z]    Hum Aapke Bina | bid=46796 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.543Z]    Aisaa Lagataa Hai | bid=46795 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.543Z]    Aaja Aai Bahar Dil Hai Beqarar | bid=46794 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.543Z]    Aaja Ke Intezar Main | bid=46793 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.543Z]    Ae Hawa Mere Sang Sang Chal | bid=46792 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.543Z]    Ae Hawa Mere Sang | bid=46791 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.543Z]    Ae Ishq Humein Barbaad | bid=46790 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.543Z]    Hum Tumhare Hain | bid=46789 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.543Z]    Hum Tumko | bid=46788 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.543Z]    Ankhiyon Ke Jharokhon Se | bid=46787 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.543Z]    Apni Zulfein Mere Shaanon Pe | bid=46786 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.544Z]    Aur is Dil Mein | bid=46785 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.544Z]    Bahot Khubsurat Hai Mera Sanam | bid=46784 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.544Z]    Jina Sirf Mere | bid=46783 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.544Z]    Kab Tak Yaad Karu | bid=46782 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.544Z]    Khwaabon ka hai | bid=46781 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.544Z]    Mera Mann Dole Mera Tan Dole | bid=46780 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.544Z]    Kisi Aur Ke Naam | bid=46779 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.544Z]    Chori Chori Dil Tera Churayenge Jo | bid=46778 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.544Z]    Is Tarah Aashiqi Ka Asar | bid=46777 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.544Z]    Wo Dil Kahin Se Laoon | bid=46776 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.544Z]    Aisaa Lagataa Hai | bid=46775 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.544Z]    Aap Ki Nazron Ne | bid=46774 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.544Z]    Ae Hawa Mere Sang | bid=46773 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.544Z]    Bindiya Chamkegi Chudi Khankegi | bid=46772 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.544Z]    Aisaa Lagataa Hai | bid=46771 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.544Z]    Chale To Kat Hi Jayega | bid=46770 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.544Z]    Dur Se Dekha Tujhko | bid=46769 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.544Z]    Ye Galiyan Ye Chaubara | bid=46768 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.544Z]    Desh Se Pardesh Bulaye Re | bid=46767 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.544Z]    Dil Ke Armaan Aansuon Mein Beh Gaye | bid=46766 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.544Z]    Dil Wo Chala | bid=46765 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.544Z]    Dil Ye Chahe | bid=46764 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.544Z]    Dil Ye Pukare | bid=46763 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.544Z]    Dilber Mere | bid=46762 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.544Z]    Kitna Pagal Dil Hai | bid=46761 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.544Z]    Kitna Pagal Dil | bid=46760 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.544Z]    Gumnaam Hai Koi | bid=46759 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.544Z]    Haye Haye Ye Majbyri | bid=46758 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.544Z]    Kya Tum Mujhse | bid=46757 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.544Z]    Kyaa Dil Ne Kahaa | bid=46756 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.544Z]    Kyon Ki Itna Pyar | bid=46755 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.544Z]    Laal dupatta jhilmil | bid=46754 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.544Z]    Ladki Badi Anjani | bid=46753 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.544Z]    Lagi Aaj Sawan Ki Phir | bid=46752 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.544Z]    Jab Se Tujhako Jaana | bid=46751 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.544Z]    Mashroof Hai Dil Kitna | bid=46750 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.544Z]    Mashroof HaiDil | bid=46749 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.544Z]    Mausam Ki Tarah Tum | bid=46748 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.544Z]    Aaj Phir Jeene Ki Tamanna Hai | bid=46745 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.544Z]    Aap Jo Mere Meet Na Hote | bid=46747 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.544Z]    Ae Hawa Mere Sang | bid=46834 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.545Z]    Aur Is Dil Mein Kia Rakha Hai | bid=46746 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.545Z]    Bade Achhe Lagte Hain | bid=46744 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.545Z]    Bato Bato Me Akshar Bat | bid=46835 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.545Z]    Dil Ye Pukare | bid=46836 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.545Z]    Dil Wo Chala | bid=46837 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.545Z]    Aankh Churaaye | bid=46839 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.545Z]    Musafir Jaane Wale | bid=46743 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.545Z]    Nachaniya karan di | bid=46742 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.545Z]    Nachaniya karan din raat | bid=46741 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.545Z]    Odhani Odh Ke | bid=46740 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.545Z]    Do Ghoont Mujhe Bhi Pila De Sharabi | bid=46841 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.545Z]    Atariya Pe Lotan Kabootar Re | bid=46944 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.545Z]    Aapke Pyaar Mein Hum | bid=46945 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.545Z]    Leto Ayeho Hame Sapnoki Gaon Mein | bid=46946 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.545Z]    Aati Hai To Ch | bid=46947 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.545Z]    Aayega Maza Ab | bid=46948 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.545Z]    Aayegi Har Pal Tujhe Meri | bid=46949 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.545Z]    Aayegi Har Pal Tujhe | bid=46950 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.545Z]    Aayegi Har Pal | bid=46951 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.545Z]    Ek Pardesi Mera Dil Le Gaya | bid=46954 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.545Z]    Aap Ka Aana Dil | bid=46943 | step= | mod=draft | ourState=failed | BSON_FIXED
+[2026-07-12T13:04:27.545Z] 
+--- NOT IN BROMA (594) ---
+[2026-07-12T13:04:27.545Z]    Chand Chhupa Badal Mein | bid=46184 | ourState=processing | err=
+[2026-07-12T13:04:27.545Z]    Kasme Vaade Pyar Wafa | bid=46478 | ourState=cancelled | err=
+[2026-07-12T13:04:27.545Z]    Jhume Re Manwa Jhume | bid=46357 | ourState=cancelled | err=
+[2026-07-12T13:04:27.545Z]    Bidesh Jane Mayalu | bid=46362 | ourState=cancelled | err=Release deleted by admin
+[2026-07-12T13:04:27.545Z]    Aakashaima Chil Udyo Dharti Ma Chaya | bid=46363 | ourState=cancelled | err=Release deleted by admin
+[2026-07-12T13:04:27.545Z]    Kasme Vaade Pyar Wafa | bid=45920 | ourState=cancelled | err=
+[2026-07-12T13:04:27.545Z]    Sachi Kaho Humse | bid=45588 | ourState=delivered | err=
+[2026-07-12T13:04:27.545Z]    Sachi Kaho | bid=45585 | ourState=delivered | err=
+[2026-07-12T13:04:27.545Z]    Sajan Tumse Pyar | bid=45586 | ourState=delivered | err=
+[2026-07-12T13:04:27.545Z]    Sajana Tere Pya | bid=45581 | ourState=delivered | err=
+[2026-07-12T13:04:27.545Z]    Sajana Tere Pyar Mein | bid=45590 | ourState=delivered | err=
+[2026-07-12T13:04:27.545Z]    Samjho Na Kuch | bid=45562 | ourState=delivered | err=
+[2026-07-12T13:04:27.545Z]    Sapna | bid=45587 | ourState=delivered | err=
+[2026-07-12T13:04:27.545Z]    Sapno mein tera | bid=45589 | ourState=delivered | err=
+[2026-07-12T13:04:27.546Z]    Sare Shikve Gile | bid=45580 | ourState=delivered | err=
+[2026-07-12T13:04:27.546Z]    Shaam Bhi Khoob Hai | bid=45583 | ourState=delivered | err=
+[2026-07-12T13:04:27.546Z]    Dil Atka Teri Typing Mein | bid=45567 | ourState=delivered | err=
+[2026-07-12T13:04:27.546Z]    Pyar To Hota Hai Pyar | bid=45564 | ourState=delivered | err=
+[2026-07-12T13:04:27.546Z]    Qismat Badalta Hai | bid=45584 | ourState=delivered | err=
+[2026-07-12T13:04:27.546Z]    Raah Me Unse Mula | bid=45565 | ourState=delivered | err=
+[2026-07-12T13:04:27.546Z]    Agni Pariksha | bid=45568 | ourState=delivered | err=
+[2026-07-12T13:04:27.546Z]    Agni Parikshk | bid=45582 | ourState=delivered | err=
+[2026-07-12T13:04:27.546Z]    AGAR TUM SATH HO | bid=45561 | ourState=delivered | err=
+[2026-07-12T13:04:27.546Z]    Agni Pariksh | bid=45569 | ourState=delivered | err=
+[2026-07-12T13:04:27.546Z]    Teri Ungli Pakad Ke Chala | bid=45563 | ourState=delivered | err=
+[2026-07-12T13:04:27.546Z]    Teri Ungli Pakad | bid=45566 | ourState=delivered | err=
+[2026-07-12T13:04:27.546Z]    Thoda Thoda Pyaar | bid=45546 | ourState=delivered | err=
+[2026-07-12T13:04:27.546Z]    Thoda Thoda | bid=45543 | ourState=delivered | err=
+[2026-07-12T13:04:27.546Z]    Thukra Ka Mer | bid=45539 | ourState=delivered | err=
+[2026-07-12T13:04:27.546Z]    Tohfa Tohfa Tohfa | bid=45537 | ourState=delivered | err=
+[2026-07-12T13:04:27.546Z]    Tor Kamar Par Najar Gadi | bid=45535 | ourState=delivered | err=
+[2026-07-12T13:04:27.546Z]    Tu Cheez Badi Hai | bid=45534 | ourState=delivered | err=
+[2026-07-12T13:04:27.546Z]    Tu Hi Mera Dil Hai | bid=45532 | ourState=delivered | err=
+[2026-07-12T13:04:27.546Z]    Tu Hi Mera Dil | bid=45529 | ourState=delivered | err=
+[2026-07-12T13:04:27.546Z]    Tu Jo Hans Hans Ke | bid=45526 | ourState=delivered | err=
+[2026-07-12T13:04:27.546Z]    Tujhe Dekh Ke Paheli | bid=45523 | ourState=delivered | err=
+[2026-07-12T13:04:27.546Z]    Tum Se Badhka | bid=45521 | ourState=delivered | err=
+[2026-07-12T13:04:27.546Z]    Tu Jab Jab Mujhko Pukare | bid=45518 | ourState=delivered | err=
+[2026-07-12T13:04:27.546Z]    Tu Jo Hans Hans | bid=45515 | ourState=delivered | err=
+[2026-07-12T13:04:27.546Z]    Tu Milta Hai Mujhe | bid=45514 | ourState=delivered | err=
+[2026-07-12T13:04:27.546Z]    Tumhein Dil Se Kaise | bid=45502 | ourState=delivered | err=
+[2026-07-12T13:04:27.546Z]    Tujhko Mirch | bid=46844 | ourState=failed | err=Missing Broma outlet ids | BSON_FIXED
+[2026-07-12T13:04:27.546Z]    Tujhmein Aur Teri Yaad | bid=45495 | ourState=delivered | err=
+[2026-07-12T13:04:27.546Z]    Tum Se Badhkar | bid=45491 | ourState=delivered | err=
+[2026-07-12T13:04:27.546Z]    Tumhein Dil Se | bid=45490 | ourState=delivered | err=
+[2026-07-12T13:04:27.546Z]    Dil To Hai Dil | bid=45481 | ourState=delivered | err=
+[2026-07-12T13:04:27.546Z]    Mohabbat Me Sawarne Lage Hai | bid=45478 | ourState=delivered | err=
+[2026-07-12T13:04:27.546Z]    Dost Banke | bid=45477 | ourState=delivered | err=
+[2026-07-12T13:04:27.546Z]    Ek Din Teri Raahon Mein | bid=45473 | ourState=delivered | err=
+[2026-07-12T13:04:27.546Z]    Ek Pardesi Mera Dil Le Gaya | bid=45471 | ourState=delivered | err=
+[2026-07-12T13:04:27.546Z]    Emraan Hashmi | bid=45470 | ourState=delivered | err=
+[2026-07-12T13:04:27.546Z]    Ek Pyar Ka Naghma Hai | bid=45468 | ourState=delivered | err=
+[2026-07-12T13:04:27.546Z]    En Galiyon Se Nata Toota | bid=45466 | ourState=delivered | err=
+[2026-07-12T13:04:27.547Z]    Fakira | bid=45464 | ourState=delivered | err=
+[2026-07-12T13:04:27.547Z]    Gale Mai Dal Ke | bid=45455 | ourState=delivered | err=
+[2026-07-12T13:04:27.547Z]    Gehra Hua | bid=45451 | ourState=delivered | err=
+[2026-07-12T13:04:27.547Z]    Gori Hai Kalaiyan | bid=45448 | ourState=delivered | err=
+[2026-07-12T13:04:27.547Z]    Haan Tu Hain | bid=45441 | ourState=delivered | err=
+[2026-07-12T13:04:27.547Z]    Hale Dil tujhko Sunata | bid=45439 | ourState=delivered | err=
+[2026-07-12T13:04:27.547Z]    Hamein Tumse Hua Hai Pyar | bid=45437 | ourState=delivered | err=
+[2026-07-12T13:04:27.547Z]    Hamne Tumko Dil Ye De Diya | bid=45436 | ourState=delivered | err=
+[2026-07-12T13:04:27.547Z]    Har Kisi Ko Nahin Milta Yahan Pyar Zindagi Mein | bid=45433 | ourState=delivered | err=
+[2026-07-12T13:04:27.547Z]    Har kisi ko nahi milta | bid=45432 | ourState=delivered | err=
+[2026-07-12T13:04:27.547Z]    Haseeno Ko Aate Hain | bid=45430 | ourState=delivered | err=
+[2026-07-12T13:04:27.547Z]    Haye Haye Ye Majboori | bid=45427 | ourState=delivered | err=
+[2026-07-12T13:04:27.547Z]    Hua hai aaj pehli baar | bid=45426 | ourState=delivered | err=
+[2026-07-12T13:04:27.547Z]    Humnava | bid=46840 | ourState=failed | err=Missing Broma outlet ids | BSON_FIXED
+[2026-07-12T13:04:27.547Z]    Ishq Mubarak | bid=45420 | ourState=delivered | err=
+[2026-07-12T13:04:27.547Z]    Ho Mukhda Chand Ka Tukda | bid=45416 | ourState=delivered | err=
+[2026-07-12T13:04:27.547Z]    Humko Aajkal Hai Waiting | bid=45415 | ourState=delivered | err=
+[2026-07-12T13:04:27.547Z]    Itna Na Mujhse Tu Pyar Badha | bid=45412 | ourState=delivered | err=
+[2026-07-12T13:04:27.547Z]    Hum tumko | bid=45408 | ourState=delivered | err=
+[2026-07-12T13:04:27.547Z]    Ishq De Fanniyar | bid=45407 | ourState=delivered | err=
+[2026-07-12T13:04:27.547Z]    Jaane Kyon Log Mohabbat Kiya Karte Hain | bid=45406 | ourState=delivered | err=
+[2026-07-12T13:04:27.547Z]    Jab Hum Jawan Honge | bid=45365 | ourState=delivered | err=
+[2026-07-12T13:04:27.547Z]    Jab Tu Najar Se Najar | bid=45361 | ourState=delivered | err=
+[2026-07-12T13:04:27.547Z]    Jadu Nagari Se Aaya Hai Koi Magician | bid=45358 | ourState=delivered | err=
+[2026-07-12T13:04:27.547Z]    Mohabbat Me Sawarne Lage Hai | bid=45354 | ourState=delivered | err=
+[2026-07-12T13:04:27.547Z]    Tere Bina Adhura | bid=45352 | ourState=delivered | err=
+[2026-07-12T13:04:27.547Z]    Tere Bina Jee | bid=45347 | ourState=delivered | err=
+[2026-07-12T13:04:27.547Z]    Tere Dil Pe Haq | bid=45353 | ourState=delivered | err=
+[2026-07-12T13:04:27.547Z]    TERE MERE LAMHE PEECHE | bid=45349 | ourState=delivered | err=
+[2026-07-12T13:04:27.547Z]    Tera Mera Rishta | bid=45344 | ourState=delivered | err=
+[2026-07-12T13:04:27.547Z]    Tujhe Dhoondti | bid=45339 | ourState=delivered | err=
+[2026-07-12T13:04:27.547Z]    Teri Galliyon Se | bid=45355 | ourState=delivered | err=
+[2026-07-12T13:04:27.547Z]    Tum Jo Aaye Jindagi | bid=45343 | ourState=delivered | err=
+[2026-07-12T13:04:27.547Z]    Wajah Tum | bid=45340 | ourState=delivered | err=
+[2026-07-12T13:04:27.547Z]    Yeh Dil Deewana | bid=46471 | ourState=processing | err=
+[2026-07-12T13:04:27.547Z]    Aakhri Khayal | bid=45348 | ourState=delivered | err=
+[2026-07-12T13:04:27.547Z]    Aapke Pyaar Me  | bid=45345 | ourState=delivered | err=
+[2026-07-12T13:04:27.547Z]    Aapke Pyaar Me | bid=45342 | ourState=delivered | err=
+[2026-07-12T13:04:27.547Z]    AE DIL HAI MUSHKIL | bid=45337 | ourState=delivered | err=
+[2026-07-12T13:04:27.548Z]    AFGHAN JALEBI PEECHE | bid=45336 | ourState=delivered | err=
+[2026-07-12T13:04:27.548Z]    Titliaan | bid=45335 | ourState=delivered | err=
+[2026-07-12T13:04:27.548Z]    Yaadon Ke Jharoke | bid=45341 | ourState=delivered | err=
+[2026-07-12T13:04:27.548Z]    Tu Milta Hai | bid=45511 | ourState=delivered | err=
+[2026-07-12T13:04:27.548Z]    Tu Neendon Ki | bid=45509 | ourState=delivered | err=
+[2026-07-12T13:04:27.548Z]    Tujh Sang Preet | bid=45507 | ourState=delivered | err=
+[2026-07-12T13:04:27.548Z]    Tujhe Aankho Me Basa | bid=45519 | ourState=delivered | err=
+[2026-07-12T13:04:27.548Z]    Tujhe Dekh Ke Paheli Baar | bid=45498 | ourState=delivered | err=
+[2026-07-12T13:04:27.548Z]    EK PARDESI MERA DIL LE GAYA | bid=44971 | ourState=delivered | err=
+[2026-07-12T13:04:27.548Z]    O Bewafa Janeman | bid=44972 | ourState=delivered | err=
+[2026-07-12T13:04:27.548Z]    Panna Ki Tamanna Hai | bid=44966 | ourState=delivered | err=
+[2026-07-12T13:04:27.548Z]    Dil ke armaan dil se | bid=44968 | ourState=delivered | err=
+[2026-07-12T13:04:27.548Z]    Dil ke kone mei | bid=44967 | ourState=delivered | err=
+[2026-07-12T13:04:27.548Z]    Dil ke kone mein chhupa | bid=44964 | ourState=delivered | err=
+[2026-07-12T13:04:27.548Z]    Dil keh raha | bid=44962 | ourState=delivered | err=
+[2026-07-12T13:04:27.548Z]    Dil ke armaan jaag | bid=44961 | ourState=delivered | err=
+[2026-07-12T13:04:27.548Z]    Dil ke armaan naye | bid=44960 | ourState=delivered | err=
+[2026-07-12T13:04:27.548Z]    Dil ke armaan | bid=44959 | ourState=delivered | err=
+[2026-07-12T13:04:27.548Z]    Dil ke armaan tere | bid=44963 | ourState=delivered | err=
+[2026-07-12T13:04:27.548Z]    Dil ke armaan sab | bid=44956 | ourState=delivered | err=
+[2026-07-12T13:04:27.548Z]    Dil ke kone mein jagi | bid=44954 | ourState=delivered | err=
+[2026-07-12T13:04:27.548Z]    Dil ke kone mein karein | bid=44955 | ourState=delivered | err=
+[2026-07-12T13:04:27.548Z]    Dil ke kone mein khushi | bid=44946 | ourState=delivered | err=
+[2026-07-12T13:04:27.548Z]    Dil ke taar bajayein | bid=46824 | ourState=failed | err=Missing Broma outlet ids | BSON_FIXED
+[2026-07-12T13:04:27.548Z]    Dil ke taaron ko | bid=44945 | ourState=delivered | err=
+[2026-07-12T13:04:27.548Z]    Dil ki baat hai chhupi | bid=44944 | ourState=delivered | err=
+[2026-07-12T13:04:27.548Z]    Dil ki baat hai yeh dil | bid=44942 | ourState=delivered | err=
+[2026-07-12T13:04:27.548Z]    Dil ki baat tujhse | bid=46472 | ourState=processing | err=
+[2026-07-12T13:04:27.548Z]    Dil ki baatein chup | bid=44937 | ourState=delivered | err=
+[2026-07-12T13:04:27.548Z]    Do Deewane Pyar Ke | bid=44935 | ourState=delivered | err=
+[2026-07-12T13:04:27.548Z]    Dupatta Sarak Raha | bid=44933 | ourState=delivered | err=
+[2026-07-12T13:04:27.548Z]    Eka Karel zsg | bid=44931 | ourState=delivered | err=
+[2026-07-12T13:04:27.548Z]    Eka Karelmnb | bid=44932 | ourState=delivered | err=
+[2026-07-12T13:04:27.548Z]    Dil Tera Deewana | bid=44930 | ourState=delivered | err=
+[2026-07-12T13:04:27.548Z]    Dil ki dhadkan tere | bid=44924 | ourState=delivered | err=
+[2026-07-12T13:04:27.548Z]    Dil kyoon udaa | bid=44922 | ourState=delivered | err=
+[2026-07-12T13:04:27.548Z]    Diwanon Se Poochho | bid=44925 | ourState=delivered | err=
+[2026-07-12T13:04:27.548Z]    Din raat ke rang | bid=44927 | ourState=delivered | err=
+[2026-07-12T13:04:27.548Z]    Duniya Haseeno Ka | bid=44926 | ourState=delivered | err=
+[2026-07-12T13:04:27.548Z]    Dil Tera Deewana | bid=44920 | ourState=delivered | err=
+[2026-07-12T13:04:27.549Z]    Ek Dil Hai | bid=44921 | ourState=delivered | err=
+[2026-07-12T13:04:27.549Z]    Duniya Haseeno | bid=44919 | ourState=delivered | err=
+[2026-07-12T13:04:27.549Z]    Dilwa Le Gaile Raja | bid=44917 | ourState=delivered | err=
+[2026-07-12T13:04:27.549Z]    Ek Ladka Hai Ek | bid=46820 | ourState=failed | err=Missing Broma outlet ids | BSON_FIXED
+[2026-07-12T13:04:27.549Z]    Ek Meri Gali Ki Ladki | bid=44915 | ourState=delivered | err=
+[2026-07-12T13:04:27.549Z]    Ek Meri Gali Ki | bid=44916 | ourState=delivered | err=
+[2026-07-12T13:04:27.549Z]    Eka Karelb | bid=46475 | ourState=failed | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.549Z]    Eka Karelpopi | bid=46474 | ourState=failed | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.549Z]    Eka Karelsfdb | bid=44914 | ourState=delivered | err=
+[2026-07-12T13:04:27.549Z]    Eka Karelu Dil | bid=44912 | ourState=delivered | err=
+[2026-07-12T13:04:27.549Z]    Eka karelu mahe | bid=44913 | ourState=delivered | err=
+[2026-07-12T13:04:27.549Z]    Gawah Haichand | bid=46476 | ourState=failed | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.549Z]    Ghar Se Nikal Pada | bid=46477 | ourState=failed | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.549Z]    Gori Hai Kalaiyan | bid=44765 | ourState=cancelled | err=
+[2026-07-12T13:04:27.549Z]    Dil Tera Deewana | bid=44757 | ourState=delivered | err=
+[2026-07-12T13:04:27.549Z]    Hadh Kar Dil | bid=44742 | ourState=cancelled | err=
+[2026-07-12T13:04:27.549Z]    Hamare Raj Chalta | bid=44714 | ourState=cancelled | err=Release deleted by admin
+[2026-07-12T13:04:27.549Z]    Hamein Tumse Hua Hai | bid=44720 | ourState=delivered | err=
+[2026-07-12T13:04:27.549Z]    Hamein Tumse Hua | bid=44718 | ourState=processing | err=
+[2026-07-12T13:04:27.549Z]    Hamne Tumko Dil Ye | bid=44723 | ourState=processing | err=
+[2026-07-12T13:04:27.549Z]    Har Kisike Dil Me Ek | bid=44721 | ourState=processing | err=
+[2026-07-12T13:04:27.549Z]    Har Pal Mere Hothon | bid=44713 | ourState=delivered | err=
+[2026-07-12T13:04:27.549Z]    Heart is Crazy | bid=44716 | ourState=delivered | err=
+[2026-07-12T13:04:27.549Z]    Hawa mein uda | bid=44712 | ourState=delivered | err=
+[2026-07-12T13:04:27.549Z]    Bhool Na Jana Na Hona Anjaan | bid=44717 | ourState=delivered | err=
+[2026-07-12T13:04:27.549Z]    Hum Aise Pyar Ki | bid=44711 | ourState=delivered | err=
+[2026-07-12T13:04:27.549Z]    Hum Lakh Chupaye | bid=44709 | ourState=delivered | err= | BSON_FIXED
+[2026-07-12T13:04:27.549Z]    Hamein Tumse Hua | bid=44710 | ourState=delivered | err=
+[2026-07-12T13:04:27.549Z]    Dil Tera Deewana | bid=44707 | ourState=delivered | err=
+[2026-07-12T13:04:27.549Z]    Hum Tumhare | bid=44699 | ourState=delivered | err=
+[2026-07-12T13:04:27.549Z]    Aankh Churaaye | bid=44703 | ourState=delivered | err=
+[2026-07-12T13:04:27.549Z]    Aap Jo Mere Meet Na Hote | bid=44696 | ourState=delivered | err=
+[2026-07-12T13:04:27.549Z]    Aap Ki Nazron Ne Samjha | bid=44698 | ourState=delivered | err=
+[2026-07-12T13:04:27.549Z]    Aap Ki Nazron Ne | bid=44697 | ourState=cancelled | err=
+[2026-07-12T13:04:27.549Z]    Ae Dil Kahin Se Unko | bid=44695 | ourState=cancelled | err=
+[2026-07-12T13:04:27.549Z]    Sheeshe Ka Tha Dil Mera | bid=44692 | ourState=cancelled | err=
+[2026-07-12T13:04:27.549Z]    Ae Dil-E-Nadan | bid=44689 | ourState=delivered | err=
+[2026-07-12T13:04:27.549Z]    Aankh Milakar Loot Liya Dil | bid=44693 | ourState=cancelled | err=
+[2026-07-12T13:04:27.549Z]    Hum Teri Mohabbat | bid=44686 | ourState=delivered | err=
+[2026-07-12T13:04:27.550Z]    Hum To Tujhs | bid=44684 | ourState=delivered | err=
+[2026-07-12T13:04:27.550Z]    Hum To Tujhse Mohabbat | bid=44682 | ourState=delivered | err=
+[2026-07-12T13:04:27.550Z]    Hum To Tujhse | bid=44683 | ourState=delivered | err=
+[2026-07-12T13:04:27.550Z]    Hum Tumhein Itna | bid=44679 | ourState=delivered | err= | BSON_FIXED
+[2026-07-12T13:04:27.550Z]    Hum Tumhein Pyar | bid=44675 | ourState=delivered | err=
+[2026-07-12T13:04:27.550Z]    Hum Tumko Nigahon | bid=44678 | ourState=delivered | err=
+[2026-07-12T13:04:27.550Z]    Hum Unse Mohabbat | bid=44672 | ourState=delivered | err=
+[2026-07-12T13:04:27.550Z]    Hum Yaar Hai Tumhare | bid=44673 | ourState=delivered | err=
+[2026-07-12T13:04:27.550Z]    Hum Yaar Hai | bid=44671 | ourState=delivered | err=
+[2026-07-12T13:04:27.550Z]    Armaan Hamare | bid=44668 | ourState=cancelled | err=
+[2026-07-12T13:04:27.550Z]    Humko Deewana Kar | bid=44669 | ourState=delivered | err=
+[2026-07-12T13:04:27.550Z]    Humko Tumse Pyaar Hai | bid=44665 | ourState=delivered | err=
+[2026-07-12T13:04:27.550Z]    Humse Sajna Kyon | bid=44667 | ourState=delivered | err=
+[2026-07-12T13:04:27.550Z]    Humse Sajna | bid=44664 | ourState=delivered | err=
+[2026-07-12T13:04:27.550Z]    Is Pyar Se Meri Taraf Na | bid=44660 | ourState=delivered | err=
+[2026-07-12T13:04:27.550Z]    Pyar Se Meri | bid=44661 | ourState=delivered | err=
+[2026-07-12T13:04:27.550Z]    Bahut Der Se Dar Pe Aankh | bid=44662 | ourState=delivered | err=
+[2026-07-12T13:04:27.550Z]    Bahut Pyar Karte Hain | bid=44659 | ourState=delivered | err= | BSON_FIXED
+[2026-07-12T13:04:27.550Z]    Ishq Na Karna | bid=44658 | ourState=delivered | err=
+[2026-07-12T13:04:27.550Z]    Bas Tu Hi Tu Meri Dua | bid=44655 | ourState=delivered | err=
+[2026-07-12T13:04:27.550Z]    Itna Main Chaahoon | bid=44656 | ourState=delivered | err=
+[2026-07-12T13:04:27.550Z]    Jaaneman Jaaneman | bid=44657 | ourState=delivered | err=
+[2026-07-12T13:04:27.550Z]    Jab Jab Dekhu Tujhe Dil | bid=44654 | ourState=delivered | err=
+[2026-07-12T13:04:27.550Z]    Jab Se Tumhein | bid=44653 | ourState=delivered | err=
+[2026-07-12T13:04:27.550Z]    Ka Dekhela Aise Hans | bid=44652 | ourState=delivered | err=
+[2026-07-12T13:04:27.550Z]    Bhooli Bisri Ek Kahani | bid=44883 | ourState=delivered | err=
+[2026-07-12T13:04:27.550Z]    Jahan Khushi Milati Hai | bid=44880 | ourState=delivered | err=
+[2026-07-12T13:04:27.550Z]    Bindiya Chamkegi Chudi Khankegi | bid=44879 | ourState=delivered | err=
+[2026-07-12T13:04:27.550Z]    Chahe Mera Dil Jaaye | bid=44881 | ourState=delivered | err=
+[2026-07-12T13:04:27.550Z]    Janam Janam Jo Sath Nibhaye | bid=44878 | ourState=processing | err=
+[2026-07-12T13:04:27.550Z]    Chale To Kat Hi Jayega Safar | bid=44875 | ourState=delivered | err=
+[2026-07-12T13:04:27.550Z]    Janam Janam Jo Sath | bid=44877 | ourState=delivered | err=
+[2026-07-12T13:04:27.550Z]    Jeeta Tha Jiske Liye | bid=44876 | ourState=delivered | err=
+[2026-07-12T13:04:27.550Z]    Hum To Tujhse Mohabbat | bid=44872 | ourState=delivered | err=
+[2026-07-12T13:04:27.550Z]    Jeeta Tha Jiske | bid=44871 | ourState=delivered | err=
+[2026-07-12T13:04:27.550Z]    Jina Sirf Mer | bid=44869 | ourState=cancelled | err=Release deleted by admin
+[2026-07-12T13:04:27.550Z]    Ka Dekhela Aise Hans Ke | bid=44868 | ourState=delivered | err=
+[2026-07-12T13:04:27.550Z]    Kab Tak Yaad Karoon Main | bid=44867 | ourState=delivered | err=
+[2026-07-12T13:04:27.550Z]    Kab Tak Yaad Karoon | bid=44866 | ourState=delivered | err=
+[2026-07-12T13:04:27.550Z]    Kah Ke Babu Sona | bid=44863 | ourState=delivered | err=
+[2026-07-12T13:04:27.551Z]    Kahin Mujhe Pyar Hua Toh | bid=44864 | ourState=cancelled | err=Release deleted by admin
+[2026-07-12T13:04:27.551Z]    Kahin Mujhe Pyar Hua | bid=44862 | ourState=delivered | err=
+[2026-07-12T13:04:27.551Z]    Kahin mujhe pyar | bid=44858 | ourState=delivered | err=
+[2026-07-12T13:04:27.551Z]    Kamar Me Pareshani | bid=44857 | ourState=processing | err=
+[2026-07-12T13:04:27.551Z]    Kar Lo Tum Kadar Hamari | bid=44859 | ourState=processing | err=
+[2026-07-12T13:04:27.551Z]    Kar Lo Tum Kadar | bid=44636 | ourState=delivered | err=
+[2026-07-12T13:04:27.551Z]    Kar Lo Tum | bid=44633 | ourState=delivered | err=
+[2026-07-12T13:04:27.551Z]    Kaun Disha Mein Leke Chala | bid=44637 | ourState=delivered | err=
+[2026-07-12T13:04:27.551Z]    Kaun disha mein | bid=44856 | ourState=delivered | err=
+[2026-07-12T13:04:27.551Z]    Kaun Hai Jo Sapno Mein | bid=44635 | ourState=delivered | err=
+[2026-07-12T13:04:27.551Z]    Khamoshi Hai Ek Baja Hai | bid=44855 | ourState=delivered | err=
+[2026-07-12T13:04:27.551Z]    Khel Wohi Phir Aaj | bid=44838 | ourState=delivered | err=
+[2026-07-12T13:04:27.551Z]    Dekha Hai Pehli Baar Sajan | bid=44626 | ourState=delivered | err=
+[2026-07-12T13:04:27.551Z]    Aaj Pehli Baar Dil Ki Baat | bid=44634 | ourState=delivered | err=
+[2026-07-12T13:04:27.551Z]    Khushboo si hawaon | bid=44629 | ourState=delivered | err=
+[2026-07-12T13:04:27.551Z]    Tere Naam Humne Kiya Hai | bid=44837 | ourState=delivered | err=
+[2026-07-12T13:04:27.551Z]    Khushi chha jaaye | bid=44630 | ourState=delivered | err=
+[2026-07-12T13:04:27.551Z]    Rab Ne Banaya Tujhko | bid=44628 | ourState=delivered | err=
+[2026-07-12T13:04:27.551Z]    Tu Hi Dhoondti Hai Ye Pagal | bid=44632 | ourState=delivered | err=
+[2026-07-12T13:04:27.551Z]    Dil Kahe Tu Paas Aa | bid=44620 | ourState=delivered | err=
+[2026-07-12T13:04:27.551Z]    Odhni Fisal Rahi Hai | bid=44623 | ourState=delivered | err=
+[2026-07-12T13:04:27.551Z]    Zindagi Dene Wale Sun | bid=44627 | ourState=delivered | err=
+[2026-07-12T13:04:27.551Z]    Ankhiyon Ke Jharokhon Se | bid=44612 | ourState=delivered | err=
+[2026-07-12T13:04:27.551Z]    Aankh Churaaye | bid=44606 | ourState=cancelled | err=
+[2026-07-12T13:04:27.551Z]    Aaja Ke Intezar Main | bid=44601 | ourState=delivered | err=
+[2026-07-12T13:04:27.551Z]    Chahe Mera Dil Jaaye | bid=44596 | ourState=delivered | err=
+[2026-07-12T13:04:27.551Z]    Panchhi Banu Udti Phiru | bid=44589 | ourState=delivered | err=
+[2026-07-12T13:04:27.551Z]    Tu Mera Hai | bid=44590 | ourState=delivered | err=
+[2026-07-12T13:04:27.551Z]    Mukhda Chand Ka Tukda | bid=44586 | ourState=processing | err=
+[2026-07-12T13:04:27.551Z]    Dil Hai Kahi | bid=44584 | ourState=delivered | err=
+[2026-07-12T13:04:27.551Z]    Dil Ki Girah Khol Do | bid=44582 | ourState=delivered | err=
+[2026-07-12T13:04:27.551Z]    Dil Ki Mehfil | bid=44581 | ourState=delivered | err=
+[2026-07-12T13:04:27.551Z]    Disco Dil Mera | bid=44575 | ourState=delivered | err=
+[2026-07-12T13:04:27.551Z]    Do Lafzon Ki Hai | bid=44574 | ourState=delivered | err=
+[2026-07-12T13:04:27.551Z]    Ek Jawani Teri, Ek Jawani Meri | bid=44817 | ourState=delivered | err=
+[2026-07-12T13:04:27.551Z]    Ek Ladki Bheegi Bhagi | bid=44815 | ourState=delivered | err=
+[2026-07-12T13:04:27.551Z]    Ek Pardasi Mera Dil Le Gaya | bid=44814 | ourState=delivered | err=
+[2026-07-12T13:04:27.551Z]    Ek Pyar Ka Dariya Hai | bid=44807 | ourState=delivered | err=
+[2026-07-12T13:04:27.551Z]    Gori Tera Gaon Bada Pyara | bid=44805 | ourState=delivered | err=
+[2026-07-12T13:04:27.552Z]    Kisi Shayar Ka Dil | bid=44806 | ourState=delivered | err=
+[2026-07-12T13:04:27.552Z]    Kisise Tum Pyaar Karo | bid=44803 | ourState=delivered | err=
+[2026-07-12T13:04:27.552Z]    Kitna Pyaara Hai | bid=44801 | ourState=delivered | err=
+[2026-07-12T13:04:27.552Z]    Pyar Se Meri | bid=44562 | ourState=delivered | err=
+[2026-07-12T13:04:27.552Z]    Haal Kya Hai Dilon Ka | bid=44558 | ourState=delivered | err=
+[2026-07-12T13:04:27.552Z]    Haay Meri Uljhi Nazar | bid=44559 | ourState=delivered | err=
+[2026-07-12T13:04:27.552Z]    Har Khushi | bid=44560 | ourState=delivered | err=
+[2026-07-12T13:04:27.552Z]    Kitna Pyaara Tujhe Rabne | bid=44557 | ourState=delivered | err=
+[2026-07-12T13:04:27.552Z]    Har Pal Mere Dil Mein Tu | bid=44553 | ourState=delivered | err=
+[2026-07-12T13:04:27.552Z]    Kitne Chahat Dil Me | bid=44555 | ourState=delivered | err=
+[2026-07-12T13:04:27.552Z]    Honton Pe Bas Tera Naam Hai | bid=44554 | ourState=delivered | err=
+[2026-07-12T13:04:27.552Z]    Kitne Dino Ke Baad Mile | bid=44549 | ourState=delivered | err=
+[2026-07-12T13:04:27.552Z]    Kuch Kuch Hota Hai | bid=44552 | ourState=delivered | err=
+[2026-07-12T13:04:27.552Z]    Kuch Kuch Hota | bid=44547 | ourState=delivered | err=
+[2026-07-12T13:04:27.552Z]    Hume Aur Jeene Ki Chahat Na Hoti | bid=44542 | ourState=delivered | err=
+[2026-07-12T13:04:27.552Z]    Kya Tum Mujhse Pyar | bid=44545 | ourState=delivered | err=
+[2026-07-12T13:04:27.552Z]    Kyaa Dil Ne Ka | bid=44546 | ourState=delivered | err=
+[2026-07-12T13:04:27.552Z]    Laal Dupatta | bid=44532 | ourState=delivered | err=
+[2026-07-12T13:04:27.552Z]    Le Gayi Le Gayi | bid=44522 | ourState=delivered | err=
+[2026-07-12T13:04:27.552Z]    Main Nikla Gadi Leke | bid=44519 | ourState=delivered | err=
+[2026-07-12T13:04:27.552Z]    Ishq Ka Dard | bid=44473 | ourState=delivered | err=
+[2026-07-12T13:04:27.552Z]    Jaane Do Jaane Do   Shahenshah | bid=44472 | ourState=delivered | err=
+[2026-07-12T13:04:27.552Z]    Jaane Kyon Log Mohabbat Kiya Karte Hain | bid=44471 | ourState=delivered | err=
+[2026-07-12T13:04:27.552Z]    Jadu Nagari Se Aaya Hai Koi Jadugar | bid=44469 | ourState=delivered | err=
+[2026-07-12T13:04:27.552Z]    Main Tera Her | bid=44468 | ourState=delivered | err=
+[2026-07-12T13:04:27.552Z]    Jawani Teri Ke Deewane | bid=44466 | ourState=delivered | err=
+[2026-07-12T13:04:27.552Z]    Main Tujhko Bhaga | bid=44467 | ourState=delivered | err=
+[2026-07-12T13:04:27.552Z]    Main Tujhko | bid=44463 | ourState=delivered | err=
+[2026-07-12T13:04:27.552Z]    Main Tujhse Aise Milun | bid=44465 | ourState=delivered | err=
+[2026-07-12T13:04:27.552Z]    Maine Tujhse Pyar Kiya | bid=44464 | ourState=delivered | err=
+[2026-07-12T13:04:27.552Z]    Man Kyoon Behka Re | bid=44462 | ourState=delivered | err=
+[2026-07-12T13:04:27.552Z]    Mashroof Hai Dil Kitn | bid=44461 | ourState=delivered | err=
+[2026-07-12T13:04:27.552Z]    Mast Jawani Lage Kadak | bid=44451 | ourState=delivered | err=
+[2026-07-12T13:04:27.552Z]    Mast Jawani Lage | bid=44453 | ourState=processing | err=
+[2026-07-12T13:04:27.552Z]    Mera Dil Hi To Hai | bid=44449 | ourState=processing | err=
+[2026-07-12T13:04:27.552Z]    Ankhein | bid=44441 | ourState=processing | err=
+[2026-07-12T13:04:27.552Z]    Aisa Sama Na Hota | bid=44442 | ourState=processing | err=
+[2026-07-12T13:04:27.552Z]    Akhiyon Ke Jharokon Se | bid=44440 | ourState=delivered | err=
+[2026-07-12T13:04:27.552Z]    Mera Kangna | bid=44436 | ourState=processing | err=
+[2026-07-12T13:04:27.552Z]    Barsat Ke Mosam Me | bid=44433 | ourState=delivered | err=
+[2026-07-12T13:04:27.553Z]    Mera Yaar Dild | bid=44428 | ourState=processing | err=
+[2026-07-12T13:04:27.553Z]    Mera Yaar Dildar | bid=44432 | ourState=delivered | err=
+[2026-07-12T13:04:27.553Z]    Chaale To Kaat Hi Jaayega Safar | bid=44430 | ourState=delivered | err=
+[2026-07-12T13:04:27.553Z]    Chalte Chalte Meray Ye Geet | bid=44423 | ourState=delivered | err=
+[2026-07-12T13:04:27.553Z]    Chalte Chalte Yunhi | bid=44422 | ourState=delivered | err=
+[2026-07-12T13:04:27.553Z]    Jawani Teri Ke Deewane | bid=44425 | ourState=delivered | err=
+[2026-07-12T13:04:27.553Z]    Jadu Nagari Se Aaya Hai Koi Jadugar | bid=44424 | ourState=delivered | err=
+[2026-07-12T13:04:27.553Z]    Jab Pyar Ke Baadal Chhaye Nahin | bid=44427 | ourState=delivered | err=
+[2026-07-12T13:04:27.553Z]    Ishq Ka Dard | bid=44421 | ourState=delivered | err=
+[2026-07-12T13:04:27.553Z]    Chale To Kat Hi Jayega | bid=44418 | ourState=delivered | err=
+[2026-07-12T13:04:27.553Z]    Aisaa Lagataa Hai | bid=44419 | ourState=delivered | err=
+[2026-07-12T13:04:27.553Z]    Chahe Mera Dil Jaaye | bid=44416 | ourState=delivered | err=
+[2026-07-12T13:04:27.553Z]    Chalte Chalte Meray Ye Geet | bid=44409 | ourState=delivered | err=
+[2026-07-12T13:04:27.553Z]    Dil Ki Girah Khol Do | bid=44405 | ourState=delivered | err=
+[2026-07-12T13:04:27.553Z]    Desh Se Pardesh Bulaye Re | bid=44411 | ourState=delivered | err=
+[2026-07-12T13:04:27.553Z]    Aaja Ke Intezar Main | bid=44402 | ourState=delivered | err=
+[2026-07-12T13:04:27.553Z]    Aap Ki Nazron Ne | bid=44401 | ourState=cancelled | err=
+[2026-07-12T13:04:27.553Z]    Chand Mera Dil | bid=44403 | ourState=delivered | err=
+[2026-07-12T13:04:27.553Z]    Chehra Mera Tha | bid=44399 | ourState=delivered | err=
+[2026-07-12T13:04:27.553Z]    Chori Chori Dil Tera Churayenge | bid=44398 | ourState=delivered | err=
+[2026-07-12T13:04:27.553Z]    Chudi Maja Na Degi Kangan Maja Na Dega | bid=44400 | ourState=delivered | err=
+[2026-07-12T13:04:27.553Z]    Dikhayi Diye Yun | bid=44397 | ourState=delivered | err=
+[2026-07-12T13:04:27.554Z]    Dil Ke Armaan Aansuon Mein Beh Gaye | bid=44339 | ourState=delivered | err=
+[2026-07-12T13:04:27.554Z]    Mere Dil Ki Hai | bid=44340 | ourState=delivered | err=
+[2026-07-12T13:04:27.554Z]    Diwano Se Pucho Mohabbat Hai Kya | bid=44343 | ourState=delivered | err=
+[2026-07-12T13:04:27.554Z]    Mere Pyar Ko Tum | bid=44336 | ourState=processing | err=
+[2026-07-12T13:04:27.554Z]    Mere Rashke Qamar | bid=44333 | ourState=delivered | err=
+[2026-07-12T13:04:27.554Z]    Mere Rashke | bid=44337 | ourState=delivered | err=
+[2026-07-12T13:04:27.554Z]    Mere Saathi Jeevan Sathi | bid=44334 | ourState=delivered | err=
+[2026-07-12T13:04:27.554Z]    Mere saathi jeevan | bid=44335 | ourState=delivered | err=
+[2026-07-12T13:04:27.554Z]    Meri Tarah Tum Bhi | bid=44327 | ourState=delivered | err=
+[2026-07-12T13:04:27.554Z]    Meri Tarah Tum | bid=44329 | ourState=delivered | err=
+[2026-07-12T13:04:27.554Z]    Meri Zindagi Hai | bid=44331 | ourState=delivered | err=
+[2026-07-12T13:04:27.554Z]    Meri Zindagi | bid=44332 | ourState=delivered | err=
+[2026-07-12T13:04:27.554Z]    Mile Abhi Chhori Darbhanga Mein Karhari | bid=44330 | ourState=delivered | err=
+[2026-07-12T13:04:27.554Z]    Mitwa Bhool Na Jana | bid=44328 | ourState=delivered | err=
+[2026-07-12T13:04:27.554Z]    Mohabbat Ka Sapna | bid=44325 | ourState=processing | err=
+[2026-07-12T13:04:27.554Z]    Mai Joru Ka Gulam Banke Rahunga | bid=44323 | ourState=delivered | err=
+[2026-07-12T13:04:27.554Z]    Mohabbat Na Karna | bid=44324 | ourState=processing | err=
+[2026-07-12T13:04:27.554Z]    Mujhe Log Kehte Hain | bid=44319 | ourState=delivered | err=
+[2026-07-12T13:04:27.554Z]    Mujhe Pyar Hua Allamiya | bid=44318 | ourState=delivered | err=
+[2026-07-12T13:04:27.554Z]    Mujhko Dhadka | bid=44316 | ourState=processing | err=
+[2026-07-12T13:04:27.554Z]    Mujhko Dhadkano | bid=44322 | ourState=delivered | err=
+[2026-07-12T13:04:27.554Z]    Mujhse Jo Door Hai | bid=44315 | ourState=delivered | err=
+[2026-07-12T13:04:27.554Z]    Munh Mod Le Li | bid=44312 | ourState=delivered | err=
+[2026-07-12T13:04:27.554Z]    Naam Hai Tera | bid=44314 | ourState=processing | err=
+[2026-07-12T13:04:27.554Z]    Nachaniya Karan Dil | bid=44309 | ourState=processing | err=
+[2026-07-12T13:04:27.554Z]    Nachaniya Karan | bid=44305 | ourState=delivered | err=
+[2026-07-12T13:04:27.554Z]    Nai Jhulni Ke Chhaiyan | bid=44303 | ourState=delivered | err=
+[2026-07-12T13:04:27.554Z]    Neend Churayee Meri | bid=44304 | ourState=delivered | err=
+[2026-07-12T13:04:27.554Z]    Neend Churayee | bid=44302 | ourState=delivered | err=
+[2026-07-12T13:04:27.554Z]    Neend Kise Chain Kahan | bid=44297 | ourState=delivered | err=
+[2026-07-12T13:04:27.554Z]    Neend Kise Chain | bid=44300 | ourState=delivered | err=
+[2026-07-12T13:04:27.554Z]    O Dil Tod Ke Hansti Ho | bid=44295 | ourState=delivered | err=
+[2026-07-12T13:04:27.554Z]    O Jaane Jaan Main | bid=44296 | ourState=delivered | err=
+[2026-07-12T13:04:27.554Z]    O Jaane Jaan Main | bid=44298 | ourState=delivered | err=
+[2026-07-12T13:04:27.554Z]    O Lal Dupatte Wali | bid=44294 | ourState=delivered | err=
+[2026-07-12T13:04:27.554Z]    O Lal Dupatte | bid=44292 | ourState=delivered | err=
+[2026-07-12T13:04:27.554Z]    Odhani Odh Ke Nachu | bid=44290 | ourState=processing | err=
+[2026-07-12T13:04:27.554Z]    Aadatein | bid=44293 | ourState=delivered | err=
+[2026-07-12T13:04:27.554Z]    Odhani Odh | bid=44288 | ourState=delivered | err=
+[2026-07-12T13:04:27.554Z]    Aane se uske jaaye ye saal | bid=44286 | ourState=delivered | err=
+[2026-07-12T13:04:27.555Z]    Aankh Se Chalka Aansu | bid=44285 | ourState=delivered | err=
+[2026-07-12T13:04:27.555Z]    Odhni Odh Ke Nachu | bid=44284 | ourState=delivered | err=
+[2026-07-12T13:04:27.555Z]    Odhni Odh Ke | bid=44289 | ourState=delivered | err=
+[2026-07-12T13:04:27.555Z]    Oh Oh Jane Jaana | bid=44280 | ourState=delivered | err=
+[2026-07-12T13:04:27.555Z]    Aawara Banjara | bid=44279 | ourState=delivered | err=
+[2026-07-12T13:04:27.555Z]    Adhoori Baatein | bid=44283 | ourState=delivered | err=
+[2026-07-12T13:04:27.555Z]    Do Lafzo Ki Hai Dil Ki Kahani | bid=44281 | ourState=delivered | err=
+[2026-07-12T13:04:27.555Z]    Afsana Tere Pyaar La | bid=44278 | ourState=delivered | err=
+[2026-07-12T13:04:27.555Z]    Anjaan Raahon mein | bid=44277 | ourState=delivered | err=
+[2026-07-12T13:04:27.555Z]    Pagla Ke Bhes | bid=44275 | ourState=delivered | err=
+[2026-07-12T13:04:27.555Z]    Ankahi Daastan | bid=44274 | ourState=delivered | err=
+[2026-07-12T13:04:27.555Z]    Ek Hasina Thi | bid=44276 | ourState=delivered | err=
+[2026-07-12T13:04:27.555Z]    Chale To Kaat Hi Jayegi Safar | bid=44261 | ourState=delivered | err=
+[2026-07-12T13:04:27.555Z]    Pagla Ke Bhesh | bid=44259 | ourState=delivered | err=
+[2026-07-12T13:04:27.555Z]    Ek Ladki Ko Dekha Tu Aisa Laga | bid=44260 | ourState=delivered | err=
+[2026-07-12T13:04:27.555Z]    Dillagi Yeh Hai Dillagi | bid=44078 | ourState=delivered | err=
+[2026-07-12T13:04:27.555Z]    Yaar Tera Pyar | bid=44080 | ourState=delivered | err=
+[2026-07-12T13:04:27.555Z]    Banya Nhi Koi Sada | bid=44075 | ourState=delivered | err=
+[2026-07-12T13:04:27.555Z]    Dil Pe Zakhm 2.0 | bid=44050 | ourState=delivered | err=
+[2026-07-12T13:04:27.555Z]    Ek Laadki Bheegi Bhaagisi | bid=44046 | ourState=delivered | err=
+[2026-07-12T13:04:27.556Z]    Chalo phir se jietein hain | bid=44043 | ourState=delivered | err=
+[2026-07-12T13:04:27.556Z]    Dekha Ek Khwab | bid=44263 | ourState=delivered | err=
+[2026-07-12T13:04:27.556Z]    Ladki Ko Dekha | bid=44256 | ourState=delivered | err=
+[2026-07-12T13:04:27.556Z]    Dheema Sa Pal | bid=44254 | ourState=delivered | err=
+[2026-07-12T13:04:27.556Z]    Ek Pal Ke | bid=44258 | ourState=delivered | err=
+[2026-07-12T13:04:27.556Z]    Chandni Raat | bid=44257 | ourState=delivered | err=
+[2026-07-12T13:04:27.556Z]    Mera Dil Hi To | bid=44045 | ourState=delivered | err=
+[2026-07-12T13:04:27.556Z]    Mashroof Hai Dil | bid=44396 | ourState=processing | err=
+[2026-07-12T13:04:27.556Z]    Mera Intkam | bid=44393 | ourState=delivered | err=
+[2026-07-12T13:04:27.556Z]    Main Tera He | bid=44395 | ourState=delivered | err=
+[2026-07-12T13:04:27.556Z]    Jab Pyar Ke Baadal Chhaye Nahin | bid=44392 | ourState=delivered | err=
+[2026-07-12T13:04:27.556Z]    Mera Intkam Dekhegi | bid=44394 | ourState=processing | err=
+[2026-07-12T13:04:27.556Z]    Likhne Wale Ne | bid=44492 | ourState=delivered | err=
+[2026-07-12T13:04:27.556Z]    A Hawa Mere Sang Sang | bid=44488 | ourState=delivered | err=
+[2026-07-12T13:04:27.556Z]    Aaj Rone Ki Aakhiri Baari | bid=44490 | ourState=delivered | err=
+[2026-07-12T13:04:27.556Z]    Aaj Phir Jeene | bid=44489 | ourState=delivered | err=
+[2026-07-12T13:04:27.556Z]    Mujhy Tum Nazar Se | bid=44044 | ourState=cancelled | err=
+[2026-07-12T13:04:27.556Z]    Balamuwa Ke Ballam | bid=43878 | ourState=delivered | err=
+[2026-07-12T13:04:27.556Z]    Bali Re Umaria Ke | bid=43876 | ourState=delivered | err=
+[2026-07-12T13:04:27.556Z]    Ban Piya | bid=43874 | ourState=delivered | err=
+[2026-07-12T13:04:27.556Z]    Dil Ki Dharkan | bid=43872 | ourState=delivered | err=
+[2026-07-12T13:04:27.556Z]    Dil Ki Mahfil | bid=43871 | ourState=delivered | err=
+[2026-07-12T13:04:27.556Z]    Dil Le Gayi Re | bid=43868 | ourState=delivered | err=
+[2026-07-12T13:04:27.556Z]    Bepanah Ishq Hai Tumse Sanam | bid=43861 | ourState=delivered | err=
+[2026-07-12T13:04:27.556Z]    Bepanah Ishq Ki Kahani | bid=43855 | ourState=delivered | err=
+[2026-07-12T13:04:27.556Z]    Bhig Ja Pyar Ki Barish Me | bid=43853 | ourState=delivered | err=
+[2026-07-12T13:04:27.557Z]    Bangle Ke Peech | bid=43851 | ourState=delivered | err=
+[2026-07-12T13:04:27.557Z]    Dil Tere Naam Hone Laga | bid=43849 | ourState=delivered | err=
+[2026-07-12T13:04:27.557Z]    Jhoothe Tere Vaade | bid=43847 | ourState=delivered | err=
+[2026-07-12T13:04:27.557Z]    Bangle Ke Peechhe | bid=43845 | ourState=delivered | err=
+[2026-07-12T13:04:27.557Z]    Mohabbat Me Sawarne Lage Hai | bid=43841 | ourState=delivered | err=
+[2026-07-12T13:04:27.557Z]    O Bangla Gaadi Jhumke Kangana | bid=43840 | ourState=delivered | err=
+[2026-07-12T13:04:27.557Z]    DIL KE SAARE KHWAAB BIKHAR GAYE | bid=43836 | ourState=delivered | err=
+[2026-07-12T13:04:27.557Z]    Sanson Ki Mala Pe | bid=43835 | ourState=delivered | err=
+[2026-07-12T13:04:27.557Z]    Tere Jism Ki Khushbu | bid=43832 | ourState=delivered | err=
+[2026-07-12T13:04:27.557Z]    Teri Chahat | bid=43830 | ourState=delivered | err=
+[2026-07-12T13:04:27.557Z]    Tu Hi Meri Aashiqui | bid=43829 | ourState=delivered | err=
+[2026-07-12T13:04:27.557Z]    Tu Hi Meri Chahat | bid=43825 | ourState=delivered | err=
+[2026-07-12T13:04:27.557Z]    Banke Hawa Mei | bid=43824 | ourState=delivered | err=
+[2026-07-12T13:04:27.557Z]    Tu Ishq Thi | bid=43823 | ourState=delivered | err=
+[2026-07-12T13:04:27.557Z]    Banke Hawa Mein | bid=43820 | ourState=delivered | err=
+[2026-07-12T13:04:27.557Z]    Wo Bhi Apne Na Huye | bid=43818 | ourState=delivered | err=
+[2026-07-12T13:04:27.557Z]    Chupana Bhi Nahi Aata | bid=43817 | ourState=delivered | err=
+[2026-07-12T13:04:27.557Z]    Bansuriya Ab Yeh Hi Pukare | bid=43814 | ourState=delivered | err=
+[2026-07-12T13:04:27.557Z]    Bardash Nahi Hola | bid=43812 | ourState=delivered | err=
+[2026-07-12T13:04:27.557Z]    Aaj Phir Jeene Ki Tamanna Hai | bid=43810 | ourState=delivered | err=
+[2026-07-12T13:04:27.557Z]    Barish Ki Bundi | bid=43809 | ourState=delivered | err=
+[2026-07-12T13:04:27.557Z]    AAP JO MERE MEET NA HOTE | bid=43807 | ourState=delivered | err=
+[2026-07-12T13:04:27.557Z]    Barish Ki Bundiye | bid=43805 | ourState=delivered | err=
+[2026-07-12T13:04:27.557Z]    AISAA LAGTAA HAI | bid=43803 | ourState=delivered | err=
+[2026-07-12T13:04:27.557Z]    Beshak Tum Meri Ho | bid=43801 | ourState=delivered | err=
+[2026-07-12T13:04:27.557Z]    Beta Apni Maa Se Kabhi | bid=43799 | ourState=delivered | err=
+[2026-07-12T13:04:27.557Z]    Chehra Ye Chand Ki Raat Mein | bid=43797 | ourState=delivered | err=
+[2026-07-12T13:04:27.557Z]    Bahon Mein Botal Botal Mein Daru | bid=43795 | ourState=delivered | err=
+[2026-07-12T13:04:27.557Z]    BIJLI SA DIL | bid=43793 | ourState=delivered | err=
+[2026-07-12T13:04:27.557Z]    Beta Apni Maa Se | bid=43790 | ourState=delivered | err=
+[2026-07-12T13:04:27.557Z]    Chale To Kat Hi Jaayega Safar | bid=43789 | ourState=delivered | err=
+[2026-07-12T13:04:27.557Z]    Bhaiya Lago Hi Bhatar | bid=43787 | ourState=delivered | err=
+[2026-07-12T13:04:27.557Z]    Hamen Aur Jeene Ki | bid=43784 | ourState=delivered | err=
+[2026-07-12T13:04:27.557Z]    Bhatar Kaise Kahabo | bid=43783 | ourState=delivered | err=
+[2026-07-12T13:04:27.557Z]    Jabse Tujhko Jaana | bid=43780 | ourState=delivered | err=
+[2026-07-12T13:04:27.557Z]    KAANTA LAGA | bid=43779 | ourState=delivered | err=
+[2026-07-12T13:04:27.557Z]    Chahat Ka Ilaka Hai | bid=43776 | ourState=delivered | err=
+[2026-07-12T13:04:27.557Z]    Bheegi Hui Hai Raat | bid=43775 | ourState=delivered | err=
+[2026-07-12T13:04:27.557Z]    Kabhi Shaam Dhale | bid=43772 | ourState=delivered | err=
+[2026-07-12T13:04:27.557Z]    Aaja Sanam | bid=43771 | ourState=delivered | err=
+[2026-07-12T13:04:27.558Z]    Aap Jo Mere Meet Na Hote | bid=43768 | ourState=delivered | err=
+[2026-07-12T13:04:27.558Z]    Ae Kaash Kahin Aisa Hota 2.0 | bid=43767 | ourState=delivered | err=
+[2026-07-12T13:04:27.558Z]    Ap Jo Mere Meet Na Hote | bid=43765 | ourState=delivered | err=
+[2026-07-12T13:04:27.558Z]    Barsaat Ke Mausam Mein | bid=43763 | ourState=delivered | err=
+[2026-07-12T13:04:27.558Z]    Beqaraar Karke Humein Yun Na Jaiye | bid=43761 | ourState=delivered | err=
+[2026-07-12T13:04:27.558Z]    Bhool Na Jana Na Hona Anjaan | bid=43759 | ourState=delivered | err=
+[2026-07-12T13:04:27.558Z]    Chaale To Kaat Hi Jaayenge Safar | bid=43757 | ourState=delivered | err=
+[2026-07-12T13:04:27.558Z]    Bheegi Hui Hai | bid=43753 | ourState=delivered | err=
+[2026-07-12T13:04:27.558Z]    Kisi Din Banoongi Main Raja Ki Rani | bid=43752 | ourState=delivered | err=
+[2026-07-12T13:04:27.558Z]    Bhige Na Kajarawa | bid=43748 | ourState=delivered | err=
+[2026-07-12T13:04:27.558Z]    Bina tohre kaise bitaibe | bid=43747 | ourState=delivered | err=
+[2026-07-12T13:04:27.558Z]    LEKE PEHLA PEHLA PYAR | bid=43746 | ourState=delivered | err=
+[2026-07-12T13:04:27.558Z]    Mera Dil Ye Pukare Aaja | bid=43742 | ourState=delivered | err=
+[2026-07-12T13:04:27.558Z]    Neele Neele Ambar Par | bid=43741 | ourState=delivered | err=
+[2026-07-12T13:04:27.558Z]    O Haseena Zulfon Wali | bid=43740 | ourState=delivered | err=
+[2026-07-12T13:04:27.558Z]    Bole Mora Kang | bid=43737 | ourState=delivered | err=
+[2026-07-12T13:04:27.558Z]    Bole Mora Kangna | bid=43736 | ourState=delivered | err=
+[2026-07-12T13:04:27.558Z]    Caller Tune | bid=43733 | ourState=delivered | err=
+[2026-07-12T13:04:27.558Z]    Milo Na Tumto | bid=43732 | ourState=delivered | err=
+[2026-07-12T13:04:27.558Z]    Na Na Karte Pyar Hai Main Kar Gayi | bid=43729 | ourState=delivered | err=
+[2026-07-12T13:04:27.558Z]    Pardesiya Yeh Sach Hai Piya | bid=43728 | ourState=delivered | err=
+[2026-07-12T13:04:27.558Z]    Phulori Bina Chutney Kaise Bani | bid=43724 | ourState=delivered | err=
+[2026-07-12T13:04:27.558Z]    Tere Bina | bid=43723 | ourState=delivered | err=
+[2026-07-12T13:04:27.558Z]    Teri Do Takiya Di Naukri | bid=43722 | ourState=delivered | err=
+[2026-07-12T13:04:27.558Z]    Teri Najar Mein Sapne Hain | bid=43719 | ourState=delivered | err=
+[2026-07-12T13:04:27.558Z]    Teri Yaadon Ki Chadar Odhe | bid=43717 | ourState=delivered | err=
+[2026-07-12T13:04:27.558Z]    Tune O Rangile Kaisa Jaadu Kiya | bid=43716 | ourState=delivered | err=
+[2026-07-12T13:04:27.558Z]    Uska Mat Ban Jana Jogi | bid=43713 | ourState=cancelled | err=Release deleted by admin
+[2026-07-12T13:04:27.558Z]    Baharon Phool Barsao Mera Mehboob Aaya Hai | bid=43712 | ourState=delivered | err=
+[2026-07-12T13:04:27.558Z]    Chhor Ke Na Jao Piya | bid=43708 | ourState=delivered | err=
+[2026-07-12T13:04:27.558Z]    Can Enchanting | bid=43704 | ourState=delivered | err=
+[2026-07-12T13:04:27.558Z]    Dil Hai Ke Maanta Nahi | bid=43703 | ourState=delivered | err=
+[2026-07-12T13:04:27.558Z]    Haal Kya Hai | bid=43702 | ourState=delivered | err=
+[2026-07-12T13:04:27.559Z]    Hum Aise Karenge Pyar Ki Duniya Yaad Kare | bid=43699 | ourState=delivered | err=
+[2026-07-12T13:04:27.559Z]    Kagaj Kalam Dawaat La | bid=43698 | ourState=cancelled | err=Release deleted by admin
+[2026-07-12T13:04:27.559Z]    Maine Pee Hai Ishq Wali | bid=43695 | ourState=delivered | err=
+[2026-07-12T13:04:27.559Z]    Pardesiya Yeh Sach Hai Piya | bid=43694 | ourState=delivered | err=
+[2026-07-12T13:04:27.559Z]    Tu Chanda Main Chandni | bid=43692 | ourState=delivered | err=
+[2026-07-12T13:04:27.559Z]    Tu Cheez Badi Hai Mast Mast | bid=43690 | ourState=delivered | err=
+[2026-07-12T13:04:27.559Z]    Pyara ka Andaz | bid=43689 | ourState=delivered | err=
+[2026-07-12T13:04:27.559Z]    Chhauda Chup Chup | bid=43683 | ourState=delivered | err=
+[2026-07-12T13:04:27.559Z]    Chhodh Ke Na Jaa Ooh | bid=43681 | ourState=delivered | err=
+[2026-07-12T13:04:27.559Z]    Chup tha magar aaj | bid=43658 | ourState=delivered | err=
+[2026-07-12T13:04:27.559Z]    Chupke Se Koi Aayega | bid=43657 | ourState=delivered | err=
+[2026-07-12T13:04:27.559Z]    Chura ke le gaya | bid=43654 | ourState=delivered | err=
+[2026-07-12T13:04:27.559Z]    Dadhiya Badhiya Lagela | bid=43653 | ourState=delivered | err=
+[2026-07-12T13:04:27.559Z]    Dadhiya Badhiya | bid=43650 | ourState=delivered | err=
+[2026-07-12T13:04:27.559Z]    Dahej Me Du NAli Ke | bid=43649 | ourState=delivered | err=
+[2026-07-12T13:04:27.559Z]    Dahej Me Du NAli | bid=43647 | ourState=delivered | err=
+[2026-07-12T13:04:27.559Z]    Daiya Daiya Daiya Re | bid=43645 | ourState=delivered | err=
+[2026-07-12T13:04:27.559Z]    Daiya Daiya Daiya | bid=43643 | ourState=delivered | err=
+[2026-07-12T13:04:27.559Z]    Le To Aaye Ho Hame Sapno Ke Gaon Mein | bid=43641 | ourState=delivered | err=
+[2026-07-12T13:04:27.559Z]    Chudi Maza Na Degi Kangan Maza Na Dega | bid=43639 | ourState=delivered | err=
+[2026-07-12T13:04:27.559Z]    Sona Ke Kadar Sonara Jane | bid=43635 | ourState=delivered | err=
+[2026-07-12T13:04:27.559Z]    Darua Piyal Holau Jaruri | bid=43632 | ourState=delivered | err=
+[2026-07-12T13:04:27.559Z]    Mere Sathi O | bid=43631 | ourState=delivered | err=
+[2026-07-12T13:04:27.559Z]    Kagaj Kalam Dabat | bid=43628 | ourState=delivered | err=
+[2026-07-12T13:04:27.559Z]    Dekhe sapne chand | bid=43627 | ourState=delivered | err=
+[2026-07-12T13:04:27.559Z]    Dafli Wale Dafli Baja | bid=43625 | ourState=delivered | err=
+[2026-07-12T13:04:27.559Z]    Delhi Dreams | bid=43623 | ourState=delivered | err=
+[2026-07-12T13:04:27.559Z]    Unse Mili Najar | bid=43621 | ourState=delivered | err=
+[2026-07-12T13:04:27.559Z]    Tere Chehre Mein Wo Jaadu Hai | bid=43619 | ourState=delivered | err=
+[2026-07-12T13:04:27.559Z]    Delhi Wali | bid=43617 | ourState=delivered | err=
+[2026-07-12T13:04:27.559Z]    Dhaire Bola Ye Koyaliya | bid=43614 | ourState=delivered | err=
+[2026-07-12T13:04:27.559Z]    Dil chura le o chand | bid=43613 | ourState=delivered | err=
+[2026-07-12T13:04:27.559Z]    Dil Chura Le | bid=43610 | ourState=delivered | err=
+[2026-07-12T13:04:27.559Z]    Dil deewana kahin | bid=43609 | ourState=delivered | err=
+[2026-07-12T13:04:27.559Z]    Dil Deewana Na Jaane | bid=43607 | ourState=delivered | err=
+[2026-07-12T13:04:27.559Z]    Dil Deewana | bid=43605 | ourState=delivered | err=
+[2026-07-12T13:04:27.559Z]    Dil Jaane Jigar Tujh Pe | bid=43603 | ourState=delivered | err=
+[2026-07-12T13:04:27.559Z]    Dil jaane jigar tujh | bid=43601 | ourState=delivered | err=
+[2026-07-12T13:04:27.559Z]    Dil Jane Jigar | bid=43599 | ourState=delivered | err=
+[2026-07-12T13:04:27.559Z]    Dil ka diya hai tujhe | bid=43597 | ourState=delivered | err=
+[2026-07-12T13:04:27.560Z]    Dil ka har ek raaz | bid=43595 | ourState=delivered | err=
+[2026-07-12T13:04:27.560Z]    Dil ka junoon | bid=43593 | ourState=delivered | err=
+[2026-07-12T13:04:27.560Z]    Dil karta hai bas dekhte | bid=43591 | ourState=delivered | err=
+[2026-07-12T13:04:27.560Z]    Dil ke afsane likhe | bid=43589 | ourState=delivered | err=
+[2026-07-12T13:04:27.560Z]    Pyar Ki Dagar Pe | bid=43679 | ourState=delivered | err=
+[2026-07-12T13:04:27.560Z]    SAIYAN CHURA LE GAYA DIL MERA | bid=43677 | ourState=delivered | err=
+[2026-07-12T13:04:27.560Z]    Sua Saal Pehle | bid=43583 | ourState=delivered | err=
+[2026-07-12T13:04:27.560Z]    Tera Naam Liya | bid=43581 | ourState=delivered | err=
+[2026-07-12T13:04:27.560Z]    Tera Nam Liya Tujhe Yaad Kiya | bid=43579 | ourState=delivered | err=
+[2026-07-12T13:04:27.560Z]    Maar Dunga Main | bid=43844 | ourState=cancelled | err=
+[2026-07-12T13:04:27.560Z]    Lagi Tumse Man Ki Lagan | bid=43259 | ourState=cancelled | err=Release deleted by admin
+[2026-07-12T13:04:27.560Z]    Kise Nu Pasand Chitte Chole | bid=43258 | ourState=cancelled | err=Release deleted by admin
+[2026-07-12T13:04:27.560Z]    Main Toota Hoon | bid=43237 | ourState=cancelled | err=Release deleted by admin
+[2026-07-12T13:04:27.560Z]    Nazar Chahti Hai | bid=43159 | ourState=delivered | err=
+[2026-07-12T13:04:27.560Z]    Mujhy Tum Nazar Se | bid=43157 | ourState=cancelled | err=Release deleted by admin
+[2026-07-12T13:04:27.560Z]    Deewani Deewani Main Teri | bid=43149 | ourState=delivered | err=
+[2026-07-12T13:04:27.560Z]    O Soniya Ishq Hai Tumse | bid=43142 | ourState=delivered | err=
+[2026-07-12T13:04:27.560Z]    Angoor Wali Bagiya | bid=43140 | ourState=delivered | err=
+[2026-07-12T13:04:27.560Z]    Sajan Mera Uss Paar | bid=43136 | ourState=delivered | err=
+[2026-07-12T13:04:27.560Z]    Hansta Hua Nurani Chehra | bid=43134 | ourState=delivered | err=
+[2026-07-12T13:04:27.560Z]    Ankhon Mein Mohab | bid=43132 | ourState=delivered | err=
+[2026-07-12T13:04:27.560Z]    Is Dil Ko Badnaam Mat Karo | bid=43129 | ourState=delivered | err=
+[2026-07-12T13:04:27.560Z]    Jhume Re Manwa Jhume | bid=43127 | ourState=delivered | err=
+[2026-07-12T13:04:27.560Z]    Ankhon Mein | bid=43125 | ourState=delivered | err=
+[2026-07-12T13:04:27.560Z]    Apni bhi zindagi | bid=43123 | ourState=delivered | err=
+[2026-07-12T13:04:27.560Z]    Aye Dil Aye | bid=43118 | ourState=delivered | err=
+[2026-07-12T13:04:27.560Z]    Aye Meri Natkh | bid=43116 | ourState=delivered | err=
+[2026-07-12T13:04:27.560Z]    Aye Meri Natkhati Colleg | bid=43114 | ourState=delivered | err=
+[2026-07-12T13:04:27.560Z]    Aye Meri Natkhati | bid=43112 | ourState=delivered | err=
+[2026-07-12T13:04:27.560Z]    Baarish Ban Jaana | bid=43110 | ourState=delivered | err=
+[2026-07-12T13:04:27.560Z]    Baat Kuch Sama | bid=43108 | ourState=delivered | err=
+[2026-07-12T13:04:27.560Z]    Baat Kuch Samajh | bid=43106 | ourState=delivered | err=
+[2026-07-12T13:04:27.560Z]    Bahut Jatate Ho Chah | bid=43103 | ourState=delivered | err=
+[2026-07-12T13:04:27.560Z]    Bahut Jatate Ho | bid=43101 | ourState=delivered | err=
+[2026-07-12T13:04:27.560Z]    Ae Mere Dil Bata | bid=43051 | ourState=delivered | err=
+[2026-07-12T13:04:27.560Z]    Ae Mere Dost Laut Ke | bid=43049 | ourState=delivered | err=
+[2026-07-12T13:04:27.560Z]    Aisa Deewana | bid=43047 | ourState=delivered | err=
+[2026-07-12T13:04:27.560Z]    Aisa Lagta Hai | bid=43046 | ourState=delivered | err=
+[2026-07-12T13:04:27.560Z]    Aisa Lagta Jaise | bid=43034 | ourState=delivered | err=
+[2026-07-12T13:04:27.561Z]    Yaar Tera Pyar | bid=43033 | ourState=delivered | err=
+[2026-07-12T13:04:27.561Z]    Akhiya Ke Kajra Jhagra | bid=43031 | ourState=delivered | err=
+[2026-07-12T13:04:27.561Z]    Akhiya Ke Kajra | bid=43029 | ourState=delivered | err=
+[2026-07-12T13:04:27.561Z]    Dillagi Yeh Hai Dillagi | bid=45104 | ourState=delivered | err=
+[2026-07-12T13:04:27.561Z]    Test | bid=42966 | ourState=cancelled | err=
+[2026-07-12T13:04:27.561Z]    Hansta Hua Nurani Chehra | bid=42964 | ourState=cancelled | err=Release deleted by admin
+[2026-07-12T13:04:27.561Z]    Is Dil Ko Badnaam Mat Karo | bid=42963 | ourState=cancelled | err=Release deleted by admin
+[2026-07-12T13:04:27.561Z]    Jhume Re Manwa Jhume | bid=42961 | ourState=cancelled | err=Release deleted by admin
+[2026-07-12T13:04:27.561Z]    Kasme Vaade Pyar Wafa | bid=42960 | ourState=cancelled | err=Release deleted by admin
+[2026-07-12T13:04:27.561Z]    Ye Aayine Jo Tumhe Kam Pasand Karte Hai | bid=42957 | ourState=cancelled | err=Release deleted by admin
+[2026-07-12T13:04:27.561Z]    Zindagi Ki Talash Mein | bid=42956 | ourState=cancelled | err=Release deleted by admin
+[2026-07-12T13:04:27.561Z]    Aayega Maza Ab Barsaat Ka | bid=45087 | ourState=cancelled | err=Release deleted by admin
+[2026-07-12T13:04:27.561Z]    Didi Tera Devar Deewana | bid=42950 | ourState=delivered | err=
+[2026-07-12T13:04:27.561Z]    sdfgdss | bid=42941 | ourState=cancelled | err=
+[2026-07-12T13:04:27.561Z]    Forever In Your Eyes | bid=45033 | ourState=delivered | err=
+[2026-07-12T13:04:27.561Z]    Cold Love Confessions | bid=45032 | ourState=delivered | err=
+[2026-07-12T13:04:27.561Z]    A Girl in Everyone | bid=45030 | ourState=delivered | err=
+[2026-07-12T13:04:27.561Z]    Kaun Disa Me Leke Chala Re Batuhiya | bid=45025 | ourState=delivered | err=
+[2026-07-12T13:04:27.561Z]    Aakashai Ma Chil Udyo Fanana | bid=45027 | ourState=cancelled | err=
+[2026-07-12T13:04:27.561Z]    Aaj Pahli Baar | bid=45029 | ourState=delivered | err=
+[2026-07-12T13:04:27.561Z]    Aakashaima Chil Udyo Dharti Ma Chaya | bid=42869 | ourState=cancelled | err=Release deleted by admin
+[2026-07-12T13:04:27.561Z]    Aaj RuswaTari Galiyon | bid=46485 | ourState=failed | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.561Z]    Bidesh Jane Mayalu | bid=42864 | ourState=cancelled | err=Release deleted by admin
+[2026-07-12T13:04:27.561Z]    Birata Ko Chino | bid=42863 | ourState=cancelled | err=Release deleted by admin
+[2026-07-12T13:04:27.561Z]    Chari Udyo Badal Chuna Lai | bid=42856 | ourState=cancelled | err=Release deleted by admin
+[2026-07-12T13:04:27.561Z]    Aap ka aana dil mein | bid=46955 | ourState=failed | err=Missing Broma outlet ids | BSON_FIXED
+[2026-07-12T13:04:27.561Z]    Yeh Reshmi Zulfein | bid=46479 | ourState=failed | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.561Z]    Mere Khwabon Mein | bid=45085 | ourState=delivered | err=
+[2026-07-12T13:04:27.561Z]    Tere Mathe Ke Kumkum Ko | bid=45086 | ourState=delivered | err=
+[2026-07-12T13:04:27.561Z]    Yeh Mera Dil Yaar Ka Diwana | bid=42768 | ourState=delivered | err=
+[2026-07-12T13:04:27.561Z]    Ya Nabi Sab Karam Hai Tumhara | bid=42767 | ourState=delivered | err=
+[2026-07-12T13:04:27.561Z]    Kah Dena Hasnain Se Salam | bid=42750 | ourState=delivered | err=
+[2026-07-12T13:04:27.561Z]    Duniya Banane | bid=42733 | ourState=delivered | err=
+[2026-07-12T13:04:27.561Z]    Dil Ki Baat Kahi | bid=42722 | ourState=delivered | err=
+[2026-07-12T13:04:27.561Z]    Sham Hai Dhua Dhua | bid=42711 | ourState=cancelled | err=
+[2026-07-12T13:04:27.561Z]    Bassstormer | bid=42700 | ourState=delivered | err=
+[2026-07-12T13:04:27.561Z]    Bata De Uski Ek Jhalak Dikha De | bid=42694 | ourState=delivered | err=
+[2026-07-12T13:04:27.561Z]    Mere Mehboob Se Mila De | bid=42692 | ourState=delivered | err=
+[2026-07-12T13:04:27.561Z]    Meri Pahle Ki Girlfriend Ka Pata Batao | bid=42690 | ourState=delivered | err=
+[2026-07-12T13:04:27.561Z]    O Mere Kab Aaega India | bid=42688 | ourState=delivered | err=
+[2026-07-12T13:04:27.562Z]    Hamein Kya Ho Gaya Hai | bid=42681 | ourState=cancelled | err=
+[2026-07-12T13:04:27.562Z]    Aankhon Mein | bid=42646 | ourState=delivered | err=
+[2026-07-12T13:04:27.562Z]    Release 30 june test 001 | bid=42633 | ourState=cancelled | err=
+[2026-07-12T13:04:27.562Z]    Test Release 29 June 003 C | bid=42610 | ourState=cancelled | err=
+[2026-07-12T13:04:27.562Z] 
+--- BSON FIXED + STILL FAILED (151) ---
+[2026-07-12T13:04:27.562Z]    Tujhe Maanga Tha | bid=46846 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.562Z]    Tujhko Mirchi | bid=46845 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.562Z]    Tujhko Mirch | bid=46844 | category=NOT_IN_BROMA | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.562Z]    Tum Mere Baad Mohabbat | bid=46843 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.562Z]    Dil Ka Kya Karen Saheb | bid=46831 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.562Z]    Dil Ke Badle Sanam | bid=46830 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.562Z]    Dil Ne Tujhko Pukara Female | bid=46829 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.562Z]    Dreaming | bid=46736 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.562Z]    Gale Lag Ja | bid=46739 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.562Z]    Gore Rang Pe Na Itna Gumaan Kar | bid=46737 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.562Z]    Gori Tera Gaon Bada Pyara | bid=46842 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.562Z]    Humnava | bid=46840 | category=NOT_IN_BROMA | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.562Z]    Humein Tumse Pyar Kitna | bid=46838 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.562Z]    Ishq Ki Gali | bid=46833 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.562Z]    Jahaan Tum Ho | bid=46832 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.562Z]    Panna Ki Tamanna | bid=46828 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.562Z]    Mohabbat Pyar  | bid=46827 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.562Z]    Yaad Rakhna Mujhe | bid=46826 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.562Z]    O Rani Teri Kahani | bid=46825 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.562Z]    Dil ke taar bajayein | bid=46824 | category=NOT_IN_BROMA | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.562Z]    Dil ki baatein bhi | bid=46823 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.562Z]    Dil ki baaton ke hazaron | bid=46822 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.562Z]    Dil Laga Liya Maine Tumse Pyaar Karke | bid=46821 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.562Z]    Ek Ladka Hai Ek | bid=46820 | category=NOT_IN_BROMA | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.562Z]    Gawah Hai Chand Tare | bid=46819 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.562Z]    Hum Lakh Chupaye Pyaar | bid=46818 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.562Z]    Dil ki har dhadkan | bid=46817 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.562Z]    Dil ki yeh dhadkan | bid=46816 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.563Z]    Dil ko ek aasmaan banaya hai | bid=46815 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.563Z]    Dil Kone Mein | bid=46814 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.563Z]    Dil Laga Liya Maine | bid=46813 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.563Z]    Dil Maang Raha Hai | bid=46812 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.563Z]    Dil Mein Dard Sa Jaga Hai | bid=46811 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.563Z]    Dil mein jo baatein | bid=46738 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.563Z]    Dil Mein jo ek daag | bid=46810 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.563Z]    Dil Mere Na Aur Intezaar | bid=46809 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.563Z]    Dil Ne Dil Se Iqra | bid=46808 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.563Z]    Dil Ne Dil Se Iqrar | bid=46807 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.563Z]    Dil se chheda | bid=46806 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.563Z]    Dil se dil ka rishta | bid=46805 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.563Z]    Dil Tera Deewana | bid=46804 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.563Z]    Dilon ke raaste se | bid=46803 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.563Z]    Dilwa Le Gaile Raja | bid=46802 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.563Z]    Dilwa Le Gaile Raja | bid=46801 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.563Z]    Dilwa Le Gaile | bid=46800 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.563Z]    Dilwale Jo Rumal Mein | bid=46799 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.563Z]    Dilwale Jo Rumal | bid=46798 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.563Z]    Hadh Kar Di Aapne | bid=46797 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.563Z]    Hum Aapke Bina | bid=46796 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.563Z]    Aisaa Lagataa Hai | bid=46795 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.563Z]    Aaja Aai Bahar Dil Hai Beqarar | bid=46794 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.563Z]    Aaja Ke Intezar Main | bid=46793 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.563Z]    Aane Se Uske Aaye Bahar | bid= | category=NO_BROMA_ID | err=Connector validation failed: Track 1: missing ISRC
+[2026-07-12T13:04:27.563Z]    Ae Hawa Mere Sang Sang Chal | bid=46792 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.563Z]    Ae Hawa Mere Sang | bid=46791 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.563Z]    Ae Ishq Humein Barbaad | bid=46790 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.563Z]    Hum Tumhare Hain | bid=46789 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.563Z]    Hum Tumko | bid=46788 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.563Z]    Ankhiyon Ke Jharokhon Se | bid=46787 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.563Z]    Apni Zulfein Mere Shaanon Pe | bid=46786 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.563Z]    Aur is Dil Mein | bid=46785 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.563Z]    Bahot Khubsurat Hai Mera Sanam | bid=46784 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.563Z]    Jina Sirf Mere | bid=46783 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.563Z]    Kab Tak Yaad Karu | bid=46782 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.563Z]    Khwaabon ka hai | bid=46781 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.563Z]    Mera Mann Dole Mera Tan Dole | bid=46780 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.563Z]    Kisi Aur Ke Naam | bid=46779 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.563Z]    Chori Chori Dil Tera Churayenge Jo | bid=46778 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.563Z]    Is Tarah Aashiqi Ka Asar | bid=46777 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.564Z]    Wo Dil Kahin Se Laoon | bid=46776 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.564Z]    Aisaa Lagataa Hai | bid=46775 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.564Z]    Aap Ki Nazron Ne | bid=46774 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.564Z]    Ae Hawa Mere Sang | bid=46773 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.564Z]    Bindiya Chamkegi Chudi Khankegi | bid=46772 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.564Z]    Aisaa Lagataa Hai | bid=46771 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.564Z]    Chale To Kat Hi Jayega | bid=46770 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.564Z]    Dur Se Dekha Tujhko | bid=46769 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.564Z]    Ye Galiyan Ye Chaubara | bid=46768 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.564Z]    Desh Se Pardesh Bulaye Re | bid=46767 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.564Z]    Dil Ke Armaan Aansuon Mein Beh Gaye | bid=46766 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.564Z]    Dil Wo Chala | bid=46765 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.564Z]    Dil Ye Chahe | bid=46764 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.564Z]    Dil Ye Pukare | bid=46763 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.564Z]    Dilber Mere | bid=46762 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.564Z]    Kitna Pagal Dil Hai | bid=46761 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.564Z]    Kitna Pagal Dil | bid=46760 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.564Z]    Gumnaam Hai Koi | bid=46759 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.564Z]    Haye Haye Ye Majbyri | bid=46758 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.564Z]    Kya Tum Mujhse | bid=46757 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.564Z]    Kyaa Dil Ne Kahaa | bid=46756 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.564Z]    Kyon Ki Itna Pyar | bid=46755 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.564Z]    Laal dupatta jhilmil | bid=46754 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.564Z]    Ladki Badi Anjani | bid=46753 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.564Z]    Lagi Aaj Sawan Ki Phir | bid=46752 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.564Z]    Jab Se Tujhako Jaana | bid=46751 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.564Z]    Mashroof Hai Dil Kitna | bid=46750 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.564Z]    Mashroof HaiDil | bid=46749 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.564Z]    Mausam Ki Tarah Tum | bid=46748 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.564Z]    Aaj Phir Jeene Ki Tamanna Hai | bid=46745 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.564Z]    Aap Jo Mere Meet Na Hote | bid=46747 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.564Z]    Ae Hawa Mere Sang | bid=46834 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.564Z]    Aur Is Dil Mein Kia Rakha Hai | bid=46746 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.564Z]    Bade Achhe Lagte Hain | bid=46744 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.564Z]    Bato Bato Me Akshar Bat | bid=46835 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.564Z]    Dil Ye Pukare | bid=46836 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.564Z]    Dil Wo Chala | bid=46837 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.564Z]    Aane Se Uske Aaye Bahar | bid= | category=NO_BROMA_ID | err=Connector validation failed: Track 1: missing ISRC
+[2026-07-12T13:04:27.564Z]    Aankh Churaaye | bid=46839 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.565Z]    Musafir Jaane Wale | bid=46743 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.565Z]    Nachaniya karan di | bid=46742 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.565Z]    Nachaniya karan din raat | bid=46741 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.565Z]    Odhani Odh Ke | bid=46740 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.565Z]    Do Ghoont Mujhe Bhi Pila De Sharabi | bid=46841 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.565Z]    Ye Aayine Jo Tumhe Kam Pasand Karte Hai  | bid=18296434 | category=LIVE_ON_BROMA | err=
+[2026-07-12T13:04:27.565Z]    Nepali Hami | bid=18296430 | category=LIVE_ON_BROMA | err=
+[2026-07-12T13:04:27.565Z]    Allah Di Kassam | bid=18296426 | category=LIVE_ON_BROMA | err=
+[2026-07-12T13:04:27.565Z]    Bidesh Jane Mayalu | bid=18296422 | category=LIVE_ON_BROMA | err=
+[2026-07-12T13:04:27.565Z]    Birata Ko Chino | bid=18296418 | category=LIVE_ON_BROMA | err=
+[2026-07-12T13:04:27.565Z]    Chari Udyo Badal Chuna Lai | bid=18296414 | category=LIVE_ON_BROMA | err=
+[2026-07-12T13:04:27.565Z]    China | bid=18296410 | category=LIVE_ON_BROMA | err=
+[2026-07-12T13:04:27.565Z]    Musu Musu Hasi Deuna | bid=18296406 | category=LIVE_ON_BROMA | err=
+[2026-07-12T13:04:27.565Z]    Chiya Bari Ma | bid=18296400 | category=LIVE_ON_BROMA | err=
+[2026-07-12T13:04:27.565Z]    Dadaima Mela Lagecha | bid=18296396 | category=LIVE_ON_BROMA | err=
+[2026-07-12T13:04:27.565Z]    Deurali Ma Batas Chalyo | bid=18296392 | category=LIVE_ON_BROMA | err=
+[2026-07-12T13:04:27.565Z]    Deurali Ukali Chadhera | bid=18296388 | category=LIVE_ON_BROMA | err=
+[2026-07-12T13:04:27.565Z]    Muglan Hera Jadai Chu | bid=18296384 | category=LIVE_ON_BROMA | err=
+[2026-07-12T13:04:27.565Z]    Gairi Khet Ko Sirai Hanyo | bid=18296360 | category=LIVE_ON_BROMA | err=
+[2026-07-12T13:04:27.565Z]    Gajalule Ankhai Chhopne | bid=18296356 | category=LIVE_ON_BROMA | err=
+[2026-07-12T13:04:27.565Z]    Manchhe Ko Maya Yeha | bid=18296341 | category=LIVE_ON_BROMA | err=
+[2026-07-12T13:04:27.565Z]    Mayaluko Maya Mitho | bid=18296337 | category=LIVE_ON_BROMA | err=
+[2026-07-12T13:04:27.565Z]    Zindagi Ki Talash Mein | bid=18296331 | category=LIVE_ON_BROMA | err=
+[2026-07-12T13:04:27.565Z]    Aisa Lagta Hai Jaise | bid=18296327 | category=LIVE_ON_BROMA | err=
+[2026-07-12T13:04:27.565Z]    Banma Kasturi | bid=18296319 | category=LIVE_ON_BROMA | err=
+[2026-07-12T13:04:27.565Z]    Basa Sundari | bid=18296315 | category=LIVE_ON_BROMA | err=
+[2026-07-12T13:04:27.565Z]    Ab Hain Neend | bid=18296287 | category=LIVE_ON_BROMA | err=
+[2026-07-12T13:04:27.565Z]    Aakashai Ma Chil Udyo Fanana | bid=18296283 | category=LIVE_ON_BROMA | err=
+[2026-07-12T13:04:27.565Z]    Ae Mere Dil Bata Kya Bura | bid=18296279 | category=LIVE_ON_BROMA | err=
+[2026-07-12T13:04:27.565Z]    Aakashaima Chil Udyo Dharti Ma Chaya | bid=18296275 | category=LIVE_ON_BROMA | err=
+[2026-07-12T13:04:27.565Z]    Aba Yo Baato Mero Ho | bid=18296265 | category=LIVE_ON_BROMA | err=
+[2026-07-12T13:04:27.565Z]    Ab Hain Neend Kise | bid=18296187 | category=LIVE_ON_BROMA | err=
+[2026-07-12T13:04:27.565Z]    Atariya Pe Lotan Kabootar Re | bid=46944 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.565Z]    Aapke Pyaar Mein Hum | bid=46945 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.565Z]    Leto Ayeho Hame Sapnoki Gaon Mein | bid=46946 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.565Z]    Aati Hai To Ch | bid=46947 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.565Z]    Aayega Maza Ab | bid=46948 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.565Z]    Aayegi Har Pal Tujhe Meri | bid=46949 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.565Z]    Aayegi Har Pal Tujhe | bid=46950 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.565Z]    Aayegi Har Pal | bid=46951 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.566Z]    Ek Pardesi Mera Dil Le Gaya | bid=46954 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.566Z]    Aap ka aana dil mein | bid=46955 | category=NOT_IN_BROMA | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.566Z]    Aap Ka Aana Dil | bid=46943 | category=IN_BROMA_DRAFTS | err=Missing Broma outlet ids
+[2026-07-12T13:04:27.566Z] 
+--- BSON FIXED + OK (220) ---
+[2026-07-12T13:04:27.566Z]    Gori Hai Kalaiyan | bid=46498 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.566Z]    Sheeshe Ka Tha Dil Mera | bid=46499 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.566Z]    Aankh Milakar Loot Liya Dil | bid=46536 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.566Z]    Aa Jao Meri Tamanna | bid=46501 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.566Z]    Dil ko tera intezar reh gaya | bid=46502 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.566Z]    Ek Pardesi Mera Dil Le Gaya | bid=46503 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.566Z]    Hamne Tumko Dil Ye De Diya | bid=46510 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.566Z]    Has Mat Yaar Nazar Lag Jayegi | bid=46508 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.566Z]    Itna Na Mujhse Tu Pyar Badha | bid=46509 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.566Z]    Jab Tu Najar Se Najar | bid=46512 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.566Z]    Jabse Tujhko Dekha Hai | bid=46511 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.566Z]    Jeena Yahan Marna Yahan | bid=46292 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.566Z]    Kesariya | bid=46519 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.566Z]    Koi Haseena Jab Rooth Jati Hai To | bid=46513 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.566Z]    Mera Mann Dole Mera Tan Dole | bid=46514 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.566Z]    Mera Mann | bid=46518 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.566Z]    Mere Mehboob Qayamat Hogi | bid=46515 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.566Z]    Mere Mehboob | bid=46516 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.566Z]    Panchi Sur Mein Gate Hai | bid=46528 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.566Z]    Mujhe Teri Mohabbat Ka | bid=46527 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.566Z]    Panchi Sur Mein Gate | bid=46529 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.566Z]    Mujhe Teri | bid=46531 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.566Z]    Aaj Phir Jeene | bid=46533 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.566Z]    Panchi Sur Mein | bid=46532 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.566Z]    Aane Se Tere Mehke Din | bid=46534 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.566Z]    Sach keh raha hai deewana | bid=46273 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.566Z]    Aankhein Khuli Ho Yah Band | bid=46270 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.566Z]    Pardesi Pardesi | bid=46268 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.566Z]    Safar aur dhundh | bid=46266 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.566Z]    Sajna Mere Dil Ye Tera | bid=46264 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.566Z]    Sanam Re | bid=46262 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.566Z]    Aap Jo Mere Meet Naa Hote | bid=46261 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.566Z]    Solah Baras Ki Baali Umar Ko Salam | bid=46256 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.566Z]    Aap Ki Nazron Ne Samjha | bid=46253 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.567Z]    Teri Yaadon Ka Safar | bid=46252 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.567Z]    Aasan Nahi Yahan | bid=46250 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.567Z]    Thehre Hue Paani Mein | bid=46249 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.567Z]    Adhi Adhi Raat | bid=46247 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.567Z]    Tumse Mila Jo Pyar Mujhe | bid=46244 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.567Z]    Pehle Kabhi Na | bid=46243 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.567Z]    Tune O Rangile Kaisa Jaadu Kiya | bid=46242 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.567Z]    Aisaa Lagataa Hai | bid=46241 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.567Z]    Pehli Pehli Baar x Dil Deewana | bid=46847 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.567Z]    Tune O Rangile | bid=46848 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.567Z]    Akhmedov | bid=46849 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.567Z]    Amplifier | bid=46850 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.567Z]    Pehli Pehli Baar | bid=46851 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.567Z]    Baarish Ki Pyaas | bid=46853 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.567Z]    Baarish | bid=46854 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.567Z]    Phool gulab ka khilta | bid=46855 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.567Z]    Bahut Pyar Karte Hain Tumko | bid=46856 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.567Z]    Bandeya | bid=46857 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.567Z]    Phool Gulab Ka | bid=46858 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.567Z]    Bansuriya Ab Yehi Pukare | bid=46859 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.567Z]    Baras Ki Baali Umar | bid=46860 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.567Z]    Beete lamhe | bid=46861 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.567Z]    Bewafa | bid=46862 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.567Z]    Bhooli Bisri Prem Kahani | bid=46863 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.567Z]    Bindiya Chamkegi Chudi Khankegi | bid=46864 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.567Z]    Chaahat | bid=46865 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.567Z]    Phool Jaisi Muskaan | bid=46866 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.567Z]    Phool Main bheju | bid=46867 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.567Z]    Chale To Kaat Hi Jayegi Safar | bid=46868 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.567Z]    Chahun Main Ya Naa | bid=46869 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.567Z]    Phoolon Ke Mausam | bid=46870 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.567Z]    Chhodenge Na Hum Tera Sath | bid=46871 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.567Z]    Chhupana Bhi Nahi Aata | bid=46872 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.567Z]    Pyaar Gum Hai | bid=46873 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.567Z]    Chupke Se Pyar Hua Hai | bid=46874 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.567Z]    Pyaar Ki Kasthi Mein | bid=46877 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.567Z]    Darkhaast | bid=46878 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.567Z]    Pyaar Ki Kasthi | bid=46879 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.567Z]    Deewana Kar Raha Hai | bid=46880 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.567Z]     Ritin animation | bid=46881 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.568Z]    Pyar Ka Ehsaa | bid=46882 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.568Z]    Dhoop Mein Nikla Na Karo Roop Ki Rani | bid=46883 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.568Z]    Pyar Ka Ehsaas | bid=46884 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.568Z]    Dhun | bid=46885 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.568Z]    Pyar Kahe Banaya Ram | bid=46886 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.568Z]    Phool Jaisi Muskaan | bid=46887 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.568Z]    Raah Me Unse Mulakat | bid=46888 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.568Z]    Kandhe mile se Thana chaudar | bid=46875 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.568Z]    Raat Ko Aaunga | bid=46889 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.568Z]    Ram Kasam Delhi | bid=46890 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.568Z]    Rangdar Se Sikh Rangdari | bid=46891 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.568Z]    Rishta Pyar Ka Na | bid=46892 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.568Z]    Rote Rote Yun Hi Raat | bid=46893 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.568Z]    Rote Rote yun hi | bid=46894 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.568Z]    Ruk Re Tareniya | bid=46895 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.568Z]    Saat Samund | bid=46896 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.568Z]    Saat Samundar | bid=46897 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.568Z]    Shaam Hai Dhuan Dhuan | bid=46899 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.568Z]    Sham hai dhuan sa hawa | bid=46900 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.568Z]    Sun Meri Sheh | bid=46901 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.568Z]    Sham Hai Dhuan | bid=46876 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.568Z]    Shuru Ho Rahi Hai | bid=46903 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.568Z]    Sona Ke Sikadiya | bid=46904 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.568Z]    Sona Kitna Sona Hai | bid=46905 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.568Z]    Sun Meri Shehzadi | bid=46906 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.568Z]    Sweet Sixteen Dreams | bid=46907 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.568Z]    Sykkeen kutsu kaikuu | bid=46908 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.568Z]    Tera Pallu Sarka Jaye | bid=46910 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.568Z]    Tera Pallu Sarka | bid=46911 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.568Z]    Tere Bahoon Me | bid=46912 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.568Z]    Tere Bina Jeen | bid=46913 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.568Z]    Tere Bina Jeena | bid=46914 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.568Z]    Tere Bina Zindegi | bid=46915 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.568Z]    Tere Dil Mein Mujhe | bid=46916 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.568Z]    Tere Dil Mein | bid=46918 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.568Z]    Tere Mere Beech Men | bid=46919 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.568Z]    Teri Mohabbat Meri | bid=46920 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.568Z]    Teri Payal Baji Jahan | bid=46921 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.568Z]    Teri Payal Baji | bid=46922 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.568Z]    AGAR TUM SATH HO | bid=46923 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.569Z]    Jahan Tum Ho | bid=46924 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.569Z]    Janmo Janam | bid=46925 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.569Z]    Jhooth Bole Kauwa Kaate | bid=46927 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.569Z]    Jidhar Dekhti Hoon Udhar Tum Hi Tum Ho | bid=46928 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.569Z]    AIRPLANE | bid=46929 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.569Z]    Jahan Tum Ho | bid=46930 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.569Z]    Jhooth Bole Kauwa Kaate | bid=46931 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.569Z]    Jhooth Bole Kauwa Kaate | bid=46932 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.569Z]    Akela | bid=46933 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.569Z]    Akela17  | bid=46934 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.569Z]    Jidhar Dekhti Hu | bid=46935 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.569Z]    Jind Le Gaya Wo Dil Ka Jaani | bid=46936 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.569Z]    Jo Bhi Kasme Khai Thi Humne | bid=46937 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.569Z]    AMPLIFIER | bid=46938 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.569Z]    Jo Bhi Kasmein | bid=46939 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.569Z]    AM Thoughts | bid=46940 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.569Z]    Jo Tere Sang Kati Rate | bid=46941 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.569Z]    Julf Ghaneri Shaam | bid=46942 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.569Z]    ANKAHI BAATEIN | bid=45961 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.569Z]    Just Come | bid=45959 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.569Z]    ANKAHI Modi Bihari ke Laika | bid=45957 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.569Z]    Kaanta Laaga | bid=45955 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.569Z]    ANKAHI Rap Baatein | bid=45953 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.569Z]    Kabhi Bhula Kabhi Yaad Kiya | bid=45952 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.569Z]    ARSH | bid=45951 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.569Z]    Kabhi Jo Baadal Barse | bid=45948 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.569Z]    Kabhi Na Kabhi | bid=45947 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.569Z]    Kabhi Shaam Dhale To Mere | bid=45945 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.569Z]    Kabhi Shaam Dhale | bid=45942 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.569Z]    Kabhi To Paas Mere Aao | bid=45939 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.569Z]    Kah Doon Tumhe | bid=45938 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.570Z]    Kahan Ho Tum Chale Aao | bid=45937 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.570Z]    Kaho Na Kaho | bid=45934 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.570Z]    Kaise Baani | bid=45932 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.570Z]    Kaisi Abhagan Bani Suhagan | bid=45929 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.570Z]    Kajara Behkega | bid=45927 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.570Z]    Kanta Laga Teri Beri Ke Niche | bid=45926 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.570Z]    Pyar Bewafa | bid=45925 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.570Z]    Keh Doon Tumhe | bid=45918 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.570Z]    Kehdoon Tumhe Ya Chup Rahoon | bid=45916 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.570Z]    AUR IS DIL MEIN | bid=45914 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.570Z]    Kehta Hai Dil | bid=45913 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.570Z]    AZUL | bid=45910 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.570Z]    Baatcheet | bid=45908 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.570Z]    Keya Hua Yev Mujhe Keya Hua | bid=45907 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.570Z]    Khairiyat | bid=45906 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.570Z]    Khoya Khoya Chand | bid=45905 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.570Z]    Khud Ko Tere | bid=45901 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.570Z]    Baazigar Mashupj | bid=45898 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.570Z]    Khuda Aur Mohabbat | bid=45897 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.570Z]    Babu Sona Rap | bid=45896 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.570Z]    Khuda Jaane | bid=45894 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.570Z]    Kitna Pyar Karte Hain Sanam | bid=45891 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.570Z]    Babu Sonja Rap | bid=45890 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.570Z]    Koi Aaye Mera Dill Thaamle | bid=45887 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.570Z]    Badhta Chal | bid=45886 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.570Z]    Koi Sehri Babu | bid=45885 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.570Z]    BAJIS EP | bid=45883 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.570Z]    Kora Kagaz Tha Ye Man Mera | bid=45879 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.570Z]    BEDARDEYA | bid=45878 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.570Z]    Kuch Na Kaho | bid=45876 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.570Z]    BEWAFA TU NIKALI | bid=45874 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.570Z]    Lagti Ho | bid=45872 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.570Z]    BEWAFA | bid=45870 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.570Z]    Bihar Ki Sachai | bid=45868 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.570Z]    Bihar Pagla pagl | bid=45866 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.570Z]    Bihar Pagla Pagli | bid=45865 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.570Z]    BLACK MONEY | bid=45858 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.570Z]    BLEED US | bid=45857 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.570Z]    BROKEN Modi Rap | bid=45855 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.570Z]    BROKEN | bid=45853 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.571Z]    CASH FLOW | bid=45852 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.571Z]    Chahat | bid=45851 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.571Z]    CHAHUNGA MAIN | bid=45849 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.571Z]    CHALA KALTI | bid=45848 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.571Z]    Chhitara Jaba Tu  | bid=45846 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.571Z]    CHINA KI MAAL | bid=45844 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.571Z]    Chumma Rap Tera | bid=45841 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.571Z]    Chumma Rap | bid=45838 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.571Z]    Chummai Rap | bid=45836 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.571Z]    CHUSAMBA | bid=45834 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.571Z]    COME CLOSER | bid=45833 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.571Z]    DAGAG | bid=45830 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.572Z]    Dard Aur Dava | bid=45828 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.572Z]    Dard Aur Zeher | bid=45826 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.572Z]    Dard ki dawal | bid=45825 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.572Z]    Dard Or Pyal | bid=45823 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.572Z]    Dard Or Pyar  | bid=45818 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.572Z]    DARD OR PYAR | bid=45815 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.572Z]    Kya Khoob Lagti Ho | bid=45814 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.572Z]    Kya Khoob | bid=45812 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.572Z]    Kya Tumhe Pata Hai Ye Gulshan | bid=45811 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.572Z]    La Isla Bonita | bid=45809 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.572Z]    Labon Ko | bid=45807 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.572Z]    Lag Ja Gale | bid=45805 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.572Z]    Leke Pehla Pehla Pyar | bid=45804 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.572Z]    Leke Pehla Pyar | bid=45803 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.572Z]    Tere Bina Ye Saam Adhoori | bid=45744 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.572Z]    Mere Darde Dil Ki Dawa | bid=45755 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.572Z]    Crystal Beat | bid=45753 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.572Z]    Darkdrive | bid=45752 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.572Z]    Maine Aansuon Se Sekha Hai | bid=45754 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.572Z]    Dil Tera Deewana | bid=46637 | state=processing | category=IN_BROMA_DRAFTS
+[2026-07-12T13:04:27.572Z]    Hum Lakh Chupaye | bid=44709 | state=delivered | category=NOT_IN_BROMA
+[2026-07-12T13:04:27.572Z]    Hum Tumhein Itna | bid=44679 | state=delivered | category=NOT_IN_BROMA
+[2026-07-12T13:04:27.572Z]    Bahut Pyar Karte Hain | bid=44659 | state=delivered | category=NOT_IN_BROMA
+[2026-07-12T13:04:27.572Z] 
+10: === BROMA DASHBOARD MATCH ===
+[2026-07-12T13:04:27.572Z]    Broma dashboard shows: 530 drafts
+[2026-07-12T13:04:27.573Z]    Our delivery jobs found in those drafts: 367
+[2026-07-12T13:04:27.573Z]    Drafts with NO delivery job: 163
+[2026-07-12T13:04:27.573Z]    -> These 163 exist on Broma but have no job in our DB (might need new jobs created)
+[2026-07-12T13:04:27.573Z] 
+11: === RECOMMENDATIONS ===
+[2026-07-12T13:04:27.573Z] 
+   RETRYABLE (failed + in drafts or not in broma): 128
+[2026-07-12T13:04:27.573Z]    -> Tujhe Maanga Tha | bid=46846 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.573Z]    -> Tujhko Mirchi | bid=46845 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.573Z]    -> Tujhko Mirch | bid=46844 | cat=NOT_IN_BROMA | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.573Z]    -> Tum Mere Baad Mohabbat | bid=46843 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.573Z]    -> Dil Ka Kya Karen Saheb | bid=46831 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.573Z]    -> Dil Ke Badle Sanam | bid=46830 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.573Z]    -> Dil Ne Tujhko Pukara Female | bid=46829 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.573Z]    -> Dreaming | bid=46736 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.573Z]    -> Gale Lag Ja | bid=46739 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.573Z]    -> Gore Rang Pe Na Itna Gumaan Kar | bid=46737 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.573Z]    -> Gori Tera Gaon Bada Pyara | bid=46842 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.573Z]    -> Humnava | bid=46840 | cat=NOT_IN_BROMA | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.573Z]    -> Humein Tumse Pyar Kitna | bid=46838 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.573Z]    -> Ishq Ki Gali | bid=46833 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.574Z]    -> Jahaan Tum Ho | bid=46832 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.574Z]    -> Panna Ki Tamanna | bid=46828 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.574Z]    -> Mohabbat Pyar  | bid=46827 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.574Z]    -> Yaad Rakhna Mujhe | bid=46826 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.574Z]    -> O Rani Teri Kahani | bid=46825 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.574Z]    -> Dil ke taar bajayein | bid=46824 | cat=NOT_IN_BROMA | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.574Z]    -> Dil ki baatein bhi | bid=46823 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.574Z]    -> Dil ki baaton ke hazaron | bid=46822 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.574Z]    -> Dil Laga Liya Maine Tumse Pyaar Karke | bid=46821 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.574Z]    -> Ek Ladka Hai Ek | bid=46820 | cat=NOT_IN_BROMA | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.574Z]    -> Eka Karelb | bid=46475 | cat=NOT_IN_BROMA | state=failed
+[2026-07-12T13:04:27.574Z]    -> Eka Karelpopi | bid=46474 | cat=NOT_IN_BROMA | state=failed
+[2026-07-12T13:04:27.574Z]    -> Gawah Hai Chand Tare | bid=46819 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.574Z]    -> Gawah Haichand | bid=46476 | cat=NOT_IN_BROMA | state=failed
+[2026-07-12T13:04:27.574Z]    -> Ghar Se Nikal Pada | bid=46477 | cat=NOT_IN_BROMA | state=failed
+[2026-07-12T13:04:27.574Z]    -> Hum Lakh Chupaye Pyaar | bid=46818 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.574Z]    -> Dil ki har dhadkan | bid=46817 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.574Z]    -> Dil ki yeh dhadkan | bid=46816 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.574Z]    -> Dil ko ek aasmaan banaya hai | bid=46815 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.574Z]    -> Dil Kone Mein | bid=46814 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.574Z]    -> Dil Laga Liya Maine | bid=46813 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.574Z]    -> Dil Maang Raha Hai | bid=46812 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.574Z]    -> Dil Mein Dard Sa Jaga Hai | bid=46811 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.574Z]    -> Dil mein jo baatein | bid=46738 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.574Z]    -> Dil Mein jo ek daag | bid=46810 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.574Z]    -> Dil Mere Na Aur Intezaar | bid=46809 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.574Z]    -> Dil Ne Dil Se Iqra | bid=46808 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.574Z]    -> Dil Ne Dil Se Iqrar | bid=46807 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.574Z]    -> Dil se chheda | bid=46806 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.574Z]    -> Dil se dil ka rishta | bid=46805 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.574Z]    -> Dil Tera Deewana | bid=46804 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.574Z]    -> Dilon ke raaste se | bid=46803 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.574Z]    -> Dilwa Le Gaile Raja | bid=46802 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.574Z]    -> Dilwa Le Gaile Raja | bid=46801 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.574Z]    -> Dilwa Le Gaile | bid=46800 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.574Z]    -> Dilwale Jo Rumal Mein | bid=46799 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.574Z]    -> Dilwale Jo Rumal | bid=46798 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.574Z]    -> Hadh Kar Di Aapne | bid=46797 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.574Z]    -> Hum Aapke Bina | bid=46796 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.575Z]    -> Aisaa Lagataa Hai | bid=46795 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.575Z]    -> Aaja Aai Bahar Dil Hai Beqarar | bid=46794 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.575Z]    -> Aaja Ke Intezar Main | bid=46793 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.575Z]    -> Ae Hawa Mere Sang Sang Chal | bid=46792 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.575Z]    -> Ae Hawa Mere Sang | bid=46791 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.575Z]    -> Ae Ishq Humein Barbaad | bid=46790 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.575Z]    -> Hum Tumhare Hain | bid=46789 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.575Z]    -> Hum Tumko | bid=46788 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.575Z]    -> Ankhiyon Ke Jharokhon Se | bid=46787 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.575Z]    -> Apni Zulfein Mere Shaanon Pe | bid=46786 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.575Z]    -> Aur is Dil Mein | bid=46785 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.575Z]    -> Bahot Khubsurat Hai Mera Sanam | bid=46784 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.575Z]    -> Jina Sirf Mere | bid=46783 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.575Z]    -> Kab Tak Yaad Karu | bid=46782 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.575Z]    -> Khwaabon ka hai | bid=46781 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.575Z]    -> Mera Mann Dole Mera Tan Dole | bid=46780 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.575Z]    -> Kisi Aur Ke Naam | bid=46779 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.575Z]    -> Chori Chori Dil Tera Churayenge Jo | bid=46778 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.575Z]    -> Is Tarah Aashiqi Ka Asar | bid=46777 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.575Z]    -> Wo Dil Kahin Se Laoon | bid=46776 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.575Z]    -> Aisaa Lagataa Hai | bid=46775 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.575Z]    -> Aap Ki Nazron Ne | bid=46774 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.575Z]    -> Ae Hawa Mere Sang | bid=46773 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.575Z]    -> Bindiya Chamkegi Chudi Khankegi | bid=46772 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.575Z]    -> Aisaa Lagataa Hai | bid=46771 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.575Z]    -> Chale To Kat Hi Jayega | bid=46770 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.575Z]    -> Dur Se Dekha Tujhko | bid=46769 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.576Z]    -> Ye Galiyan Ye Chaubara | bid=46768 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.576Z]    -> Desh Se Pardesh Bulaye Re | bid=46767 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.576Z]    -> Dil Ke Armaan Aansuon Mein Beh Gaye | bid=46766 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.576Z]    -> Dil Wo Chala | bid=46765 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.576Z]    -> Dil Ye Chahe | bid=46764 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.576Z]    -> Dil Ye Pukare | bid=46763 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.576Z]    -> Dilber Mere | bid=46762 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.576Z]    -> Kitna Pagal Dil Hai | bid=46761 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.576Z]    -> Kitna Pagal Dil | bid=46760 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.576Z]    -> Gumnaam Hai Koi | bid=46759 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.576Z]    -> Haye Haye Ye Majbyri | bid=46758 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.576Z]    -> Kya Tum Mujhse | bid=46757 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.576Z]    -> Kyaa Dil Ne Kahaa | bid=46756 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.576Z]    -> Kyon Ki Itna Pyar | bid=46755 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.576Z]    -> Laal dupatta jhilmil | bid=46754 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.576Z]    -> Ladki Badi Anjani | bid=46753 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.576Z]    -> Lagi Aaj Sawan Ki Phir | bid=46752 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.576Z]    -> Jab Se Tujhako Jaana | bid=46751 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.576Z]    -> Mashroof Hai Dil Kitna | bid=46750 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.576Z]    -> Mashroof HaiDil | bid=46749 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.577Z]    -> Mausam Ki Tarah Tum | bid=46748 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.577Z]    -> Aaj Phir Jeene Ki Tamanna Hai | bid=46745 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.577Z]    -> Aap Jo Mere Meet Na Hote | bid=46747 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.577Z]    -> Ae Hawa Mere Sang | bid=46834 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.577Z]    -> Aur Is Dil Mein Kia Rakha Hai | bid=46746 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.577Z]    -> Bade Achhe Lagte Hain | bid=46744 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.577Z]    -> Bato Bato Me Akshar Bat | bid=46835 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.577Z]    -> Dil Ye Pukare | bid=46836 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.577Z]    -> Dil Wo Chala | bid=46837 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.577Z]    -> Aankh Churaaye | bid=46839 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.577Z]    -> Musafir Jaane Wale | bid=46743 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.577Z]    -> Nachaniya karan di | bid=46742 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.577Z]    -> Nachaniya karan din raat | bid=46741 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.577Z]    -> Odhani Odh Ke | bid=46740 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.577Z]    -> Do Ghoont Mujhe Bhi Pila De Sharabi | bid=46841 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.577Z]    -> Aaj RuswaTari Galiyon | bid=46485 | cat=NOT_IN_BROMA | state=failed
+[2026-07-12T13:04:27.577Z]    -> Atariya Pe Lotan Kabootar Re | bid=46944 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.577Z]    -> Aapke Pyaar Mein Hum | bid=46945 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.577Z]    -> Leto Ayeho Hame Sapnoki Gaon Mein | bid=46946 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.577Z]    -> Aati Hai To Ch | bid=46947 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.577Z]    -> Aayega Maza Ab | bid=46948 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.577Z]    -> Aayegi Har Pal Tujhe Meri | bid=46949 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.577Z]    -> Aayegi Har Pal Tujhe | bid=46950 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.577Z]    -> Aayegi Har Pal | bid=46951 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.577Z]    -> Ek Pardesi Mera Dil Le Gaya | bid=46954 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.577Z]    -> Aap ka aana dil mein | bid=46955 | cat=NOT_IN_BROMA | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.577Z]    -> Yeh Reshmi Zulfein | bid=46479 | cat=NOT_IN_BROMA | state=failed
+[2026-07-12T13:04:27.577Z]    -> Aap Ka Aana Dil | bid=46943 | cat=IN_BROMA_DRAFTS | state=failed | BSON_FIXED
+[2026-07-12T13:04:27.577Z] 
+   LIVE ON BROMA but FAILED in our DB (should be marked delivered): 27
+[2026-07-12T13:04:27.577Z]    -> Ye Aayine Jo Tumhe Kam Pasand Karte Hai  | bid=18296434
+[2026-07-12T13:04:27.577Z]    -> Nepali Hami | bid=18296430
+[2026-07-12T13:04:27.577Z]    -> Allah Di Kassam | bid=18296426
+[2026-07-12T13:04:27.578Z]    -> Bidesh Jane Mayalu | bid=18296422
+[2026-07-12T13:04:27.578Z]    -> Birata Ko Chino | bid=18296418
+[2026-07-12T13:04:27.578Z]    -> Chari Udyo Badal Chuna Lai | bid=18296414
+[2026-07-12T13:04:27.578Z]    -> China | bid=18296410
+[2026-07-12T13:04:27.578Z]    -> Musu Musu Hasi Deuna | bid=18296406
+[2026-07-12T13:04:27.578Z]    -> Chiya Bari Ma | bid=18296400
+[2026-07-12T13:04:27.578Z]    -> Dadaima Mela Lagecha | bid=18296396
+[2026-07-12T13:04:27.578Z]    -> Deurali Ma Batas Chalyo | bid=18296392
+[2026-07-12T13:04:27.578Z]    -> Deurali Ukali Chadhera | bid=18296388
+[2026-07-12T13:04:27.578Z]    -> Muglan Hera Jadai Chu | bid=18296384
+[2026-07-12T13:04:27.578Z]    -> Gairi Khet Ko Sirai Hanyo | bid=18296360
+[2026-07-12T13:04:27.578Z]    -> Gajalule Ankhai Chhopne | bid=18296356
+[2026-07-12T13:04:27.578Z]    -> Manchhe Ko Maya Yeha | bid=18296341
+[2026-07-12T13:04:27.578Z]    -> Mayaluko Maya Mitho | bid=18296337
+[2026-07-12T13:04:27.578Z]    -> Zindagi Ki Talash Mein | bid=18296331
+[2026-07-12T13:04:27.578Z]    -> Aisa Lagta Hai Jaise | bid=18296327
+[2026-07-12T13:04:27.578Z]    -> Banma Kasturi | bid=18296319
+[2026-07-12T13:04:27.578Z]    -> Basa Sundari | bid=18296315
+[2026-07-12T13:04:27.578Z]    -> Ab Hain Neend | bid=18296287
+[2026-07-12T13:04:27.578Z]    -> Aakashai Ma Chil Udyo Fanana | bid=18296283
+[2026-07-12T13:04:27.578Z]    -> Ae Mere Dil Bata Kya Bura | bid=18296279
+[2026-07-12T13:04:27.578Z]    -> Aakashaima Chil Udyo Dharti Ma Chaya | bid=18296275
+[2026-07-12T13:04:27.578Z]    -> Aba Yo Baato Mero Ho | bid=18296265
+[2026-07-12T13:04:27.578Z]    -> Ab Hain Neend Kise | bid=18296187
+[2026-07-12T13:04:27.580Z] 
+11: CSV -> C:\Users\jaisi\Documents\GDS Creatives\nextjs-karharimedia\server\src\scripts\status-logs\broma-status-2026-07-12T13-04-05-276Z.csv

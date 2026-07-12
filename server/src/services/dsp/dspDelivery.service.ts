@@ -1357,7 +1357,15 @@ class DspDeliveryService {
     const jobMap = new Map(jobs.map((j) => [String((j.metadata as any)?.bromaReleaseId), j]));
     const TERMINAL_JOB_STATES = new Set(['delivered', 'cancelled']);
 
-    const sorted = allItems.map((d: any) => {
+    const draftItems = allItems.filter((d: any) => {
+      const id = String(d.id ?? '');
+      const job = jobMap.get(id);
+      return !job || !TERMINAL_JOB_STATES.has(job.state);
+    });
+
+    const filteredTotal = draftItems.length;
+
+    const sorted = draftItems.map((d: any) => {
       const id = String(d.id ?? '');
       const job = jobMap.get(id);
       return {
@@ -1375,9 +1383,9 @@ class DspDeliveryService {
     if (page) {
       const PAGE = 10;
       const start = (page - 1) * PAGE;
-      return { total: bromaTotal, drafts: sorted.slice(start, start + PAGE) };
+      return { total: filteredTotal, drafts: sorted.slice(start, start + PAGE) };
     }
-    return { total: bromaTotal, drafts: sorted };
+    return { total: filteredTotal, drafts: sorted };
   }
 
   async retryAllBromaDrafts(workerId?: string) {

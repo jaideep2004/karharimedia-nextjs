@@ -1,0 +1,201 @@
+[2026-07-12T12:06:25.266Z] === Broma Hopeless Job Cleanup ===
+[2026-07-12T12:06:25.267Z] Started at: 2026-07-12T12:06:25.265Z
+[2026-07-12T12:06:25.267Z] Mode: DRY RUN (no changes)
+[2026-07-12T12:06:25.267Z] 
+[2026-07-12T12:06:25.267Z] 1: Connecting to MongoDB...
+[2026-07-12T12:06:26.052Z] 2: Connected
+[2026-07-12T12:06:26.053Z] 3: Fetching delivery jobs...
+[2026-07-12T12:06:26.498Z] 4: Got 1076 jobs
+[2026-07-12T12:06:26.498Z] 5: Logging into Broma...
+[2026-07-12T12:06:28.171Z] 6: Login OK
+[2026-07-12T12:06:30.054Z] 7: Broma total: 1869
+[2026-07-12T12:06:43.408Z] 8: Fetched 1869 releases
+[2026-07-12T12:06:43.412Z] 9: Classifying jobs...
+[2026-07-12T12:06:43.446Z] 
+[2026-07-12T12:06:43.446Z] 10: === CLASSIFICATION ===
+[2026-07-12T12:06:43.447Z]   Repeated timeout: 2
+[2026-07-12T12:06:43.447Z]   Deleted from Broma: 55
+[2026-07-12T12:06:43.447Z]   File missing from disk: 1
+[2026-07-12T12:06:43.447Z]   Total safe candidates: 58
+[2026-07-12T12:06:43.447Z] 
+[2026-07-12T12:06:43.447Z] 11: === CLEANUP CANDIDATES ===
+[2026-07-12T12:06:43.447Z]   [Repeated timeout] Ankhiyon Ke Jharokhon Se
+[2026-07-12T12:06:43.448Z]     _id=6a504b97bb57ca634c306521 bid=46852 releaseId=6a4c69a56d14d7a351539480 trackId=
+[2026-07-12T12:06:43.448Z]     Broma status: NOT_IN_BROMA | Error: timeout of 60000ms exceeded
+[2026-07-12T12:06:43.448Z]   [Deleted from Broma] Pyaar Gum Dil ke
+[2026-07-12T12:06:43.448Z]     _id=6a504a95bb57ca634c3064bc bid=46183 releaseId=6a4c6f1f6d14d7a3515394f4 trackId=
+[2026-07-12T12:06:43.448Z]     Broma status: NOT_IN_BROMA | Error: Broma HTTP 429: status: validation_error; errors.file.rule: audio limit exceeded in release; errors.file.min: 1; errors.
+[2026-07-12T12:06:43.449Z]   [Deleted from Broma] Dheere Dheere
+[2026-07-12T12:06:43.449Z]     _id=6a504a58bb57ca634c30649b bid=46162 releaseId=6a4c70bd6d14d7a351539555 trackId=
+[2026-07-12T12:06:43.449Z]     Broma status: NOT_IN_BROMA | Error: Broma HTTP 429: status: validation_error; errors.file.rule: audio limit exceeded in release; errors.file.min: 1; errors.
+[2026-07-12T12:06:43.449Z]   [Repeated timeout] Sahil Nizami
+[2026-07-12T12:06:43.449Z]     _id=6a5049f1bb57ca634c30643b bid=46898 releaseId=6a4c82256d14d7a3515395bb trackId=
+[2026-07-12T12:06:43.449Z]     Broma status: NOT_IN_BROMA | Error: timeout of 60000ms exceeded
+[2026-07-12T12:06:43.449Z]   [Deleted from Broma] Dil Ka Kya Kare Sahib
+[2026-07-12T12:06:43.449Z]     _id=6a4f531558765bfecc3bbb1a bid=45667 releaseId=6a4f51d266b4b4071b8382dd trackId=
+[2026-07-12T12:06:43.449Z]     Broma status: NOT_IN_BROMA | Error: 
+[2026-07-12T12:06:43.449Z]   [Deleted from Broma] Zamane Ke Dekhen Hain
+[2026-07-12T12:06:43.450Z]     _id=6a4e225358765bfecc3bacbe bid=45338 releaseId=6a4e1edc0324508423e6377d trackId=
+[2026-07-12T12:06:43.450Z]     Broma status: NOT_IN_BROMA | Error: 
+[2026-07-12T12:06:43.450Z]   [Deleted from Broma] Yeh Dil Aashiqan
+[2026-07-12T12:06:43.450Z]     _id=6a4e106858765bfecc3bac2b bid=45350 releaseId=6a4de314d2745735a898059f trackId=
+[2026-07-12T12:06:43.450Z]     Broma status: NOT_IN_BROMA | Error: 
+[2026-07-12T12:06:43.450Z]   [Deleted from Broma] Tu Neendon Ki RaniAu
+[2026-07-12T12:06:43.450Z]     _id=6a4d7ec758765bfecc3ba3f7 bid=45527 releaseId=6a4ccb926d14d7a351539672 trackId=
+[2026-07-12T12:06:43.450Z]     Broma status: NOT_IN_BROMA | Error: 
+[2026-07-12T12:06:43.450Z]   [Deleted from Broma] Sath Chhodu Na Tera
+[2026-07-12T12:06:43.450Z]     _id=6a4bf1a858765bfecc3b9076 bid=44611 releaseId=6a49d3174028dc69f78560c1 trackId=
+[2026-07-12T12:06:43.450Z]     Broma status: NOT_IN_BROMA | Error: 
+[2026-07-12T12:06:43.451Z]   [Deleted from Broma] A Hawa Mere Sang Sang
+[2026-07-12T12:06:43.451Z]     _id=6a4bf17158765bfecc3b9052 bid=44605 releaseId=6a49d5954028dc69f78560dc trackId=
+[2026-07-12T12:06:43.451Z]     Broma status: NOT_IN_BROMA | Error: 
+[2026-07-12T12:06:43.451Z]   [Deleted from Broma] Mohabbat Me Sawarne Lage Hai
+[2026-07-12T12:06:43.451Z]     _id=6a4bf17058765bfecc3b904d bid=44603 releaseId=6a49d5a64028dc69f78560df trackId=
+[2026-07-12T12:06:43.451Z]     Broma status: NOT_IN_BROMA | Error: 
+[2026-07-12T12:06:43.451Z]   [Deleted from Broma] Aakashaima Chil Udyo Dharti Ma Chaya
+[2026-07-12T12:06:43.451Z]     _id=6a4bf16e58765bfecc3b9048 bid=44604 releaseId=6a49d5c04028dc69f78560e2 trackId=
+[2026-07-12T12:06:43.451Z]     Broma status: NOT_IN_BROMA | Error: 
+[2026-07-12T12:06:43.451Z]   [Deleted from Broma] Deurali Ma Batas Chalyo
+[2026-07-12T12:06:43.452Z]     _id=6a4bf16c58765bfecc3b9043 bid=44602 releaseId=6a49d5d14028dc69f78560e5 trackId=
+[2026-07-12T12:06:43.452Z]     Broma status: NOT_IN_BROMA | Error: 
+[2026-07-12T12:06:43.452Z]   [Deleted from Broma] Aane Se Uske Aaye Bahar
+[2026-07-12T12:06:43.452Z]     _id=6a4bf16858765bfecc3b9039 bid=44598 releaseId=6a49d60b4028dc69f78560eb trackId=
+[2026-07-12T12:06:43.452Z]     Broma status: NOT_IN_BROMA | Error: 
+[2026-07-12T12:06:43.452Z]   [Deleted from Broma] Saare Larko Ki Kardo Sadi
+[2026-07-12T12:06:43.452Z]     _id=6a4bf14e58765bfecc3b9020 bid=44593 releaseId=6a49d6df4028dc69f78560fa trackId=
+[2026-07-12T12:06:43.453Z]     Broma status: NOT_IN_BROMA | Error: 
+[2026-07-12T12:06:43.453Z]   [Deleted from Broma] Chhupana Bhi Nahi Aata
+[2026-07-12T12:06:43.453Z]     _id=6a4bf14958765bfecc3b9011 bid=44592 releaseId=6a49d7c34028dc69f7856103 trackId=
+[2026-07-12T12:06:43.453Z]     Broma status: NOT_IN_BROMA | Error: 
+[2026-07-12T12:06:43.453Z]   [Deleted from Broma] Chura Liya Hai Tumne Jo Dil Ko
+[2026-07-12T12:06:43.454Z]     _id=6a4bf14158765bfecc3b8ffd bid=44587 releaseId=6a49d8354028dc69f785610f trackId=
+[2026-07-12T12:06:43.454Z]     Broma status: NOT_IN_BROMA | Error: 
+[2026-07-12T12:06:43.454Z]   [Deleted from Broma] Dil Ka Fasaana 
+[2026-07-12T12:06:43.454Z]     _id=6a4bf12a58765bfecc3b8fe9 bid=44583 releaseId=6a49d9ff4028dc69f785611b trackId=
+[2026-07-12T12:06:43.454Z]     Broma status: NOT_IN_BROMA | Error: 
+[2026-07-12T12:06:43.454Z]   [Deleted from Broma] Heart Touchi
+[2026-07-12T12:06:43.454Z]     _id=6a4bf0c358765bfecc3b8f57 bid=44556 releaseId=6a49f4814028dc69f7856172 trackId=
+[2026-07-12T12:06:43.454Z]     Broma status: NOT_IN_BROMA | Error: 
+[2026-07-12T12:06:43.455Z]   [Deleted from Broma] Hum Tere Pyar Mein
+[2026-07-12T12:06:43.455Z]     _id=6a4bf0be58765bfecc3b8f48 bid=44551 releaseId=6a49f5414028dc69f785617b trackId=
+[2026-07-12T12:06:43.455Z]     Broma status: NOT_IN_BROMA | Error: 
+[2026-07-12T12:06:43.455Z]   [Deleted from Broma] Human Nature
+[2026-07-12T12:06:43.455Z]     _id=6a4bf0b958765bfecc3b8f39 bid=44541 releaseId=6a49f6324028dc69f7856184 trackId=
+[2026-07-12T12:06:43.455Z]     Broma status: NOT_IN_BROMA | Error: 
+[2026-07-12T12:06:43.455Z]   [Deleted from Broma] Ladki Badi Anjani Hai
+[2026-07-12T12:06:43.455Z]     _id=6a4bf09658765bfecc3b8f0c bid=44533 releaseId=6a49fed94028dc69f785619f trackId=
+[2026-07-12T12:06:43.455Z]     Broma status: NOT_IN_BROMA | Error: 
+[2026-07-12T12:06:43.456Z]   [Deleted from Broma] Ladki Deewani
+[2026-07-12T12:06:43.456Z]     _id=6a4bf09358765bfecc3b8f01 bid=44528 releaseId=6a49ff974028dc69f78561a5 trackId=
+[2026-07-12T12:06:43.456Z]     Broma status: NOT_IN_BROMA | Error: 
+[2026-07-12T12:06:43.456Z]   [Deleted from Broma] Lal Dupatta Ud Gaya
+[2026-07-12T12:06:43.456Z]     _id=6a4bf07f58765bfecc3b8ef6 bid=44530 releaseId=6a4a06864028dc69f78561ab trackId=
+[2026-07-12T12:06:43.456Z]     Broma status: NOT_IN_BROMA | Error: 
+[2026-07-12T12:06:43.457Z]   [Deleted from Broma] Lal Dupatta Ud
+[2026-07-12T12:06:43.457Z]     _id=6a4bf07d58765bfecc3b8ef1 bid=44529 releaseId=6a4a074b4028dc69f78561ae trackId=
+[2026-07-12T12:06:43.457Z]     Broma status: NOT_IN_BROMA | Error: 
+[2026-07-12T12:06:43.458Z]   [Deleted from Broma] Kya Tum Mujhse
+[2026-07-12T12:06:43.458Z]     _id=6a4bf07b58765bfecc3b8eec bid=44523 releaseId=6a4a07544028dc69f78561b1 trackId=
+[2026-07-12T12:06:43.458Z]     Broma status: NOT_IN_BROMA | Error: 
+[2026-07-12T12:06:43.458Z]   [Deleted from Broma] Likhne Wale Ne Likh Dale
+[2026-07-12T12:06:43.459Z]     _id=6a4bf07858765bfecc3b8ee2 bid=44524 releaseId=6a4a08334028dc69f78561b7 trackId=
+[2026-07-12T12:06:43.459Z]     Broma status: NOT_IN_BROMA | Error: 
+[2026-07-12T12:06:43.459Z]   [Deleted from Broma] Main Kaise Jiyu Meri Jaan
+[2026-07-12T12:06:43.459Z]     _id=6a4bf07458765bfecc3b8edd bid=44521 releaseId=6a4a1a1b4028dc69f78561c2 trackId=
+[2026-07-12T12:06:43.459Z]     Broma status: NOT_IN_BROMA | Error: 
+[2026-07-12T12:06:43.460Z]   [Deleted from Broma] Main kya baat
+[2026-07-12T12:06:43.460Z]     _id=6a4bf07258765bfecc3b8ed8 bid=44525 releaseId=6a4a1acf4028dc69f78561c5 trackId=
+[2026-07-12T12:06:43.460Z]     Broma status: NOT_IN_BROMA | Error: 
+[2026-07-12T12:06:43.460Z]   [Deleted from Broma] Humsafar Bano
+[2026-07-12T12:06:43.460Z]     _id=6a4bf06b58765bfecc3b8ece bid=44520 releaseId=6a4a1eb84028dc69f78561cb trackId=
+[2026-07-12T12:06:43.460Z]     Broma status: NOT_IN_BROMA | Error: 
+[2026-07-12T12:06:43.461Z]   [Deleted from Broma] Ab Tere Bin Jee Lenge Hum
+[2026-07-12T12:06:43.461Z]     _id=6a4beef358765bfecc3b8e55 bid=44446 releaseId=6a4afc873576ebe4b14b7dea trackId=
+[2026-07-12T12:06:43.461Z]     Broma status: NOT_IN_BROMA | Error: 
+[2026-07-12T12:06:43.461Z]   [Deleted from Broma] Ankhiyon Ke Jharokhon Se
+[2026-07-12T12:06:43.461Z]     _id=6a4beeee58765bfecc3b8e46 bid=44443 releaseId=6a4afe553576ebe4b14b7df9 trackId=
+[2026-07-12T12:06:43.461Z]     Broma status: NOT_IN_BROMA | Error: 
+[2026-07-12T12:06:43.461Z]   [Deleted from Broma] Aye Meri Zohorajabi
+[2026-07-12T12:06:43.461Z]     _id=6a4beed858765bfecc3b8e30 bid=44438 releaseId=6a4aff753576ebe4b14b7dff trackId=
+[2026-07-12T12:06:43.461Z]     Broma status: NOT_IN_BROMA | Error: 
+[2026-07-12T12:06:43.462Z]   [Deleted from Broma] Baazigar O Baazigar
+[2026-07-12T12:06:43.462Z]     _id=6a4beed658765bfecc3b8e2b bid=44435 releaseId=6a4affbc3576ebe4b14b7e02 trackId=
+[2026-07-12T12:06:43.462Z]     Broma status: NOT_IN_BROMA | Error: 
+[2026-07-12T12:06:43.462Z]   [Deleted from Broma] Mere Dil Ki Hai Aawa
+[2026-07-12T12:06:43.462Z]     _id=6a4beeb858765bfecc3b8e03 bid=44426 releaseId=6a4b01fc3576ebe4b14b7e1a trackId=
+[2026-07-12T12:06:43.462Z]     Broma status: NOT_IN_BROMA | Error: 
+[2026-07-12T12:06:43.462Z]   [Deleted from Broma] Ek Pardasi Mera Dil Le Gaya
+[2026-07-12T12:06:43.462Z]     _id=6a4bee6358765bfecc3b8ddb bid=44420 releaseId=6a4b02f73576ebe4b14b7e32 trackId=
+[2026-07-12T12:06:43.462Z]     Broma status: NOT_IN_BROMA | Error: 
+[2026-07-12T12:06:43.463Z]   [Deleted from Broma] Bindiya Chamkegi Chudi Khankegi
+[2026-07-12T12:06:43.463Z]     _id=6a4bee5858765bfecc3b8dc7 bid=44413 releaseId=6a4b032c3576ebe4b14b7e3e trackId=
+[2026-07-12T12:06:43.463Z]     Broma status: NOT_IN_BROMA | Error: 
+[2026-07-12T12:06:43.463Z]   [Deleted from Broma] Dil Ke Armaan Aansuon Mein Beh Gaye
+[2026-07-12T12:06:43.463Z]     _id=6a4bee4c58765bfecc3b8dae bid=44406 releaseId=6a4b038e3576ebe4b14b7e4d trackId=
+[2026-07-12T12:06:43.463Z]     Broma status: NOT_IN_BROMA | Error: 
+[2026-07-12T12:06:43.463Z]   [Deleted from Broma] Mohabbat Me Sawarne Lage Hai
+[2026-07-12T12:06:43.463Z]     _id=6a4bee4858765bfecc3b8da4 bid=44407 releaseId=6a4b03ac3576ebe4b14b7e53 trackId=
+[2026-07-12T12:06:43.463Z]     Broma status: NOT_IN_BROMA | Error: 
+[2026-07-12T12:06:43.464Z]   [Deleted from Broma] Mohabbat Ki Nahi Jati
+[2026-07-12T12:06:43.464Z]     _id=6a4bed4458765bfecc3b8d1a bid=44326 releaseId=6a4b0f3a3576ebe4b14b7ea4 trackId=
+[2026-07-12T12:06:43.464Z]     Broma status: NOT_IN_BROMA | Error: 
+[2026-07-12T12:06:43.464Z]   [Deleted from Broma] Panchhi Sur Mein
+[2026-07-12T12:06:43.464Z]     _id=6a4be50d58765bfecc3b893f bid=44255 releaseId=6a4b237c3576ebe4b14b7f43 trackId=
+[2026-07-12T12:06:43.464Z]     Broma status: NOT_IN_BROMA | Error: 
+[2026-07-12T12:06:43.464Z]   [Deleted from Broma] Aaj Phir Jeene Ki Tamanna Hai
+[2026-07-12T12:06:43.464Z]     _id=6a48fd8577da7fde10af5ffb bid=44491 releaseId=6a48fc6d4028dc69f7855f76 trackId=
+[2026-07-12T12:06:43.464Z]     Broma status: NOT_IN_BROMA | Error: 
+[2026-07-12T12:06:43.465Z]   [Deleted from Broma] Can Enchanting Dance
+[2026-07-12T12:06:43.465Z]     _id=6a47dcfe77da7fde10af5966 bid=43709 releaseId=6a45e76885cfdba38620b090 trackId=
+[2026-07-12T12:06:43.465Z]     Broma status: NOT_IN_BROMA | Error: 
+[2026-07-12T12:06:43.465Z]   [Deleted from Broma] Chand Ke Paar Le Jaiba
+[2026-07-12T12:06:43.465Z]     _id=6a47dc7c77da7fde10af591e bid=43687 releaseId=6a45fd9385cfdba38620b0dc trackId=
+[2026-07-12T12:06:43.465Z]     Broma status: NOT_IN_BROMA | Error: 
+[2026-07-12T12:06:43.465Z]   [Deleted from Broma] Chand Ke Paar Le
+[2026-07-12T12:06:43.465Z]     _id=6a47dc7577da7fde10af5919 bid=43685 releaseId=6a45fe3385cfdba38620b0df trackId=
+[2026-07-12T12:06:43.465Z]     Broma status: NOT_IN_BROMA | Error: 
+[2026-07-12T12:06:43.465Z]   [Deleted from Broma] Chhouri Dilli Wali Dil Tor Delkai
+[2026-07-12T12:06:43.465Z]     _id=6a47db6c77da7fde10af5908 bid=43674 releaseId=6a46014285cfdba38620b0e8 trackId=
+[2026-07-12T12:06:43.465Z]     Broma status: NOT_IN_BROMA | Error: 
+[2026-07-12T12:06:43.466Z]   [Deleted from Broma] Chhouri Dilli Wali Dil Tor
+[2026-07-12T12:06:43.466Z]     _id=6a47db6577da7fde10af5903 bid=43673 releaseId=6a46021785cfdba38620b0eb trackId=
+[2026-07-12T12:06:43.466Z]     Broma status: NOT_IN_BROMA | Error: 
+[2026-07-12T12:06:43.466Z]   [Deleted from Broma] Chhouri Dilli Wali Dil
+[2026-07-12T12:06:43.466Z]     _id=6a47db5c77da7fde10af58fe bid=43670 releaseId=6a46029485cfdba38620b0ee trackId=
+[2026-07-12T12:06:43.466Z]     Broma status: NOT_IN_BROMA | Error: 
+[2026-07-12T12:06:43.467Z]   [Deleted from Broma] Chhup gaya hoon
+[2026-07-12T12:06:43.467Z]     _id=6a47db5577da7fde10af58f9 bid=43669 releaseId=6a4603d685cfdba38620b0f1 trackId=
+[2026-07-12T12:06:43.467Z]     Broma status: NOT_IN_BROMA | Error: 
+[2026-07-12T12:06:43.467Z]   [Deleted from Broma] Chhupa ke rakhalu
+[2026-07-12T12:06:43.467Z]     _id=6a47db4b77da7fde10af58f4 bid=43666 releaseId=6a46048d85cfdba38620b0f4 trackId=
+[2026-07-12T12:06:43.467Z]     Broma status: NOT_IN_BROMA | Error: 
+[2026-07-12T12:06:43.467Z]   [Deleted from Broma] Chori Chori Dil Tera
+[2026-07-12T12:06:43.467Z]     _id=6a47db4577da7fde10af58ef bid=43665 releaseId=6a46052e85cfdba38620b0f7 trackId=
+[2026-07-12T12:06:43.467Z]     Broma status: NOT_IN_BROMA | Error: 
+[2026-07-12T12:06:43.468Z]   [Deleted from Broma] Chudiya One Beat
+[2026-07-12T12:06:43.468Z]     _id=6a47db3877da7fde10af58ea bid=43662 releaseId=6a46065285cfdba38620b0fa trackId=
+[2026-07-12T12:06:43.468Z]     Broma status: NOT_IN_BROMA | Error: 
+[2026-07-12T12:06:43.468Z]   [Deleted from Broma] Chunnari Chunnari
+[2026-07-12T12:06:43.468Z]     _id=6a47db3177da7fde10af58e5 bid=43661 releaseId=6a4606db85cfdba38620b0fd trackId=
+[2026-07-12T12:06:43.468Z]     Broma status: NOT_IN_BROMA | Error: 
+[2026-07-12T12:06:43.468Z]   [Deleted from Broma] Dandiye Ke Bahane
+[2026-07-12T12:06:43.468Z]     _id=6a47d9d577da7fde10af58a8 bid=43636 releaseId=6a479c2472193f420bd66a58 trackId=
+[2026-07-12T12:06:43.468Z]     Broma status: NOT_IN_BROMA | Error: 
+[2026-07-12T12:06:43.469Z]   [Deleted from Broma] Aye Dil Aye Dil
+[2026-07-12T12:06:43.469Z]     _id=6a452106625a188fd3dedb34 bid=43121 releaseId=6a4501c0161d7aa451fcd506 trackId=
+[2026-07-12T12:06:43.469Z]     Broma status: NOT_IN_BROMA | Error: 
+[2026-07-12T12:06:43.469Z]   [Deleted from Broma] Lost in Her Silence
+[2026-07-12T12:06:43.469Z]     _id=6a44c68e625a188fd3ded6d7 bid=45034 releaseId=6a44787c63d9e483edd4c66e trackId=
+[2026-07-12T12:06:43.469Z]     Broma status: NOT_IN_BROMA | Error: 
+[2026-07-12T12:06:43.469Z]   [Deleted from Broma] Aaj Bhar Dhil Da Dhodi Jan
+[2026-07-12T12:06:43.469Z]     _id=6a44c688625a188fd3ded695 bid=45031 releaseId=6a449fe963d9e483edd4c674 trackId=
+[2026-07-12T12:06:43.469Z]     Broma status: NOT_IN_BROMA | Error: 
+[2026-07-12T12:06:43.469Z]   [File missing from disk] Aaj Ki Raat
+[2026-07-12T12:06:43.470Z]     _id=6a44c680625a188fd3ded686 bid=46481 releaseId=6a44a51163d9e483edd4c67d trackId=
+[2026-07-12T12:06:43.470Z]     Broma status: NOT_IN_BROMA | Error: ENOENT: no such file or directory, open 'C:\Users\jaisi\Documents\GDS Creatives\nextjs-karharimedia\server\uploads\track
+[2026-07-12T12:06:43.470Z] 
+12: === DRY RUN — no changes made ===
+[2026-07-12T12:06:43.470Z] Would delete 58 delivery jobs from MongoDB
+[2026-07-12T12:06:43.470Z] Would attempt Broma API draft deletion for 0 records
+[2026-07-12T12:06:43.470Z] Log file: cleanup-2026-07-12T12-06-25-265Z.log
+[2026-07-12T12:06:43.470Z] CSV file: cleanup-2026-07-12T12-06-25-265Z.csv

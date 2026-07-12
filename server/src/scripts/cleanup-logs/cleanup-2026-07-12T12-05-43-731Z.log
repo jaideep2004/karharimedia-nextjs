@@ -1,0 +1,32 @@
+[2026-07-12T12:05:43.732Z] === Broma Hopeless Job Cleanup ===
+[2026-07-12T12:05:43.732Z] Started at: 2026-07-12T12:05:43.731Z
+[2026-07-12T12:05:43.732Z] Mode: DRY RUN (no changes)
+[2026-07-12T12:05:43.732Z] 
+[2026-07-12T12:05:43.732Z] 1: Connecting to MongoDB...
+[2026-07-12T12:05:44.563Z] 2: Connected
+[2026-07-12T12:05:44.563Z] 3: Fetching delivery jobs...
+[2026-07-12T12:05:45.122Z] 4: Got 1076 jobs
+[2026-07-12T12:05:45.123Z] 5: No Broma credentials — Broma API deletion disabled
+[2026-07-12T12:05:45.123Z] 9: Classifying jobs...
+[2026-07-12T12:05:45.123Z] 
+[2026-07-12T12:05:45.123Z] 10: === CLASSIFICATION ===
+[2026-07-12T12:05:45.123Z]   Repeated timeout: 2
+[2026-07-12T12:05:45.123Z]   File missing from disk: 1
+[2026-07-12T12:05:45.123Z]   Total safe candidates: 3
+[2026-07-12T12:05:45.123Z] 
+[2026-07-12T12:05:45.123Z] 11: === CLEANUP CANDIDATES ===
+[2026-07-12T12:05:45.123Z]   [Repeated timeout] Ankhiyon Ke Jharokhon Se
+[2026-07-12T12:05:45.123Z]     _id=6a504b97bb57ca634c306521 bid=46852 releaseId=6a4c69a56d14d7a351539480 trackId=
+[2026-07-12T12:05:45.123Z]     Broma status: unknown | Error: timeout of 60000ms exceeded
+[2026-07-12T12:05:45.123Z]   [Repeated timeout] Sahil Nizami
+[2026-07-12T12:05:45.123Z]     _id=6a5049f1bb57ca634c30643b bid=46898 releaseId=6a4c82256d14d7a3515395bb trackId=
+[2026-07-12T12:05:45.123Z]     Broma status: unknown | Error: timeout of 60000ms exceeded
+[2026-07-12T12:05:45.123Z]   [File missing from disk] Aaj Ki Raat
+[2026-07-12T12:05:45.123Z]     _id=6a44c680625a188fd3ded686 bid=46481 releaseId=6a44a51163d9e483edd4c67d trackId=
+[2026-07-12T12:05:45.123Z]     Broma status: unknown | Error: ENOENT: no such file or directory, open 'C:\Users\jaisi\Documents\GDS Creatives\nextjs-karharimedia\server\uploads\track
+[2026-07-12T12:05:45.123Z] 
+12: === DRY RUN — no changes made ===
+[2026-07-12T12:05:45.123Z] Would delete 3 delivery jobs from MongoDB
+[2026-07-12T12:05:45.123Z] Would attempt Broma API draft deletion for 0 records
+[2026-07-12T12:05:45.123Z] Log file: cleanup-2026-07-12T12-05-43-731Z.log
+[2026-07-12T12:05:45.123Z] CSV file: cleanup-2026-07-12T12-05-43-731Z.csv

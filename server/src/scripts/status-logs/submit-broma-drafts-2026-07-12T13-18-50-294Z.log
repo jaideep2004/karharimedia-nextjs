@@ -1,0 +1,20 @@
+[2026-07-12T13:18:50.295Z] === Submit Broma Drafts to Moderation ===
+[2026-07-12T13:18:50.295Z] Started: 2026-07-12T13:18:50.294Z
+[2026-07-12T13:18:50.295Z] 
+1: Connecting to MongoDB...
+[2026-07-12T13:18:51.058Z] 
+2: Logging into Broma...
+[2026-07-12T13:18:52.656Z]    Login OK
+[2026-07-12T13:18:52.656Z] 
+3: Using manually specified BIDs: 2
+[2026-07-12T13:18:52.656Z] 
+4: SUBMITTING 2 releases to moderation...
+[2026-07-12T13:18:52.656Z]    Endpoint: POST /repertoire/release/{releaseId}/send-moderate
+
+[2026-07-12T13:18:53.537Z]    [1/2] ❌ manual-46846 | bid=46846 | 403 | {"status":"error","message":"release in status check"}
+[2026-07-12T13:18:55.291Z]    [2/2] ❌ manual-46845 | bid=46845 | 403 | {"status":"error","message":"release in status check"}
+[2026-07-12T13:18:55.291Z] 
+6: === SUMMARY ===
+[2026-07-12T13:18:55.291Z]    Total releases submitted: 2
+[2026-07-12T13:18:55.291Z]    Success: 0
+[2026-07-12T13:18:55.291Z]    Failed: 2

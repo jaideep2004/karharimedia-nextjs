@@ -1,0 +1,13 @@
+[2026-07-12T13:31:20.960Z] === Fix Outlet Config + Reset Failed Jobs ===
+[2026-07-12T13:31:20.960Z] Started: 2026-07-12T13:31:20.958Z
+[2026-07-12T13:31:22.035Z] 
+1: Updating Broma provider config...
+[2026-07-12T13:31:22.093Z]    Current expandToAllOutlets: undefined
+[2026-07-12T13:31:22.156Z]    ✅ Set expandToAllOutlets: true
+[2026-07-12T13:31:22.249Z] 
+2: Failed "Missing outlet ids" jobs to reset: 128
+[2026-07-12T13:31:22.249Z] 
+3: Resetting jobs to queued...
+[2026-07-12T13:31:22.409Z]    Matched: 128, Modified: 128
+[2026-07-12T13:31:22.410Z] 
+=== Done ===

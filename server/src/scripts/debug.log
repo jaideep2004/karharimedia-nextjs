@@ -1,0 +1,16 @@
+started
+mongo ok
+count:1076
+login ok
+token:eyJ0eXAiOiJKV1Qi
+page 1: 200 items, total:1869
+page 2: 200 items, total:1869
+page 3: 200 items, total:1869
+page 4: 200 items, total:1869
+page 5: 200 items, total:1869
+page 6: 200 items, total:1869
+page 7: 200 items, total:1869
+page 8: 200 items, total:1869
+page 9: 200 items, total:1869
+page 10: 69 items, total:1869
+done fetching:1869

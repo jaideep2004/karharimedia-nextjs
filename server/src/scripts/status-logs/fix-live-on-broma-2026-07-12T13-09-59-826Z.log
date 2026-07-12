@@ -1,0 +1,53 @@
+[2026-07-12T13:09:59.827Z] === Fix LIVE on Broma but FAILED in DB ===
+[2026-07-12T13:09:59.827Z] Started: 2026-07-12T13:09:59.826Z
+[2026-07-12T13:09:59.828Z] 
+1: Connecting to MongoDB...
+[2026-07-12T13:10:00.895Z]    Connected
+[2026-07-12T13:10:00.895Z] 
+2: Logging into Broma...
+[2026-07-12T13:10:02.979Z]    Login OK
+[2026-07-12T13:10:02.979Z] 
+3: Fetching Broma RELEASES...
+[2026-07-12T13:10:16.957Z]    Total: 1869
+[2026-07-12T13:10:16.958Z]    Approved/Live releases: 1361
+[2026-07-12T13:10:16.959Z] 
+4: Finding delivery jobs with state='failed' and matching bromaReleaseId...
+[2026-07-12T13:10:17.155Z]    Total failed jobs with bromaReleaseId: 155
+[2026-07-12T13:10:17.155Z] 
+   Jobs to fix (failed in DB but LIVE on Broma): 27
+[2026-07-12T13:10:17.155Z]    -> Ye Aayine Jo Tumhe Kam Pasand Karte Hai  | bid=18296434 | BSON_FIXED | err=
+[2026-07-12T13:10:17.155Z]    -> Nepali Hami | bid=18296430 | BSON_FIXED | err=
+[2026-07-12T13:10:17.155Z]    -> Allah Di Kassam | bid=18296426 | BSON_FIXED | err=
+[2026-07-12T13:10:17.155Z]    -> Bidesh Jane Mayalu | bid=18296422 | BSON_FIXED | err=
+[2026-07-12T13:10:17.155Z]    -> Birata Ko Chino | bid=18296418 | BSON_FIXED | err=
+[2026-07-12T13:10:17.155Z]    -> Chari Udyo Badal Chuna Lai | bid=18296414 | BSON_FIXED | err=
+[2026-07-12T13:10:17.155Z]    -> China | bid=18296410 | BSON_FIXED | err=
+[2026-07-12T13:10:17.155Z]    -> Musu Musu Hasi Deuna | bid=18296406 | BSON_FIXED | err=
+[2026-07-12T13:10:17.155Z]    -> Chiya Bari Ma | bid=18296400 | BSON_FIXED | err=
+[2026-07-12T13:10:17.156Z]    -> Dadaima Mela Lagecha | bid=18296396 | BSON_FIXED | err=
+[2026-07-12T13:10:17.156Z]    -> Deurali Ma Batas Chalyo | bid=18296392 | BSON_FIXED | err=
+[2026-07-12T13:10:17.156Z]    -> Deurali Ukali Chadhera | bid=18296388 | BSON_FIXED | err=
+[2026-07-12T13:10:17.156Z]    -> Muglan Hera Jadai Chu | bid=18296384 | BSON_FIXED | err=
+[2026-07-12T13:10:17.156Z]    -> Gairi Khet Ko Sirai Hanyo | bid=18296360 | BSON_FIXED | err=
+[2026-07-12T13:10:17.156Z]    -> Gajalule Ankhai Chhopne | bid=18296356 | BSON_FIXED | err=
+[2026-07-12T13:10:17.156Z]    -> Manchhe Ko Maya Yeha | bid=18296341 | BSON_FIXED | err=
+[2026-07-12T13:10:17.156Z]    -> Mayaluko Maya Mitho | bid=18296337 | BSON_FIXED | err=
+[2026-07-12T13:10:17.156Z]    -> Zindagi Ki Talash Mein | bid=18296331 | BSON_FIXED | err=
+[2026-07-12T13:10:17.156Z]    -> Aisa Lagta Hai Jaise | bid=18296327 | BSON_FIXED | err=
+[2026-07-12T13:10:17.156Z]    -> Banma Kasturi | bid=18296319 | BSON_FIXED | err=
+[2026-07-12T13:10:17.156Z]    -> Basa Sundari | bid=18296315 | BSON_FIXED | err=
+[2026-07-12T13:10:17.156Z]    -> Ab Hain Neend | bid=18296287 | BSON_FIXED | err=
+[2026-07-12T13:10:17.156Z]    -> Aakashai Ma Chil Udyo Fanana | bid=18296283 | BSON_FIXED | err=
+[2026-07-12T13:10:17.156Z]    -> Ae Mere Dil Bata Kya Bura | bid=18296279 | BSON_FIXED | err=
+[2026-07-12T13:10:17.156Z]    -> Aakashaima Chil Udyo Dharti Ma Chaya | bid=18296275 | BSON_FIXED | err=
+[2026-07-12T13:10:17.156Z]    -> Aba Yo Baato Mero Ho | bid=18296265 | BSON_FIXED | err=
+[2026-07-12T13:10:17.156Z]    -> Ab Hain Neend Kise | bid=18296187 | BSON_FIXED | err=
+[2026-07-12T13:10:17.156Z] 
+5: UPDATING 27 jobs to delivered...
+[2026-07-12T13:10:17.265Z]    Matched: 27, Modified: 27
+[2026-07-12T13:10:17.265Z] 
+6: === SUMMARY ===
+[2026-07-12T13:10:17.265Z]    Total approved on Broma: 1361
+[2026-07-12T13:10:17.265Z]    Found failed in our DB: 155
+[2026-07-12T13:10:17.265Z]    Matching (live-on-Broma + failed-in-DB): 27
+[2026-07-12T13:10:17.265Z]    Fixed: 27

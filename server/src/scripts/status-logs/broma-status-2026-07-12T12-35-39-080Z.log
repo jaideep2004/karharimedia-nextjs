@@ -1,0 +1,14 @@
+[2026-07-12T12:35:39.082Z] === Broma Deep Status Audit ===
+[2026-07-12T12:35:39.082Z] Started: 2026-07-12T12:35:39.080Z
+[2026-07-12T12:35:39.082Z] 
+1: Connecting to MongoDB...
+[2026-07-12T12:35:39.982Z] 2: Fetching remaining Broma delivery jobs...
+[2026-07-12T12:35:41.032Z]    Total jobs: 1018
+[2026-07-12T12:35:41.033Z]    processing: 250
+[2026-07-12T12:35:41.033Z]    delivered: 540
+[2026-07-12T12:35:41.033Z]    cancelled: 71
+[2026-07-12T12:35:41.033Z]    failed: 157
+[2026-07-12T12:35:41.033Z]    BSON depth fixed: 371 (151 still failed)
+[2026-07-12T12:35:41.033Z] 
+3: Logging into Broma...
+[2026-07-12T12:35:42.397Z]    Login FAILED: Request failed with status code 422

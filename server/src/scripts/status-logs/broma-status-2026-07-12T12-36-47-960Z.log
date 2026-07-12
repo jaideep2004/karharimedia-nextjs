@@ -1,0 +1,16 @@
+[2026-07-12T12:36:47.962Z] === Broma Deep Status Audit ===
+[2026-07-12T12:36:47.962Z] Started: 2026-07-12T12:36:47.960Z
+[2026-07-12T12:36:47.962Z] 
+1: Connecting to MongoDB...
+[2026-07-12T12:36:48.731Z] 2: Fetching remaining Broma delivery jobs...
+[2026-07-12T12:36:49.176Z]    Total jobs: 1018
+[2026-07-12T12:36:49.177Z]    processing: 250
+[2026-07-12T12:36:49.177Z]    delivered: 540
+[2026-07-12T12:36:49.177Z]    cancelled: 71
+[2026-07-12T12:36:49.177Z]    failed: 157
+[2026-07-12T12:36:49.177Z]    BSON depth fixed: 371 (151 still failed)
+[2026-07-12T12:36:49.177Z] 
+3: Logging into Broma...
+[2026-07-12T12:36:50.517Z]    Login FAILED: Request failed with status code 422 | status=422 | body={"status":"validation_error","errors":{"email":[{"rule":"required"}],"password":[{"rule":"required"}]}}
+[2026-07-12T12:36:50.518Z]    Retrying once...
+[2026-07-12T12:36:53.031Z]    Login FAILED (retry): Request failed with status code 422 | status=422 | body={"status":"validation_error","errors":{"email":[{"rule":"required"}],"password":[{"rule":"required"}]}}

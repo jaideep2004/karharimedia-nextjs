@@ -1,0 +1,879 @@
+Total hopeless: 186
+================================
+
+Ankhiyon Ke Jharokhon Se
+  bid: 46852 | releaseId: 6a4c69a56d14d7a351539480 | trackId: 
+  Reason: Repeated timeout
+  Error: timeout of 60000ms exceeded
+
+Pyaar Gum Dil ke
+  bid: 46183 | releaseId: 6a4c6f1f6d14d7a3515394f4 | trackId: 
+  Reason: Deleted from Broma
+  Error: Broma HTTP 429: status: validation_error; errors.file.rule: audio limit exceeded in release; errors.file.min: 1; errors.
+
+Dheere Dheere
+  bid: 46162 | releaseId: 6a4c70bd6d14d7a351539555 | trackId: 
+  Reason: Deleted from Broma
+  Error: Broma HTTP 429: status: validation_error; errors.file.rule: audio limit exceeded in release; errors.file.min: 1; errors.
+
+Sahil Nizami
+  bid: 46898 | releaseId: 6a4c82256d14d7a3515395bb | trackId: 
+  Reason: Repeated timeout
+  Error: timeout of 60000ms exceeded
+
+Dil Ka Kya Kare Sahib
+  bid: 45667 | releaseId: 6a4f51d266b4b4071b8382dd | trackId: 
+  Reason: Deleted from Broma
+
+Tujhe Maanga Tha
+  bid: 46846 | releaseId: 6a4cce606d14d7a351539684 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Tujhko Mirchi
+  bid: 46845 | releaseId: 6a4ccfdd6d14d7a35153968a | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Tujhko Mirch
+  bid: 46844 | releaseId: 6a4ccf6b6d14d7a351539687 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Tum Mere Baad Mohabbat
+  bid: 46843 | releaseId: 6a4cd0d06d14d7a351539690 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Dil Ka Kya Karen Saheb
+  bid: 46831 | releaseId: 6a4dafc728bd2a70587ab46f | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Dil Ke Badle Sanam
+  bid: 46830 | releaseId: 6a4db04f28bd2a70587ab472 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Dil Ne Tujhko Pukara Female
+  bid: 46829 | releaseId: 6a4db09528bd2a70587ab475 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Dreaming
+  bid: 46736 | releaseId: 6a4db19328bd2a70587ab481 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Gale Lag Ja
+  bid: 46739 | releaseId: 6a4db39f28bd2a70587ab496 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Gore Rang Pe Na Itna Gumaan Kar
+  bid: 46737 | releaseId: 6a4db4b528bd2a70587ab4a2 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Gori Tera Gaon Bada Pyara
+  bid: 46842 | releaseId: 6a4db5bc28bd2a70587ab4ab | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Humnava
+  bid: 46840 | releaseId: 6a4dbee128bd2a70587ab4d5 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Humein Tumse Pyar Kitna
+  bid: 46838 | releaseId: 6a4dbe4a28bd2a70587ab4cf | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Ishq Ki Gali
+  bid: 46833 | releaseId: 6a4dc30c28bd2a70587ab4db | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Jahaan Tum Ho
+  bid: 46832 | releaseId: 6a4dc5ca28bd2a70587ab4f0 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Zamane Ke Dekhen Hain
+  bid: 45338 | releaseId: 6a4e1edc0324508423e6377d | trackId: 
+  Reason: Deleted from Broma
+
+Panna Ki Tamanna
+  bid: 46828 | releaseId: 6a4c682d6d14d7a351539477 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Yeh Dil Aashiqan
+  bid: 45350 | releaseId: 6a4de314d2745735a898059f | trackId: 
+  Reason: Deleted from Broma
+
+Tu Neendon Ki RaniAu
+  bid: 45527 | releaseId: 6a4ccb926d14d7a351539672 | trackId: 
+  Reason: Deleted from Broma
+
+Mohabbat Pyar 
+  bid: 46827 | releaseId: 6a47e620b1de8b210ab4d9dd | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Yaad Rakhna Mujhe
+  bid: 46826 | releaseId: 6a47e6a2b1de8b210ab4d9e0 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+O Rani Teri Kahani
+  bid: 46825 | releaseId: 6a47e7bbb1de8b210ab4d9e6 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Dil ke taar bajayein
+  bid: 46824 | releaseId: 6a48806f191ffc8b4c204d2d | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Dil ki baatein bhi
+  bid: 46823 | releaseId: 6a489241191ffc8b4c204d3f | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Dil ki baaton ke hazaron
+  bid: 46822 | releaseId: 6a48940c191ffc8b4c204d45 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Dil Laga Liya Maine Tumse Pyaar Karke
+  bid: 46821 | releaseId: 6a4898c6191ffc8b4c204d5a | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Ek Ladka Hai Ek
+  bid: 46820 | releaseId: 6a48cb4f191ffc8b4c204dab | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Eka Karelb
+  bid: 46475 | releaseId: 6a48d157191ffc8b4c204db7 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Eka Karelpopi
+  bid: 46474 | releaseId: 6a48d280191ffc8b4c204dc0 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Gawah Hai Chand Tare
+  bid: 46819 | releaseId: 6a48d813191ffc8b4c204dcc | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Gawah Haichand
+  bid: 46476 | releaseId: 6a48d8b1191ffc8b4c204dcf | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Ghar Se Nikal Pada
+  bid: 46477 | releaseId: 6a48d95a191ffc8b4c204dd2 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Hum Lakh Chupaye Pyaar
+  bid: 46818 | releaseId: 6a48f0af4028dc69f7855f67 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Dil ki har dhadkan
+  bid: 46817 | releaseId: 6a4895af191ffc8b4c204d4b | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Dil ki yeh dhadkan
+  bid: 46816 | releaseId: 6a48962d191ffc8b4c204d4e | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Dil ko ek aasmaan banaya hai
+  bid: 46815 | releaseId: 6a4896af191ffc8b4c204d51 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Dil Kone Mein
+  bid: 46814 | releaseId: 6a489734191ffc8b4c204d54 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Dil Laga Liya Maine
+  bid: 46813 | releaseId: 6a489960191ffc8b4c204d5d | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Dil Maang Raha Hai
+  bid: 46812 | releaseId: 6a489a6d191ffc8b4c204d60 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Dil Mein Dard Sa Jaga Hai
+  bid: 46811 | releaseId: 6a489af3191ffc8b4c204d63 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Dil mein jo baatein
+  bid: 46738 | releaseId: 6a48a1c9191ffc8b4c204d66 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Dil Mein jo ek daag
+  bid: 46810 | releaseId: 6a48a2c8191ffc8b4c204d69 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Dil Mere Na Aur Intezaar
+  bid: 46809 | releaseId: 6a48a390191ffc8b4c204d6c | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Dil Ne Dil Se Iqra
+  bid: 46808 | releaseId: 6a48a544191ffc8b4c204d6f | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Dil Ne Dil Se Iqrar
+  bid: 46807 | releaseId: 6a48a60a191ffc8b4c204d72 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Dil se chheda
+  bid: 46806 | releaseId: 6a48a695191ffc8b4c204d75 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Dil se dil ka rishta
+  bid: 46805 | releaseId: 6a48a74a191ffc8b4c204d78 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Dil Tera Deewana
+  bid: 46804 | releaseId: 6a48a7e3191ffc8b4c204d7b | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Dilon ke raaste se
+  bid: 46803 | releaseId: 6a48a869191ffc8b4c204d7e | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Dilwa Le Gaile Raja
+  bid: 46802 | releaseId: 6a48a996191ffc8b4c204d81 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Dilwa Le Gaile Raja
+  bid: 46801 | releaseId: 6a48adf5191ffc8b4c204d84 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Dilwa Le Gaile
+  bid: 46800 | releaseId: 6a48af22191ffc8b4c204d87 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Dilwale Jo Rumal Mein
+  bid: 46799 | releaseId: 6a48b05a191ffc8b4c204d8a | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Dilwale Jo Rumal
+  bid: 46798 | releaseId: 6a48b0ce191ffc8b4c204d8d | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Hadh Kar Di Aapne
+  bid: 46797 | releaseId: 6a48db9a191ffc8b4c204dde | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Hum Aapke Bina
+  bid: 46796 | releaseId: 6a48ef174028dc69f7855f61 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Aisaa Lagataa Hai
+  bid: 46795 | releaseId: 6a4911d54028dc69f7855fc5 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Aaja Aai Bahar Dil Hai Beqarar
+  bid: 46794 | releaseId: 6a48fd854028dc69f7855f8b | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Aaja Ke Intezar Main
+  bid: 46793 | releaseId: 6a48fde84028dc69f7855f96 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Ae Hawa Mere Sang Sang Chal
+  bid: 46792 | releaseId: 6a490ae64028dc69f7855fb9 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Ae Hawa Mere Sang
+  bid: 46791 | releaseId: 6a4910ef4028dc69f7855fbf | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Ae Ishq Humein Barbaad
+  bid: 46790 | releaseId: 6a4911634028dc69f7855fc2 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Hum Tumhare Hain
+  bid: 46789 | releaseId: 6a49b0ad4028dc69f7855fd7 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Hum Tumko
+  bid: 46788 | releaseId: 6a49b3594028dc69f7855fe6 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Ankhiyon Ke Jharokhon Se
+  bid: 46787 | releaseId: 6a49b66c4028dc69f7855ff5 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Apni Zulfein Mere Shaanon Pe
+  bid: 46786 | releaseId: 6a49b6e44028dc69f7855ffb | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Aur is Dil Mein
+  bid: 46785 | releaseId: 6a49b7ad4028dc69f7856005 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Bahot Khubsurat Hai Mera Sanam
+  bid: 46784 | releaseId: 6a49b8e14028dc69f7856013 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Jina Sirf Mere
+  bid: 46783 | releaseId: 6a49c52c4028dc69f785605b | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Kab Tak Yaad Karu
+  bid: 46782 | releaseId: 6a49c8594028dc69f785606a | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Khwaabon ka hai
+  bid: 46781 | releaseId: 6a49d0ed4028dc69f78560a9 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Mera Mann Dole Mera Tan Dole
+  bid: 46780 | releaseId: 6a49d11c4028dc69f78560ac | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Kisi Aur Ke Naam
+  bid: 46779 | releaseId: 6a49d19d4028dc69f78560b2 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Chori Chori Dil Tera Churayenge Jo
+  bid: 46778 | releaseId: 6a49d2c14028dc69f78560be | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Sath Chhodu Na Tera
+  bid: 44611 | releaseId: 6a49d3174028dc69f78560c1 | trackId: 
+  Reason: Deleted from Broma
+
+Is Tarah Aashiqi Ka Asar
+  bid: 46777 | releaseId: 6a49d3614028dc69f78560c4 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Wo Dil Kahin Se Laoon
+  bid: 46776 | releaseId: 6a49d3ad4028dc69f78560c7 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Aisaa Lagataa Hai
+  bid: 46775 | releaseId: 6a49d5584028dc69f78560d3 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Aap Ki Nazron Ne
+  bid: 46774 | releaseId: 6a49d5774028dc69f78560d6 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+A Hawa Mere Sang Sang
+  bid: 44605 | releaseId: 6a49d5954028dc69f78560dc | trackId: 
+  Reason: Deleted from Broma
+
+Mohabbat Me Sawarne Lage Hai
+  bid: 44603 | releaseId: 6a49d5a64028dc69f78560df | trackId: 
+  Reason: Deleted from Broma
+
+Aakashaima Chil Udyo Dharti Ma Chaya
+  bid: 44604 | releaseId: 6a49d5c04028dc69f78560e2 | trackId: 
+  Reason: Deleted from Broma
+
+Deurali Ma Batas Chalyo
+  bid: 44602 | releaseId: 6a49d5d14028dc69f78560e5 | trackId: 
+  Reason: Deleted from Broma
+
+Aane Se Uske Aaye Bahar
+  bid: 44598 | releaseId: 6a49d60b4028dc69f78560eb | trackId: 
+  Reason: Deleted from Broma
+
+Ae Hawa Mere Sang
+  bid: 46773 | releaseId: 6a49d61a4028dc69f78560ee | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Bindiya Chamkegi Chudi Khankegi
+  bid: 46772 | releaseId: 6a49d6204028dc69f78560f1 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Aisaa Lagataa Hai
+  bid: 46771 | releaseId: 6a49d6434028dc69f78560f7 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Saare Larko Ki Kardo Sadi
+  bid: 44593 | releaseId: 6a49d6df4028dc69f78560fa | trackId: 
+  Reason: Deleted from Broma
+
+Chale To Kat Hi Jayega
+  bid: 46770 | releaseId: 6a49d76e4028dc69f78560fd | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Dur Se Dekha Tujhko
+  bid: 46769 | releaseId: 6a49d7b94028dc69f7856100 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Chhupana Bhi Nahi Aata
+  bid: 44592 | releaseId: 6a49d7c34028dc69f7856103 | trackId: 
+  Reason: Deleted from Broma
+
+Ye Galiyan Ye Chaubara
+  bid: 46768 | releaseId: 6a49d7f54028dc69f7856109 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Chura Liya Hai Tumne Jo Dil Ko
+  bid: 44587 | releaseId: 6a49d8354028dc69f785610f | trackId: 
+  Reason: Deleted from Broma
+
+Desh Se Pardesh Bulaye Re
+  bid: 46767 | releaseId: 6a49d92e4028dc69f7856115 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Dil Ka Fasaana 
+  bid: 44583 | releaseId: 6a49d9ff4028dc69f785611b | trackId: 
+  Reason: Deleted from Broma
+
+Dil Ke Armaan Aansuon Mein Beh Gaye
+  bid: 46766 | releaseId: 6a49db534028dc69f785611e | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Dil Wo Chala
+  bid: 46765 | releaseId: 6a49dcce4028dc69f7856127 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Dil Ye Chahe
+  bid: 46764 | releaseId: 6a49dd574028dc69f785612a | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Dil Ye Pukare
+  bid: 46763 | releaseId: 6a49ddd64028dc69f785612d | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Dilber Mere
+  bid: 46762 | releaseId: 6a49de374028dc69f7856130 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Kitna Pagal Dil Hai
+  bid: 46761 | releaseId: 6a49efab4028dc69f785614e | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Kitna Pagal Dil
+  bid: 46760 | releaseId: 6a49f0464028dc69f7856151 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Gumnaam Hai Koi
+  bid: 46759 | releaseId: 6a49f1a24028dc69f785615a | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Haye Haye Ye Majbyri
+  bid: 46758 | releaseId: 6a49f4044028dc69f785616c | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Heart Touchi
+  bid: 44556 | releaseId: 6a49f4814028dc69f7856172 | trackId: 
+  Reason: Deleted from Broma
+
+Hum Tere Pyar Mein
+  bid: 44551 | releaseId: 6a49f5414028dc69f785617b | trackId: 
+  Reason: Deleted from Broma
+
+Human Nature
+  bid: 44541 | releaseId: 6a49f6324028dc69f7856184 | trackId: 
+  Reason: Deleted from Broma
+
+Kya Tum Mujhse
+  bid: 46757 | releaseId: 6a49f7e04028dc69f785618d | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Kyaa Dil Ne Kahaa
+  bid: 46756 | releaseId: 6a49f9054028dc69f7856193 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Kyon Ki Itna Pyar
+  bid: 46755 | releaseId: 6a49f9764028dc69f7856196 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Laal dupatta jhilmil
+  bid: 46754 | releaseId: 6a49fdf44028dc69f7856199 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Ladki Badi Anjani Hai
+  bid: 44533 | releaseId: 6a49fed94028dc69f785619f | trackId: 
+  Reason: Deleted from Broma
+
+Ladki Badi Anjani
+  bid: 46753 | releaseId: 6a49ff3d4028dc69f78561a2 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Ladki Deewani
+  bid: 44528 | releaseId: 6a49ff974028dc69f78561a5 | trackId: 
+  Reason: Deleted from Broma
+
+Lagi Aaj Sawan Ki Phir
+  bid: 46752 | releaseId: 6a4a05134028dc69f78561a8 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Lal Dupatta Ud Gaya
+  bid: 44530 | releaseId: 6a4a06864028dc69f78561ab | trackId: 
+  Reason: Deleted from Broma
+
+Lal Dupatta Ud
+  bid: 44529 | releaseId: 6a4a074b4028dc69f78561ae | trackId: 
+  Reason: Deleted from Broma
+
+Kya Tum Mujhse
+  bid: 44523 | releaseId: 6a4a07544028dc69f78561b1 | trackId: 
+  Reason: Deleted from Broma
+
+Likhne Wale Ne Likh Dale
+  bid: 44524 | releaseId: 6a4a08334028dc69f78561b7 | trackId: 
+  Reason: Deleted from Broma
+
+Main Kaise Jiyu Meri Jaan
+  bid: 44521 | releaseId: 6a4a1a1b4028dc69f78561c2 | trackId: 
+  Reason: Deleted from Broma
+
+Main kya baat
+  bid: 44525 | releaseId: 6a4a1acf4028dc69f78561c5 | trackId: 
+  Reason: Deleted from Broma
+
+Humsafar Bano
+  bid: 44520 | releaseId: 6a4a1eb84028dc69f78561cb | trackId: 
+  Reason: Deleted from Broma
+
+Jab Se Tujhako Jaana
+  bid: 46751 | releaseId: 6a4a211b4028dc69f78561dd | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Mashroof Hai Dil Kitna
+  bid: 46750 | releaseId: 6a4a262d4028dc69f78561fb | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Mashroof HaiDil
+  bid: 46749 | releaseId: 6a4a27494028dc69f7856201 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Mausam Ki Tarah Tum
+  bid: 46748 | releaseId: 6a4a28e84028dc69f785620a | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Aaj Phir Jeene Ki Tamanna Hai
+  bid: 46745 | releaseId: 6a4afbc43576ebe4b14b7de4 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Aap Jo Mere Meet Na Hote
+  bid: 46747 | releaseId: 6a4afc0f3576ebe4b14b7de7 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Ab Tere Bin Jee Lenge Hum
+  bid: 44446 | releaseId: 6a4afc873576ebe4b14b7dea | trackId: 
+  Reason: Deleted from Broma
+
+Ae Hawa Mere Sang
+  bid: 46834 | releaseId: 6a4afd053576ebe4b14b7ded | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Ankhiyon Ke Jharokhon Se
+  bid: 44443 | releaseId: 6a4afe553576ebe4b14b7df9 | trackId: 
+  Reason: Deleted from Broma
+
+Aur Is Dil Mein Kia Rakha Hai
+  bid: 46746 | releaseId: 6a4afec63576ebe4b14b7dfc | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Aye Meri Zohorajabi
+  bid: 44438 | releaseId: 6a4aff753576ebe4b14b7dff | trackId: 
+  Reason: Deleted from Broma
+
+Baazigar O Baazigar
+  bid: 44435 | releaseId: 6a4affbc3576ebe4b14b7e02 | trackId: 
+  Reason: Deleted from Broma
+
+Bade Achhe Lagte Hain
+  bid: 46744 | releaseId: 6a4afff63576ebe4b14b7e05 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Bato Bato Me Akshar Bat
+  bid: 46835 | releaseId: 6a4b018d3576ebe4b14b7e11 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Mere Dil Ki Hai Aawa
+  bid: 44426 | releaseId: 6a4b01fc3576ebe4b14b7e1a | trackId: 
+  Reason: Deleted from Broma
+
+Ek Pardasi Mera Dil Le Gaya
+  bid: 44420 | releaseId: 6a4b02f73576ebe4b14b7e32 | trackId: 
+  Reason: Deleted from Broma
+
+Bindiya Chamkegi Chudi Khankegi
+  bid: 44413 | releaseId: 6a4b032c3576ebe4b14b7e3e | trackId: 
+  Reason: Deleted from Broma
+
+Dil Ye Pukare
+  bid: 46836 | releaseId: 6a4b03623576ebe4b14b7e44 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Dil Wo Chala
+  bid: 46837 | releaseId: 6a4b036e3576ebe4b14b7e47 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Dil Ke Armaan Aansuon Mein Beh Gaye
+  bid: 44406 | releaseId: 6a4b038e3576ebe4b14b7e4d | trackId: 
+  Reason: Deleted from Broma
+
+Mohabbat Me Sawarne Lage Hai
+  bid: 44407 | releaseId: 6a4b03ac3576ebe4b14b7e53 | trackId: 
+  Reason: Deleted from Broma
+
+Aankh Churaaye
+  bid: 46839 | releaseId: 6a4b03d63576ebe4b14b7e5c | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Mohabbat Ki Nahi Jati
+  bid: 44326 | releaseId: 6a4b0f3a3576ebe4b14b7ea4 | trackId: 
+  Reason: Deleted from Broma
+
+Musafir Jaane Wale
+  bid: 46743 | releaseId: 6a4b14353576ebe4b14b7ebf | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Nachaniya karan di
+  bid: 46742 | releaseId: 6a4b154c3576ebe4b14b7ec5 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Nachaniya karan din raat
+  bid: 46741 | releaseId: 6a4b16863576ebe4b14b7ecb | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Odhani Odh Ke
+  bid: 46740 | releaseId: 6a4b1f223576ebe4b14b7ef2 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Do Ghoont Mujhe Bhi Pila De Sharabi
+  bid: 46841 | releaseId: 6a4b21b83576ebe4b14b7f0a | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Panchhi Sur Mein
+  bid: 44255 | releaseId: 6a4b237c3576ebe4b14b7f43 | trackId: 
+  Reason: Deleted from Broma
+
+Aaj Phir Jeene Ki Tamanna Hai
+  bid: 44491 | releaseId: 6a48fc6d4028dc69f7855f76 | trackId: 
+  Reason: Deleted from Broma
+
+Can Enchanting Dance
+  bid: 43709 | releaseId: 6a45e76885cfdba38620b090 | trackId: 
+  Reason: Deleted from Broma
+
+Chand Ke Paar Le Jaiba
+  bid: 43687 | releaseId: 6a45fd9385cfdba38620b0dc | trackId: 
+  Reason: Deleted from Broma
+
+Chand Ke Paar Le
+  bid: 43685 | releaseId: 6a45fe3385cfdba38620b0df | trackId: 
+  Reason: Deleted from Broma
+
+Chhouri Dilli Wali Dil Tor Delkai
+  bid: 43674 | releaseId: 6a46014285cfdba38620b0e8 | trackId: 
+  Reason: Deleted from Broma
+
+Chhouri Dilli Wali Dil Tor
+  bid: 43673 | releaseId: 6a46021785cfdba38620b0eb | trackId: 
+  Reason: Deleted from Broma
+
+Chhouri Dilli Wali Dil
+  bid: 43670 | releaseId: 6a46029485cfdba38620b0ee | trackId: 
+  Reason: Deleted from Broma
+
+Chhup gaya hoon
+  bid: 43669 | releaseId: 6a4603d685cfdba38620b0f1 | trackId: 
+  Reason: Deleted from Broma
+
+Chhupa ke rakhalu
+  bid: 43666 | releaseId: 6a46048d85cfdba38620b0f4 | trackId: 
+  Reason: Deleted from Broma
+
+Chori Chori Dil Tera
+  bid: 43665 | releaseId: 6a46052e85cfdba38620b0f7 | trackId: 
+  Reason: Deleted from Broma
+
+Chudiya One Beat
+  bid: 43662 | releaseId: 6a46065285cfdba38620b0fa | trackId: 
+  Reason: Deleted from Broma
+
+Chunnari Chunnari
+  bid: 43661 | releaseId: 6a4606db85cfdba38620b0fd | trackId: 
+  Reason: Deleted from Broma
+
+Dandiye Ke Bahane
+  bid: 43636 | releaseId: 6a479c2472193f420bd66a58 | trackId: 
+  Reason: Deleted from Broma
+
+Aye Dil Aye Dil
+  bid: 43121 | releaseId: 6a4501c0161d7aa451fcd506 | trackId: 
+  Reason: Deleted from Broma
+
+Lost in Her Silence
+  bid: 45034 | releaseId: 6a44787c63d9e483edd4c66e | trackId: 
+  Reason: Deleted from Broma
+
+Aaj Bhar Dhil Da Dhodi Jan
+  bid: 45031 | releaseId: 6a449fe963d9e483edd4c674 | trackId: 
+  Reason: Deleted from Broma
+
+Aaj Ki Raat
+  bid: 46481 | releaseId: 6a44a51163d9e483edd4c67d | trackId: 
+  Reason: File missing from disk
+  Error: ENOENT: no such file or directory, open 'C:\Users\jaisi\Documents\GDS Creatives\nextjs-karharimedia\server\uploads\track
+
+Aaj RuswaTari Galiyon
+  bid: 46485 | releaseId: 6a44a9b763d9e483edd4c68c | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Atariya Pe Lotan Kabootar Re
+  bid: 46944 | releaseId: 6a44b29c63d9e483edd4c6e8 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Aapke Pyaar Mein Hum
+  bid: 46945 | releaseId: 6a44b2f263d9e483edd4c6eb | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Leto Ayeho Hame Sapnoki Gaon Mein
+  bid: 46946 | releaseId: 6a44b3b963d9e483edd4c6ee | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Aati Hai To Ch
+  bid: 46947 | releaseId: 6a44b65863d9e483edd4c6fd | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Aayega Maza Ab
+  bid: 46948 | releaseId: 6a44bbfe63d9e483edd4c70b | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Aayegi Har Pal Tujhe Meri
+  bid: 46949 | releaseId: 6a44be6263d9e483edd4c70e | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Aayegi Har Pal Tujhe
+  bid: 46950 | releaseId: 6a44c14763d9e483edd4c711 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Aayegi Har Pal
+  bid: 46951 | releaseId: 6a44c4bb63d9e483edd4c71b | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Ek Pardesi Mera Dil Le Gaya
+  bid: 46954 | releaseId: 6a44b61f63d9e483edd4c6fa | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Aap ka aana dil mein
+  bid: 46955 | releaseId: 6a44add563d9e483edd4c69b | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Yeh Reshmi Zulfein
+  bid: 46479 | releaseId: 6a44aec163d9e483edd4c69e | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids
+
+Aap Ka Aana Dil
+  bid: 46943 | releaseId: 6a44b02a63d9e483edd4c6a7 | trackId: 
+  Reason: No outlet IDs
+  Error: Missing Broma outlet ids

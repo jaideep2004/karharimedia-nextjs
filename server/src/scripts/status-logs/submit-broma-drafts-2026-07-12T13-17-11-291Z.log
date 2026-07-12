@@ -1,0 +1,149 @@
+[2026-07-12T13:17:11.292Z] === DRY RUN MODE — no moderation submission will be sent ===
+[2026-07-12T13:17:11.292Z] === Submit Broma Drafts to Moderation ===
+[2026-07-12T13:17:11.292Z] Started: 2026-07-12T13:17:11.291Z
+[2026-07-12T13:17:11.292Z] 
+1: Connecting to MongoDB...
+[2026-07-12T13:17:12.088Z] 
+2: Logging into Broma...
+[2026-07-12T13:17:13.732Z]    Login OK
+[2026-07-12T13:17:13.732Z] 
+3: Fetching failed delivery jobs with Missing outlet IDs...
+[2026-07-12T13:17:13.962Z]    Found: 128
+[2026-07-12T13:17:13.962Z] 
+4: WOULD SUBMIT 128 releases to moderation...
+[2026-07-12T13:17:13.962Z]    Endpoint: POST /repertoire/release/{releaseId}/send-moderate
+
+[2026-07-12T13:17:13.962Z]    [1/128] Tujhe Maanga Tha | bid=46846 — WOULD SUBMIT
+[2026-07-12T13:17:13.962Z]    [2/128] Tujhko Mirchi | bid=46845 — WOULD SUBMIT
+[2026-07-12T13:17:13.962Z]    [3/128] Tujhko Mirch | bid=46844 — WOULD SUBMIT
+[2026-07-12T13:17:13.962Z]    [4/128] Tum Mere Baad Mohabbat | bid=46843 — WOULD SUBMIT
+[2026-07-12T13:17:13.962Z]    [5/128] Dil Ka Kya Karen Saheb | bid=46831 — WOULD SUBMIT
+[2026-07-12T13:17:13.962Z]    [6/128] Dil Ke Badle Sanam | bid=46830 — WOULD SUBMIT
+[2026-07-12T13:17:13.962Z]    [7/128] Dil Ne Tujhko Pukara Female | bid=46829 — WOULD SUBMIT
+[2026-07-12T13:17:13.962Z]    [8/128] Dreaming | bid=46736 — WOULD SUBMIT
+[2026-07-12T13:17:13.962Z]    [9/128] Gale Lag Ja | bid=46739 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [10/128] Gore Rang Pe Na Itna Gumaan Kar | bid=46737 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [11/128] Gori Tera Gaon Bada Pyara | bid=46842 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [12/128] Humnava | bid=46840 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [13/128] Humein Tumse Pyar Kitna | bid=46838 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [14/128] Ishq Ki Gali | bid=46833 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [15/128] Jahaan Tum Ho | bid=46832 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [16/128] Panna Ki Tamanna | bid=46828 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [17/128] Mohabbat Pyar  | bid=46827 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [18/128] Yaad Rakhna Mujhe | bid=46826 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [19/128] O Rani Teri Kahani | bid=46825 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [20/128] Dil ke taar bajayein | bid=46824 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [21/128] Dil ki baatein bhi | bid=46823 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [22/128] Dil ki baaton ke hazaron | bid=46822 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [23/128] Dil Laga Liya Maine Tumse Pyaar Karke | bid=46821 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [24/128] Ek Ladka Hai Ek | bid=46820 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [25/128] Eka Karelb | bid=46475 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [26/128] Eka Karelpopi | bid=46474 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [27/128] Gawah Hai Chand Tare | bid=46819 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [28/128] Gawah Haichand | bid=46476 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [29/128] Ghar Se Nikal Pada | bid=46477 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [30/128] Hum Lakh Chupaye Pyaar | bid=46818 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [31/128] Dil ki har dhadkan | bid=46817 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [32/128] Dil ki yeh dhadkan | bid=46816 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [33/128] Dil ko ek aasmaan banaya hai | bid=46815 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [34/128] Dil Kone Mein | bid=46814 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [35/128] Dil Laga Liya Maine | bid=46813 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [36/128] Dil Maang Raha Hai | bid=46812 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [37/128] Dil Mein Dard Sa Jaga Hai | bid=46811 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [38/128] Dil mein jo baatein | bid=46738 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [39/128] Dil Mein jo ek daag | bid=46810 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [40/128] Dil Mere Na Aur Intezaar | bid=46809 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [41/128] Dil Ne Dil Se Iqra | bid=46808 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [42/128] Dil Ne Dil Se Iqrar | bid=46807 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [43/128] Dil se chheda | bid=46806 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [44/128] Dil se dil ka rishta | bid=46805 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [45/128] Dil Tera Deewana | bid=46804 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [46/128] Dilon ke raaste se | bid=46803 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [47/128] Dilwa Le Gaile Raja | bid=46802 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [48/128] Dilwa Le Gaile Raja | bid=46801 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [49/128] Dilwa Le Gaile | bid=46800 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [50/128] Dilwale Jo Rumal Mein | bid=46799 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [51/128] Dilwale Jo Rumal | bid=46798 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [52/128] Hadh Kar Di Aapne | bid=46797 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [53/128] Hum Aapke Bina | bid=46796 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [54/128] Aisaa Lagataa Hai | bid=46795 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [55/128] Aaja Aai Bahar Dil Hai Beqarar | bid=46794 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [56/128] Aaja Ke Intezar Main | bid=46793 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [57/128] Ae Hawa Mere Sang Sang Chal | bid=46792 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [58/128] Ae Hawa Mere Sang | bid=46791 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [59/128] Ae Ishq Humein Barbaad | bid=46790 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [60/128] Hum Tumhare Hain | bid=46789 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [61/128] Hum Tumko | bid=46788 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [62/128] Ankhiyon Ke Jharokhon Se | bid=46787 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [63/128] Apni Zulfein Mere Shaanon Pe | bid=46786 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [64/128] Aur is Dil Mein | bid=46785 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [65/128] Bahot Khubsurat Hai Mera Sanam | bid=46784 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [66/128] Jina Sirf Mere | bid=46783 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [67/128] Kab Tak Yaad Karu | bid=46782 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [68/128] Khwaabon ka hai | bid=46781 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [69/128] Mera Mann Dole Mera Tan Dole | bid=46780 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [70/128] Kisi Aur Ke Naam | bid=46779 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [71/128] Chori Chori Dil Tera Churayenge Jo | bid=46778 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [72/128] Is Tarah Aashiqi Ka Asar | bid=46777 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [73/128] Wo Dil Kahin Se Laoon | bid=46776 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [74/128] Aisaa Lagataa Hai | bid=46775 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [75/128] Aap Ki Nazron Ne | bid=46774 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [76/128] Ae Hawa Mere Sang | bid=46773 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [77/128] Bindiya Chamkegi Chudi Khankegi | bid=46772 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [78/128] Aisaa Lagataa Hai | bid=46771 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [79/128] Chale To Kat Hi Jayega | bid=46770 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [80/128] Dur Se Dekha Tujhko | bid=46769 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [81/128] Ye Galiyan Ye Chaubara | bid=46768 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [82/128] Desh Se Pardesh Bulaye Re | bid=46767 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [83/128] Dil Ke Armaan Aansuon Mein Beh Gaye | bid=46766 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [84/128] Dil Wo Chala | bid=46765 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [85/128] Dil Ye Chahe | bid=46764 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [86/128] Dil Ye Pukare | bid=46763 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [87/128] Dilber Mere | bid=46762 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [88/128] Kitna Pagal Dil Hai | bid=46761 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [89/128] Kitna Pagal Dil | bid=46760 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [90/128] Gumnaam Hai Koi | bid=46759 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [91/128] Haye Haye Ye Majbyri | bid=46758 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [92/128] Kya Tum Mujhse | bid=46757 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [93/128] Kyaa Dil Ne Kahaa | bid=46756 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [94/128] Kyon Ki Itna Pyar | bid=46755 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [95/128] Laal dupatta jhilmil | bid=46754 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [96/128] Ladki Badi Anjani | bid=46753 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [97/128] Lagi Aaj Sawan Ki Phir | bid=46752 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [98/128] Jab Se Tujhako Jaana | bid=46751 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [99/128] Mashroof Hai Dil Kitna | bid=46750 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [100/128] Mashroof HaiDil | bid=46749 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [101/128] Mausam Ki Tarah Tum | bid=46748 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [102/128] Aaj Phir Jeene Ki Tamanna Hai | bid=46745 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [103/128] Aap Jo Mere Meet Na Hote | bid=46747 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [104/128] Ae Hawa Mere Sang | bid=46834 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [105/128] Aur Is Dil Mein Kia Rakha Hai | bid=46746 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [106/128] Bade Achhe Lagte Hain | bid=46744 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [107/128] Bato Bato Me Akshar Bat | bid=46835 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [108/128] Dil Ye Pukare | bid=46836 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [109/128] Dil Wo Chala | bid=46837 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [110/128] Aankh Churaaye | bid=46839 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [111/128] Musafir Jaane Wale | bid=46743 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [112/128] Nachaniya karan di | bid=46742 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [113/128] Nachaniya karan din raat | bid=46741 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [114/128] Odhani Odh Ke | bid=46740 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [115/128] Do Ghoont Mujhe Bhi Pila De Sharabi | bid=46841 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [116/128] Aaj RuswaTari Galiyon | bid=46485 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [117/128] Atariya Pe Lotan Kabootar Re | bid=46944 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [118/128] Aapke Pyaar Mein Hum | bid=46945 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [119/128] Leto Ayeho Hame Sapnoki Gaon Mein | bid=46946 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [120/128] Aati Hai To Ch | bid=46947 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [121/128] Aayega Maza Ab | bid=46948 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [122/128] Aayegi Har Pal Tujhe Meri | bid=46949 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [123/128] Aayegi Har Pal Tujhe | bid=46950 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [124/128] Aayegi Har Pal | bid=46951 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [125/128] Ek Pardesi Mera Dil Le Gaya | bid=46954 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [126/128] Aap ka aana dil mein | bid=46955 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [127/128] Yeh Reshmi Zulfein | bid=46479 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z]    [128/128] Aap Ka Aana Dil | bid=46943 — WOULD SUBMIT
+[2026-07-12T13:17:13.963Z] 
+6: === SUMMARY ===
+[2026-07-12T13:17:13.963Z]    Total releases submitted: 128
+[2026-07-12T13:17:13.963Z]    Success: 0
+[2026-07-12T13:17:13.963Z]    Failed: 0
+[2026-07-12T13:17:13.963Z]    (DRY RUN — no changes made)

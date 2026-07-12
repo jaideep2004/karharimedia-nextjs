@@ -1,0 +1,1019 @@
+relName,bid,state,releaseId,trackId,error,bsonTag,category,bromaModStatus,bromaStep,inDrafts,inReleases
+"Koi Mere Dil Da Haal",46437,processing,6a50ff673fbc92d483913267,,"",,IN_BROMA_DRAFTS,draft,,true,false
+"Hadh Kar Dil",46491,processing,6a48de434028dc69f7855f3e,,"",,IN_BROMA_DRAFTS,draft,,true,false
+"Ae Dil Kahin Se Unko",46492,processing,6a4908fd4028dc69f7855fad,,"",,IN_BROMA_DRAFTS,draft,,true,false
+"Armaan Hamare",46494,processing,6a49b7524028dc69f7855ffe,,"",,IN_BROMA_DRAFTS,draft,,true,false
+"Aap Ki Nazron Ne",46493,processing,6a4b03e43576ebe4b14b7e5f,,"",,IN_BROMA_DRAFTS,draft,,true,false
+"Aankh Churaaye",46496,processing,6a49d5864028dc69f78560d9,,"",,IN_BROMA_DRAFTS,draft,,true,false
+"Gori Hai Kalaiyan",46498,processing,6a48da47191ffc8b4c204dd5,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Sheeshe Ka Tha Dil Mera",46499,processing,6a49097d4028dc69f7855fb0,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Aankh Milakar Loot Liya Dil",46536,processing,6a4909f94028dc69f7855fb6,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Aa Jao Meri Tamanna",46501,processing,6a4b242f3576ebe4b14b7f49,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Dil ko tera intezar reh gaya",46502,processing,6a4c5b796d14d7a3515393f9,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Ek Pardesi Mera Dil Le Gaya",46503,processing,6a4c5bfd6d14d7a3515393fc,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Hamne Tumko Dil Ye De Diya",46510,processing,6a4c5c626d14d7a3515393ff,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Has Mat Yaar Nazar Lag Jayegi",46508,processing,6a4c5cdc6d14d7a351539402,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Itna Na Mujhse Tu Pyar Badha",46509,processing,6a4c5d3c6d14d7a351539405,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Jab Tu Najar Se Najar",46512,processing,6a4c5dd56d14d7a351539408,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Jabse Tujhko Dekha Hai",46511,processing,6a4c5e3f6d14d7a35153940b,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Jeena Yahan Marna Yahan",46292,processing,6a4c5eef6d14d7a35153940e,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Kesariya",46519,processing,6a4c5f816d14d7a351539411,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Koi Haseena Jab Rooth Jati Hai To",46513,processing,6a4c60956d14d7a351539414,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Mera Mann Dole Mera Tan Dole",46514,processing,6a4c61886d14d7a351539417,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Mera Mann",46518,processing,6a4c62126d14d7a35153941a,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Mere Mehboob Qayamat Hogi",46515,processing,6a4c62876d14d7a35153941d,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Mere Mehboob",46516,processing,6a4c62f46d14d7a351539420,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Panchi Sur Mein Gate Hai",46528,processing,6a4c63106d14d7a351539423,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Mujhe Teri Mohabbat Ka",46527,processing,6a4c63816d14d7a351539426,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Panchi Sur Mein Gate",46529,processing,6a4c638d6d14d7a351539429,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Mujhe Teri",46531,processing,6a4c63f06d14d7a35153942c,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Aaj Phir Jeene",46533,processing,6a4c63f86d14d7a35153942f,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Panchi Sur Mein",46532,processing,6a4c64046d14d7a351539432,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Aane Se Tere Mehke Din",46534,processing,6a4c64556d14d7a351539435,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Sach keh raha hai deewana",46273,processing,6a4c64596d14d7a351539436,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Aankhein Khuli Ho Yah Band",46270,processing,6a4c64ad6d14d7a35153943b,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Pardesi Pardesi",46268,processing,6a4c64bd6d14d7a35153943e,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Safar aur dhundh",46266,processing,6a4c64d26d14d7a351539441,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Sajna Mere Dil Ye Tera",46264,processing,6a4c65386d14d7a351539444,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Sanam Re",46262,processing,6a4c65a16d14d7a35153944a,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Aap Jo Mere Meet Naa Hote",46261,processing,6a4c65de6d14d7a35153944d,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Solah Baras Ki Baali Umar Ko Salam",46256,processing,6a4c65fd6d14d7a351539450,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Aap Ki Nazron Ne Samjha",46253,processing,6a4c66486d14d7a351539453,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Teri Yaadon Ka Safar",46252,processing,6a4c665b6d14d7a351539456,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Aasan Nahi Yahan",46250,processing,6a4c669e6d14d7a351539459,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Thehre Hue Paani Mein",46249,processing,6a4c66ab6d14d7a35153945c,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Adhi Adhi Raat",46247,processing,6a4c66fc6d14d7a35153945f,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Tumse Mila Jo Pyar Mujhe",46244,processing,6a4c66fd6d14d7a351539460,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Pehle Kabhi Na",46243,processing,6a4c67236d14d7a351539465,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Tune O Rangile Kaisa Jaadu Kiya",46242,processing,6a4c674b6d14d7a351539468,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Aisaa Lagataa Hai",46241,processing,6a4c67506d14d7a35153946b,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Pehli Pehli Baar x Dil Deewana",46847,processing,6a4c67976d14d7a35153946e,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Tune O Rangile",46848,processing,6a4c67986d14d7a35153946f,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Akhmedov",46849,processing,6a4c67b76d14d7a351539474,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Amplifier",46850,processing,6a4c68706d14d7a35153947a,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Pehli Pehli Baar",46851,processing,6a4c68e26d14d7a35153947d,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Baarish Ki Pyaas",46853,processing,6a4c6ab86d14d7a351539486,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Baarish",46854,processing,6a4c6b2c6d14d7a351539489,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Phool gulab ka khilta",46855,processing,6a4c6b6c6d14d7a35153948c,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Bahut Pyar Karte Hain Tumko",46856,processing,6a4c6bc36d14d7a35153948f,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Bandeya",46857,processing,6a4c6bfe6d14d7a351539492,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Phool Gulab Ka",46858,processing,6a4c6c076d14d7a351539495,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Bansuriya Ab Yehi Pukare",46859,processing,6a4c6c836d14d7a351539498,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Baras Ki Baali Umar",46860,processing,6a4c6cbd6d14d7a35153949b,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Beete lamhe",46861,processing,6a4c6cf76d14d7a35153949e,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Bewafa",46862,processing,6a4c6d2b6d14d7a3515394a1,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Bhooli Bisri Prem Kahani",46863,processing,6a4c6d636d14d7a3515394a4,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Bindiya Chamkegi Chudi Khankegi",46864,processing,6a4c6d9e6d14d7a3515394a7,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Chaahat",46865,processing,6a4c6dd76d14d7a3515394aa,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Phool Jaisi Muskaan",46866,processing,6a4c6deb6d14d7a3515394ad,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Phool Main bheju",46867,processing,6a4c6e6d6d14d7a3515394e8,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Chale To Kaat Hi Jayegi Safar",46868,processing,6a4c6e676d14d7a3515394e5,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Chahun Main Ya Naa",46869,processing,6a4c6e196d14d7a3515394b9,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Phoolon Ke Mausam",46870,processing,6a4c6ec56d14d7a3515394ee,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Chand Chhupa Badal Mein",46184,processing,6a4c6eab6d14d7a3515394eb,,"",,NOT_IN_BROMA,-,-,false,false
+"Chhodenge Na Hum Tera Sath",46871,processing,6a4c6eea6d14d7a3515394f1,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Chhupana Bhi Nahi Aata",46872,processing,6a4c6f2a6d14d7a3515394f7,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Pyaar Gum Hai",46873,processing,6a4c6f7a6d14d7a351539524,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Chupke Se Pyar Hua Hai",46874,processing,6a4c6f896d14d7a35153952a,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Pyaar Ki Kasthi Mein",46877,processing,6a4c6fd36d14d7a35153952d,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Darkhaast",46878,processing,6a4c6fff6d14d7a351539530,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Pyaar Ki Kasthi",46879,processing,6a4c702f6d14d7a351539533,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Deewana Kar Raha Hai",46880,processing,6a4c70546d14d7a35153954f,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+" Ritin animation",46881,processing,6a4c70816d14d7a351539552,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Pyar Ka Ehsaa",46882,processing,6a4c70f16d14d7a351539558,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Dhoop Mein Nikla Na Karo Roop Ki Rani",46883,processing,6a4c71366d14d7a35153955b,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Pyar Ka Ehsaas",46884,processing,6a4c71666d14d7a35153955e,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Dhun",46885,processing,6a4c71956d14d7a351539561,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Pyar Kahe Banaya Ram",46886,processing,6a4c71c56d14d7a351539564,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Phool Jaisi Muskaan",46887,processing,6a4c71d36d14d7a351539567,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Raah Me Unse Mulakat",46888,processing,6a4c75566d14d7a35153958f,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Kandhe mile se Thana chaudar",46875,processing,6a4c79e26d14d7a351539597,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Raat Ko Aaunga",46889,processing,6a4c7a496d14d7a35153959a,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Ram Kasam Delhi Sarkar",46147,processing,6a4c7ade6d14d7a35153959d,,"",,IN_BROMA_DRAFTS,draft,,true,false
+"Ram Kasam Delhi",46890,processing,6a4c7b606d14d7a3515395a0,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Rangdar Ke",46142,processing,6a4c7bce6d14d7a3515395a3,,"",,IN_BROMA_DRAFTS,draft,,true,false
+"Rangdar Se Sikh Rangdari",46891,processing,6a4c7c2b6d14d7a3515395a6,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Rishta Pyar Ka Na",46892,processing,6a4c7f046d14d7a3515395a9,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Rote Rote Yun Hi Raat",46893,processing,6a4c7f9f6d14d7a3515395ac,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Rote Rote yun hi",46894,processing,6a4c801c6d14d7a3515395af,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Ruk Re Tareniya",46895,processing,6a4c80786d14d7a3515395b2,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Saat Samund",46896,processing,6a4c80db6d14d7a3515395b5,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Saat Samundar",46897,processing,6a4c81846d14d7a3515395b8,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Shaam Hai Dhuan Dhuan",46899,processing,6a4c93746d14d7a3515395dc,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Sham hai dhuan sa hawa",46900,processing,6a4c94086d14d7a3515395df,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Sun Meri Sheh",46901,processing,6a4c971c6d14d7a3515395f1,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Deurali Ukali Chadhera",46117,delivered,6a44e30063d9e483edd4c80d,,"",,IN_BROMA_DRAFTS,draft,,true,false
+"Gairi Khet Ko Sirai Hanyo",46116,delivered,6a44e3db63d9e483edd4c810,,"",,IN_BROMA_DRAFTS,draft,,true,false
+"Gajalule Ankhai Chhopne",46114,delivered,6a44edb8161d7aa451fcd42c,,"",,IN_BROMA_DRAFTS,draft,,true,false
+"Manchhe Ko Maya Yeha",46112,delivered,6a44f07c161d7aa451fcd438,,"",,IN_BROMA_DRAFTS,draft,,true,false
+"Aisa Lagta Hai Jaise",46110,delivered,6a44f297161d7aa451fcd43b,,"",,IN_BROMA_DRAFTS,draft,,true,false
+"Zindagi Ki Talash Mein",46108,delivered,6a44f4d1161d7aa451fcd446,,"",,IN_BROMA_DRAFTS,draft,,true,false
+"Mayaluko Maya Mitho",46107,delivered,6a44f6e6161d7aa451fcd454,,"",,IN_BROMA_DRAFTS,draft,,true,false
+"Muglan Hera Jadai Chu",46103,delivered,6a44f7d5161d7aa451fcd470,,"",,IN_BROMA_DRAFTS,draft,,true,false
+"Musu Musu Hasi Deuna",46104,delivered,6a44f87a161d7aa451fcd492,,"",,IN_BROMA_DRAFTS,draft,,true,false
+"Allah Di Kassam",46102,delivered,6a44f9ab161d7aa451fcd4a4,,"",,IN_BROMA_DRAFTS,draft,,true,false
+"Deurali Ma Batas Chalyo",46078,delivered,6a44e2a863d9e483edd4c80a,,"",,IN_BROMA_DRAFTS,draft,,true,false
+"Dadaima Mela Lagecha",46074,delivered,6a44e21463d9e483edd4c807,,"",,IN_BROMA_DRAFTS,draft,,true,false
+"Chiya Bari Ma",46073,delivered,6a44e19e63d9e483edd4c804,,"",,IN_BROMA_DRAFTS,draft,,true,false
+"China",46072,delivered,6a44e11d63d9e483edd4c801,,"",,IN_BROMA_DRAFTS,draft,,true,false
+"Birata Ko Chino",46071,delivered,6a44dfb363d9e483edd4c7e7,,"",,IN_BROMA_DRAFTS,draft,,true,false
+"Bidesh Jane Mayalu",46069,delivered,6a44df2b63d9e483edd4c7e4,,"",,IN_BROMA_DRAFTS,draft,,true,false
+"Basa Sundari",46065,delivered,6a44cde063d9e483edd4c7d5,,"",,IN_BROMA_DRAFTS,draft,,true,false
+"Kasme Vaade Pyar Wafa",46478,cancelled,6a44cdd263d9e483edd4c7d2,,"",,NOT_IN_BROMA,-,-,false,false
+"Jhume Re Manwa Jhume",46357,cancelled,6a44cd6963d9e483edd4c7cf,,"",,NOT_IN_BROMA,-,-,false,false
+"Banma Kasturi",46061,delivered,6a44cd2d63d9e483edd4c7cc,,"",,IN_BROMA_DRAFTS,draft,,true,false
+"Aba Yo Baato Mero Ho",46056,delivered,6a44cc1763d9e483edd4c7be,,"",,IN_BROMA_DRAFTS,draft,,true,false
+"Aakashaima Chil Udyo Dharti Ma Chaya",46054,delivered,6a44cb5863d9e483edd4c7bb,,"",,IN_BROMA_DRAFTS,draft,,true,false
+"Ae Mere Dil Bata Kya Bura",46052,delivered,6a44ca9063d9e483edd4c7b8,,"",,IN_BROMA_DRAFTS,draft,,true,false
+"Ab Hain Neend",46051,delivered,6a44c8d863d9e483edd4c7b2,,"",,IN_BROMA_DRAFTS,draft,,true,false
+"Ab Hain Neend Kise",46050,delivered,6a44c65463d9e483edd4c769,,"",,IN_BROMA_DRAFTS,draft,,true,false
+"Bidesh Jane Mayalu",46362,cancelled,6a44b12f63d9e483edd4c6e2,,"Release deleted by admin",,NOT_IN_BROMA,-,-,false,false
+"Aaj RuswaTari Galiyon",46044,delivered,6a44a9b763d9e483edd4c68c,,"",,IN_BROMA_DRAFTS,draft,,true,false
+"Aakashaima Chil Udyo Dharti Ma Chaya",46363,cancelled,6a44a93963d9e483edd4c689,,"Release deleted by admin",,NOT_IN_BROMA,-,-,false,false
+"Aaj Pahli Daar dil",46042,delivered,6a44a87063d9e483edd4c686,,"",,IN_BROMA_DRAFTS,draft,,true,false
+"Sham Hai Dhuan",46876,processing,6a4c947e6d14d7a3515395e2,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Shuru Ho Rahi Hai",46903,processing,6a4c951f6d14d7a3515395e5,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Sona Ke Sikadiya",46904,processing,6a4c959a6d14d7a3515395e8,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Sona Kitna Sona Hai",46905,processing,6a4c96296d14d7a3515395eb,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Sun Meri Shehzadi",46906,processing,6a4c96a16d14d7a3515395ee,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Sweet Sixteen Dreams",46907,processing,6a4c97a46d14d7a3515395f4,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Sykkeen kutsu kaikuu",46908,processing,6a4ca8bd6d14d7a35153961b,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Tera Pallu Sarka Jaye",46910,processing,6a4ca9196d14d7a35153961e,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Tera Pallu Sarka",46911,processing,6a4ca9616d14d7a351539621,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Tere Bahoon Me",46912,processing,6a4ca9ad6d14d7a351539624,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Tere Bina Jeen",46913,processing,6a4ca9f66d14d7a351539627,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Tere Bina Jeena",46914,processing,6a4caa406d14d7a35153962a,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Tere Bina Zindegi",46915,processing,6a4caa8c6d14d7a35153962d,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Tere Dil Mein Mujhe",46916,processing,6a4caaf16d14d7a351539630,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Tere Dil Mein",46918,processing,6a4cab316d14d7a351539633,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Tere Mere Beech Men",46919,processing,6a4cab836d14d7a351539636,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Teri Mohabbat Meri",46920,processing,6a4cabf36d14d7a351539639,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Teri Payal Baji Jahan",46921,processing,6a4cac416d14d7a35153963c,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Teri Payal Baji",46922,processing,6a4cac9b6d14d7a35153963f,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"AGAR TUM SATH HO",46923,processing,6a4ef86f069e60e4b8b3fd8b,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Jahan Tum Ho",46924,processing,6a4efc05069e60e4b8b3fdbc,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Janmo Janam",46925,processing,6a4efc7e069e60e4b8b3fdc5,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Jhooth Bole Kauwa Kaate",46927,processing,6a4efcc9069e60e4b8b3fdc8,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Jidhar Dekhti Hoon Udhar Tum Hi Tum Ho",46928,processing,6a4eff66069e60e4b8b3fdcf,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"AIRPLANE",46929,processing,6a4eff73069e60e4b8b3fdd2,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Jahan Tum Ho",46930,processing,6a4eff82069e60e4b8b3fdd5,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Jhooth Bole Kauwa Kaate",46931,processing,6a4eff8a069e60e4b8b3fdd8,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Jhooth Bole Kauwa Kaate",46932,processing,6a4eff91069e60e4b8b3fddb,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Akela",46933,processing,6a4effdc069e60e4b8b3fdde,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Akela17 ",46934,processing,6a4f004d069e60e4b8b3fde1,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Jidhar Dekhti Hu",46935,processing,6a4f004d069e60e4b8b3fde2,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Jind Le Gaya Wo Dil Ka Jaani",46936,processing,6a4f0093069e60e4b8b3fde7,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Jo Bhi Kasme Khai Thi Humne",46937,processing,6a4f00d1069e60e4b8b3fded,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"AMPLIFIER",46938,processing,6a4f0120069e60e4b8b3fdf0,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Jo Bhi Kasmein",46939,processing,6a4f013d069e60e4b8b3fdf3,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"AM Thoughts",46940,processing,6a4f01a6069e60e4b8b3fdf6,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Jo Tere Sang Kati Rate",46941,processing,6a4f01ab069e60e4b8b3fdf9,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Julf Ghaneri Shaam",46942,processing,6a4f01f2069e60e4b8b3fdfc,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"ANKAHI BAATEIN",45961,processing,6a4f020e069e60e4b8b3fdff,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Just Come",45959,processing,6a4f022d069e60e4b8b3fe02,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"ANKAHI Modi Bihari ke Laika",45957,processing,6a4f027a069e60e4b8b3fe05,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Kaanta Laaga",45955,processing,6a4f027e069e60e4b8b3fe08,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"ANKAHI Rap Baatein",45953,processing,6a4f02d1069e60e4b8b3fe0b,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Kabhi Bhula Kabhi Yaad Kiya",45952,processing,6a4f030e069e60e4b8b3fe0e,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"ARSH",45951,processing,6a4f0330069e60e4b8b3fe11,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Kabhi Jo Baadal Barse",45948,processing,6a4f034b069e60e4b8b3fe14,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Kabhi Na Kabhi",45947,processing,6a4f03c3069e60e4b8b3fe17,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Kabhi Shaam Dhale To Mere",45945,processing,6a4f0434069e60e4b8b3fe1a,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Kabhi Shaam Dhale",45942,processing,6a4f04a2069e60e4b8b3fe1d,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Kabhi To Paas Mere Aao",45939,processing,6a4f04fc069e60e4b8b3fe20,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Kah Doon Tumhe",45938,processing,6a4f053e069e60e4b8b3fe23,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Kahan Ho Tum Chale Aao",45937,processing,6a4f0579069e60e4b8b3fe26,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Kaho Na Kaho",45934,processing,6a4f05c5069e60e4b8b3fe29,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Kaise Baani",45932,processing,6a4f060a069e60e4b8b3fe2c,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Kaisi Abhagan Bani Suhagan",45929,processing,6a4f068c069e60e4b8b3fe2f,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Kajara Behkega",45927,processing,6a4f06c0069e60e4b8b3fe32,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Kanta Laga Teri Beri Ke Niche",45926,processing,6a4f078f069e60e4b8b3fe35,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Pyar Bewafa",45925,processing,6a4f07d3069e60e4b8b3fe38,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Kasme Vaade Pyar Wafa",45920,cancelled,6a4f0803069e60e4b8b3fe3b,,"",,NOT_IN_BROMA,-,-,false,false
+"Keh Doon Tumhe",45918,processing,6a4f0842069e60e4b8b3fe3e,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Kehdoon Tumhe Ya Chup Rahoon",45916,processing,6a4f0889069e60e4b8b3fe41,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"AUR IS DIL MEIN",45914,processing,6a4f08d8069e60e4b8b3fe44,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Kehta Hai Dil",45913,processing,6a4f090b069e60e4b8b3fe47,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"AZUL",45910,processing,6a4f0932069e60e4b8b3fe4a,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Baatcheet",45908,processing,6a4f0987069e60e4b8b3fe4d,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Keya Hua Yev Mujhe Keya Hua",45907,processing,6a4f0992069e60e4b8b3fe50,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Khairiyat",45906,processing,6a4f09e6069e60e4b8b3fe53,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Khoya Khoya Chand",45905,processing,6a4f0a26069e60e4b8b3fe56,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Khud Ko Tere",45901,processing,6a4f0a62069e60e4b8b3fe59,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Baazigar Mashupj",45898,processing,6a4f0a73069e60e4b8b3fe5c,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Khuda Aur Mohabbat",45897,processing,6a4f0aad069e60e4b8b3fe5f,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Babu Sona Rap",45896,processing,6a4f0ae4069e60e4b8b3fe62,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Khuda Jaane",45894,processing,6a4f0af2069e60e4b8b3fe65,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Kitna Pyar Karte Hain Sanam",45891,processing,6a4f0b34069e60e4b8b3fe68,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Babu Sonja Rap",45890,processing,6a4f0b39069e60e4b8b3fe6b,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Koi Aaye Mera Dill Thaamle",45887,processing,6a4f0b9b069e60e4b8b3fe6e,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Badhta Chal",45886,processing,6a4f0bb9069e60e4b8b3fe71,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Koi Sehri Babu",45885,processing,6a4f0c0a069e60e4b8b3fe74,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"BAJIS EP",45883,processing,6a4f0c40069e60e4b8b3fe77,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Kora Kagaz Tha Ye Man Mera",45879,processing,6a4f0c7a069e60e4b8b3fe7a,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"BEDARDEYA",45878,processing,6a4f0c9f069e60e4b8b3fe7d,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Kuch Na Kaho",45876,processing,6a4f0cd5069e60e4b8b3fe80,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"BEWAFA TU NIKALI",45874,processing,6a4f0cf6069e60e4b8b3fe83,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Lagti Ho",45872,processing,6a4f0d61069e60e4b8b3fe86,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"BEWAFA",45870,processing,6a4f123b069e60e4b8b3fe89,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Bihar Ki Sachai",45868,processing,6a4f12af069e60e4b8b3fe8c,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Bihar Pagla pagl",45866,processing,6a4f130f069e60e4b8b3fe8f,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Bihar Pagla Pagli",45865,processing,6a4f1365069e60e4b8b3fe92,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"BLACK MONEY",45858,processing,6a4f13f0069e60e4b8b3fe95,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"BLEED US",45857,processing,6a4f14aa069e60e4b8b3fe98,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"BROKEN Modi Rap",45855,processing,6a4f1518069e60e4b8b3fe9b,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"BROKEN",45853,processing,6a4f1587069e60e4b8b3fe9e,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"CASH FLOW",45852,processing,6a4f15f9069e60e4b8b3fea1,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Chahat",45851,processing,6a4f17b8069e60e4b8b3fea4,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"CHAHUNGA MAIN",45849,processing,6a4f1f5d069e60e4b8b3fea7,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"CHALA KALTI",45848,processing,6a4f1fed069e60e4b8b3feaa,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Chhitara Jaba Tu ",45846,processing,6a4f28ee069e60e4b8b3fedf,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"CHINA KI MAAL",45844,processing,6a4f296f069e60e4b8b3fee2,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Chumma Rap Tera",45841,processing,6a4f2a19069e60e4b8b3fee5,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Chumma Rap",45838,processing,6a4f2a6d069e60e4b8b3fee8,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Chummai Rap",45836,processing,6a4f2d97069e60e4b8b3feeb,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"CHUSAMBA",45834,processing,6a4f2df8069e60e4b8b3feee,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"COME CLOSER",45833,processing,6a4f2e74069e60e4b8b3fef1,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"DAGAG",45830,processing,6a4f2ede069e60e4b8b3fef4,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Dard Aur Dava",45828,processing,6a4f31f166b4b4071b83829c,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Dard Aur Zeher",45826,processing,6a4f326e66b4b4071b83829f,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Dard ki dawal",45825,processing,6a4f32d066b4b4071b8382a2,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Dard Or Pyal",45823,processing,6a4f332f66b4b4071b8382a5,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Dard Or Pyar ",45818,processing,6a4f338d66b4b4071b8382a8,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"DARD OR PYAR",45815,processing,6a4f33fd66b4b4071b8382ab,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Kya Khoob Lagti Ho",45814,processing,6a4f3f0866b4b4071b8382b1,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Kya Khoob",45812,processing,6a4f3f5d66b4b4071b8382b4,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Kya Tumhe Pata Hai Ye Gulshan",45811,processing,6a4f3f8f66b4b4071b8382b7,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"La Isla Bonita",45809,processing,6a4f3fbb66b4b4071b8382ba,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Labon Ko",45807,processing,6a4f400866b4b4071b8382bd,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Lag Ja Gale",45805,processing,6a4f404866b4b4071b8382c0,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Leke Pehla Pehla Pyar",45804,processing,6a4f408966b4b4071b8382c3,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Leke Pehla Pyar",45803,processing,6a4f40ea66b4b4071b8382c6,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Tere Bina Ye Saam Adhoori",45744,processing,6a4c69b06d14d7a351539483,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Mere Darde Dil Ki Dawa",45755,processing,6a4f4e4b66b4b4071b8382d9,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Crystal Beat",45753,processing,6a4f419766b4b4071b8382cc,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Darkdrive",45752,processing,6a4f410a66b4b4071b8382c9,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Maine Aansuon Se Sekha Hai",45754,processing,6a4f495d66b4b4071b8382d0,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Sachi Kaho Humse",45588,delivered,6a4c837d6d14d7a3515395be,,"",,NOT_IN_BROMA,-,-,false,false
+"Sachi Kaho",45585,delivered,6a4c84096d14d7a3515395c1,,"",,NOT_IN_BROMA,-,-,false,false
+"Sajan Tumse Pyar",45586,delivered,6a4c85326d14d7a3515395c4,,"",,NOT_IN_BROMA,-,-,false,false
+"Sajana Tere Pya",45581,delivered,6a4c85ef6d14d7a3515395c7,,"",,NOT_IN_BROMA,-,-,false,false
+"Sajana Tere Pyar Mein",45590,delivered,6a4c867e6d14d7a3515395ca,,"",,NOT_IN_BROMA,-,-,false,false
+"Samjho Na Kuch",45562,delivered,6a4c874b6d14d7a3515395cd,,"",,NOT_IN_BROMA,-,-,false,false
+"Sapna",45587,delivered,6a4c8ea66d14d7a3515395d0,,"",,NOT_IN_BROMA,-,-,false,false
+"Sapno mein tera",45589,delivered,6a4c90466d14d7a3515395d3,,"",,NOT_IN_BROMA,-,-,false,false
+"Sare Shikve Gile",45580,delivered,6a4c911b6d14d7a3515395d6,,"",,NOT_IN_BROMA,-,-,false,false
+"Shaam Bhi Khoob Hai",45583,delivered,6a4c92626d14d7a3515395d9,,"",,NOT_IN_BROMA,-,-,false,false
+"Dil Atka Teri Typing Mein",45567,delivered,6a4c71d56d14d7a351539568,,"",,NOT_IN_BROMA,-,-,false,false
+"Pyar To Hota Hai Pyar",45564,delivered,6a4c722c6d14d7a35153956d,,"",,NOT_IN_BROMA,-,-,false,false
+"Qismat Badalta Hai",45584,delivered,6a4c72af6d14d7a351539570,,"",,NOT_IN_BROMA,-,-,false,false
+"Raah Me Unse Mula",45565,delivered,6a4c73d96d14d7a351539573,,"",,NOT_IN_BROMA,-,-,false,false
+"Agni Pariksha",45568,delivered,6a4ef940069e60e4b8b3fd93,,"",,NOT_IN_BROMA,-,-,false,false
+"Agni Parikshk",45582,delivered,6a4ef9b9069e60e4b8b3fd99,,"",,NOT_IN_BROMA,-,-,false,false
+"AGAR TUM SATH HO",45561,delivered,6a4ef9c3069e60e4b8b3fd9c,,"",,NOT_IN_BROMA,-,-,false,false
+"Agni Pariksh",45569,delivered,6a4ef8d0069e60e4b8b3fd8e,,"",,NOT_IN_BROMA,-,-,false,false
+"Teri Ungli Pakad Ke Chala",45563,delivered,6a4cad556d14d7a351539642,,"",,NOT_IN_BROMA,-,-,false,false
+"Teri Ungli Pakad",45566,delivered,6a4cadb76d14d7a351539645,,"",,NOT_IN_BROMA,-,-,false,false
+"Thoda Thoda Pyaar",45546,delivered,6a4cc0bb6d14d7a351539648,,"",,NOT_IN_BROMA,-,-,false,false
+"Thoda Thoda",45543,delivered,6a4cc2786d14d7a35153964b,,"",,NOT_IN_BROMA,-,-,false,false
+"Thukra Ka Mer",45539,delivered,6a4cc34c6d14d7a35153964e,,"",,NOT_IN_BROMA,-,-,false,false
+"Tohfa Tohfa Tohfa",45537,delivered,6a4cc5a66d14d7a351539654,,"",,NOT_IN_BROMA,-,-,false,false
+"Tor Kamar Par Najar Gadi",45535,delivered,6a4cc6316d14d7a351539657,,"",,NOT_IN_BROMA,-,-,false,false
+"Tu Cheez Badi Hai",45534,delivered,6a4cc69f6d14d7a35153965a,,"",,NOT_IN_BROMA,-,-,false,false
+"Tu Hi Mera Dil Hai",45532,delivered,6a4cc77a6d14d7a35153965d,,"",,NOT_IN_BROMA,-,-,false,false
+"Tu Hi Mera Dil",45529,delivered,6a4cc8056d14d7a351539660,,"",,NOT_IN_BROMA,-,-,false,false
+"Tu Jo Hans Hans Ke",45526,delivered,6a4cc9256d14d7a351539666,,"",,NOT_IN_BROMA,-,-,false,false
+"Tujhe Dekh Ke Paheli",45523,delivered,6a4ccdfe6d14d7a351539681,,"",,NOT_IN_BROMA,-,-,false,false
+"Tum Se Badhka",45521,delivered,6a4cd1986d14d7a351539693,,"",,NOT_IN_BROMA,-,-,false,false
+"Tu Jab Jab Mujhko Pukare",45518,delivered,6a4cc8976d14d7a351539663,,"",,NOT_IN_BROMA,-,-,false,false
+"Tu Jo Hans Hans",45515,delivered,6a4cc9986d14d7a351539669,,"",,NOT_IN_BROMA,-,-,false,false
+"Tu Milta Hai Mujhe",45514,delivered,6a4cca076d14d7a35153966c,,"",,NOT_IN_BROMA,-,-,false,false
+"Tujhe Maanga Tha",46846,failed,6a4cce606d14d7a351539684,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Tujhko Mirchi",46845,failed,6a4ccfdd6d14d7a35153968a,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Tumhein Dil Se Kaise",45502,delivered,6a4cd2de6d14d7a351539699,,"",,NOT_IN_BROMA,-,-,false,false
+"Tujhko Mirch",46844,failed,6a4ccf6b6d14d7a351539687,,"Missing Broma outlet ids",BSON_FIXED,NOT_IN_BROMA,-,-,false,false
+"Tujhmein Aur Teri Yaad",45495,delivered,6a4cd06e6d14d7a35153968d,,"",,NOT_IN_BROMA,-,-,false,false
+"Tum Mere Baad Mohabbat",46843,failed,6a4cd0d06d14d7a351539690,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Tum Se Badhkar",45491,delivered,6a4cd1f36d14d7a351539696,,"",,NOT_IN_BROMA,-,-,false,false
+"Tumhein Dil Se",45490,delivered,6a4cd3af6d14d7a35153969c,,"",,NOT_IN_BROMA,-,-,false,false
+"Dil Ka Kya Karen Saheb",46831,failed,6a4dafc728bd2a70587ab46f,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Dil Ke Badle Sanam",46830,failed,6a4db04f28bd2a70587ab472,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Dil Ne Tujhko Pukara Female",46829,failed,6a4db09528bd2a70587ab475,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Dil To Hai Dil",45481,delivered,6a4db0e128bd2a70587ab478,,"",,NOT_IN_BROMA,-,-,false,false
+"Mohabbat Me Sawarne Lage Hai",45478,delivered,6a4db10a28bd2a70587ab47b,,"",,NOT_IN_BROMA,-,-,false,false
+"Dost Banke",45477,delivered,6a4db14128bd2a70587ab47e,,"",,NOT_IN_BROMA,-,-,false,false
+"Dreaming",46736,failed,6a4db19328bd2a70587ab481,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Ek Din Teri Raahon Mein",45473,delivered,6a4db1cd28bd2a70587ab484,,"",,NOT_IN_BROMA,-,-,false,false
+"Ek Pardesi Mera Dil Le Gaya",45471,delivered,6a4db20b28bd2a70587ab487,,"",,NOT_IN_BROMA,-,-,false,false
+"Emraan Hashmi",45470,delivered,6a4db2b528bd2a70587ab48d,,"",,NOT_IN_BROMA,-,-,false,false
+"Ek Pyar Ka Naghma Hai",45468,delivered,6a4db26f28bd2a70587ab48a,,"",,NOT_IN_BROMA,-,-,false,false
+"En Galiyon Se Nata Toota",45466,delivered,6a4db32d28bd2a70587ab490,,"",,NOT_IN_BROMA,-,-,false,false
+"Fakira",45464,delivered,6a4db36628bd2a70587ab493,,"",,NOT_IN_BROMA,-,-,false,false
+"Gale Lag Ja",46739,failed,6a4db39f28bd2a70587ab496,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Gale Mai Dal Ke",45455,delivered,6a4db40228bd2a70587ab499,,"",,NOT_IN_BROMA,-,-,false,false
+"Gehra Hua",45451,delivered,6a4db46128bd2a70587ab49f,,"",,NOT_IN_BROMA,-,-,false,false
+"Gore Rang Pe Na Itna Gumaan Kar",46737,failed,6a4db4b528bd2a70587ab4a2,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Gori Hai Kalaiyan",45448,delivered,6a4db4ff28bd2a70587ab4a5,,"",,NOT_IN_BROMA,-,-,false,false
+"Gori Tera Gaon Bada Pyara",46842,failed,6a4db5bc28bd2a70587ab4ab,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Haan Tu Hain",45441,delivered,6a4db63128bd2a70587ab4ae,,"",,NOT_IN_BROMA,-,-,false,false
+"Hale Dil tujhko Sunata",45439,delivered,6a4db68728bd2a70587ab4b1,,"",,NOT_IN_BROMA,-,-,false,false
+"Hamein Tumse Hua Hai Pyar",45437,delivered,6a4db6f428bd2a70587ab4b4,,"",,NOT_IN_BROMA,-,-,false,false
+"Hamne Tumko Dil Ye De Diya",45436,delivered,6a4db75d28bd2a70587ab4b7,,"",,NOT_IN_BROMA,-,-,false,false
+"Har Kisi Ko Nahin Milta Yahan Pyar Zindagi Mein",45433,delivered,6a4dbc9228bd2a70587ab4bd,,"",,NOT_IN_BROMA,-,-,false,false
+"Har kisi ko nahi milta",45432,delivered,6a4dbc2928bd2a70587ab4ba,,"",,NOT_IN_BROMA,-,-,false,false
+"Haseeno Ko Aate Hain",45430,delivered,6a4dbcc128bd2a70587ab4c0,,"",,NOT_IN_BROMA,-,-,false,false
+"Haye Haye Ye Majboori",45427,delivered,6a4dbd1f28bd2a70587ab4c3,,"",,NOT_IN_BROMA,-,-,false,false
+"Hua hai aaj pehli baar",45426,delivered,6a4dbdd128bd2a70587ab4c9,,"",,NOT_IN_BROMA,-,-,false,false
+"Humnava",46840,failed,6a4dbee128bd2a70587ab4d5,,"Missing Broma outlet ids",BSON_FIXED,NOT_IN_BROMA,-,-,false,false
+"Humein Tumse Pyar Kitna",46838,failed,6a4dbe4a28bd2a70587ab4cf,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Ishq Mubarak",45420,delivered,6a4dc36628bd2a70587ab4de,,"",,NOT_IN_BROMA,-,-,false,false
+"Ho Mukhda Chand Ka Tukda",45416,delivered,6a4dbd8928bd2a70587ab4c6,,"",,NOT_IN_BROMA,-,-,false,false
+"Humko Aajkal Hai Waiting",45415,delivered,6a4dbe8728bd2a70587ab4d2,,"",,NOT_IN_BROMA,-,-,false,false
+"Ishq Ki Gali",46833,failed,6a4dc30c28bd2a70587ab4db,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Itna Na Mujhse Tu Pyar Badha",45412,delivered,6a4dc3bf28bd2a70587ab4e1,,"",,NOT_IN_BROMA,-,-,false,false
+"Hum tumko",45408,delivered,6a4dbe1128bd2a70587ab4cc,,"",,NOT_IN_BROMA,-,-,false,false
+"Ishq De Fanniyar",45407,delivered,6a4dc2ce28bd2a70587ab4d8,,"",,NOT_IN_BROMA,-,-,false,false
+"Jaane Kyon Log Mohabbat Kiya Karte Hain",45406,delivered,6a4dc42728bd2a70587ab4e4,,"",,NOT_IN_BROMA,-,-,false,false
+"Jab Hum Jawan Honge",45365,delivered,6a4dc45928bd2a70587ab4e7,,"",,NOT_IN_BROMA,-,-,false,false
+"Jab Tu Najar Se Najar",45361,delivered,6a4dc4e328bd2a70587ab4ea,,"",,NOT_IN_BROMA,-,-,false,false
+"Jadu Nagari Se Aaya Hai Koi Magician",45358,delivered,6a4dc56128bd2a70587ab4ed,,"",,NOT_IN_BROMA,-,-,false,false
+"Jahaan Tum Ho",46832,failed,6a4dc5ca28bd2a70587ab4f0,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Mohabbat Me Sawarne Lage Hai",45354,delivered,6a4dc60c28bd2a70587ab4f3,,"",,NOT_IN_BROMA,-,-,false,false
+"Tere Bina Adhura",45352,delivered,6a4dc82328bd2a70587ab4f9,,"",,NOT_IN_BROMA,-,-,false,false
+"Tere Bina Jee",45347,delivered,6a4dc8d228bd2a70587ab4fc,,"",,NOT_IN_BROMA,-,-,false,false
+"Tere Dil Pe Haq",45353,delivered,6a4dc93428bd2a70587ab4ff,,"",,NOT_IN_BROMA,-,-,false,false
+"TERE MERE LAMHE PEECHE",45349,delivered,6a4dcaf628bd2a70587ab505,,"",,NOT_IN_BROMA,-,-,false,false
+"Tera Mera Rishta",45344,delivered,6a4dc7b928bd2a70587ab4f6,,"",,NOT_IN_BROMA,-,-,false,false
+"Tujhe Dhoondti",45339,delivered,6a4dc98b28bd2a70587ab502,,"",,NOT_IN_BROMA,-,-,false,false
+"Teri Galliyon Se",45355,delivered,6a4dccd928bd2a70587ab508,,"",,NOT_IN_BROMA,-,-,false,false
+"Tum Jo Aaye Jindagi",45343,delivered,6a4dddd9d2745735a8980596,,"",,NOT_IN_BROMA,-,-,false,false
+"Wajah Tum",45340,delivered,6a4ddf5fd2745735a8980599,,"",,NOT_IN_BROMA,-,-,false,false
+"Yeh Dil Deewana",46471,processing,6a4e1dba0324508423e6377a,,"",,NOT_IN_BROMA,-,-,false,false
+"Aakhri Khayal",45348,delivered,6a4e2b3e3d7ce2d0546e2e20,,"",,NOT_IN_BROMA,-,-,false,false
+"Aapke Pyaar Me ",45345,delivered,6a4e2c123d7ce2d0546e2e23,,"",,NOT_IN_BROMA,-,-,false,false
+"Aapke Pyaar Me",45342,delivered,6a4e2cf53d7ce2d0546e2e26,,"",,NOT_IN_BROMA,-,-,false,false
+"AE DIL HAI MUSHKIL",45337,delivered,6a4e39943d7ce2d0546e2e2c,,"",,NOT_IN_BROMA,-,-,false,false
+"AFGHAN JALEBI PEECHE",45336,delivered,6a4e42ff52eaf73ea6a786cd,,"",,NOT_IN_BROMA,-,-,false,false
+"Titliaan",45335,delivered,6a4dce6728bd2a70587ab50b,,"",,NOT_IN_BROMA,-,-,false,false
+"Panna Ki Tamanna",46828,failed,6a4c682d6d14d7a351539477,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Yaadon Ke Jharoke",45341,delivered,6a4de15ad2745735a898059c,,"",,NOT_IN_BROMA,-,-,false,false
+"Tu Milta Hai",45511,delivered,6a4cca796d14d7a35153966f,,"",,NOT_IN_BROMA,-,-,false,false
+"Tu Neendon Ki",45509,delivered,6a4ccc6d6d14d7a351539675,,"",,NOT_IN_BROMA,-,-,false,false
+"Tujh Sang Preet",45507,delivered,6a4cccd56d14d7a351539678,,"",,NOT_IN_BROMA,-,-,false,false
+"Tujhe Aankho Me Basa",45519,delivered,6a4ccd456d14d7a35153967b,,"",,NOT_IN_BROMA,-,-,false,false
+"Tujhe Dekh Ke Paheli Baar",45498,delivered,6a4ccda26d14d7a35153967e,,"",,NOT_IN_BROMA,-,-,false,false
+"Tujhe Dekh Ke Paheli",,cancelled,6a4ccdfe6d14d7a351539681,,"",,NO_BROMA_ID,-,-,false,false
+"Tujhe Maanga Tha",,cancelled,6a4cce606d14d7a351539684,,"",,NO_BROMA_ID,-,-,false,false
+"Tujhko Mirch",,cancelled,6a4ccf6b6d14d7a351539687,,"",,NO_BROMA_ID,-,-,false,false
+"Tujhko Mirchi",,cancelled,6a4ccfdd6d14d7a35153968a,,"",,NO_BROMA_ID,-,-,false,false
+"Tujhmein Aur Teri Yaad",,cancelled,6a4cd06e6d14d7a35153968d,,"",,NO_BROMA_ID,-,-,false,false
+"Tum Mere Baad Mohabbat",,cancelled,6a4cd0d06d14d7a351539690,,"",,NO_BROMA_ID,-,-,false,false
+"Tum Se Badhka",,cancelled,6a4cd1986d14d7a351539693,,"",,NO_BROMA_ID,-,-,false,false
+"Tum Se Badhkar",,cancelled,6a4cd1f36d14d7a351539696,,"",,NO_BROMA_ID,-,-,false,false
+"Tumhein Dil Se Kaise",,cancelled,6a4cd2de6d14d7a351539699,,"",,NO_BROMA_ID,-,-,false,false
+"Tumhein Dil Se",,cancelled,6a4cd3af6d14d7a35153969c,,"",,NO_BROMA_ID,-,-,false,false
+"Phool Jaisi Muskaan",,cancelled,6a4c71d36d14d7a351539567,,"",,NO_BROMA_ID,-,-,false,false
+"Dil Atka Teri Typing Mein",,cancelled,6a4c71d56d14d7a351539568,,"",,NO_BROMA_ID,-,-,false,false
+"Pyar To Hota Hai Pyar",,cancelled,6a4c722c6d14d7a35153956d,,"",,NO_BROMA_ID,-,-,false,false
+"Qismat Badalta Hai",,cancelled,6a4c72af6d14d7a351539570,,"",,NO_BROMA_ID,-,-,false,false
+"Raah Me Unse Mula",,cancelled,6a4c73d96d14d7a351539573,,"",,NO_BROMA_ID,-,-,false,false
+"Chand Chhupa Badal Mein",,cancelled,6a4c6eab6d14d7a3515394eb,,"",,NO_BROMA_ID,-,-,false,false
+"Chhodenge Na Hum Tera Sath",,cancelled,6a4c6eea6d14d7a3515394f1,,"",,NO_BROMA_ID,-,-,false,false
+"Chhupana Bhi Nahi Aata",,cancelled,6a4c6f2a6d14d7a3515394f7,,"",,NO_BROMA_ID,-,-,false,false
+"Chupke Se Pyar Hua Hai",,cancelled,6a4c6f896d14d7a35153952a,,"",,NO_BROMA_ID,-,-,false,false
+"Darkhaast",,cancelled,6a4c6fff6d14d7a351539530,,"",,NO_BROMA_ID,-,-,false,false
+"Mujhy Tum Nazar Se",,cancelled,6a453989161d7aa451fcd5e3,,"",,NO_BROMA_ID,-,-,false,false
+"Main Toota Hoon",,cancelled,6a45bb3485cfdba38620afae,,"",,NO_BROMA_ID,-,-,false,false
+"Lagi Tumse Man Ki Lagan",,cancelled,6a45bcd985cfdba38620afb1,,"",,NO_BROMA_ID,-,-,false,false
+"Kise Nu Pasand Chitte Chole",,cancelled,6a45be5d85cfdba38620afb4,,"",,NO_BROMA_ID,-,-,false,false
+"Panna Ki Tamanna",,cancelled,6a4c682d6d14d7a351539477,,"",,NO_BROMA_ID,-,-,false,false
+"Tere Bina Ye Saam Adhoori",,cancelled,6a4c69b06d14d7a351539483,,"",,NO_BROMA_ID,-,-,false,false
+"EK PARDESI MERA DIL LE GAYA",44971,delivered,6a47e569b1de8b210ab4d9da,,"",,NOT_IN_BROMA,-,-,false,false
+"Mohabbat Pyar ",46827,failed,6a47e620b1de8b210ab4d9dd,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Yaad Rakhna Mujhe",46826,failed,6a47e6a2b1de8b210ab4d9e0,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"O Bewafa Janeman",44972,delivered,6a47e722b1de8b210ab4d9e3,,"",,NOT_IN_BROMA,-,-,false,false
+"O Rani Teri Kahani",46825,failed,6a47e7bbb1de8b210ab4d9e6,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Panna Ki Tamanna Hai",44966,delivered,6a47e842b1de8b210ab4d9e9,,"",,NOT_IN_BROMA,-,-,false,false
+"Dil ke armaan dil se",44968,delivered,6a486748191ffc8b4c204d0c,,"",,NOT_IN_BROMA,-,-,false,false
+"Dil ke kone mei",44967,delivered,6a487719191ffc8b4c204d1e,,"",,NOT_IN_BROMA,-,-,false,false
+"Dil ke kone mein chhupa",44964,delivered,6a4877e2191ffc8b4c204d21,,"",,NOT_IN_BROMA,-,-,false,false
+"Dil keh raha",44962,delivered,6a4883fb191ffc8b4c204d33,,"",,NOT_IN_BROMA,-,-,false,false
+"Dil ke armaan jaag",44961,delivered,6a486be4191ffc8b4c204d0f,,"",,NOT_IN_BROMA,-,-,false,false
+"Dil ke armaan naye",44960,delivered,6a487332191ffc8b4c204d12,,"",,NOT_IN_BROMA,-,-,false,false
+"Dil ke armaan",44959,delivered,6a4875cc191ffc8b4c204d1b,,"",,NOT_IN_BROMA,-,-,false,false
+"Dil ke armaan tere",44963,delivered,6a487500191ffc8b4c204d18,,"",,NOT_IN_BROMA,-,-,false,false
+"Dil ke armaan sab",44956,delivered,6a48742b191ffc8b4c204d15,,"",,NOT_IN_BROMA,-,-,false,false
+"Dil ke kone mein jagi",44954,delivered,6a487882191ffc8b4c204d24,,"",,NOT_IN_BROMA,-,-,false,false
+"Dil ke kone mein karein",44955,delivered,6a487952191ffc8b4c204d27,,"",,NOT_IN_BROMA,-,-,false,false
+"Dil ke kone mein khushi",44946,delivered,6a487c60191ffc8b4c204d2a,,"",,NOT_IN_BROMA,-,-,false,false
+"Dil ke taar bajayein",46824,failed,6a48806f191ffc8b4c204d2d,,"Missing Broma outlet ids",BSON_FIXED,NOT_IN_BROMA,-,-,false,false
+"Dil ke taaron ko",44945,delivered,6a48818e191ffc8b4c204d30,,"",,NOT_IN_BROMA,-,-,false,false
+"Dil ki baat hai chhupi",44944,delivered,6a488e72191ffc8b4c204d36,,"",,NOT_IN_BROMA,-,-,false,false
+"Dil ki baat hai yeh dil",44942,delivered,6a48906a191ffc8b4c204d39,,"",,NOT_IN_BROMA,-,-,false,false
+"Dil ki baat tujhse",46472,processing,6a489164191ffc8b4c204d3c,,"",,NOT_IN_BROMA,-,-,false,false
+"Dil ki baatein bhi",46823,failed,6a489241191ffc8b4c204d3f,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Dil ki baatein chup",44937,delivered,6a4892ee191ffc8b4c204d42,,"",,NOT_IN_BROMA,-,-,false,false
+"Dil ki baaton ke hazaron",46822,failed,6a48940c191ffc8b4c204d45,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Dil Laga Liya Maine Tumse Pyaar Karke",46821,failed,6a4898c6191ffc8b4c204d5a,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Do Deewane Pyar Ke",44935,delivered,6a48b280191ffc8b4c204d96,,"",,NOT_IN_BROMA,-,-,false,false
+"Dupatta Sarak Raha",44933,delivered,6a48c760191ffc8b4c204da2,,"",,NOT_IN_BROMA,-,-,false,false
+"Eka Karel zsg",44931,delivered,6a48ceb4191ffc8b4c204db4,,"",,NOT_IN_BROMA,-,-,false,false
+"Eka Karelmnb",44932,delivered,6a48d1ee191ffc8b4c204dba,,"",,NOT_IN_BROMA,-,-,false,false
+"Dil Tera Deewana",44930,delivered,6a48d232191ffc8b4c204dbd,,"",,NOT_IN_BROMA,-,-,false,false
+"Dil ki dhadkan tere",44924,delivered,6a4894f8191ffc8b4c204d48,,"",,NOT_IN_BROMA,-,-,false,false
+"Dil kyoon udaa",44922,delivered,6a4897ef191ffc8b4c204d57,,"",,NOT_IN_BROMA,-,-,false,false
+"Diwanon Se Poochho",44925,delivered,6a48b1d8191ffc8b4c204d93,,"",,NOT_IN_BROMA,-,-,false,false
+"Din raat ke rang",44927,delivered,6a48b149191ffc8b4c204d90,,"",,NOT_IN_BROMA,-,-,false,false
+"Duniya Haseeno Ka",44926,delivered,6a48b361191ffc8b4c204d99,,"",,NOT_IN_BROMA,-,-,false,false
+"Dil Tera Deewana",44920,delivered,6a48b37c191ffc8b4c204d9c,,"",,NOT_IN_BROMA,-,-,false,false
+"Ek Dil Hai",44921,delivered,6a48c90e191ffc8b4c204da5,,"",,NOT_IN_BROMA,-,-,false,false
+"Duniya Haseeno",44919,delivered,6a48b454191ffc8b4c204d9f,,"",,NOT_IN_BROMA,-,-,false,false
+"Dilwa Le Gaile Raja",44917,delivered,6a48c917191ffc8b4c204da8,,"",,NOT_IN_BROMA,-,-,false,false
+"Ek Ladka Hai Ek",46820,failed,6a48cb4f191ffc8b4c204dab,,"Missing Broma outlet ids",BSON_FIXED,NOT_IN_BROMA,-,-,false,false
+"Ek Meri Gali Ki Ladki",44915,delivered,6a48cd0a191ffc8b4c204dae,,"",,NOT_IN_BROMA,-,-,false,false
+"Ek Meri Gali Ki",44916,delivered,6a48cda2191ffc8b4c204db1,,"",,NOT_IN_BROMA,-,-,false,false
+"Eka Karelb",46475,failed,6a48d157191ffc8b4c204db7,,"Missing Broma outlet ids",,NOT_IN_BROMA,-,-,false,false
+"Eka Karelpopi",46474,failed,6a48d280191ffc8b4c204dc0,,"Missing Broma outlet ids",,NOT_IN_BROMA,-,-,false,false
+"Eka Karelsfdb",44914,delivered,6a48d353191ffc8b4c204dc3,,"",,NOT_IN_BROMA,-,-,false,false
+"Eka Karelu Dil",44912,delivered,6a48d416191ffc8b4c204dc6,,"",,NOT_IN_BROMA,-,-,false,false
+"Eka karelu mahe",44913,delivered,6a48d50a191ffc8b4c204dc9,,"",,NOT_IN_BROMA,-,-,false,false
+"Gawah Hai Chand Tare",46819,failed,6a48d813191ffc8b4c204dcc,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Gawah Haichand",46476,failed,6a48d8b1191ffc8b4c204dcf,,"Missing Broma outlet ids",,NOT_IN_BROMA,-,-,false,false
+"Ghar Se Nikal Pada",46477,failed,6a48d95a191ffc8b4c204dd2,,"Missing Broma outlet ids",,NOT_IN_BROMA,-,-,false,false
+"Gori Hai Kalaiyan",44765,cancelled,6a48da47191ffc8b4c204dd5,,"",,NOT_IN_BROMA,-,-,false,false
+"Dil Tera Deewana",44757,delivered,6a48da51191ffc8b4c204dd8,,"",,NOT_IN_BROMA,-,-,false,false
+"Dil Tera Deewana",46637,processing,6a48daa5191ffc8b4c204ddb,,"",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Hum Lakh Chupaye Pyaar",46818,failed,6a48f0af4028dc69f7855f67,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Dil ki har dhadkan",46817,failed,6a4895af191ffc8b4c204d4b,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Dil ki yeh dhadkan",46816,failed,6a48962d191ffc8b4c204d4e,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Dil ko ek aasmaan banaya hai",46815,failed,6a4896af191ffc8b4c204d51,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Dil Kone Mein",46814,failed,6a489734191ffc8b4c204d54,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Dil Laga Liya Maine",46813,failed,6a489960191ffc8b4c204d5d,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Dil Maang Raha Hai",46812,failed,6a489a6d191ffc8b4c204d60,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Dil Mein Dard Sa Jaga Hai",46811,failed,6a489af3191ffc8b4c204d63,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Dil mein jo baatein",46738,failed,6a48a1c9191ffc8b4c204d66,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Dil Mein jo ek daag",46810,failed,6a48a2c8191ffc8b4c204d69,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Dil Mere Na Aur Intezaar",46809,failed,6a48a390191ffc8b4c204d6c,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Dil Ne Dil Se Iqra",46808,failed,6a48a544191ffc8b4c204d6f,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Dil Ne Dil Se Iqrar",46807,failed,6a48a60a191ffc8b4c204d72,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Dil se chheda",46806,failed,6a48a695191ffc8b4c204d75,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Dil se dil ka rishta",46805,failed,6a48a74a191ffc8b4c204d78,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Dil Tera Deewana",46804,failed,6a48a7e3191ffc8b4c204d7b,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Dilon ke raaste se",46803,failed,6a48a869191ffc8b4c204d7e,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Dilwa Le Gaile Raja",46802,failed,6a48a996191ffc8b4c204d81,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Dilwa Le Gaile Raja",46801,failed,6a48adf5191ffc8b4c204d84,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Dilwa Le Gaile",46800,failed,6a48af22191ffc8b4c204d87,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Dilwale Jo Rumal Mein",46799,failed,6a48b05a191ffc8b4c204d8a,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Dilwale Jo Rumal",46798,failed,6a48b0ce191ffc8b4c204d8d,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Hadh Kar Di Aapne",46797,failed,6a48db9a191ffc8b4c204dde,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Hadh Kar Dil",44742,cancelled,6a48de434028dc69f7855f3e,,"",,NOT_IN_BROMA,-,-,false,false
+"Hamare Raj Chalta",44714,cancelled,6a48df324028dc69f7855f41,,"Release deleted by admin",,NOT_IN_BROMA,-,-,false,false
+"Hamein Tumse Hua Hai",44720,delivered,6a48dfd54028dc69f7855f44,,"",,NOT_IN_BROMA,-,-,false,false
+"Hamein Tumse Hua",44718,processing,6a48e04b4028dc69f7855f47,,"",,NOT_IN_BROMA,-,-,false,false
+"Hamne Tumko Dil Ye",44723,processing,6a48e4884028dc69f7855f4a,,"",,NOT_IN_BROMA,-,-,false,false
+"Har Kisike Dil Me Ek",44721,processing,6a48e5624028dc69f7855f4d,,"",,NOT_IN_BROMA,-,-,false,false
+"Har Pal Mere Hothon",44713,delivered,6a48e5e24028dc69f7855f50,,"",,NOT_IN_BROMA,-,-,false,false
+"Heart is Crazy",44716,delivered,6a48e76e4028dc69f7855f56,,"",,NOT_IN_BROMA,-,-,false,false
+"Hawa mein uda",44712,delivered,6a48e6ad4028dc69f7855f53,,"",,NOT_IN_BROMA,-,-,false,false
+"Bhool Na Jana Na Hona Anjaan",44717,delivered,6a48ed324028dc69f7855f5e,,"",,NOT_IN_BROMA,-,-,false,false
+"Hum Aapke Bina",46796,failed,6a48ef174028dc69f7855f61,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Hum Aise Pyar Ki",44711,delivered,6a48f02e4028dc69f7855f64,,"",,NOT_IN_BROMA,-,-,false,false
+"Hum Lakh Chupaye",44709,delivered,6a48f13b4028dc69f7855f6a,,"",BSON_FIXED,NOT_IN_BROMA,-,-,false,false
+"Hamein Tumse Hua",44710,delivered,6a48f1654028dc69f7855f6d,,"",,NOT_IN_BROMA,-,-,false,false
+"Dil Tera Deewana",44707,delivered,6a48f1744028dc69f7855f70,,"",,NOT_IN_BROMA,-,-,false,false
+"Aisaa Lagataa Hai",46795,failed,6a4911d54028dc69f7855fc5,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Hum Tumhare",44699,delivered,6a49b1334028dc69f7855fda,,"",,NOT_IN_BROMA,-,-,false,false
+"Aaja Aai Bahar Dil Hai Beqarar",46794,failed,6a48fd854028dc69f7855f8b,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Aaja Ke Intezar Main",46793,failed,6a48fde84028dc69f7855f96,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Aane Se Uske Aaye Bahar",,failed,6a48fe534028dc69f7855f99,,"Connector validation failed: Track 1: missing ISRC",BSON_FIXED,NO_BROMA_ID,-,-,false,false
+"Aankh Churaaye",44703,delivered,6a48fed34028dc69f7855f9c,,"",,NOT_IN_BROMA,-,-,false,false
+"Aap Jo Mere Meet Na Hote",44696,delivered,6a4902884028dc69f7855f9f,,"",,NOT_IN_BROMA,-,-,false,false
+"Aap Ki Nazron Ne Samjha",44698,delivered,6a4903844028dc69f7855fa2,,"",,NOT_IN_BROMA,-,-,false,false
+"Aap Ki Nazron Ne",44697,cancelled,6a4904274028dc69f7855fa5,,"",,NOT_IN_BROMA,-,-,false,false
+"Ae Dil Kahin Se Unko",44695,cancelled,6a4908fd4028dc69f7855fad,,"",,NOT_IN_BROMA,-,-,false,false
+"Sheeshe Ka Tha Dil Mera",44692,cancelled,6a49097d4028dc69f7855fb0,,"",,NOT_IN_BROMA,-,-,false,false
+"Ae Dil-E-Nadan",44689,delivered,6a49098c4028dc69f7855fb3,,"",,NOT_IN_BROMA,-,-,false,false
+"Aankh Milakar Loot Liya Dil",44693,cancelled,6a4909f94028dc69f7855fb6,,"",,NOT_IN_BROMA,-,-,false,false
+"Ae Hawa Mere Sang Sang Chal",46792,failed,6a490ae64028dc69f7855fb9,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Ae Hawa Mere Sang",46791,failed,6a4910ef4028dc69f7855fbf,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Ae Ishq Humein Barbaad",46790,failed,6a4911634028dc69f7855fc2,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Hum Teri Mohabbat",44686,delivered,6a49a6194028dc69f7855fcb,,"",,NOT_IN_BROMA,-,-,false,false
+"Hum To Tujhs",44684,delivered,6a49af624028dc69f7855fce,,"",,NOT_IN_BROMA,-,-,false,false
+"Hum To Tujhse Mohabbat",44682,delivered,6a49afd94028dc69f7855fd1,,"",,NOT_IN_BROMA,-,-,false,false
+"Hum To Tujhse",44683,delivered,6a49b0454028dc69f7855fd4,,"",,NOT_IN_BROMA,-,-,false,false
+"Hum Tumhare Hain",46789,failed,6a49b0ad4028dc69f7855fd7,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Hum Tumhein Itna",44679,delivered,6a49b1af4028dc69f7855fdd,,"",BSON_FIXED,NOT_IN_BROMA,-,-,false,false
+"Hum Tumhein Pyar",44675,delivered,6a49b2194028dc69f7855fe0,,"",,NOT_IN_BROMA,-,-,false,false
+"Hum Tumko Nigahon",44678,delivered,6a49b2eb4028dc69f7855fe3,,"",,NOT_IN_BROMA,-,-,false,false
+"Hum Tumko",46788,failed,6a49b3594028dc69f7855fe6,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Hum Unse Mohabbat",44672,delivered,6a49b5644028dc69f7855fef,,"",,NOT_IN_BROMA,-,-,false,false
+"Hum Yaar Hai Tumhare",44673,delivered,6a49b6134028dc69f7855ff2,,"",,NOT_IN_BROMA,-,-,false,false
+"Ankhiyon Ke Jharokhon Se",46787,failed,6a49b66c4028dc69f7855ff5,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Hum Yaar Hai",44671,delivered,6a49b6df4028dc69f7855ff8,,"",,NOT_IN_BROMA,-,-,false,false
+"Apni Zulfein Mere Shaanon Pe",46786,failed,6a49b6e44028dc69f7855ffb,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Armaan Hamare",44668,cancelled,6a49b7524028dc69f7855ffe,,"",,NOT_IN_BROMA,-,-,false,false
+"Humko Deewana Kar",44669,delivered,6a49b7584028dc69f7856001,,"",,NOT_IN_BROMA,-,-,false,false
+"Aur is Dil Mein",46785,failed,6a49b7ad4028dc69f7856005,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Humko Tumse Pyaar Hai",44665,delivered,6a49b7cf4028dc69f785600a,,"",,NOT_IN_BROMA,-,-,false,false
+"Humse Sajna Kyon",44667,delivered,6a49b8414028dc69f785600d,,"",,NOT_IN_BROMA,-,-,false,false
+"Humse Sajna",44664,delivered,6a49b8bf4028dc69f7856010,,"",,NOT_IN_BROMA,-,-,false,false
+"Bahot Khubsurat Hai Mera Sanam",46784,failed,6a49b8e14028dc69f7856013,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Is Pyar Se Meri Taraf Na",44660,delivered,6a49b9714028dc69f7856016,,"",,NOT_IN_BROMA,-,-,false,false
+"Pyar Se Meri",44661,delivered,6a49ba1b4028dc69f785601c,,"",,NOT_IN_BROMA,-,-,false,false
+"Bahut Der Se Dar Pe Aankh",44662,delivered,6a49ba4e4028dc69f785601f,,"",,NOT_IN_BROMA,-,-,false,false
+"Bahut Pyar Karte Hain",44659,delivered,6a49bab04028dc69f7856025,,"",BSON_FIXED,NOT_IN_BROMA,-,-,false,false
+"Ishq Na Karna",44658,delivered,6a49bab64028dc69f7856028,,"",,NOT_IN_BROMA,-,-,false,false
+"Bas Tu Hi Tu Meri Dua",44655,delivered,6a49bb1f4028dc69f785602b,,"",,NOT_IN_BROMA,-,-,false,false
+"Itna Main Chaahoon",44656,delivered,6a49bbc34028dc69f785602e,,"",,NOT_IN_BROMA,-,-,false,false
+"Jaaneman Jaaneman",44657,delivered,6a49bc644028dc69f7856031,,"",,NOT_IN_BROMA,-,-,false,false
+"Jab Jab Dekhu Tujhe Dil",44654,delivered,6a49bd2a4028dc69f7856034,,"",,NOT_IN_BROMA,-,-,false,false
+"Jab Se Tumhein",44653,delivered,6a49bdde4028dc69f7856037,,"",,NOT_IN_BROMA,-,-,false,false
+"Ka Dekhela Aise Hans",44652,delivered,6a49c6b24028dc69f7856061,,"",,NOT_IN_BROMA,-,-,false,false
+"Bhooli Bisri Ek Kahani",44883,delivered,6a49be574028dc69f785603a,,"",,NOT_IN_BROMA,-,-,false,false
+"Jahan Khushi Milati Hai",44880,delivered,6a49be894028dc69f785603d,,"",,NOT_IN_BROMA,-,-,false,false
+"Bindiya Chamkegi Chudi Khankegi",44879,delivered,6a49bebb4028dc69f7856040,,"",,NOT_IN_BROMA,-,-,false,false
+"Chahe Mera Dil Jaaye",44881,delivered,6a49bf0d4028dc69f7856043,,"",,NOT_IN_BROMA,-,-,false,false
+"Janam Janam Jo Sath Nibhaye",44878,processing,6a49bf794028dc69f7856046,,"",,NOT_IN_BROMA,-,-,false,false
+"Chale To Kat Hi Jayega Safar",44875,delivered,6a49bf864028dc69f7856049,,"",,NOT_IN_BROMA,-,-,false,false
+"Janam Janam Jo Sath",44877,delivered,6a49c0034028dc69f785604c,,"",,NOT_IN_BROMA,-,-,false,false
+"Jeeta Tha Jiske Liye",44876,delivered,6a49c0924028dc69f785604f,,"",,NOT_IN_BROMA,-,-,false,false
+"Hum To Tujhse Mohabbat",44872,delivered,6a49c37c4028dc69f7856052,,"",,NOT_IN_BROMA,-,-,false,false
+"Jeeta Tha Jiske",44871,delivered,6a49c4504028dc69f7856055,,"",,NOT_IN_BROMA,-,-,false,false
+"Jina Sirf Mer",44869,cancelled,6a49c4b64028dc69f7856058,,"Release deleted by admin",,NOT_IN_BROMA,-,-,false,false
+"Jina Sirf Mere",46783,failed,6a49c52c4028dc69f785605b,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Ka Dekhela Aise Hans Ke",44868,delivered,6a49c62b4028dc69f785605e,,"",,NOT_IN_BROMA,-,-,false,false
+"Kab Tak Yaad Karoon Main",44867,delivered,6a49c74e4028dc69f7856064,,"",,NOT_IN_BROMA,-,-,false,false
+"Kab Tak Yaad Karoon",44866,delivered,6a49c7ca4028dc69f7856067,,"",,NOT_IN_BROMA,-,-,false,false
+"Kab Tak Yaad Karu",46782,failed,6a49c8594028dc69f785606a,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Kah Ke Babu Sona",44863,delivered,6a49c8de4028dc69f785606d,,"",,NOT_IN_BROMA,-,-,false,false
+"Kahin Mujhe Pyar Hua Toh",44864,cancelled,6a49c95d4028dc69f7856070,,"Release deleted by admin",,NOT_IN_BROMA,-,-,false,false
+"Kahin Mujhe Pyar Hua",44862,delivered,6a49ca4a4028dc69f7856073,,"",,NOT_IN_BROMA,-,-,false,false
+"Kahin mujhe pyar",44858,delivered,6a49cab44028dc69f7856076,,"",,NOT_IN_BROMA,-,-,false,false
+"Kamar Me Pareshani",44857,processing,6a49cb3a4028dc69f7856079,,"",,NOT_IN_BROMA,-,-,false,false
+"Kar Lo Tum Kadar Hamari",44859,processing,6a49cbc34028dc69f785607c,,"",,NOT_IN_BROMA,-,-,false,false
+"Kar Lo Tum Kadar",44636,delivered,6a49cc324028dc69f785607f,,"",,NOT_IN_BROMA,-,-,false,false
+"Kar Lo Tum",44633,delivered,6a49cc9f4028dc69f7856082,,"",,NOT_IN_BROMA,-,-,false,false
+"Kaun Disha Mein Leke Chala",44637,delivered,6a49cd314028dc69f7856085,,"",,NOT_IN_BROMA,-,-,false,false
+"Kaun disha mein",44856,delivered,6a49cdcc4028dc69f7856088,,"",,NOT_IN_BROMA,-,-,false,false
+"Kaun Hai Jo Sapno Mein",44635,delivered,6a49ce6c4028dc69f785608e,,"",,NOT_IN_BROMA,-,-,false,false
+"Khamoshi Hai Ek Baja Hai",44855,delivered,6a49cee14028dc69f7856091,,"",,NOT_IN_BROMA,-,-,false,false
+"Khel Wohi Phir Aaj",44838,delivered,6a49cf4d4028dc69f7856094,,"",,NOT_IN_BROMA,-,-,false,false
+"Dekha Hai Pehli Baar Sajan",44626,delivered,6a49cf724028dc69f7856097,,"",,NOT_IN_BROMA,-,-,false,false
+"Aaj Pehli Baar Dil Ki Baat",44634,delivered,6a49cfd74028dc69f785609a,,"",,NOT_IN_BROMA,-,-,false,false
+"Khushboo si hawaon",44629,delivered,6a49d0044028dc69f785609d,,"",,NOT_IN_BROMA,-,-,false,false
+"Tere Naam Humne Kiya Hai",44837,delivered,6a49d0714028dc69f78560a0,,"",,NOT_IN_BROMA,-,-,false,false
+"Khushi chha jaaye",44630,delivered,6a49d07e4028dc69f78560a3,,"",,NOT_IN_BROMA,-,-,false,false
+"Rab Ne Banaya Tujhko",44628,delivered,6a49d0c64028dc69f78560a6,,"",,NOT_IN_BROMA,-,-,false,false
+"Khwaabon ka hai",46781,failed,6a49d0ed4028dc69f78560a9,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Mera Mann Dole Mera Tan Dole",46780,failed,6a49d11c4028dc69f78560ac,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Tu Hi Dhoondti Hai Ye Pagal",44632,delivered,6a49d1794028dc69f78560af,,"",,NOT_IN_BROMA,-,-,false,false
+"Kisi Aur Ke Naam",46779,failed,6a49d19d4028dc69f78560b2,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Dil Kahe Tu Paas Aa",44620,delivered,6a49d1d14028dc69f78560b5,,"",,NOT_IN_BROMA,-,-,false,false
+"Odhni Fisal Rahi Hai",44623,delivered,6a49d21d4028dc69f78560b8,,"",,NOT_IN_BROMA,-,-,false,false
+"Zindagi Dene Wale Sun",44627,delivered,6a49d2754028dc69f78560bb,,"",,NOT_IN_BROMA,-,-,false,false
+"Chori Chori Dil Tera Churayenge Jo",46778,failed,6a49d2c14028dc69f78560be,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Is Tarah Aashiqi Ka Asar",46777,failed,6a49d3614028dc69f78560c4,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Wo Dil Kahin Se Laoon",46776,failed,6a49d3ad4028dc69f78560c7,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Ankhiyon Ke Jharokhon Se",44612,delivered,6a49d5404028dc69f78560d0,,"",,NOT_IN_BROMA,-,-,false,false
+"Aisaa Lagataa Hai",46775,failed,6a49d5584028dc69f78560d3,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Aap Ki Nazron Ne",46774,failed,6a49d5774028dc69f78560d6,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Aankh Churaaye",44606,cancelled,6a49d5864028dc69f78560d9,,"",,NOT_IN_BROMA,-,-,false,false
+"Aaja Ke Intezar Main",44601,delivered,6a49d5f54028dc69f78560e8,,"",,NOT_IN_BROMA,-,-,false,false
+"Ae Hawa Mere Sang",46773,failed,6a49d61a4028dc69f78560ee,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Bindiya Chamkegi Chudi Khankegi",46772,failed,6a49d6204028dc69f78560f1,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Chahe Mera Dil Jaaye",44596,delivered,6a49d6294028dc69f78560f4,,"",,NOT_IN_BROMA,-,-,false,false
+"Aisaa Lagataa Hai",46771,failed,6a49d6434028dc69f78560f7,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Chale To Kat Hi Jayega",46770,failed,6a49d76e4028dc69f78560fd,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Dur Se Dekha Tujhko",46769,failed,6a49d7b94028dc69f7856100,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Panchhi Banu Udti Phiru",44589,delivered,6a49d7d54028dc69f7856106,,"",,NOT_IN_BROMA,-,-,false,false
+"Ye Galiyan Ye Chaubara",46768,failed,6a49d7f54028dc69f7856109,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Tu Mera Hai",44590,delivered,6a49d8194028dc69f785610c,,"",,NOT_IN_BROMA,-,-,false,false
+"Mukhda Chand Ka Tukda",44586,processing,6a49d83a4028dc69f7856112,,"",,NOT_IN_BROMA,-,-,false,false
+"Desh Se Pardesh Bulaye Re",46767,failed,6a49d92e4028dc69f7856115,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Dil Hai Kahi",44584,delivered,6a49d9894028dc69f7856118,,"",,NOT_IN_BROMA,-,-,false,false
+"Dil Ke Armaan Aansuon Mein Beh Gaye",46766,failed,6a49db534028dc69f785611e,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Dil Ki Girah Khol Do",44582,delivered,6a49dbb94028dc69f7856121,,"",,NOT_IN_BROMA,-,-,false,false
+"Dil Ki Mehfil",44581,delivered,6a49dc484028dc69f7856124,,"",,NOT_IN_BROMA,-,-,false,false
+"Dil Wo Chala",46765,failed,6a49dcce4028dc69f7856127,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Dil Ye Chahe",46764,failed,6a49dd574028dc69f785612a,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Dil Ye Pukare",46763,failed,6a49ddd64028dc69f785612d,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Dilber Mere",46762,failed,6a49de374028dc69f7856130,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Disco Dil Mera",44575,delivered,6a49df414028dc69f7856133,,"",,NOT_IN_BROMA,-,-,false,false
+"Do Lafzon Ki Hai",44574,delivered,6a49e7f84028dc69f7856136,,"",,NOT_IN_BROMA,-,-,false,false
+"Ek Jawani Teri, Ek Jawani Meri",44817,delivered,6a49e8544028dc69f7856139,,"",,NOT_IN_BROMA,-,-,false,false
+"Ek Ladki Bheegi Bhagi",44815,delivered,6a49e8b44028dc69f785613c,,"",,NOT_IN_BROMA,-,-,false,false
+"Ek Pardasi Mera Dil Le Gaya",44814,delivered,6a49e9154028dc69f785613f,,"",,NOT_IN_BROMA,-,-,false,false
+"Ek Pyar Ka Dariya Hai",44807,delivered,6a49e9ab4028dc69f7856142,,"",,NOT_IN_BROMA,-,-,false,false
+"Gori Tera Gaon Bada Pyara",44805,delivered,6a49ea104028dc69f7856145,,"",,NOT_IN_BROMA,-,-,false,false
+"Kisi Shayar Ka Dil",44806,delivered,6a49eea44028dc69f7856148,,"",,NOT_IN_BROMA,-,-,false,false
+"Kisise Tum Pyaar Karo",44803,delivered,6a49ef284028dc69f785614b,,"",,NOT_IN_BROMA,-,-,false,false
+"Kitna Pagal Dil Hai",46761,failed,6a49efab4028dc69f785614e,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Kitna Pagal Dil",46760,failed,6a49f0464028dc69f7856151,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Kitna Pyaara Hai",44801,delivered,6a49f0ba4028dc69f7856154,,"",,NOT_IN_BROMA,-,-,false,false
+"Pyar Se Meri",44562,delivered,6a49f1624028dc69f7856157,,"",,NOT_IN_BROMA,-,-,false,false
+"Gumnaam Hai Koi",46759,failed,6a49f1a24028dc69f785615a,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Haal Kya Hai Dilon Ka",44558,delivered,6a49f2744028dc69f785615d,,"",,NOT_IN_BROMA,-,-,false,false
+"Haay Meri Uljhi Nazar",44559,delivered,6a49f2eb4028dc69f7856160,,"",,NOT_IN_BROMA,-,-,false,false
+"Har Khushi",44560,delivered,6a49f34a4028dc69f7856163,,"",,NOT_IN_BROMA,-,-,false,false
+"Kitna Pyaara Tujhe Rabne",44557,delivered,6a49f38f4028dc69f7856166,,"",,NOT_IN_BROMA,-,-,false,false
+"Har Pal Mere Dil Mein Tu",44553,delivered,6a49f3b04028dc69f7856169,,"",,NOT_IN_BROMA,-,-,false,false
+"Haye Haye Ye Majbyri",46758,failed,6a49f4044028dc69f785616c,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Kitne Chahat Dil Me",44555,delivered,6a49f4434028dc69f785616f,,"",,NOT_IN_BROMA,-,-,false,false
+"Honton Pe Bas Tera Naam Hai",44554,delivered,6a49f4e04028dc69f7856175,,"",,NOT_IN_BROMA,-,-,false,false
+"Kitne Dino Ke Baad Mile",44549,delivered,6a49f5134028dc69f7856178,,"",,NOT_IN_BROMA,-,-,false,false
+"Kuch Kuch Hota Hai",44552,delivered,6a49f5854028dc69f785617e,,"",,NOT_IN_BROMA,-,-,false,false
+"Kuch Kuch Hota",44547,delivered,6a49f61d4028dc69f7856181,,"",,NOT_IN_BROMA,-,-,false,false
+"Hume Aur Jeene Ki Chahat Na Hoti",44542,delivered,6a49f6974028dc69f7856187,,"",,NOT_IN_BROMA,-,-,false,false
+"Kya Tum Mujhse Pyar",44545,delivered,6a49f71a4028dc69f785618a,,"",,NOT_IN_BROMA,-,-,false,false
+"Kya Tum Mujhse",46757,failed,6a49f7e04028dc69f785618d,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Kyaa Dil Ne Ka",44546,delivered,6a49f8814028dc69f7856190,,"",,NOT_IN_BROMA,-,-,false,false
+"Kyaa Dil Ne Kahaa",46756,failed,6a49f9054028dc69f7856193,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Kyon Ki Itna Pyar",46755,failed,6a49f9764028dc69f7856196,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Laal dupatta jhilmil",46754,failed,6a49fdf44028dc69f7856199,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Laal Dupatta",44532,delivered,6a49fe644028dc69f785619c,,"",,NOT_IN_BROMA,-,-,false,false
+"Ladki Badi Anjani",46753,failed,6a49ff3d4028dc69f78561a2,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Lagi Aaj Sawan Ki Phir",46752,failed,6a4a05134028dc69f78561a8,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Le Gayi Le Gayi",44522,delivered,6a4a07c54028dc69f78561b4,,"",,NOT_IN_BROMA,-,-,false,false
+"Main Nikla Gadi Leke",44519,delivered,6a4a1b5f4028dc69f78561c8,,"",,NOT_IN_BROMA,-,-,false,false
+"Ishq Ka Dard",44473,delivered,6a4a1f164028dc69f78561ce,,"",,NOT_IN_BROMA,-,-,false,false
+"Jaane Do Jaane Do   Shahenshah",44472,delivered,6a4a1f7f4028dc69f78561d1,,"",,NOT_IN_BROMA,-,-,false,false
+"Jaane Kyon Log Mohabbat Kiya Karte Hain",44471,delivered,6a4a20654028dc69f78561d4,,"",,NOT_IN_BROMA,-,-,false,false
+"Jab Se Tujhako Jaana",46751,failed,6a4a211b4028dc69f78561dd,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Jadu Nagari Se Aaya Hai Koi Jadugar",44469,delivered,6a4a21794028dc69f78561e0,,"",,NOT_IN_BROMA,-,-,false,false
+"Main Tera Her",44468,delivered,6a4a218f4028dc69f78561e3,,"",,NOT_IN_BROMA,-,-,false,false
+"Jawani Teri Ke Deewane",44466,delivered,6a4a21cf4028dc69f78561e6,,"",,NOT_IN_BROMA,-,-,false,false
+"Main Tujhko Bhaga",44467,delivered,6a4a22374028dc69f78561e9,,"",,NOT_IN_BROMA,-,-,false,false
+"Main Tujhko",44463,delivered,6a4a22cb4028dc69f78561ec,,"",,NOT_IN_BROMA,-,-,false,false
+"Main Tujhse Aise Milun",44465,delivered,6a4a234f4028dc69f78561ef,,"",,NOT_IN_BROMA,-,-,false,false
+"Maine Tujhse Pyar Kiya",44464,delivered,6a4a243d4028dc69f78561f2,,"",,NOT_IN_BROMA,-,-,false,false
+"Man Kyoon Behka Re",44462,delivered,6a4a24c24028dc69f78561f5,,"",,NOT_IN_BROMA,-,-,false,false
+"Mashroof Hai Dil Kitn",44461,delivered,6a4a25894028dc69f78561f8,,"",,NOT_IN_BROMA,-,-,false,false
+"Mashroof Hai Dil Kitna",46750,failed,6a4a262d4028dc69f78561fb,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Mashroof HaiDil",46749,failed,6a4a27494028dc69f7856201,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Mast Jawani Lage Kadak",44451,delivered,6a4a27f04028dc69f7856204,,"",,NOT_IN_BROMA,-,-,false,false
+"Mast Jawani Lage",44453,processing,6a4a286b4028dc69f7856207,,"",,NOT_IN_BROMA,-,-,false,false
+"Mausam Ki Tarah Tum",46748,failed,6a4a28e84028dc69f785620a,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Mera Dil Hi To Hai",44449,processing,6a4a29624028dc69f785620d,,"",,NOT_IN_BROMA,-,-,false,false
+"Aaj Phir Jeene Ki Tamanna Hai",46745,failed,6a4afbc43576ebe4b14b7de4,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Aap Jo Mere Meet Na Hote",46747,failed,6a4afc0f3576ebe4b14b7de7,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Ae Hawa Mere Sang",46834,failed,6a4afd053576ebe4b14b7ded,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Ankhein",44441,processing,6a4afdee3576ebe4b14b7df6,,"",,NOT_IN_BROMA,-,-,false,false
+"Aisa Sama Na Hota",44442,processing,6a4afd4a3576ebe4b14b7df0,,"",,NOT_IN_BROMA,-,-,false,false
+"Akhiyon Ke Jharokon Se",44440,delivered,6a4afd963576ebe4b14b7df3,,"",,NOT_IN_BROMA,-,-,false,false
+"Aur Is Dil Mein Kia Rakha Hai",46746,failed,6a4afec63576ebe4b14b7dfc,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Bade Achhe Lagte Hain",46744,failed,6a4afff63576ebe4b14b7e05,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Mera Kangna",44436,processing,6a4b00a03576ebe4b14b7e0b,,"",,NOT_IN_BROMA,-,-,false,false
+"Barsat Ke Mosam Me",44433,delivered,6a4b00633576ebe4b14b7e08,,"",,NOT_IN_BROMA,-,-,false,false
+"Mera Yaar Dild",44428,processing,6a4b01173576ebe4b14b7e0e,,"",,NOT_IN_BROMA,-,-,false,false
+"Bato Bato Me Akshar Bat",46835,failed,6a4b018d3576ebe4b14b7e11,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Mera Yaar Dildar",44432,delivered,6a4b01903576ebe4b14b7e14,,"",,NOT_IN_BROMA,-,-,false,false
+"Chaale To Kaat Hi Jaayega Safar",44430,delivered,6a4b01d33576ebe4b14b7e17,,"",,NOT_IN_BROMA,-,-,false,false
+"Chalte Chalte Meray Ye Geet",44423,delivered,6a4b02383576ebe4b14b7e1d,,"",,NOT_IN_BROMA,-,-,false,false
+"Chalte Chalte Yunhi",44422,delivered,6a4b027d3576ebe4b14b7e20,,"",,NOT_IN_BROMA,-,-,false,false
+"Jawani Teri Ke Deewane",44425,delivered,6a4b02a23576ebe4b14b7e23,,"",,NOT_IN_BROMA,-,-,false,false
+"Jadu Nagari Se Aaya Hai Koi Jadugar",44424,delivered,6a4b02be3576ebe4b14b7e26,,"",,NOT_IN_BROMA,-,-,false,false
+"Jab Pyar Ke Baadal Chhaye Nahin",44427,delivered,6a4b02cc3576ebe4b14b7e29,,"",,NOT_IN_BROMA,-,-,false,false
+"Ishq Ka Dard",44421,delivered,6a4b02da3576ebe4b14b7e2c,,"",,NOT_IN_BROMA,-,-,false,false
+"Chale To Kat Hi Jayega",44418,delivered,6a4b03013576ebe4b14b7e35,,"",,NOT_IN_BROMA,-,-,false,false
+"Aisaa Lagataa Hai",44419,delivered,6a4b03113576ebe4b14b7e38,,"",,NOT_IN_BROMA,-,-,false,false
+"Chahe Mera Dil Jaaye",44416,delivered,6a4b031c3576ebe4b14b7e3b,,"",,NOT_IN_BROMA,-,-,false,false
+"Chalte Chalte Meray Ye Geet",44409,delivered,6a4b03533576ebe4b14b7e41,,"",,NOT_IN_BROMA,-,-,false,false
+"Dil Ye Pukare",46836,failed,6a4b03623576ebe4b14b7e44,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Dil Wo Chala",46837,failed,6a4b036e3576ebe4b14b7e47,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Dil Ki Girah Khol Do",44405,delivered,6a4b037a3576ebe4b14b7e4a,,"",,NOT_IN_BROMA,-,-,false,false
+"Desh Se Pardesh Bulaye Re",44411,delivered,6a4b039b3576ebe4b14b7e50,,"",,NOT_IN_BROMA,-,-,false,false
+"Aane Se Uske Aaye Bahar",,failed,6a4b03b93576ebe4b14b7e56,,"Connector validation failed: Track 1: missing ISRC",BSON_FIXED,NO_BROMA_ID,-,-,false,false
+"Aaja Ke Intezar Main",44402,delivered,6a4b03c83576ebe4b14b7e59,,"",,NOT_IN_BROMA,-,-,false,false
+"Aankh Churaaye",46839,failed,6a4b03d63576ebe4b14b7e5c,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Aap Ki Nazron Ne",44401,cancelled,6a4b03e43576ebe4b14b7e5f,,"",,NOT_IN_BROMA,-,-,false,false
+"Chand Mera Dil",44403,delivered,6a4b04453576ebe4b14b7e62,,"",,NOT_IN_BROMA,-,-,false,false
+"Chehra Mera Tha",44399,delivered,6a4b048c3576ebe4b14b7e65,,"",,NOT_IN_BROMA,-,-,false,false
+"Chori Chori Dil Tera Churayenge",44398,delivered,6a4b04c83576ebe4b14b7e68,,"",,NOT_IN_BROMA,-,-,false,false
+"Chudi Maja Na Degi Kangan Maja Na Dega",44400,delivered,6a4b05383576ebe4b14b7e6b,,"",,NOT_IN_BROMA,-,-,false,false
+"Dikhayi Diye Yun",44397,delivered,6a4b05783576ebe4b14b7e6e,,"",,NOT_IN_BROMA,-,-,false,false
+"Dil Ke Armaan Aansuon Mein Beh Gaye",44339,delivered,6a4b060c3576ebe4b14b7e71,,"",,NOT_IN_BROMA,-,-,false,false
+"Mere Dil Ki Hai",44340,delivered,6a4b068a3576ebe4b14b7e74,,"",,NOT_IN_BROMA,-,-,false,false
+"Diwano Se Pucho Mohabbat Hai Kya",44343,delivered,6a4b06983576ebe4b14b7e77,,"",,NOT_IN_BROMA,-,-,false,false
+"Mere Pyar Ko Tum",44336,processing,6a4b08793576ebe4b14b7e80,,"",,NOT_IN_BROMA,-,-,false,false
+"Mere Rashke Qamar",44333,delivered,6a4b09023576ebe4b14b7e83,,"",,NOT_IN_BROMA,-,-,false,false
+"Mere Rashke",44337,delivered,6a4b09683576ebe4b14b7e86,,"",,NOT_IN_BROMA,-,-,false,false
+"Mere Saathi Jeevan Sathi",44334,delivered,6a4b0a643576ebe4b14b7e89,,"",,NOT_IN_BROMA,-,-,false,false
+"Mere saathi jeevan",44335,delivered,6a4b0b4b3576ebe4b14b7e8c,,"",,NOT_IN_BROMA,-,-,false,false
+"Meri Tarah Tum Bhi",44327,delivered,6a4b0bca3576ebe4b14b7e8f,,"",,NOT_IN_BROMA,-,-,false,false
+"Meri Tarah Tum",44329,delivered,6a4b0c493576ebe4b14b7e92,,"",,NOT_IN_BROMA,-,-,false,false
+"Meri Zindagi Hai",44331,delivered,6a4b0cce3576ebe4b14b7e95,,"",,NOT_IN_BROMA,-,-,false,false
+"Meri Zindagi",44332,delivered,6a4b0d3f3576ebe4b14b7e98,,"",,NOT_IN_BROMA,-,-,false,false
+"Mile Abhi Chhori Darbhanga Mein Karhari",44330,delivered,6a4b0daf3576ebe4b14b7e9b,,"",,NOT_IN_BROMA,-,-,false,false
+"Mitwa Bhool Na Jana",44328,delivered,6a4b0e213576ebe4b14b7e9e,,"",,NOT_IN_BROMA,-,-,false,false
+"Mohabbat Ka Sapna",44325,processing,6a4b0ec83576ebe4b14b7ea1,,"",,NOT_IN_BROMA,-,-,false,false
+"Mai Joru Ka Gulam Banke Rahunga",44323,delivered,6a4b10023576ebe4b14b7ea7,,"",,NOT_IN_BROMA,-,-,false,false
+"Mohabbat Na Karna",44324,processing,6a4b10c13576ebe4b14b7eaa,,"",,NOT_IN_BROMA,-,-,false,false
+"Mujhe Log Kehte Hain",44319,delivered,6a4b11603576ebe4b14b7ead,,"",,NOT_IN_BROMA,-,-,false,false
+"Mujhe Pyar Hua Allamiya",44318,delivered,6a4b11c93576ebe4b14b7eb0,,"",,NOT_IN_BROMA,-,-,false,false
+"Mujhko Dhadka",44316,processing,6a4b123b3576ebe4b14b7eb3,,"",,NOT_IN_BROMA,-,-,false,false
+"Mujhko Dhadkano",44322,delivered,6a4b12aa3576ebe4b14b7eb6,,"",,NOT_IN_BROMA,-,-,false,false
+"Mujhse Jo Door Hai",44315,delivered,6a4b131e3576ebe4b14b7eb9,,"",,NOT_IN_BROMA,-,-,false,false
+"Munh Mod Le Li",44312,delivered,6a4b13903576ebe4b14b7ebc,,"",,NOT_IN_BROMA,-,-,false,false
+"Musafir Jaane Wale",46743,failed,6a4b14353576ebe4b14b7ebf,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Naam Hai Tera",44314,processing,6a4b14b93576ebe4b14b7ec2,,"",,NOT_IN_BROMA,-,-,false,false
+"Nachaniya karan di",46742,failed,6a4b154c3576ebe4b14b7ec5,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Nachaniya Karan Dil",44309,processing,6a4b16083576ebe4b14b7ec8,,"",,NOT_IN_BROMA,-,-,false,false
+"Nachaniya karan din raat",46741,failed,6a4b16863576ebe4b14b7ecb,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Nachaniya Karan",44305,delivered,6a4b16fe3576ebe4b14b7ece,,"",,NOT_IN_BROMA,-,-,false,false
+"Nai Jhulni Ke Chhaiyan",44303,delivered,6a4b17793576ebe4b14b7ed1,,"",,NOT_IN_BROMA,-,-,false,false
+"Neend Churayee Meri",44304,delivered,6a4b17f73576ebe4b14b7ed4,,"",,NOT_IN_BROMA,-,-,false,false
+"Neend Churayee",44302,delivered,6a4b18803576ebe4b14b7ed7,,"",,NOT_IN_BROMA,-,-,false,false
+"Neend Kise Chain Kahan",44297,delivered,6a4b18fc3576ebe4b14b7eda,,"",,NOT_IN_BROMA,-,-,false,false
+"Neend Kise Chain",44300,delivered,6a4b19633576ebe4b14b7edd,,"",,NOT_IN_BROMA,-,-,false,false
+"O Dil Tod Ke Hansti Ho",44295,delivered,6a4b19c33576ebe4b14b7ee0,,"",,NOT_IN_BROMA,-,-,false,false
+"O Jaane Jaan Main",44296,delivered,6a4b1a5a3576ebe4b14b7ee3,,"",,NOT_IN_BROMA,-,-,false,false
+"O Jaane Jaan Main",44298,delivered,6a4b1d113576ebe4b14b7ee6,,"",,NOT_IN_BROMA,-,-,false,false
+"O Lal Dupatte Wali",44294,delivered,6a4b1d863576ebe4b14b7ee9,,"",,NOT_IN_BROMA,-,-,false,false
+"O Lal Dupatte",44292,delivered,6a4b1e4d3576ebe4b14b7eec,,"",,NOT_IN_BROMA,-,-,false,false
+"Odhani Odh Ke Nachu",44290,processing,6a4b1eb33576ebe4b14b7eef,,"",,NOT_IN_BROMA,-,-,false,false
+"Odhani Odh Ke",46740,failed,6a4b1f223576ebe4b14b7ef2,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Aadatein",44293,delivered,6a4b1f2a3576ebe4b14b7ef5,,"",,NOT_IN_BROMA,-,-,false,false
+"Odhani Odh",44288,delivered,6a4b1faa3576ebe4b14b7ef8,,"",,NOT_IN_BROMA,-,-,false,false
+"Aane se uske jaaye ye saal",44286,delivered,6a4b1fd93576ebe4b14b7efb,,"",,NOT_IN_BROMA,-,-,false,false
+"Aankh Se Chalka Aansu",44285,delivered,6a4b201f3576ebe4b14b7efe,,"",,NOT_IN_BROMA,-,-,false,false
+"Odhni Odh Ke Nachu",44284,delivered,6a4b202c3576ebe4b14b7f01,,"",,NOT_IN_BROMA,-,-,false,false
+"Odhni Odh Ke",44289,delivered,6a4b21233576ebe4b14b7f04,,"",,NOT_IN_BROMA,-,-,false,false
+"Oh Oh Jane Jaana",44280,delivered,6a4b21a83576ebe4b14b7f07,,"",,NOT_IN_BROMA,-,-,false,false
+"Do Ghoont Mujhe Bhi Pila De Sharabi",46841,failed,6a4b21b83576ebe4b14b7f0a,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Aawara Banjara",44279,delivered,6a4b21df3576ebe4b14b7f0d,,"",,NOT_IN_BROMA,-,-,false,false
+"Adhoori Baatein",44283,delivered,6a4b21fc3576ebe4b14b7f10,,"",,NOT_IN_BROMA,-,-,false,false
+"Do Lafzo Ki Hai Dil Ki Kahani",44281,delivered,6a4b22073576ebe4b14b7f13,,"",,NOT_IN_BROMA,-,-,false,false
+"Afsana Tere Pyaar La",44278,delivered,6a4b22203576ebe4b14b7f16,,"",,NOT_IN_BROMA,-,-,false,false
+"Anjaan Raahon mein",44277,delivered,6a4b223e3576ebe4b14b7f19,,"",,NOT_IN_BROMA,-,-,false,false
+"Pagla Ke Bhes",44275,delivered,6a4b22443576ebe4b14b7f1c,,"",,NOT_IN_BROMA,-,-,false,false
+"Ankahi Daastan",44274,delivered,6a4b22693576ebe4b14b7f1f,,"",,NOT_IN_BROMA,-,-,false,false
+"Ek Hasina Thi",44276,delivered,6a4b22803576ebe4b14b7f22,,"",,NOT_IN_BROMA,-,-,false,false
+"Chale To Kaat Hi Jayegi Safar",44261,delivered,6a4b22a73576ebe4b14b7f25,,"",,NOT_IN_BROMA,-,-,false,false
+"Pagla Ke Bhesh",44259,delivered,6a4b22b53576ebe4b14b7f28,,"",,NOT_IN_BROMA,-,-,false,false
+"Ek Ladki Ko Dekha Tu Aisa Laga",44260,delivered,6a4b22fa3576ebe4b14b7f34,,"",,NOT_IN_BROMA,-,-,false,false
+"Dillagi Yeh Hai Dillagi",44078,delivered,6a49d51a4028dc69f78560cd,,"",,NOT_IN_BROMA,-,-,false,false
+"Yaar Tera Pyar",44080,delivered,6a49d4ed4028dc69f78560ca,,"",,NOT_IN_BROMA,-,-,false,false
+"Banya Nhi Koi Sada",44075,delivered,6a490f154028dc69f7855fbc,,"",,NOT_IN_BROMA,-,-,false,false
+"Dil Pe Zakhm 2.0",44050,delivered,6a47e4f7b1de8b210ab4d9d7,,"",,NOT_IN_BROMA,-,-,false,false
+"Ek Laadki Bheegi Bhaagisi",44046,delivered,6a4b22c13576ebe4b14b7f2b,,"",,NOT_IN_BROMA,-,-,false,false
+"Chalo phir se jietein hain",44043,delivered,6a4b22c43576ebe4b14b7f2e,,"",,NOT_IN_BROMA,-,-,false,false
+"Dekha Ek Khwab",44263,delivered,6a4b23163576ebe4b14b7f3a,,"",,NOT_IN_BROMA,-,-,false,false
+"Ladki Ko Dekha",44256,delivered,6a4b23323576ebe4b14b7f3d,,"",,NOT_IN_BROMA,-,-,false,false
+"Dheema Sa Pal",44254,delivered,6a4b23343576ebe4b14b7f3e,,"",,NOT_IN_BROMA,-,-,false,false
+"Ek Pal Ke",44258,delivered,6a4b23953576ebe4b14b7f46,,"",,NOT_IN_BROMA,-,-,false,false
+"Chandni Raat",44257,delivered,6a4b22e03576ebe4b14b7f31,,"",,NOT_IN_BROMA,-,-,false,false
+"Mera Dil Hi To",44045,delivered,6a4a29ce4028dc69f7856210,,"",,NOT_IN_BROMA,-,-,false,false
+"Mashroof Hai Dil",44396,processing,6a4a26bd4028dc69f78561fe,,"",,NOT_IN_BROMA,-,-,false,false
+"Mera Intkam",44393,delivered,6a4a2b1e4028dc69f7856216,,"",,NOT_IN_BROMA,-,-,false,false
+"Main Tera He",44395,delivered,6a4a20bd4028dc69f78561da,,"",,NOT_IN_BROMA,-,-,false,false
+"Jab Pyar Ke Baadal Chhaye Nahin",44392,delivered,6a4a20b74028dc69f78561d7,,"",,NOT_IN_BROMA,-,-,false,false
+"Mera Intkam Dekhegi",44394,processing,6a4a2a514028dc69f7856213,,"",,NOT_IN_BROMA,-,-,false,false
+"Likhne Wale Ne",44492,delivered,6a4a08c04028dc69f78561ba,,"",,NOT_IN_BROMA,-,-,false,false
+"A Hawa Mere Sang Sang",44488,delivered,6a48fbfc4028dc69f7855f73,,"",,NOT_IN_BROMA,-,-,false,false
+"Aaj Rone Ki Aakhiri Baari",44490,delivered,6a48fd3e4028dc69f7855f7c,,"",,NOT_IN_BROMA,-,-,false,false
+"Aaj Phir Jeene",44489,delivered,6a48fcd34028dc69f7855f79,,"",,NOT_IN_BROMA,-,-,false,false
+"Mujhy Tum Nazar Se",44044,cancelled,6a453989161d7aa451fcd5e3,,"",,NOT_IN_BROMA,-,-,false,false
+"Balamuwa Ke Ballam",43878,delivered,6a45bedb85cfdba38620afb7,,"",,NOT_IN_BROMA,-,-,false,false
+"Bali Re Umaria Ke",43876,delivered,6a45c0fc85cfdba38620afbf,,"",,NOT_IN_BROMA,-,-,false,false
+"Ban Piya",43874,delivered,6a45c27685cfdba38620afc2,,"",,NOT_IN_BROMA,-,-,false,false
+"Dil Ki Dharkan",43872,delivered,6a47e2f9b1de8b210ab4d974,,"",,NOT_IN_BROMA,-,-,false,false
+"Dil Ki Mahfil",43871,delivered,6a47e35eb1de8b210ab4d977,,"",,NOT_IN_BROMA,-,-,false,false
+"Dil Le Gayi Re",43868,delivered,6a47e3bdb1de8b210ab4d990,,"",,NOT_IN_BROMA,-,-,false,false
+"Bepanah Ishq Hai Tumse Sanam",43861,delivered,6a45c28485cfdba38620afc5,,"",,NOT_IN_BROMA,-,-,false,false
+"Bepanah Ishq Ki Kahani",43855,delivered,6a45c34885cfdba38620afc8,,"",,NOT_IN_BROMA,-,-,false,false
+"Bhig Ja Pyar Ki Barish Me",43853,delivered,6a45c3d285cfdba38620afcb,,"",,NOT_IN_BROMA,-,-,false,false
+"Bangle Ke Peech",43851,delivered,6a45c43c85cfdba38620afce,,"",,NOT_IN_BROMA,-,-,false,false
+"Dil Tere Naam Hone Laga",43849,delivered,6a45c46385cfdba38620afd1,,"",,NOT_IN_BROMA,-,-,false,false
+"Jhoothe Tere Vaade",43847,delivered,6a45c51c85cfdba38620afd4,,"",,NOT_IN_BROMA,-,-,false,false
+"Bangle Ke Peechhe",43845,delivered,6a45c54f85cfdba38620afd7,,"",,NOT_IN_BROMA,-,-,false,false
+"Mohabbat Me Sawarne Lage Hai",43841,delivered,6a45c5b185cfdba38620afda,,"",,NOT_IN_BROMA,-,-,false,false
+"O Bangla Gaadi Jhumke Kangana",43840,delivered,6a45c66285cfdba38620afdd,,"",,NOT_IN_BROMA,-,-,false,false
+"DIL KE SAARE KHWAAB BIKHAR GAYE",43836,delivered,6a47e27ab1de8b210ab4d96a,,"",,NOT_IN_BROMA,-,-,false,false
+"Sanson Ki Mala Pe",43835,delivered,6a45c6d785cfdba38620afe0,,"",,NOT_IN_BROMA,-,-,false,false
+"Tere Jism Ki Khushbu",43832,delivered,6a45c7d385cfdba38620afe3,,"",,NOT_IN_BROMA,-,-,false,false
+"Teri Chahat",43830,delivered,6a45c83a85cfdba38620afe6,,"",,NOT_IN_BROMA,-,-,false,false
+"Tu Hi Meri Aashiqui",43829,delivered,6a45c8bc85cfdba38620afe9,,"",,NOT_IN_BROMA,-,-,false,false
+"Tu Hi Meri Chahat",43825,delivered,6a45c9e985cfdba38620afec,,"",,NOT_IN_BROMA,-,-,false,false
+"Banke Hawa Mei",43824,delivered,6a45c9f385cfdba38620afef,,"",,NOT_IN_BROMA,-,-,false,false
+"Tu Ishq Thi",43823,delivered,6a45ca7b85cfdba38620aff2,,"",,NOT_IN_BROMA,-,-,false,false
+"Banke Hawa Mein",43820,delivered,6a45ca8885cfdba38620aff5,,"",,NOT_IN_BROMA,-,-,false,false
+"Wo Bhi Apne Na Huye",43818,delivered,6a45cb0885cfdba38620aff8,,"",,NOT_IN_BROMA,-,-,false,false
+"Chupana Bhi Nahi Aata",43817,delivered,6a47e1feb1de8b210ab4d91c,,"",,NOT_IN_BROMA,-,-,false,false
+"Bansuriya Ab Yeh Hi Pukare",43814,delivered,6a45cb1285cfdba38620affb,,"",,NOT_IN_BROMA,-,-,false,false
+"Bardash Nahi Hola",43812,delivered,6a45cb8585cfdba38620b008,,"",,NOT_IN_BROMA,-,-,false,false
+"Aaj Phir Jeene Ki Tamanna Hai",43810,delivered,6a45cb8885cfdba38620b00b,,"",,NOT_IN_BROMA,-,-,false,false
+"Barish Ki Bundi",43809,delivered,6a45cc0c85cfdba38620b00e,,"",,NOT_IN_BROMA,-,-,false,false
+"AAP JO MERE MEET NA HOTE",43807,delivered,6a45cc4f85cfdba38620b011,,"",,NOT_IN_BROMA,-,-,false,false
+"Barish Ki Bundiye",43805,delivered,6a45cc8085cfdba38620b014,,"",,NOT_IN_BROMA,-,-,false,false
+"AISAA LAGTAA HAI",43803,delivered,6a45ccb585cfdba38620b017,,"",,NOT_IN_BROMA,-,-,false,false
+"Beshak Tum Meri Ho",43801,delivered,6a45cd2785cfdba38620b01a,,"",,NOT_IN_BROMA,-,-,false,false
+"Beta Apni Maa Se Kabhi",43799,delivered,6a45cdad85cfdba38620b01d,,"",,NOT_IN_BROMA,-,-,false,false
+"Chehra Ye Chand Ki Raat Mein",43797,delivered,6a47e18fb1de8b210ab4d8d5,,"",,NOT_IN_BROMA,-,-,false,false
+"Bahon Mein Botal Botal Mein Daru",43795,delivered,6a45cdb785cfdba38620b020,,"",,NOT_IN_BROMA,-,-,false,false
+"BIJLI SA DIL",43793,delivered,6a45ce2085cfdba38620b023,,"",,NOT_IN_BROMA,-,-,false,false
+"Beta Apni Maa Se",43790,delivered,6a45ce2485cfdba38620b026,,"",,NOT_IN_BROMA,-,-,false,false
+"Chale To Kat Hi Jaayega Safar",43789,delivered,6a45ce9285cfdba38620b029,,"",,NOT_IN_BROMA,-,-,false,false
+"Bhaiya Lago Hi Bhatar",43787,delivered,6a45ceb985cfdba38620b02c,,"",,NOT_IN_BROMA,-,-,false,false
+"Hamen Aur Jeene Ki",43784,delivered,6a45cf1085cfdba38620b031,,"",,NOT_IN_BROMA,-,-,false,false
+"Bhatar Kaise Kahabo",43783,delivered,6a45cf7e85cfdba38620b038,,"",,NOT_IN_BROMA,-,-,false,false
+"Jabse Tujhko Jaana",43780,delivered,6a45cf8385cfdba38620b03b,,"",,NOT_IN_BROMA,-,-,false,false
+"KAANTA LAGA",43779,delivered,6a45d01085cfdba38620b040,,"",,NOT_IN_BROMA,-,-,false,false
+"Chahat Ka Ilaka Hai",43776,delivered,6a47e130b1de8b210ab4d8a0,,"",,NOT_IN_BROMA,-,-,false,false
+"Bheegi Hui Hai Raat",43775,delivered,6a45d01e85cfdba38620b043,,"",,NOT_IN_BROMA,-,-,false,false
+"Kabhi Shaam Dhale",43772,delivered,6a45d07a85cfdba38620b046,,"",,NOT_IN_BROMA,-,-,false,false
+"Aaja Sanam",43771,delivered,6a47ddf9b1de8b210ab4d879,,"",,NOT_IN_BROMA,-,-,false,false
+"Aap Jo Mere Meet Na Hote",43768,delivered,6a47de5cb1de8b210ab4d88b,,"",,NOT_IN_BROMA,-,-,false,false
+"Ae Kaash Kahin Aisa Hota 2.0",43767,delivered,6a47deb6b1de8b210ab4d88e,,"",,NOT_IN_BROMA,-,-,false,false
+"Ap Jo Mere Meet Na Hote",43765,delivered,6a47df1ab1de8b210ab4d891,,"",,NOT_IN_BROMA,-,-,false,false
+"Barsaat Ke Mausam Mein",43763,delivered,6a47df8cb1de8b210ab4d894,,"",,NOT_IN_BROMA,-,-,false,false
+"Beqaraar Karke Humein Yun Na Jaiye",43761,delivered,6a47dfe1b1de8b210ab4d897,,"",,NOT_IN_BROMA,-,-,false,false
+"Bhool Na Jana Na Hona Anjaan",43759,delivered,6a47e066b1de8b210ab4d89a,,"",,NOT_IN_BROMA,-,-,false,false
+"Chaale To Kaat Hi Jaayenge Safar",43757,delivered,6a47e0d3b1de8b210ab4d89d,,"",,NOT_IN_BROMA,-,-,false,false
+"Bheegi Hui Hai",43753,delivered,6a45d0b885cfdba38620b049,,"",,NOT_IN_BROMA,-,-,false,false
+"Kisi Din Banoongi Main Raja Ki Rani",43752,delivered,6a45d13e85cfdba38620b04c,,"",,NOT_IN_BROMA,-,-,false,false
+"Bhige Na Kajarawa",43748,delivered,6a45d15185cfdba38620b04f,,"",,NOT_IN_BROMA,-,-,false,false
+"Bina tohre kaise bitaibe",43747,delivered,6a45d1c385cfdba38620b052,,"",,NOT_IN_BROMA,-,-,false,false
+"LEKE PEHLA PEHLA PYAR",43746,delivered,6a45d1d585cfdba38620b055,,"",,NOT_IN_BROMA,-,-,false,false
+"Mera Dil Ye Pukare Aaja",43742,delivered,6a45d24f85cfdba38620b058,,"",,NOT_IN_BROMA,-,-,false,false
+"Neele Neele Ambar Par",43741,delivered,6a45d2cc85cfdba38620b05b,,"",,NOT_IN_BROMA,-,-,false,false
+"O Haseena Zulfon Wali",43740,delivered,6a45d35e85cfdba38620b063,,"",,NOT_IN_BROMA,-,-,false,false
+"Bole Mora Kang",43737,delivered,6a45d3ee85cfdba38620b066,,"",,NOT_IN_BROMA,-,-,false,false
+"Bole Mora Kangna",43736,delivered,6a45d4a185cfdba38620b069,,"",,NOT_IN_BROMA,-,-,false,false
+"Caller Tune",43733,delivered,6a45d51a85cfdba38620b06c,,"",,NOT_IN_BROMA,-,-,false,false
+"Milo Na Tumto",43732,delivered,6a45defd85cfdba38620b06f,,"",,NOT_IN_BROMA,-,-,false,false
+"Na Na Karte Pyar Hai Main Kar Gayi",43729,delivered,6a45dfac85cfdba38620b072,,"",,NOT_IN_BROMA,-,-,false,false
+"Pardesiya Yeh Sach Hai Piya",43728,delivered,6a45e01c85cfdba38620b075,,"",,NOT_IN_BROMA,-,-,false,false
+"Phulori Bina Chutney Kaise Bani",43724,delivered,6a45e07385cfdba38620b078,,"",,NOT_IN_BROMA,-,-,false,false
+"Tere Bina",43723,delivered,6a45e0cb85cfdba38620b07b,,"",,NOT_IN_BROMA,-,-,false,false
+"Teri Do Takiya Di Naukri",43722,delivered,6a45e12f85cfdba38620b07e,,"",,NOT_IN_BROMA,-,-,false,false
+"Teri Najar Mein Sapne Hain",43719,delivered,6a45e1c885cfdba38620b081,,"",,NOT_IN_BROMA,-,-,false,false
+"Teri Yaadon Ki Chadar Odhe",43717,delivered,6a45e22485cfdba38620b084,,"",,NOT_IN_BROMA,-,-,false,false
+"Tune O Rangile Kaisa Jaadu Kiya",43716,delivered,6a45e2cc85cfdba38620b087,,"",,NOT_IN_BROMA,-,-,false,false
+"Uska Mat Ban Jana Jogi",43713,cancelled,6a45e3e285cfdba38620b08a,,"Release deleted by admin",,NOT_IN_BROMA,-,-,false,false
+"Baharon Phool Barsao Mera Mehboob Aaya Hai",43712,delivered,6a45e76485cfdba38620b08d,,"",,NOT_IN_BROMA,-,-,false,false
+"Chhor Ke Na Jao Piya",43708,delivered,6a45e7c185cfdba38620b093,,"",,NOT_IN_BROMA,-,-,false,false
+"Can Enchanting",43704,delivered,6a45e7df85cfdba38620b096,,"",,NOT_IN_BROMA,-,-,false,false
+"Dil Hai Ke Maanta Nahi",43703,delivered,6a45e86685cfdba38620b099,,"",,NOT_IN_BROMA,-,-,false,false
+"Haal Kya Hai",43702,delivered,6a45e92d85cfdba38620b09c,,"",,NOT_IN_BROMA,-,-,false,false
+"Hum Aise Karenge Pyar Ki Duniya Yaad Kare",43699,delivered,6a45e9a285cfdba38620b09f,,"",,NOT_IN_BROMA,-,-,false,false
+"Kagaj Kalam Dawaat La",43698,cancelled,6a45ea2f85cfdba38620b0a2,,"Release deleted by admin",,NOT_IN_BROMA,-,-,false,false
+"Maine Pee Hai Ishq Wali",43695,delivered,6a45ea7f85cfdba38620b0a5,,"",,NOT_IN_BROMA,-,-,false,false
+"Pardesiya Yeh Sach Hai Piya",43694,delivered,6a45ead885cfdba38620b0a8,,"",,NOT_IN_BROMA,-,-,false,false
+"Tu Chanda Main Chandni",43692,delivered,6a45edea85cfdba38620b0ba,,"",,NOT_IN_BROMA,-,-,false,false
+"Tu Cheez Badi Hai Mast Mast",43690,delivered,6a45ee5985cfdba38620b0bd,,"",,NOT_IN_BROMA,-,-,false,false
+"Pyara ka Andaz",43689,delivered,6a45efc785cfdba38620b0c0,,"",,NOT_IN_BROMA,-,-,false,false
+"Chhauda Chup Chup",43683,delivered,6a45ff9285cfdba38620b0e2,,"",,NOT_IN_BROMA,-,-,false,false
+"Chhodh Ke Na Jaa Ooh",43681,delivered,6a46005485cfdba38620b0e5,,"",,NOT_IN_BROMA,-,-,false,false
+"Chup tha magar aaj",43658,delivered,6a4607b485cfdba38620b100,,"",,NOT_IN_BROMA,-,-,false,false
+"Chupke Se Koi Aayega",43657,delivered,6a460bab85cfdba38620b107,,"",,NOT_IN_BROMA,-,-,false,false
+"Chura ke le gaya",43654,delivered,6a460c7d85cfdba38620b10a,,"",,NOT_IN_BROMA,-,-,false,false
+"Dadhiya Badhiya Lagela",43653,delivered,6a460dd485cfdba38620b10d,,"",,NOT_IN_BROMA,-,-,false,false
+"Dadhiya Badhiya",43650,delivered,6a460f4a85cfdba38620b110,,"",,NOT_IN_BROMA,-,-,false,false
+"Dahej Me Du NAli Ke",43649,delivered,6a46102385cfdba38620b113,,"",,NOT_IN_BROMA,-,-,false,false
+"Dahej Me Du NAli",43647,delivered,6a47990672193f420bd66a47,,"",,NOT_IN_BROMA,-,-,false,false
+"Daiya Daiya Daiya Re",43645,delivered,6a47999872193f420bd66a4a,,"",,NOT_IN_BROMA,-,-,false,false
+"Daiya Daiya Daiya",43643,delivered,6a479a6f72193f420bd66a4d,,"",,NOT_IN_BROMA,-,-,false,false
+"Le To Aaye Ho Hame Sapno Ke Gaon Mein",43641,delivered,6a479b9772193f420bd66a52,,"",,NOT_IN_BROMA,-,-,false,false
+"Chudi Maza Na Degi Kangan Maza Na Dega",43639,delivered,6a479c0c72193f420bd66a55,,"",,NOT_IN_BROMA,-,-,false,false
+"Sona Ke Kadar Sonara Jane",43635,delivered,6a479c6572193f420bd66a5b,,"",,NOT_IN_BROMA,-,-,false,false
+"Darua Piyal Holau Jaruri",43632,delivered,6a479caa72193f420bd66a5e,,"",,NOT_IN_BROMA,-,-,false,false
+"Mere Sathi O",43631,delivered,6a479cc372193f420bd66a61,,"",,NOT_IN_BROMA,-,-,false,false
+"Kagaj Kalam Dabat",43628,delivered,6a479d2472193f420bd66a64,,"",,NOT_IN_BROMA,-,-,false,false
+"Dekhe sapne chand",43627,delivered,6a479d4a72193f420bd66a67,,"",,NOT_IN_BROMA,-,-,false,false
+"Dafli Wale Dafli Baja",43625,delivered,6a479d8a72193f420bd66a6a,,"",,NOT_IN_BROMA,-,-,false,false
+"Delhi Dreams",43623,delivered,6a479dd372193f420bd66a6d,,"",,NOT_IN_BROMA,-,-,false,false
+"Unse Mili Najar",43621,delivered,6a479dea72193f420bd66a70,,"",,NOT_IN_BROMA,-,-,false,false
+"Tere Chehre Mein Wo Jaadu Hai",43619,delivered,6a479e4c72193f420bd66a73,,"",,NOT_IN_BROMA,-,-,false,false
+"Delhi Wali",43617,delivered,6a479e7072193f420bd66a76,,"",,NOT_IN_BROMA,-,-,false,false
+"Dhaire Bola Ye Koyaliya",43614,delivered,6a479f1972193f420bd66a79,,"",,NOT_IN_BROMA,-,-,false,false
+"Dil chura le o chand",43613,delivered,6a479fe772193f420bd66a7c,,"",,NOT_IN_BROMA,-,-,false,false
+"Dil Chura Le",43610,delivered,6a47a0f072193f420bd66a7f,,"",,NOT_IN_BROMA,-,-,false,false
+"Dil deewana kahin",43609,delivered,6a47a1cd72193f420bd66a82,,"",,NOT_IN_BROMA,-,-,false,false
+"Dil Deewana Na Jaane",43607,delivered,6a47ab84b1de8b210ab4d6c4,,"",,NOT_IN_BROMA,-,-,false,false
+"Dil Deewana",43605,delivered,6a47ac12b1de8b210ab4d6c7,,"",,NOT_IN_BROMA,-,-,false,false
+"Dil Jaane Jigar Tujh Pe",43603,delivered,6a47ace0b1de8b210ab4d6ca,,"",,NOT_IN_BROMA,-,-,false,false
+"Dil jaane jigar tujh",43601,delivered,6a47ad5db1de8b210ab4d6cd,,"",,NOT_IN_BROMA,-,-,false,false
+"Dil Jane Jigar",43599,delivered,6a47ae0fb1de8b210ab4d6d0,,"",,NOT_IN_BROMA,-,-,false,false
+"Dil ka diya hai tujhe",43597,delivered,6a47aebab1de8b210ab4d6d3,,"",,NOT_IN_BROMA,-,-,false,false
+"Dil ka har ek raaz",43595,delivered,6a47af5eb1de8b210ab4d6d6,,"",,NOT_IN_BROMA,-,-,false,false
+"Dil ka junoon",43593,delivered,6a47b134b1de8b210ab4d6d9,,"",,NOT_IN_BROMA,-,-,false,false
+"Dil karta hai bas dekhte",43591,delivered,6a47b206b1de8b210ab4d6dc,,"",,NOT_IN_BROMA,-,-,false,false
+"Dil ke afsane likhe",43589,delivered,6a47b28ab1de8b210ab4d6df,,"",,NOT_IN_BROMA,-,-,false,false
+"release aws test",,cancelled,6a46591da7d8ca07e5c75621,,"",,NO_BROMA_ID,-,-,false,false
+"Pyar Ki Dagar Pe",43679,delivered,6a45ebae85cfdba38620b0ab,,"",,NOT_IN_BROMA,-,-,false,false
+"SAIYAN CHURA LE GAYA DIL MERA",43677,delivered,6a45ec1d85cfdba38620b0ae,,"",,NOT_IN_BROMA,-,-,false,false
+"Sua Saal Pehle",43583,delivered,6a45ec8585cfdba38620b0b1,,"",,NOT_IN_BROMA,-,-,false,false
+"Tera Naam Liya",43581,delivered,6a45ed0385cfdba38620b0b4,,"",,NOT_IN_BROMA,-,-,false,false
+"Tera Nam Liya Tujhe Yaad Kiya",43579,delivered,6a45ed7e85cfdba38620b0b7,,"",,NOT_IN_BROMA,-,-,false,false
+"Maar Dunga Main",43844,cancelled,6a43b9b463d9e483edd4c633,,"",,NOT_IN_BROMA,-,-,false,false
+"Lagi Tumse Man Ki Lagan",43259,cancelled,6a45bcd985cfdba38620afb1,,"Release deleted by admin",,NOT_IN_BROMA,-,-,false,false
+"Kise Nu Pasand Chitte Chole",43258,cancelled,6a45be5d85cfdba38620afb4,,"Release deleted by admin",,NOT_IN_BROMA,-,-,false,false
+"Main Toota Hoon",43237,cancelled,6a45bb3485cfdba38620afae,,"Release deleted by admin",,NOT_IN_BROMA,-,-,false,false
+"test reject 1 july",,cancelled,6a4517a607147aac8e17dc0d,,"",,NO_BROMA_ID,-,-,false,false
+"Nazar Chahti Hai",43159,delivered,6a4536e3161d7aa451fcd5e0,,"",,NOT_IN_BROMA,-,-,false,false
+"Mujhy Tum Nazar Se",43157,cancelled,6a453989161d7aa451fcd5e3,,"Release deleted by admin",,NOT_IN_BROMA,-,-,false,false
+"Deewani Deewani Main Teri",43149,delivered,6a452605161d7aa451fcd5d0,,"",,NOT_IN_BROMA,-,-,false,false
+"O Soniya Ishq Hai Tumse",43142,delivered,6a4526af161d7aa451fcd5d3,,"",,NOT_IN_BROMA,-,-,false,false
+"Angoor Wali Bagiya",43140,delivered,6a44fb32161d7aa451fcd4dc,,"",,NOT_IN_BROMA,-,-,false,false
+"Sajan Mera Uss Paar",43136,delivered,6a44fc20161d7aa451fcd4f1,,"",,NOT_IN_BROMA,-,-,false,false
+"Hansta Hua Nurani Chehra",43134,delivered,6a44fc44161d7aa451fcd4f4,,"",,NOT_IN_BROMA,-,-,false,false
+"Ankhon Mein Mohab",43132,delivered,6a44fce5161d7aa451fcd4f7,,"",,NOT_IN_BROMA,-,-,false,false
+"Is Dil Ko Badnaam Mat Karo",43129,delivered,6a44fcf3161d7aa451fcd4fa,,"",,NOT_IN_BROMA,-,-,false,false
+"Jhume Re Manwa Jhume",43127,delivered,6a44fd7d161d7aa451fcd4fd,,"",,NOT_IN_BROMA,-,-,false,false
+"Ankhon Mein",43125,delivered,6a44ff23161d7aa451fcd500,,"",,NOT_IN_BROMA,-,-,false,false
+"Apni bhi zindagi",43123,delivered,6a450061161d7aa451fcd503,,"",,NOT_IN_BROMA,-,-,false,false
+"Aye Dil Aye",43118,delivered,6a450343161d7aa451fcd509,,"",,NOT_IN_BROMA,-,-,false,false
+"Aye Meri Natkh",43116,delivered,6a450540161d7aa451fcd50c,,"",,NOT_IN_BROMA,-,-,false,false
+"Aye Meri Natkhati Colleg",43114,delivered,6a45069f161d7aa451fcd50f,,"",,NOT_IN_BROMA,-,-,false,false
+"Aye Meri Natkhati",43112,delivered,6a450860161d7aa451fcd512,,"",,NOT_IN_BROMA,-,-,false,false
+"Baarish Ban Jaana",43110,delivered,6a45099d161d7aa451fcd515,,"",,NOT_IN_BROMA,-,-,false,false
+"Baat Kuch Sama",43108,delivered,6a450aae161d7aa451fcd518,,"",,NOT_IN_BROMA,-,-,false,false
+"Baat Kuch Samajh",43106,delivered,6a450c4b161d7aa451fcd51b,,"",,NOT_IN_BROMA,-,-,false,false
+"Bahut Jatate Ho Chah",43103,delivered,6a450ee9161d7aa451fcd51e,,"",,NOT_IN_BROMA,-,-,false,false
+"Bahut Jatate Ho",43101,delivered,6a451009161d7aa451fcd521,,"",,NOT_IN_BROMA,-,-,false,false
+"Ae Mere Dil Bata",43051,delivered,6a44ecf1161d7aa451fcd429,,"",,NOT_IN_BROMA,-,-,false,false
+"Ae Mere Dost Laut Ke",43049,delivered,6a44ee39161d7aa451fcd42f,,"",,NOT_IN_BROMA,-,-,false,false
+"Aisa Deewana",43047,delivered,6a44ef7f161d7aa451fcd432,,"",,NOT_IN_BROMA,-,-,false,false
+"Aisa Lagta Hai",43046,delivered,6a44f40d161d7aa451fcd443,,"",,NOT_IN_BROMA,-,-,false,false
+"Aisa Lagta Jaise",43034,delivered,6a44f54d161d7aa451fcd449,,"",,NOT_IN_BROMA,-,-,false,false
+"Yaar Tera Pyar",43033,delivered,6a44facd161d7aa451fcd4cd,,"",,NOT_IN_BROMA,-,-,false,false
+"Akhiya Ke Kajra Jhagra",43031,delivered,6a44f670161d7aa451fcd451,,"",,NOT_IN_BROMA,-,-,false,false
+"Akhiya Ke Kajra",43029,delivered,6a44f85b161d7aa451fcd48c,,"",,NOT_IN_BROMA,-,-,false,false
+"Ye Aayine Jo Tumhe Kam Pasand Karte Hai ",18296434,failed,6a44f86b161d7aa451fcd48f,,"",BSON_FIXED,LIVE_ON_BROMA,approved,shipped,approved,ready,false,true
+"Nepali Hami",18296430,failed,6a44f8f4161d7aa451fcd49a,,"",BSON_FIXED,LIVE_ON_BROMA,approved,shipped,approved,ready,false,true
+"Allah Di Kassam",18296426,failed,6a44f9ab161d7aa451fcd4a4,,"",BSON_FIXED,LIVE_ON_BROMA,approved,shipped,approved,ready,false,true
+"Bidesh Jane Mayalu",18296422,failed,6a44df2b63d9e483edd4c7e4,,"",BSON_FIXED,LIVE_ON_BROMA,approved,shipped,approved,ready,false,true
+"Birata Ko Chino",18296418,failed,6a44dfb363d9e483edd4c7e7,,"",BSON_FIXED,LIVE_ON_BROMA,approved,shipped,approved,ready,false,true
+"Chari Udyo Badal Chuna Lai",18296414,failed,6a44e06363d9e483edd4c7ea,,"",BSON_FIXED,LIVE_ON_BROMA,approved,shipped,approved,ready,false,true
+"China",18296410,failed,6a44e11d63d9e483edd4c801,,"",BSON_FIXED,LIVE_ON_BROMA,approved,shipped,approved,ready,false,true
+"Musu Musu Hasi Deuna",18296406,failed,6a44f87a161d7aa451fcd492,,"",BSON_FIXED,LIVE_ON_BROMA,approved,shipped,approved,ready,false,true
+"Chiya Bari Ma",18296400,failed,6a44e19e63d9e483edd4c804,,"",BSON_FIXED,LIVE_ON_BROMA,approved,shipped,approved,ready,false,true
+"Dadaima Mela Lagecha",18296396,failed,6a44e21463d9e483edd4c807,,"",BSON_FIXED,LIVE_ON_BROMA,approved,shipped,approved,ready,false,true
+"Deurali Ma Batas Chalyo",18296392,failed,6a44e2a863d9e483edd4c80a,,"",BSON_FIXED,LIVE_ON_BROMA,approved,shipped,approved,ready,false,true
+"Deurali Ukali Chadhera",18296388,failed,6a44e30063d9e483edd4c80d,,"",BSON_FIXED,LIVE_ON_BROMA,approved,shipped,approved,ready,false,true
+"Muglan Hera Jadai Chu",18296384,failed,6a44f7d5161d7aa451fcd470,,"",BSON_FIXED,LIVE_ON_BROMA,approved,shipped,approved,ready,false,true
+"Gairi Khet Ko Sirai Hanyo",18296360,failed,6a44e3db63d9e483edd4c810,,"",BSON_FIXED,LIVE_ON_BROMA,approved,shipped,approved,ready,false,true
+"Gajalule Ankhai Chhopne",18296356,failed,6a44edb8161d7aa451fcd42c,,"",BSON_FIXED,LIVE_ON_BROMA,approved,shipped,approved,ready,false,true
+"Dillagi Yeh Hai Dillagi",45104,delivered,6a44efa4161d7aa451fcd435,,"",,NOT_IN_BROMA,-,-,false,false
+"Manchhe Ko Maya Yeha",18296341,failed,6a44f07c161d7aa451fcd438,,"",BSON_FIXED,LIVE_ON_BROMA,approved,shipped,approved,ready,false,true
+"Mayaluko Maya Mitho",18296337,failed,6a44f6e6161d7aa451fcd454,,"",BSON_FIXED,LIVE_ON_BROMA,approved,shipped,approved,ready,false,true
+"Zindagi Ki Talash Mein",18296331,failed,6a44f4d1161d7aa451fcd446,,"",BSON_FIXED,LIVE_ON_BROMA,approved,shipped,approved,ready,false,true
+"Aisa Lagta Hai Jaise",18296327,failed,6a44f297161d7aa451fcd43b,,"",BSON_FIXED,LIVE_ON_BROMA,approved,shipped,approved,ready,false,true
+"Test",42966,cancelled,6a44ebcf161d7aa451fcd420,,"",,NOT_IN_BROMA,-,-,false,false
+"Hansta Hua Nurani Chehra",42964,cancelled,6a44cca063d9e483edd4c7c1,,"Release deleted by admin",,NOT_IN_BROMA,-,-,false,false
+"Is Dil Ko Badnaam Mat Karo",42963,cancelled,6a44cd0063d9e483edd4c7c9,,"Release deleted by admin",,NOT_IN_BROMA,-,-,false,false
+"Banma Kasturi",18296319,failed,6a44cd2d63d9e483edd4c7cc,,"",BSON_FIXED,LIVE_ON_BROMA,approved,shipped,approved,ready,false,true
+"Jhume Re Manwa Jhume",42961,cancelled,6a44cd6963d9e483edd4c7cf,,"Release deleted by admin",,NOT_IN_BROMA,-,-,false,false
+"Kasme Vaade Pyar Wafa",42960,cancelled,6a44cdd263d9e483edd4c7d2,,"Release deleted by admin",,NOT_IN_BROMA,-,-,false,false
+"Basa Sundari",18296315,failed,6a44cde063d9e483edd4c7d5,,"",BSON_FIXED,LIVE_ON_BROMA,approved,shipped,approved,ready,false,true
+"Ye Aayine Jo Tumhe Kam Pasand Karte Hai",42957,cancelled,6a44ce3e63d9e483edd4c7d8,,"Release deleted by admin",,NOT_IN_BROMA,-,-,false,false
+"Zindagi Ki Talash Mein",42956,cancelled,6a44cea363d9e483edd4c7db,,"Release deleted by admin",,NOT_IN_BROMA,-,-,false,false
+"Aayega Maza Ab Barsaat Ka",45087,cancelled,6a44d11b63d9e483edd4c7de,,"Release deleted by admin",,NOT_IN_BROMA,-,-,false,false
+"Didi Tera Devar Deewana",42950,delivered,6a44d27863d9e483edd4c7e1,,"",,NOT_IN_BROMA,-,-,false,false
+"Ab Hain Neend",18296287,failed,6a44c8d863d9e483edd4c7b2,,"",BSON_FIXED,LIVE_ON_BROMA,approved,shipped,approved,ready,false,true
+"Aakashai Ma Chil Udyo Fanana",18296283,failed,6a44ca8c63d9e483edd4c7b5,,"",BSON_FIXED,LIVE_ON_BROMA,approved,shipped,approved,ready,false,true
+"Ae Mere Dil Bata Kya Bura",18296279,failed,6a44ca9063d9e483edd4c7b8,,"",BSON_FIXED,LIVE_ON_BROMA,approved,shipped,approved,ready,false,true
+"Aakashaima Chil Udyo Dharti Ma Chaya",18296275,failed,6a44cb5863d9e483edd4c7bb,,"",BSON_FIXED,LIVE_ON_BROMA,approved,shipped,approved,ready,false,true
+"sdfgdss",42941,cancelled,6a44d69707147aac8e17dc04,,"",,NOT_IN_BROMA,-,-,false,false
+"Aba Yo Baato Mero Ho",18296265,failed,6a44cc1763d9e483edd4c7be,,"",BSON_FIXED,LIVE_ON_BROMA,approved,shipped,approved,ready,false,true
+"Ab Hain Neend Kise",18296187,failed,6a44c65463d9e483edd4c769,,"",BSON_FIXED,LIVE_ON_BROMA,approved,shipped,approved,ready,false,true
+"Forever In Your Eyes",45033,delivered,6a44738e63d9e483edd4c668,,"",,NOT_IN_BROMA,-,-,false,false
+"Cold Love Confessions",45032,delivered,6a44762a63d9e483edd4c66b,,"",,NOT_IN_BROMA,-,-,false,false
+"A Girl in Everyone",45030,delivered,6a448f0363d9e483edd4c671,,"",,NOT_IN_BROMA,-,-,false,false
+"Kaun Disa Me Leke Chala Re Batuhiya",45025,delivered,6a44a2d463d9e483edd4c677,,"",,NOT_IN_BROMA,-,-,false,false
+"Aakashai Ma Chil Udyo Fanana",45027,cancelled,6a44a5bb63d9e483edd4c680,,"",,NOT_IN_BROMA,-,-,false,false
+"Aaj Pahli Baar",45029,delivered,6a44a6af63d9e483edd4c683,,"",,NOT_IN_BROMA,-,-,false,false
+"Aakashaima Chil Udyo Dharti Ma Chaya",42869,cancelled,6a44a93963d9e483edd4c689,,"Release deleted by admin",,NOT_IN_BROMA,-,-,false,false
+"Aaj RuswaTari Galiyon",46485,failed,6a44a9b763d9e483edd4c68c,,"Missing Broma outlet ids",,NOT_IN_BROMA,-,-,false,false
+"Bidesh Jane Mayalu",42864,cancelled,6a44b12f63d9e483edd4c6e2,,"Release deleted by admin",,NOT_IN_BROMA,-,-,false,false
+"Birata Ko Chino",42863,cancelled,6a44b28663d9e483edd4c6e5,,"Release deleted by admin",,NOT_IN_BROMA,-,-,false,false
+"Atariya Pe Lotan Kabootar Re",46944,failed,6a44b29c63d9e483edd4c6e8,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Aapke Pyaar Mein Hum",46945,failed,6a44b2f263d9e483edd4c6eb,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Leto Ayeho Hame Sapnoki Gaon Mein",46946,failed,6a44b3b963d9e483edd4c6ee,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Chari Udyo Badal Chuna Lai",42856,cancelled,6a44b42563d9e483edd4c6f1,,"Release deleted by admin",,NOT_IN_BROMA,-,-,false,false
+"Aati Hai To Ch",46947,failed,6a44b65863d9e483edd4c6fd,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Aayega Maza Ab",46948,failed,6a44bbfe63d9e483edd4c70b,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Aayegi Har Pal Tujhe Meri",46949,failed,6a44be6263d9e483edd4c70e,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Aayegi Har Pal Tujhe",46950,failed,6a44c14763d9e483edd4c711,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Aayegi Har Pal",46951,failed,6a44c4bb63d9e483edd4c71b,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Ek Pardesi Mera Dil Le Gaya",46954,failed,6a44b61f63d9e483edd4c6fa,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Aap ka aana dil mein",46955,failed,6a44add563d9e483edd4c69b,,"Missing Broma outlet ids",BSON_FIXED,NOT_IN_BROMA,-,-,false,false
+"Yeh Reshmi Zulfein",46479,failed,6a44aec163d9e483edd4c69e,,"Missing Broma outlet ids",,NOT_IN_BROMA,-,-,false,false
+"Mere Khwabon Mein",45085,delivered,6a44aedc63d9e483edd4c6a1,,"",,NOT_IN_BROMA,-,-,false,false
+"Aap Ka Aana Dil",46943,failed,6a44b02a63d9e483edd4c6a7,,"Missing Broma outlet ids",BSON_FIXED,IN_BROMA_DRAFTS,draft,,true,false
+"Tere Mathe Ke Kumkum Ko",45086,delivered,6a44b02c63d9e483edd4c6a8,,"",,NOT_IN_BROMA,-,-,false,false
+"Yeh Mera Dil Yaar Ka Diwana",42768,delivered,6a43d93a63d9e483edd4c650,,"",,NOT_IN_BROMA,-,-,false,false
+"Ya Nabi Sab Karam Hai Tumhara",42767,delivered,6a43e33c63d9e483edd4c653,,"",,NOT_IN_BROMA,-,-,false,false
+"Kah Dena Hasnain Se Salam",42750,delivered,6a43e41563d9e483edd4c656,,"",,NOT_IN_BROMA,-,-,false,false
+"Duniya Banane",42733,delivered,6a43be5263d9e483edd4c640,,"",,NOT_IN_BROMA,-,-,false,false
+"Dil Ki Baat Kahi",42722,delivered,6a43c0ef63d9e483edd4c643,,"",,NOT_IN_BROMA,-,-,false,false
+"Sham Hai Dhua Dhua",42711,cancelled,6a43b9b463d9e483edd4c633,,"",,NOT_IN_BROMA,-,-,false,false
+"Bassstormer",42700,delivered,6a43b64c63d9e483edd4c630,,"",,NOT_IN_BROMA,-,-,false,false
+"Bata De Uski Ek Jhalak Dikha De",42694,delivered,6a43a75763d9e483edd4c610,,"",,NOT_IN_BROMA,-,-,false,false
+"Mere Mehboob Se Mila De",42692,delivered,6a43a7f863d9e483edd4c613,,"",,NOT_IN_BROMA,-,-,false,false
+"Meri Pahle Ki Girlfriend Ka Pata Batao",42690,delivered,6a43a8a463d9e483edd4c616,,"",,NOT_IN_BROMA,-,-,false,false
+"O Mere Kab Aaega India",42688,delivered,6a43a91e63d9e483edd4c619,,"",,NOT_IN_BROMA,-,-,false,false
+"Hamein Kya Ho Gaya Hai",42681,cancelled,6a439be663d9e483edd4c608,,"",,NOT_IN_BROMA,-,-,false,false
+"Aankhon Mein",42646,delivered,6a434c0563d9e483edd4c5ff,,"",,NOT_IN_BROMA,-,-,false,false
+"Release 30 june test 001",42633,cancelled,6a42c80c15104d8963e2400b,,"",,NOT_IN_BROMA,-,-,false,false
+"Test Release 29 June 003 C",42610,cancelled,6a42b34c0c2965f77a91d6ac,,"",,NOT_IN_BROMA,-,-,false,false
