@@ -39,6 +39,7 @@ export interface IDeliveryJob extends Document {
   retryCount: number;
   deadLettered: boolean;
   hiddenFromOps: boolean;
+  expiresAt?: Date;
   metadata: Record<string, unknown>;
   errorMessage?: string;
   attempts: IDeliveryAttempt[];
@@ -93,6 +94,7 @@ const DeliveryJobSchema = new Schema<IDeliveryJob>(
     retryCount: { type: Number, default: 0 },
     deadLettered: { type: Boolean, default: false, index: true },
     hiddenFromOps: { type: Boolean, default: false, index: true },
+    expiresAt: { type: Date, index: true },
     metadata: { type: Schema.Types.Mixed, default: {} },
     errorMessage: { type: String },
     attempts: { type: [DeliveryAttemptSchema], default: [] },
@@ -111,5 +113,6 @@ DeliveryJobSchema.index({ lockExpiresAt: 1, state: 1 });
 DeliveryJobSchema.index({ providerKey: 1, targetType: 1 });
 DeliveryJobSchema.index({ providerKey: 1, trackId: 1, operation: 1 });
 DeliveryJobSchema.index({ providerKey: 1, releaseId: 1, operation: 1 });
+DeliveryJobSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0 });
 
 export default mongoose.model<IDeliveryJob>('DeliveryJob', DeliveryJobSchema);

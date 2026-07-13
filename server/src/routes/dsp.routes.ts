@@ -60,6 +60,7 @@ router.post('/deliveries/:jobId/retry', protect, authorize([UserRole.ADMIN]), ds
 router.post('/deliveries/:jobId/retry-individual', protect, authorize([UserRole.ADMIN]), dspController.retryIndividualDelivery);
 router.post('/deliveries/:jobId/refresh-status', protect, authorize([UserRole.ADMIN]), dspController.refreshDeliveryStatus);
 router.delete('/deliveries/:jobId/logs', protect, authorize([UserRole.ADMIN]), dspController.clearDeliveryLogs);
+router.post('/deliveries/cleanup', protectAdminOrCronSecret, dspController.cleanupOldDeliveryJobs);
 
 router.post('/rights/claims', protect, authorize([UserRole.ADMIN]), dspController.createRightsClaim);
 router.post('/rights/fingerprint-matches', protect, authorize([UserRole.ADMIN]), dspController.addFingerprintMatch);

@@ -48,6 +48,9 @@ import {
 const BASE_RETRY_DELAY_MS = 15_000;
 const WORKER_LOCK_MS = 5 * 60_000;
 const DEFAULT_WORKER_BATCH_SIZE = 25;
+const TERMINAL_JOB_RETENTION_DAYS = 15;
+const TERMINAL_STATES: DspDeliveryState[] = ['delivered', 'failed', 'cancelled', 'needs_attention'];
+const TERMINAL_STATES_SET = new Set(TERMINAL_STATES);
 const SENSITIVE_CONFIG_KEYS = new Set(['webhookSecret']);
 const ALLOWED_WEBHOOK_STATES: DspDeliveryState[] = [
   'queued',
@@ -633,6 +636,7 @@ class DspDeliveryService {
       $unset: { lockedAt: '', lockedBy: '', lockExpiresAt: '' },
       $push: { events: { state: 'needs_attention', message, source: 'system' } },
     });
+    await this.setJobExpiry(jobId, 'needs_attention');
     const updated = await DeliveryJob.findById(jobId);
     if (updated) {
       try {
@@ -650,7 +654,26 @@ class DspDeliveryService {
       $unset: { lockedAt: '', lockedBy: '', lockExpiresAt: '' },
       $push: { events: { state: 'failed', message, source: 'system' } },
     });
+    await this.setJobExpiry(jobId, 'failed');
     return DeliveryJob.findById(jobId);
+  }
+
+  private async setJobExpiry(jobId: string, state: DspDeliveryState) {
+    if (!TERMINAL_STATES_SET.has(state)) return;
+    await DeliveryJob.findByIdAndUpdate(jobId, {
+      $set: { expiresAt: new Date(Date.now() + TERMINAL_JOB_RETENTION_DAYS * 24 * 60 * 60 * 1000) },
+    });
+  }
+
+  async cleanupOldDeliveryJobs(retentionDays = TERMINAL_JOB_RETENTION_DAYS, dryRun = false) {
+    const cutoff = new Date(Date.now() - retentionDays * 24 * 60 * 60 * 1000);
+    const match = { state: { $in: TERMINAL_STATES }, createdAt: { $lt: cutoff } };
+    const matchingCount = await DeliveryJob.countDocuments(match);
+    if (dryRun) {
+      return { dryRun: true, matchingCount, retentionDays, cutoff: cutoff.toISOString() };
+    }
+    const result = await DeliveryJob.deleteMany(match);
+    return { deletedCount: result.deletedCount, retentionDays, cutoff: cutoff.toISOString() };
   }
 
   private async updateReleaseLifecycle(job: IDeliveryJob, state: string, metadata: Record<string, any> = {}, errorMessage?: string) {
@@ -845,6 +868,7 @@ class DspDeliveryService {
       if (!nextRetryAt) completionUpdate.$unset.nextRetryAt = '';
 
       await DeliveryJob.findByIdAndUpdate(jobId, completionUpdate);
+      await this.setJobExpiry(jobId, finalState);
       await this.updateReleaseLifecycle(job, finalState, {
         ...job.metadata,
         ...connectorMetadata,
@@ -889,6 +913,9 @@ class DspDeliveryService {
           },
         },
       });
+
+      const errorState: DspDeliveryState = needsAttention ? 'needs_attention' : shouldRetry ? 'queued' : 'failed';
+      await this.setJobExpiry(jobId, errorState);
 
       if (needsAttention) {
         await this.updateReleaseLifecycle(job, 'needs_attention', latestMetadata, message);
@@ -1547,6 +1574,7 @@ class DspDeliveryService {
     else update.errorMessage = result.message;
 
     await DeliveryJob.findByIdAndUpdate(jobId, update);
+    await this.setJobExpiry(jobId, result.state);
     try {
       await this.updateReleaseLifecycle(job, result.state, nextMetadata, result.state === 'needs_attention' ? result.message : undefined);
     } catch (lifecycleError) {
@@ -1829,6 +1857,8 @@ class DspDeliveryService {
         lastAttemptAt: '',
       },
     });
+
+    await this.setJobExpiry(jobId, resetState);
 
     if (job.targetType === 'release' && job.releaseId) {
       const releaseUpdate = await mongoose.connection.collection('releases').updateOne(

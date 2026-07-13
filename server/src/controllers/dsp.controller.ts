@@ -332,3 +332,14 @@ export const addFingerprintMatch = async (req: AuthRequest, res: Response): Prom
     errorResponse(res, 'Failed to store fingerprint match', error);
   }
 };
+
+export const cleanupOldDeliveryJobs = async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    const retentionDays = req.body?.retentionDays ? Number(req.body.retentionDays) : undefined;
+    const dryRun = req.body?.dryRun === true;
+    const result = await dspDeliveryService.cleanupOldDeliveryJobs(retentionDays, dryRun);
+    successResponse(res, result, dryRun ? 'Dry-run complete' : 'Old delivery jobs cleaned up');
+  } catch (error) {
+    errorResponse(res, 'Failed to clean up old delivery jobs', error);
+  }
+};
