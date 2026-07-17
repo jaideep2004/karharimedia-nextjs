@@ -1,7 +1,3 @@
-import crypto from 'crypto';
-import fs from 'fs/promises';
-import path from 'path';
-
 type ReleaseLike = Record<string, any> & {
   tracks?: Array<Record<string, any>>;
 };
@@ -13,8 +9,6 @@ type AssetCheck = {
   ok: boolean;
   error?: string;
   warning?: string;
-  sizeBytes?: number;
-  checksumSha256?: string;
 };
 
 type AssetReadiness = {
@@ -24,46 +18,37 @@ type AssetReadiness = {
   warnings: string[];
 };
 
-const AUDIO_EXTENSIONS = new Set(['.mp3', '.wav', '.flac', '.m4a', '.aac']);
-const ARTWORK_EXTENSIONS = new Set(['.jpg', '.jpeg', '.png']);
-const MAX_AUDIO_BYTES = 500 * 1024 * 1024;
-const MAX_ARTWORK_BYTES = 25 * 1024 * 1024;
-
-const SERVER_UPLOADS_DIR = path.join(/*turbopackIgnore: true*/ process.cwd(), 'server', 'uploads');
-
 const firstString = (...values: unknown[]) =>
   values.find((value): value is string => typeof value === 'string' && value.trim().length > 0)?.trim();
 
-function normalizeUploadPath(value?: string) {
-  if (!value) return null;
+function isFilename(value: string): boolean {
+  return !/^https?:\/\//i.test(value) && !value.includes('/') && !value.includes('..');
+}
 
-  if (/^https?:\/\//i.test(value)) {
-    return null;
+function getR2Domain(): string {
+  return process.env.R2_PUBLIC_DOMAIN || process.env.NEXT_PUBLIC_R2_PUBLIC_DOMAIN || '';
+}
+
+function isR2Configured(): boolean {
+  return !!(process.env.R2_ENDPOINT && process.env.R2_ACCESS_KEY_ID && getR2Domain());
+}
+
+async function checkRemoteAsset(kind: 'audio' | 'artwork', owner: string, value: string): Promise<AssetCheck> {
+  const domain = getR2Domain();
+  if (!domain) {
+    return { kind, owner, value, ok: false, error: `${owner}: ${kind} — R2 not configured` };
   }
-
-  const cleaned = value.replace(/\\/g, '/').replace(/^\/+/, '');
-  if (cleaned.startsWith('uploads/')) return cleaned.slice('uploads/'.length);
-  if (cleaned.startsWith('/uploads/')) return cleaned.slice('/uploads/'.length);
-  return cleaned;
-}
-
-function resolveUploadPath(kind: 'audio' | 'artwork', value?: string) {
-  const normalized = normalizeUploadPath(value);
-  if (!normalized) return null;
-
-  const hasDirectory = normalized.includes('/');
-  const relativePath = hasDirectory ? normalized : path.join(kind === 'audio' ? 'tracks' : 'artwork', normalized);
-  const fullPath = path.resolve(/*turbopackIgnore: true*/ SERVER_UPLOADS_DIR, relativePath);
-  const uploadRoot = path.resolve(/*turbopackIgnore: true*/ SERVER_UPLOADS_DIR);
-  if (!fullPath.startsWith(uploadRoot)) return null;
-  return fullPath;
-}
-
-async function checksumFile(filePath: string) {
-  const hash = crypto.createHash('sha256');
-  const data = await fs.readFile(filePath);
-  hash.update(data);
-  return hash.digest('hex');
+  const dir = kind === 'audio' ? 'tracks' : 'artwork';
+  const url = `https://${domain}/${dir}/${value}`;
+  try {
+    const res = await fetch(url, { method: 'HEAD' });
+    if (res.ok) {
+      return { kind, owner, value, ok: true, warning: `${owner}: ${kind} verified on R2` };
+    }
+    return { kind, owner, value, ok: false, error: `${owner}: ${kind} not found on R2` };
+  } catch {
+    return { kind, owner, value, ok: false, error: `${owner}: ${kind} — cannot reach R2` };
+  }
 }
 
 async function checkLocalAsset(kind: 'audio' | 'artwork', owner: string, value?: string): Promise<AssetCheck> {
@@ -71,43 +56,19 @@ async function checkLocalAsset(kind: 'audio' | 'artwork', owner: string, value?:
     return { kind, owner, ok: false, error: `${owner}: missing ${kind}` };
   }
 
-  const filePath = resolveUploadPath(kind, value);
-  if (!filePath) {
-    if (/^https?:\/\//i.test(value)) {
-      return {
-        kind,
-        owner,
-        value,
-        ok: true,
-        warning: `${owner}: remote ${kind} URL cannot be checked locally`,
-      };
-    }
-    return { kind, owner, value, ok: false, error: `${owner}: invalid ${kind} path` };
-  }
-
-  try {
-    const stat = await fs.stat(filePath);
-    if (!stat.isFile()) return { kind, owner, value, ok: false, error: `${owner}: ${kind} is not a file` };
-
-    const ext = path.extname(filePath).toLowerCase();
-    const validExt = kind === 'audio' ? AUDIO_EXTENSIONS.has(ext) : ARTWORK_EXTENSIONS.has(ext);
-    if (!validExt) return { kind, owner, value, ok: false, error: `${owner}: unsupported ${kind} type ${ext || 'unknown'}` };
-
-    const maxSize = kind === 'audio' ? MAX_AUDIO_BYTES : MAX_ARTWORK_BYTES;
-    if (stat.size <= 0) return { kind, owner, value, ok: false, error: `${owner}: ${kind} file is empty` };
-    if (stat.size > maxSize) return { kind, owner, value, ok: false, error: `${owner}: ${kind} file is too large` };
-
+  if (/^https?:\/\//i.test(value)) {
     return {
-      kind,
-      owner,
-      value,
+      kind, owner, value,
       ok: true,
-      sizeBytes: stat.size,
-      checksumSha256: await checksumFile(filePath),
+      warning: `${owner}: remote ${kind} URL (not verified locally)`,
     };
-  } catch {
-    return { kind, owner, value, ok: false, error: `${owner}: ${kind} file not found` };
   }
+
+  if (isFilename(value) && isR2Configured()) {
+    return checkRemoteAsset(kind, owner, value);
+  }
+
+  return { kind, owner, value, ok: true, warning: `${owner}: ${kind} path skipped (not on local disk)` };
 }
 
 export async function validateReleaseAssetsForDelivery(release: ReleaseLike): Promise<AssetReadiness> {

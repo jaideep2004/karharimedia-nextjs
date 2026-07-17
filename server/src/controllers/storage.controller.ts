@@ -1,4 +1,5 @@
-import { Request, Response } from 'express';
+import { Response } from 'express';
+import { AuthRequest } from '../middleware/auth.middleware';
 import { logAudit } from '../services/auditLogger';
 import FileMeta from '../models/fileMeta.model';
 import { r2 } from '../services/storage/r2Provider';
@@ -29,7 +30,7 @@ const DIRECTORY_MAP: Record<string, string> = {
   'knowledge-base': 'knowledge-base',
 };
 
-export const getSignedUrl = async (req: Request, res: Response) => {
+export const getSignedUrl = async (req: AuthRequest, res: Response) => {
   try {
     const { key, operation, expiresInSeconds } = req.body;
     const provider = getProvider();
@@ -56,7 +57,7 @@ export const getSignedUrl = async (req: Request, res: Response) => {
   }
 };
 
-export const getR2SignedUploadUrl = async (req: Request, res: Response) => {
+export const getR2SignedUploadUrl = async (req: AuthRequest, res: Response) => {
   try {
     const { filename, type } = req.body;
     if (!filename || !type) {
@@ -77,7 +78,7 @@ export const getR2SignedUploadUrl = async (req: Request, res: Response) => {
   }
 };
 
-export const multipartStart = async (req: Request, res: Response) => {
+export const multipartStart = async (req: AuthRequest, res: Response) => {
   try {
     const { filename, type, partSize = 20 * 1024 * 1024, parallel = 4 } = req.body;
     if (!filename || !type) {
@@ -101,7 +102,7 @@ export const multipartStart = async (req: Request, res: Response) => {
   }
 };
 
-export const multipartGetPartUrls = async (req: Request, res: Response) => {
+export const multipartGetPartUrls = async (req: AuthRequest, res: Response) => {
   try {
     const { key, uploadId, totalParts } = req.body;
     if (!key || !uploadId || !totalParts) {
@@ -119,7 +120,7 @@ export const multipartGetPartUrls = async (req: Request, res: Response) => {
   }
 };
 
-export const multipartComplete = async (req: Request, res: Response) => {
+export const multipartComplete = async (req: AuthRequest, res: Response) => {
   try {
     const { key, uploadId, parts } = req.body;
     if (!key || !uploadId || !Array.isArray(parts)) {
@@ -136,7 +137,7 @@ export const multipartComplete = async (req: Request, res: Response) => {
   }
 };
 
-export const multipartAbort = async (req: Request, res: Response) => {
+export const multipartAbort = async (req: AuthRequest, res: Response) => {
   try {
     const { key, uploadId } = req.body;
     if (!key || !uploadId) {
@@ -150,7 +151,7 @@ export const multipartAbort = async (req: Request, res: Response) => {
   }
 };
 
-export const saveFileMeta = async (req: Request, res: Response) => {
+export const saveFileMeta = async (req: AuthRequest, res: Response) => {
   try {
     const { key, provider, contentType, size } = req.body;
     const fileMeta = await FileMeta.create({ key, url: key, provider, contentType, size, uploadedBy: req.user?.id });

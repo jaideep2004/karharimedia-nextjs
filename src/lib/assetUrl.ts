@@ -11,7 +11,7 @@ export function getFileUrl(
 ): string {
   if (!filename) return '';
   const dir = DIR_MAP[type] || type;
-  const r2Domain = process.env.NEXT_PUBLIC_R2_PUBLIC_DOMAIN;
+  const r2Domain = process.env.NEXT_PUBLIC_R2_PUBLIC_DOMAIN || process.env.R2_PUBLIC_DOMAIN;
   if (r2Domain) return `https://${r2Domain}/${dir}/${filename}`;
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
   const base = apiUrl.replace(/\/api\/?$/, '').replace(/\/+$/, '');

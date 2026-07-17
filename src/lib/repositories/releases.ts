@@ -328,6 +328,8 @@ export async function listReleasesPage(
     primaryArtist: 1,
     artist: 1,
     territories: 1,
+    artwork: 1,
+    artworkFile: 1,
     artworkUrl: 1,
     stores: 1,
     updatedAt: 1,
