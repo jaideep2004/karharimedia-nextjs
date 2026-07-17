@@ -11,7 +11,7 @@ const excludedPaths = [
   '/favicon.ico',
   '/api',
   '/static',
-  '/_error',
+  '/_error',    
 ];
 
 const HELP_HOST = process.env.NEXT_PUBLIC_HELP_HOST || 'help.karharimedia.com';

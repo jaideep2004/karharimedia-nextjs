@@ -1,19 +1,19 @@
 import { Request, Response } from 'express';
-import { S3Provider } from '../services/storage/s3Provider';
-import { GCSProvider } from '../services/storage/gcsProvider';
 import { logAudit } from '../services/auditLogger';
 import FileMeta from '../models/fileMeta.model';
 import { r2 } from '../services/storage/r2Provider';
 
-// Choose provider based on config/env (example logic)
+// Choose provider based on config/env (example logic) — lazy imports to avoid requiring @google-cloud/storage and aws-sdk
 function getProvider() {
   if (process.env.STORAGE_PROVIDER === 'gcs') {
+    const { GCSProvider } = require('../services/storage/gcsProvider');
     return new GCSProvider({
       projectId: process.env.GCS_PROJECT_ID!,
       keyFilename: process.env.GCS_KEY_FILE!,
       bucket: process.env.GCS_BUCKET!
     });
   }
+  const { S3Provider } = require('../services/storage/s3Provider');
   return new S3Provider({
     accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,

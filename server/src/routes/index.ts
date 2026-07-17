@@ -15,6 +15,7 @@ import dspRoutes from './dsp.routes';
 import supportRoutes from './support.routes';
 import knowledgeBaseRoutes from './knowledgeBase.routes';
 import adminKnowledgeBaseRoutes from './adminKnowledgeBase.routes';
+import storageRoutes from './storage.routes';
 
 const router = Router();
 
@@ -34,5 +35,6 @@ router.use(`${API_PREFIX}/dsp`, dspRoutes);
 router.use(`${API_PREFIX}/support`, supportRoutes);
 router.use(`${API_PREFIX}/knowledge-base`, knowledgeBaseRoutes);
 router.use(`${API_PREFIX}/admin/knowledge-base`, adminKnowledgeBaseRoutes);
+router.use(`${API_PREFIX}/storage`, storageRoutes);
 
 export default router;
