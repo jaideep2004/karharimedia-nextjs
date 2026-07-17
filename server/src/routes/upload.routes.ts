@@ -47,8 +47,6 @@ router.post(
     });
   }
   const filename = file.filename;
-  await uploadToR2(file, 'tracks');
-  const url = getFileUrl(filename, 'audio');
   let acrCloud;
 
   if (isAcrCloudFileScanningConfigured()) {
@@ -66,6 +64,9 @@ router.post(
       lastError: 'ACRCloud 30-second file scanning is not configured'
     };
   }
+
+  await uploadToR2(file, 'tracks');
+  const url = getFileUrl(filename, 'audio');
 
   return res.json({ success: true, filename, originalName: file.originalname, url, acrCloud });
   }
