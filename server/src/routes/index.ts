@@ -36,5 +36,6 @@ router.use(`${API_PREFIX}/support`, supportRoutes);
 router.use(`${API_PREFIX}/knowledge-base`, knowledgeBaseRoutes);
 router.use(`${API_PREFIX}/admin/knowledge-base`, adminKnowledgeBaseRoutes);
 router.use(`${API_PREFIX}/storage`, storageRoutes);
+router.use('/storage', storageRoutes);
 
 export default router;
