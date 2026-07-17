@@ -135,6 +135,9 @@ type ReleaseListOptions = {
   status?: string;
   type?: string;
   search?: string;
+  sortOrder?: 'newest' | 'oldest';
+  dateFrom?: string;
+  dateTo?: string;
 };
 
 export type ReleaseListPage = {
@@ -306,6 +309,17 @@ export async function listReleasesPage(
   const countQuery = buildReleaseListQuery(baseQuery, options, false);
   const collection = releasesCollection(db);
 
+  const sortDir = options.sortOrder === 'oldest' ? 1 : -1;
+  const sortField = 'createdAt';
+
+  if (options.dateFrom || options.dateTo) {
+    const dateClause: Record<string, any> = {};
+    if (options.dateFrom) dateClause.$gte = new Date(options.dateFrom);
+    if (options.dateTo) dateClause.$lte = new Date(options.dateTo);
+    query.createdAt = dateClause;
+    countQuery.createdAt = dateClause;
+  }
+
   const summaryProjection = {
     releaseTitle: 1,
     title: 1,
@@ -345,7 +359,7 @@ export async function listReleasesPage(
           .aggregate<Record<string, any>>(
             [
               { $match: query },
-              { $sort: { createdAt: -1 } },
+              { $sort: { [sortField]: sortDir } },
               { $skip: skip },
               { $limit: limit },
               { $project: summaryProjection },
@@ -355,7 +369,7 @@ export async function listReleasesPage(
           .toArray()
       : collection
           .find(query)
-          .sort({ createdAt: -1 })
+          .sort({ [sortField]: sortDir })
           .skip(skip)
           .limit(limit)
           .allowDiskUse(true)

@@ -1272,4 +1272,32 @@ export const adminAPI = {
       return handleApiError(error);
     }
   },
+
+  getDrafts: async () => {
+    try {
+      const response = await api.get<ApiResponse<any>>('/admin/releases/drafts');
+      const body = response.data;
+      return { success: body?.success, drafts: body?.data?.drafts ?? [], error: body?.error };
+    } catch (error) {
+      return handleApiError(error);
+    }
+  },
+
+  deleteDraft: async (id: string) => {
+    try {
+      const response = await api.delete<ApiResponse<any>>(`/admin/releases/drafts?id=${encodeURIComponent(id)}`);
+      return response.data;
+    } catch (error) {
+      return handleApiError(error);
+    }
+  },
+
+  deleteOldDrafts: async (olderThanDays: number) => {
+    try {
+      const response = await api.delete<ApiResponse<any>>(`/admin/releases/drafts?olderThanDays=${olderThanDays}`);
+      return response.data;
+    } catch (error) {
+      return handleApiError(error);
+    }
+  },
 };

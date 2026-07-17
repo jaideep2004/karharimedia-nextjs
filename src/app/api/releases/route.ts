@@ -100,7 +100,7 @@ export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url);
     const requestedUserId = searchParams.get('userId');
     const summary = searchParams.get('summary') === '1';
-    const hasPagination = searchParams.has('page') || searchParams.has('limit') || searchParams.has('status') || searchParams.has('type') || searchParams.has('search');
+    const hasPagination = searchParams.has('page') || searchParams.has('limit') || searchParams.has('status') || searchParams.has('type') || searchParams.has('search') || searchParams.has('sort') || searchParams.has('dateFrom') || searchParams.has('dateTo');
     const isAdminLike = user.role === 'admin' || user.role === 'subadmin';
     const query = isAdminLike
       ? requestedUserId
@@ -115,6 +115,9 @@ export async function GET(req: NextRequest) {
         status: searchParams.get('status') || undefined,
         type: searchParams.get('type') || undefined,
         search: searchParams.get('search') || undefined,
+        sortOrder: (searchParams.get('sort') as 'newest' | 'oldest') || undefined,
+        dateFrom: searchParams.get('dateFrom') || undefined,
+        dateTo: searchParams.get('dateTo') || undefined,
       });
       return NextResponse.json({ success: true, releases: result.releases, pagination: result.pagination, counts: result.counts });
     }

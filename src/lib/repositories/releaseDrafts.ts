@@ -95,3 +95,38 @@ export async function deleteReleaseDraftForUser(
 ) {
   return releaseDraftsCollection(db).deleteOne(draftIdentityQuery(ownerUserId, draftId));
 }
+
+export async function listAllReleaseDrafts(db: Db) {
+  return releaseDraftsCollection(db)
+    .aggregate<ReleaseDraftDocument & { ownerEmail?: string; ownerName?: string }>([
+      {
+        $addFields: {
+          ownerUserIdObj: { $convert: { input: '$ownerUserId', to: 'objectId', onError: null, onNull: null } },
+        },
+      },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'ownerUserIdObj',
+          foreignField: '_id',
+          as: 'owner',
+        },
+      },
+      { $unwind: { path: '$owner', preserveNullAndEmptyArrays: true } },
+      {
+        $addFields: {
+          ownerEmail: '$owner.email',
+          ownerName: { $ifNull: ['$owner.name', '$owner.artistName', 'Unknown'] },
+        },
+      },
+      { $project: { owner: 0, ownerUserIdObj: 0 } },
+      { $sort: { updatedAt: -1, createdAt: -1 } },
+    ])
+    .toArray();
+}
+
+export async function deleteReleaseDraftById(db: Db, draftId: string) {
+  const _id = ObjectId.isValid(draftId) ? new ObjectId(draftId) : undefined;
+  if (!_id) return null;
+  return releaseDraftsCollection(db).deleteOne({ _id });
+}

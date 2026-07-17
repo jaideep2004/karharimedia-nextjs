@@ -26,18 +26,34 @@ import {
   TablePagination,
   TextField,
   alpha,
+  IconButton,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+  InputLabel,
+  FormControl,
+  Select,
+  SelectChangeEvent,
 } from '@mui/material';
 import StatusBadge from '@/components/StatusBadge';
 import {
   Album,
+  Sync,
   Link as LinkIcon,
   CheckCircle,
   Pending,
   Cancel,
   MusicNote,
   Search,
-  Sync,
+
   UploadFile,
+  Delete as DeleteIcon,
+  DeleteSweep as DeleteSweepIcon,
+  ArrowUpward,
+  ArrowDownward,
+  EditNote,
 } from '@mui/icons-material';
 import Link from 'next/link';
 import { adminAPI, releaseAPI } from '@/services/api';
@@ -101,8 +117,14 @@ export default function AdminReleasesPage() {
   });
   const [pendingExporting, setPendingExporting] = useState(false);
   const [pendingExportMessage, setPendingExportMessage] = useState('');
-  const [syncingBromaStatuses, setSyncingBromaStatuses] = useState(false);
-  const [syncMessage, setSyncMessage] = useState('');
+  const [sortOrder, setSortOrder] = useState<'newest' | 'oldest'>('newest');
+  const [dateFrom, setDateFrom] = useState('');
+  const [dateTo, setDateTo] = useState('');
+  const [drafts, setDrafts] = useState<any[]>([]);
+  const [draftsLoading, setDraftsLoading] = useState(false);
+  const [deletingDraftId, setDeletingDraftId] = useState<string | null>(null);
+  const [deleteOldDialogOpen, setDeleteOldDialogOpen] = useState(false);
+  const [deleteOldDays, setDeleteOldDays] = useState(90);
   const { mode } = useColorMode();
 
   const [statusFilter, setStatusFilter] = useState<string | null>(null);
@@ -123,9 +145,13 @@ export default function AdminReleasesPage() {
       setTabValue(3);
     } else if (statusFilter === 'rejected') {
       setTabValue(4);
+    } else if (statusFilter === 'drafts') {
+      setTabValue(5);
+      void fetchDrafts();
     } else {
       setTabValue(0);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [statusFilter]);
 
   const statusKeys = ['', 'pending', 'in_process', 'approved', 'rejected'];
@@ -136,9 +162,13 @@ export default function AdminReleasesPage() {
   }, [searchTerm]);
 
   useEffect(() => {
+    if (tabValue === 5) {
+      void fetchDrafts();
+      return;
+    }
     void fetchReleases();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, rowsPerPage, tabValue, typeFilter, debouncedSearchTerm]);
+  }, [page, rowsPerPage, tabValue, typeFilter, debouncedSearchTerm, sortOrder, dateFrom, dateTo]);
 
   const fetchReleases = async () => {
     try {
@@ -151,6 +181,9 @@ export default function AdminReleasesPage() {
         status: statusKeys[tabValue] || undefined,
         type: typeFilter !== 'all' ? typeFilter : undefined,
         search: debouncedSearchTerm || undefined,
+        sort: sortOrder,
+        dateFrom: dateFrom || undefined,
+        dateTo: dateTo || undefined,
       });
       if (response && response.success) {
         const data = Array.isArray(response.data) ? response.data : [];
@@ -180,31 +213,54 @@ export default function AdminReleasesPage() {
     }
   };
 
-  const handleSyncBromaStatuses = async () => {
+  const fetchDrafts = async () => {
     try {
-      setSyncingBromaStatuses(true);
-      setSyncMessage('');
-      const response = await adminAPI.syncBromaReleaseStatuses({
-        limit: 150,
-      });
-      if (!response?.success) {
-        throw new Error(response?.error || response?.message || 'Failed to sync Broma statuses');
+      setDraftsLoading(true);
+      const response = await adminAPI.getDrafts();
+      if (response?.success) {
+        setDrafts(response.drafts || []);
       }
-      const result = response.data || {};
-      setSyncMessage(
-        `Broma sync checked ${result.checked || 0}: ${result.approved || 0} approved, ${result.rejected || 0} rejected, ${result.stillProcessing || 0} still processing.`
-      );
-      await fetchReleases();
-    } catch (err) {
-      setSyncMessage(err instanceof Error ? err.message : 'Failed to sync Broma statuses');
+    } catch {
+      setDrafts([]);
     } finally {
-      setSyncingBromaStatuses(false);
+      setDraftsLoading(false);
+    }
+  };
+
+  const handleDeleteDraft = async (draftId: string) => {
+    setDeletingDraftId(draftId);
+    try {
+      await adminAPI.deleteDraft(draftId);
+      setDrafts((prev) => prev.filter((d) => d._id !== draftId));
+    } catch {
+      // ignore
+    } finally {
+      setDeletingDraftId(null);
+    }
+  };
+
+  const handleDeleteOldDrafts = async () => {
+    try {
+      setDeleteOldDialogOpen(false);
+      const response = await adminAPI.deleteOldDrafts(deleteOldDays);
+      if (response?.success) {
+        await fetchDrafts();
+      }
+    } catch {
+      // ignore
     }
   };
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
-    if (newValue === 5) {
+    if (newValue === 6) {
       router.push('/admin/export');
+      return;
+    }
+    if (newValue === 5) {
+      setTabValue(5);
+      setPage(0);
+      router.push('/admin/releases?status=drafts');
+      void fetchDrafts();
       return;
     }
     setTabValue(newValue);
@@ -266,6 +322,7 @@ export default function AdminReleasesPage() {
     { label: 'In Process', count: inProcessCount, icon: <Sync fontSize="small" />, color: '#0ea5e9' },
     { label: 'Approved', count: approvedCount, icon: <CheckCircle fontSize="small" />, color: '#10b981' },
     { label: 'Rejected', count: rejectedCount, icon: <Cancel fontSize="small" />, color: '#ef4444' },
+    { label: 'Drafts', count: drafts.length || null, icon: <EditNote fontSize="small" />, color: '#8b5cf6' },
     { label: 'Export Catalog', count: null, icon: <UploadFile fontSize="small" />, color: '#0ea5e9' },
   ];
 
@@ -365,7 +422,9 @@ export default function AdminReleasesPage() {
                     ? 'rgba(255,255,255,0.045)'
                     : 'rgba(15,23,42,0.045)',
                 color: tabValue === index
-                  ? '#fff'
+                  ? mode === 'dark' && index === 0
+                    ? '#000'
+                    : '#fff'
                   : mode === 'dark'
                     ? 'rgba(255,255,255,0.78)'
                     : 'rgba(15,23,42,0.76)',
@@ -374,7 +433,7 @@ export default function AdminReleasesPage() {
                 transition: 'transform 160ms ease, background-color 160ms ease, color 160ms ease, box-shadow 160ms ease',
                 '&.Mui-selected': {
                   bgcolor: item.color,
-                  color: '#fff',
+                  color: mode === 'dark' && index === 0 ? '#000' : '#fff',
                   opacity: 1,
                 },
                 '&:hover': {
@@ -409,15 +468,37 @@ export default function AdminReleasesPage() {
               ),
             }}
           />
-          <Button
-            variant="outlined"
-            startIcon={syncingBromaStatuses ? <CircularProgress size={16} color="inherit" /> : <Sync />}
-            onClick={handleSyncBromaStatuses}
-            disabled={syncingBromaStatuses || inProcessCount === 0}
-            sx={{ minHeight: 40, whiteSpace: 'nowrap', px: 2 }}
-          >
-            {syncingBromaStatuses ? 'Syncing' : 'Sync Broma'}
-          </Button>
+          {tabValue < 5 ? (
+            <>
+              <Button
+                variant="outlined"
+                onClick={() => setSortOrder((s) => (s === 'newest' ? 'oldest' : 'newest'))}
+                startIcon={sortOrder === 'newest' ? <ArrowUpward fontSize="small" /> : <ArrowDownward fontSize="small" />}
+                size="small"
+                sx={{ minHeight: 40, whiteSpace: 'nowrap', px: 2, minWidth: 150 }}
+              >
+                {sortOrder === 'newest' ? 'Newest First' : 'Oldest First'}
+              </Button>
+              <TextField
+                type="date"
+                label="From"
+                value={dateFrom}
+                onChange={(e) => { setDateFrom(e.target.value); resetPage(); }}
+                size="small"
+                InputLabelProps={{ shrink: true }}
+                sx={{ minWidth: 130, '& input': { fontSize: '0.8rem', py: 0.75 } }}
+              />
+              <TextField
+                type="date"
+                label="To"
+                value={dateTo}
+                onChange={(e) => { setDateTo(e.target.value); resetPage(); }}
+                size="small"
+                InputLabelProps={{ shrink: true }}
+                sx={{ minWidth: 130, '& input': { fontSize: '0.8rem', py: 0.75 } }}
+              />
+            </>
+          ) : null}
           <TextField
             select
             label="Type"
@@ -464,16 +545,6 @@ export default function AdminReleasesPage() {
           </Alert>
         ) : null}
 
-        {syncMessage ? (
-          <Alert
-            severity={syncMessage.toLowerCase().includes('failed') ? 'error' : 'success'}
-            sx={{ mx: 1.5, mb: 1.5 }}
-            onClose={() => setSyncMessage('')}
-          >
-            {syncMessage}
-          </Alert>
-        ) : null}
-
         <TabPanel value={tabValue} index={0}>
           {renderReleasesTable()}
         </TabPanel>
@@ -489,9 +560,139 @@ export default function AdminReleasesPage() {
         <TabPanel value={tabValue} index={4}>
           {renderReleasesTable()}
         </TabPanel>
+        <TabPanel value={tabValue} index={5}>
+          {renderDraftsTable()}
+        </TabPanel>
       </Paper>
     </Box>
   );
+
+  function renderDraftsTable() {
+    if (draftsLoading) {
+      return (
+        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', py: 8 }}>
+          <CircularProgress />
+        </Box>
+      );
+    }
+
+    if (drafts.length === 0) {
+      return (
+        <Box sx={{ py: 8, textAlign: 'center' }}>
+          <EditNote sx={{ fontSize: 48, color: 'text.secondary', mb: 2 }} />
+          <Typography variant="h6" color="text.secondary">No drafts found</Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+            There are no saved drafts across all users.
+          </Typography>
+        </Box>
+      );
+    }
+
+    return (
+      <Box sx={{ px: 0 }}>
+        <Stack direction="row" spacing={1.5} sx={{ mb: 2, justifyContent: 'flex-end' }}>
+          <Button
+            variant="outlined"
+            color="error"
+            startIcon={<DeleteSweepIcon />}
+            onClick={() => setDeleteOldDialogOpen(true)}
+            size="small"
+          >
+            Delete Old Drafts
+          </Button>
+        </Stack>
+        <TableContainer
+          sx={{
+            border: '1px solid',
+            borderColor: mode === 'dark' ? 'rgba(255,255,255,0.08)' : 'rgba(15,23,42,0.08)',
+            borderRadius: '22px',
+            overflowX: 'auto',
+            bgcolor: mode === 'dark' ? 'rgba(11,16,32,0.32)' : 'rgba(255,255,255,0.72)',
+          }}
+        >
+          <Table size="small" sx={{ minWidth: 900 }}>
+            <TableHead>
+              <TableRow>
+                <TableCell sx={{ fontWeight: 600 }}>User</TableCell>
+                <TableCell sx={{ fontWeight: 600 }}>Title</TableCell>
+                <TableCell sx={{ fontWeight: 600 }}>Created</TableCell>
+                <TableCell sx={{ fontWeight: 600 }}>Updated</TableCell>
+                <TableCell align="right" sx={{ fontWeight: 600 }}>Actions</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {drafts.map((draft) => (
+                <TableRow
+                  key={draft._id}
+                  sx={{
+                    '&:hover': {
+                      backgroundColor: mode === 'dark' ? 'rgba(255, 255, 255, 0.04)' : 'rgba(0, 0, 0, 0.04)',
+                    },
+                  }}
+                >
+                  <TableCell>
+                    <Typography variant="body2" fontWeight={700}>
+                      {draft.ownerName || 'Unknown'}
+                    </Typography>
+                    <Typography variant="caption" color="text.secondary">
+                      {draft.ownerEmail || ''}
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography variant="body2">{draft.title || 'Untitled'}</Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography variant="body2" color="text.secondary">
+                      {draft.createdAt ? formatDate(draft.createdAt) : '—'}
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography variant="body2" color="text.secondary">
+                      {draft.updatedAt ? formatDate(draft.updatedAt) : '—'}
+                    </Typography>
+                  </TableCell>
+                  <TableCell align="right">
+                    <IconButton
+                      size="small"
+                      color="error"
+                      onClick={() => handleDeleteDraft(draft._id)}
+                      disabled={deletingDraftId === draft._id}
+                    >
+                      {deletingDraftId === draft._id ? <CircularProgress size={18} /> : <DeleteIcon fontSize="small" />}
+                    </IconButton>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+
+        <Dialog open={deleteOldDialogOpen} onClose={() => setDeleteOldDialogOpen(false)}>
+          <DialogTitle>Delete old drafts</DialogTitle>
+          <DialogContent>
+            <DialogContentText sx={{ mb: 2 }}>
+              Delete drafts that haven&apos;t been updated in more than the specified number of days.
+            </DialogContentText>
+            <TextField
+              autoFocus
+              label="Older than (days)"
+              type="number"
+              fullWidth
+              value={deleteOldDays}
+              onChange={(e) => setDeleteOldDays(Number(e.target.value))}
+              slotProps={{ htmlInput: { min: 1 } }}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setDeleteOldDialogOpen(false)}>Cancel</Button>
+            <Button variant="contained" color="error" onClick={handleDeleteOldDrafts}>
+              Delete
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </Box>
+    );
+  }
 
   function renderReleasesTable() {
     if (loading) {
