@@ -67,7 +67,6 @@ export function buildAssetDocumentsFromTrack(track: Record<string, any>) {
       type: 'audio',
       storageProvider: getStorageProvider(audio),
       path: /^https?:\/\//i.test(audio) ? undefined : audio,
-      url: /^https?:\/\//i.test(audio) ? audio : asString(legacy.audioUrl) || undefined,
       createdAt: now,
       updatedAt: now,
     });
@@ -82,7 +81,6 @@ export function buildAssetDocumentsFromTrack(track: Record<string, any>) {
       type: 'artwork',
       storageProvider: getStorageProvider(artwork),
       path: /^https?:\/\//i.test(artwork) ? undefined : artwork,
-      url: /^https?:\/\//i.test(artwork) ? artwork : asString(legacy.artworkUrl) || undefined,
       createdAt: now,
       updatedAt: now,
     });

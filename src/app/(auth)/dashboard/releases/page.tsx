@@ -25,6 +25,7 @@ import {
   EditNote,
   DeleteOutline,
 } from '@mui/icons-material';
+import StatusBadge from '@/components/StatusBadge';
 import Link from 'next/link';
 import AuthGuard from '@/components/AuthGuard';
 import { PremiumHeader, premiumSurfaceSx } from '@/components/premium/PremiumSurface';
@@ -272,32 +273,6 @@ function ReleasesContent() {
   const getTrackCount = (release: any) =>
     Number(release.trackCount ?? (Array.isArray(release.tracks) ? release.tracks.length : 0));
 
-  const getStatusChip = (status: string) => {
-    const normalized = getNormalizedReleaseStatus(status);
-    const map: Record<string, { color: string; bg: string }> = {
-      draft: { color: '#94a3b8', bg: isDark ? 'rgba(148,163,184,0.14)' : 'rgba(100,116,139,0.10)' },
-      approved: { color: '#10b981', bg: isDark ? 'rgba(16,185,129,0.12)' : 'rgba(16,185,129,0.08)' },
-      in_process: { color: '#0ea5e9', bg: isDark ? 'rgba(14,165,233,0.14)' : 'rgba(14,165,233,0.09)' },
-      pending: { color: '#f59e0b', bg: isDark ? 'rgba(245,158,11,0.12)' : 'rgba(245,158,11,0.08)' },
-      rejected: { color: '#ef4444', bg: isDark ? 'rgba(239,68,68,0.12)' : 'rgba(239,68,68,0.08)' },
-    };
-    const s = map[normalized] || map.pending;
-    const label = getReleaseStatusLabel(status);
-    return (
-      <Box
-        sx={{
-          display: 'inline-flex', alignItems: 'center', gap: 0.5,
-          px: 1.25, py: 0.35, borderRadius: '6px',
-          bgcolor: s.bg, color: s.color,
-          fontSize: '0.72rem', fontWeight: 600,
-        }}
-      >
-        <Box sx={{ width: 6, height: 6, borderRadius: '50%', bgcolor: s.color }} />
-        {label}
-      </Box>
-    );
-  };
-
   const renderDSPIcons = (stores: string[]) => {
     if (!Array.isArray(stores) || stores.length === 0) return null;
     const maxShow = 5;
@@ -412,7 +387,7 @@ function ReleasesContent() {
             startIcon={<CloudUpload />}
             sx={{
               borderRadius: '10px',
-              background: 'linear-gradient(135deg, #00e7ff 0%, #7b93f9 100%)',
+              background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, #7b93f9 100%)`,
             }}
           >
             Create New Release
@@ -544,7 +519,7 @@ function ReleasesContent() {
 
               {/* Status */}
               <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: { xs: 'flex-start', md: 'flex-start' }, gap: 1 }}>
-                {getStatusChip(release.status)}
+                <StatusBadge status={release.status} />
                 {release.isLocalDraft ? (
                   <Tooltip title="Delete draft">
                     <IconButton

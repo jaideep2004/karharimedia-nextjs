@@ -85,6 +85,24 @@ export default function AdminSettingsPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
 
+  const NOTIFICATION_KEYS = [
+    { key: 'email_on_release_submitted', label: 'Release Submitted' },
+    { key: 'email_on_release_approved', label: 'Release Approved' },
+    { key: 'email_on_release_rejected', label: 'Release Rejected' },
+    { key: 'email_on_gs1_upc_assigned', label: 'GS1 UPC Assigned' },
+    { key: 'email_on_gs1_upc_failed', label: 'GS1 UPC Assignment Failed' },
+    { key: 'email_on_account_created', label: 'Account Created (Self-Registration)' },
+    { key: 'email_on_signup_completed', label: 'Signup Completed (Mobile)' },
+    { key: 'email_on_kyc_submitted', label: 'KYC Submitted' },
+    { key: 'email_on_kyc_reviewed', label: 'KYC Approved/Rejected' },
+    { key: 'email_on_profile_updated', label: 'Profile Updated' },
+    { key: 'email_on_admin_user_created', label: 'Admin Created User' },
+    { key: 'email_on_admin_user_updated', label: 'Admin Updated User' },
+  ] as const;
+  const [emailToggles, setEmailToggles] = useState<Record<string, boolean>>(() =>
+    Object.fromEntries(NOTIFICATION_KEYS.map((n) => [n.key, true]))
+  );
+
   useEffect(() => {
     if (isAdmin) {
       fetchSettings();
@@ -118,6 +136,13 @@ export default function AdminSettingsPage() {
         minPayoutAmount: Number(byKey.get('minPayoutAmount') || 100),
         maxUploadSize: Number(byKey.get('maxUploadSize') || prev.maxUploadSize),
       }));
+      setEmailToggles((prev) => {
+        const next = { ...prev };
+        for (const { key } of NOTIFICATION_KEYS) {
+          if (byKey.has(key)) next[key] = byKey.get(key) === true;
+        }
+        return next;
+      });
     } catch (error) {
       console.error('Error fetching settings:', error);
       toast.error('Failed to load settings');
@@ -282,7 +307,10 @@ export default function AdminSettingsPage() {
         ['minPayoutAmount', settings.minPayoutAmount],
         ['maxUploadSize', Math.min(200, Math.max(1, Number(settings.maxUploadSize) || 1))],
       ] as const;
-      const responses = await Promise.all(writes.map(([key, value]) => adminAPI.updateSetting(key, value)));
+      const notificationWrites = NOTIFICATION_KEYS.map(({ key }) => [key, emailToggles[key]] as const);
+      const responses = await Promise.all(
+        [...writes, ...notificationWrites].map(([key, value]) => adminAPI.updateSetting(key, value))
+      );
 
       if (responses.some((response) => !response.success)) {
         throw new Error('Failed to update one or more settings');
@@ -359,7 +387,7 @@ export default function AdminSettingsPage() {
             '& .MuiTabs-indicator': {
               height: 3,
               borderRadius: 999,
-              backgroundColor: mode === 'dark' ? '#9bafff' : '#00e7ff',
+              backgroundColor: mode === 'dark' ? '#9bafff' : theme.palette.primary.main,
             },
           }}
         >
@@ -477,9 +505,38 @@ export default function AdminSettingsPage() {
                     color="primary"
                   />
                 }
-                label="Enable Email Notifications"
+                label="Enable Email Notifications (master switch)"
                 sx={{ mt: 1, display: 'block' }}
               />
+              <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+                When enabled, the individual toggles below control which specific emails are sent.
+              </Typography>
+
+              <Divider sx={{ my: 2 }} />
+              <Typography variant="subtitle2" fontWeight={700} sx={{ mb: 1.5 }}>
+                Per-Notification Toggles
+              </Typography>
+              <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+                Each toggle independently enables or disables a specific email notification. Disabled emails are silently skipped.
+              </Typography>
+
+              {NOTIFICATION_KEYS.map(({ key, label }) => (
+                <FormControlLabel
+                  key={key}
+                  control={
+                    <Switch
+                      checked={emailToggles[key]}
+                      onChange={(e) =>
+                        setEmailToggles((prev) => ({ ...prev, [key]: e.target.checked }))
+                      }
+                      color="primary"
+                      disabled={saving}
+                    />
+                  }
+                  label={label}
+                  sx={{ display: 'block', ml: 0 }}
+                />
+              ))}
             </Box>
           </TabPanel>
 

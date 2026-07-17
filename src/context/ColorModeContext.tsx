@@ -64,6 +64,10 @@ export function ColorModeProvider({ children }: { children: React.ReactNode }) {
       const textPrimary = isDark ? '#e9fbff' : '#111827';
       const textSecondary = isDark ? 'rgba(216, 247, 255, 0.68)' : '#536173';
       const divider = isDark ? 'rgba(0, 231, 255, 0.14)' : 'rgba(17, 24, 39, 0.10)';
+      const primaryMain = isDark ? '#00e7ff' : '#0369a1';
+      const primaryLight = isDark ? '#7ad9ff' : '#38bdf8';
+      const primaryDark = isDark ? '#0098c7' : '#0284c7';
+      const primaryRgb = isDark ? '0, 231, 255' : '3, 105, 161';
       const appBackground = isDark
         ? '#08061a'
         : '#f3f8fb';
@@ -76,9 +80,9 @@ export function ColorModeProvider({ children }: { children: React.ReactNode }) {
             'linear-gradient(135deg, #08061a 0%, #100725 45%, #061426 100%)',
           ].join(', ')
         : [
-            'radial-gradient(900px 520px at 78% 18%, rgba(0, 153, 199, 0.11), transparent 62%)',
-            'linear-gradient(rgba(0, 153, 199, 0.06) 1px, transparent 1px)',
-            'linear-gradient(90deg, rgba(0, 153, 199, 0.06) 1px, transparent 1px)',
+            'radial-gradient(900px 520px at 78% 18%, rgba(3, 105, 161, 0.11), transparent 62%)',
+            'linear-gradient(rgba(3, 105, 161, 0.06) 1px, transparent 1px)',
+            'linear-gradient(90deg, rgba(3, 105, 161, 0.06) 1px, transparent 1px)',
             '#f3f8fb',
           ].join(', ');
 
@@ -86,10 +90,10 @@ export function ColorModeProvider({ children }: { children: React.ReactNode }) {
         palette: {
           mode,
           primary: {
-            main: '#00e7ff',
-            light: '#7ad9ff',
-            dark: '#0098c7',
-            contrastText: '#06121b',
+            main: primaryMain,
+            light: primaryLight,
+            dark: primaryDark,
+            contrastText: isDark ? '#06121b' : '#ffffff',
           },
           secondary: {
             main: '#d6d70d',
@@ -113,9 +117,9 @@ export function ColorModeProvider({ children }: { children: React.ReactNode }) {
             dark: '#be233d',
           },
           info: {
-            main: '#00b8d9',
-            light: '#6feaff',
-            dark: '#007993',
+            main: isDark ? '#00b8d9' : '#0284c7',
+            light: isDark ? '#6feaff' : '#7dd3fc',
+            dark: isDark ? '#007993' : '#0369a1',
           },
           background: {
             default: appBackground,
@@ -174,7 +178,7 @@ export function ColorModeProvider({ children }: { children: React.ReactNode }) {
                 color: textPrimary,
               },
               '::selection': {
-                backgroundColor: isDark ? 'rgba(0, 231, 255, 0.34)' : 'rgba(0, 153, 199, 0.22)',
+                backgroundColor: isDark ? 'rgba(0, 231, 255, 0.34)' : `rgba(${primaryRgb}, 0.22)`,
               },
             },
           },
@@ -199,11 +203,11 @@ export function ColorModeProvider({ children }: { children: React.ReactNode }) {
               contained: {
                 boxShadow: isDark
                   ? '0 12px 28px rgba(0, 231, 255, 0.24)'
-                  : '0 12px 24px rgba(0, 153, 199, 0.16)',
+                  : `0 12px 24px rgba(${primaryRgb}, 0.16)`,
                 '&:hover': {
                   boxShadow: isDark
                     ? '0 18px 36px rgba(0, 231, 255, 0.32)'
-                    : '0 16px 28px rgba(0, 153, 199, 0.22)',
+                    : `0 16px 28px rgba(${primaryRgb}, 0.22)`,
                 },
               },
               outlined: {
@@ -265,7 +269,7 @@ export function ColorModeProvider({ children }: { children: React.ReactNode }) {
                   borderColor: divider,
                 },
                 '&:hover .MuiOutlinedInput-notchedOutline': {
-                  borderColor: isDark ? 'rgba(0, 231, 255, 0.38)' : 'rgba(0, 153, 199, 0.3)',
+                  borderColor: isDark ? 'rgba(0, 231, 255, 0.38)' : `rgba(${primaryRgb}, 0.3)`,
                 },
               },
               input: {

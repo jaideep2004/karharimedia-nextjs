@@ -167,7 +167,7 @@ export default function SignupPage() {
           color: authTokens.text,
         }}
       >
-        <CircularProgress sx={{ color: '#00e7ff' }} />
+        <CircularProgress sx={{ color: theme.palette.primary.main }} />
       </Box>
     );
   }
@@ -338,7 +338,7 @@ export default function SignupPage() {
                     key={point}
                     sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}
                   >
-                    <CheckCircle sx={{ color: '#00e7ff', fontSize: 18, flexShrink: 0 }} />
+                    <CheckCircle sx={{ color: theme.palette.primary.main, fontSize: 18, flexShrink: 0 }} />
                     <Typography sx={{ fontSize: '0.98rem', color: 'var(--auth-panel-text)' }}>
                       {point}
                     </Typography>
@@ -438,7 +438,7 @@ export default function SignupPage() {
                 Already have an account?{' '}
                 <Link
                   href="/login"
-                  style={{ color: '#00e7ff', fontWeight: 700, textDecoration: 'none' }}
+                  style={{ color: theme.palette.primary.main, fontWeight: 700, textDecoration: 'none' }}
                 >
                   Sign in
                 </Link>

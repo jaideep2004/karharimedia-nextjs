@@ -12,6 +12,7 @@ import {
   Skeleton,
   LinearProgress,
 } from '@mui/material';
+import { alpha } from '@mui/material/styles';
 import {
   PlayArrow as PlayArrowIcon,
   Pause as PauseIcon,
@@ -25,6 +26,7 @@ import {
   Sync as SyncIcon,
   Error as ErrorIcon,
 } from '@mui/icons-material';
+import StatusBadge from '@/components/StatusBadge';
 import { useAuth } from '@/context/AppContext';
 import { trackAPI, releaseAPI } from '@/services/api';
 import AuthGuard from '@/components/AuthGuard';
@@ -170,8 +172,8 @@ function DashboardPage() {
       label: 'Total Tracks',
       value: totalTracks,
       icon: <MusicNoteIcon />,
-      color: '#00e7ff',
-      bgColor: isDark ? 'rgba(0, 231, 255, 0.12)' : 'rgba(0, 231, 255, 0.08)',
+      color: theme.palette.primary.main,
+      bgColor: isDark ? alpha(theme.palette.primary.main, 0.12) : alpha(theme.palette.primary.main, 0.08),
     },
     {
       label: 'In Process',
@@ -202,30 +204,6 @@ function DashboardPage() {
       bgColor: isDark ? 'rgba(239, 68, 68, 0.1)' : 'rgba(239, 68, 68, 0.08)',
     },
   ];
-
-  const getStatusChip = (status: string) => {
-    const map: Record<string, { color: string; bg: string }> = {
-      approved: { color: '#10b981', bg: isDark ? 'rgba(16,185,129,0.12)' : 'rgba(16,185,129,0.08)' },
-      in_process: { color: '#0ea5e9', bg: isDark ? 'rgba(14,165,233,0.14)' : 'rgba(14,165,233,0.09)' },
-      pending: { color: '#f59e0b', bg: isDark ? 'rgba(245,158,11,0.12)' : 'rgba(245,158,11,0.08)' },
-      rejected: { color: '#ef4444', bg: isDark ? 'rgba(239,68,68,0.12)' : 'rgba(239,68,68,0.08)' },
-    };
-    const s = map[getNormalizedReleaseStatus(status)] || map.pending;
-    const label = getReleaseStatusLabel(status);
-    return (
-      <Box
-        sx={{
-          display: 'inline-flex', alignItems: 'center', gap: 0.5,
-          px: 1.25, py: 0.35, borderRadius: '6px',
-          bgcolor: s.bg, color: s.color,
-          fontSize: '0.72rem', fontWeight: 600, letterSpacing: '0.02em',
-        }}
-      >
-        <Box sx={{ width: 6, height: 6, borderRadius: '50%', bgcolor: s.color }} />
-        {label}
-      </Box>
-    );
-  };
 
   if (isLoading) {
     return (
@@ -349,8 +327,8 @@ function DashboardPage() {
               endIcon={<ArrowForward sx={{ fontSize: '14px !important' }} />}
               sx={{
                 fontSize: '0.78rem', fontWeight: 600,
-                color: '#00e7ff',
-                '&:hover': { bgcolor: 'rgba(0,231,255,0.06)' },
+                color: theme.palette.primary.main,
+                '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.06) },
               }}
             >
               View All
@@ -414,7 +392,7 @@ function DashboardPage() {
                       {getReleaseTrackCount(release)} tracks · {formatDate(release.createdAt)}
                     </Typography>
                   </Box>
-                  {getStatusChip(release.status)}
+                  <StatusBadge status={release.status} />
                 </Box>
               ))}
             </Box>
@@ -485,7 +463,7 @@ function DashboardPage() {
             </Typography>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
               {[
-                { label: 'Create New Release', href: '/dashboard/upload', icon: <CloudUploadIcon />, color: '#00e7ff' },
+                { label: 'Create New Release', href: '/dashboard/upload', icon: <CloudUploadIcon />, color: theme.palette.primary.main },
                 { label: 'View Releases', href: '/dashboard/releases', icon: <AlbumIcon />, color: '#f59e0b' },
                 { label: 'View Analytics', href: '/dashboard/analytics', icon: <TrendingUp />, color: '#10b981' },
               ].map((action) => (
@@ -542,7 +520,7 @@ function DashboardPage() {
             href="/dashboard/tracks"
             size="small"
             endIcon={<ArrowForward sx={{ fontSize: '14px !important' }} />}
-            sx={{ fontSize: '0.78rem', fontWeight: 600, color: '#00e7ff' }}
+            sx={{ fontSize: '0.78rem', fontWeight: 600, color: theme.palette.primary.main }}
           >
             View All
           </Button>
@@ -562,7 +540,7 @@ function DashboardPage() {
               startIcon={<CloudUploadIcon />}
               sx={{
                 borderRadius: '10px',
-                background: 'linear-gradient(135deg, #00e7ff 0%, #7b93f9 100%)',
+                background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, #7b93f9 100%)`,
               }}
             >
               Create New Release
@@ -632,7 +610,7 @@ function DashboardPage() {
                     {track.genre} · {formatDate(track.createdAt)}
                   </Typography>
                 </Box>
-                {getStatusChip(track.status)}
+                <StatusBadge status={track.status} />
               </Box>
             ))}
           </Box>

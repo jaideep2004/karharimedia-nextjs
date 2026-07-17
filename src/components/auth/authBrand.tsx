@@ -13,9 +13,9 @@ export const AUTH_BACKGROUND = `
 `;
 
 export const AUTH_LIGHT_BACKGROUND = `
-  radial-gradient(900px 520px at 78% 18%, rgba(0, 153, 199, 0.11), transparent 62%),
-  linear-gradient(rgba(0, 153, 199, 0.06) 1px, transparent 1px),
-  linear-gradient(90deg, rgba(0, 153, 199, 0.06) 1px, transparent 1px),
+  radial-gradient(900px 520px at 78% 18%, rgba(3, 105, 161, 0.11), transparent 62%),
+  linear-gradient(rgba(3, 105, 161, 0.06) 1px, transparent 1px),
+  linear-gradient(90deg, rgba(3, 105, 161, 0.06) 1px, transparent 1px),
   #f3f8fb
 `;
 
@@ -39,7 +39,7 @@ export const getAuthTokens = (mode: PaletteMode) => {
       : 'linear-gradient(150deg, rgba(255,255,255,0.94) 0%, rgba(232,251,255,0.92) 46%, rgba(248,250,225,0.96) 100%)',
     panelOverlay: isDark
       ? 'radial-gradient(circle at top right, rgba(0,231,255,0.24), transparent 24%), radial-gradient(circle at bottom left, rgba(214,215,13,0.14), transparent 22%)'
-      : 'radial-gradient(circle at top right, rgba(0,153,199,0.16), transparent 25%), radial-gradient(circle at bottom left, rgba(214,215,13,0.16), transparent 24%)',
+      : 'radial-gradient(circle at top right, rgba(3,105,161,0.16), transparent 25%), radial-gradient(circle at bottom left, rgba(214,215,13,0.16), transparent 24%)',
     surfaceBackground: isDark
       ? AUTH_SURFACE_GRADIENT
       : 'linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,247,252,0.94))',
@@ -48,17 +48,17 @@ export const getAuthTokens = (mode: PaletteMode) => {
     text: isDark ? '#f8fafc' : '#15111a',
     muted: isDark ? 'rgba(226,232,240,0.68)' : 'rgba(64,56,72,0.68)',
     faint: isDark ? 'rgba(255,255,255,0.36)' : 'rgba(49,35,56,0.48)',
-    border: isDark ? 'rgba(0,231,255,0.12)' : 'rgba(0,153,199,0.16)',
+    border: isDark ? 'rgba(0,231,255,0.12)' : 'rgba(3,105,161,0.16)',
     cardBg: isDark ? 'rgba(0,231,255,0.06)' : 'rgba(255,255,255,0.72)',
-    cardBorder: isDark ? 'rgba(0,231,255,0.12)' : 'rgba(0,153,199,0.18)',
+    cardBorder: isDark ? 'rgba(0,231,255,0.12)' : 'rgba(3,105,161,0.18)',
     fieldBg: isDark ? 'rgba(0,231,255,0.035)' : 'rgba(255,255,255,0.82)',
-    fieldBorder: isDark ? 'rgba(0,231,255,0.14)' : 'rgba(0,153,199,0.18)',
-    fieldHoverBorder: isDark ? 'rgba(0,231,255,0.42)' : 'rgba(0,153,199,0.42)',
+    fieldBorder: isDark ? 'rgba(0,231,255,0.14)' : 'rgba(3,105,161,0.18)',
+    fieldHoverBorder: isDark ? 'rgba(0,231,255,0.42)' : 'rgba(3,105,161,0.42)',
     fieldLabel: isDark ? 'rgba(255,255,255,0.58)' : 'rgba(42,35,49,0.68)',
     fieldText: isDark ? '#f8fafc' : '#15111a',
     icon: isDark ? 'rgba(255,255,255,0.42)' : 'rgba(42,35,49,0.58)',
-    divider: isDark ? 'rgba(0,231,255,0.12)' : 'rgba(0,153,199,0.14)',
-    shadow: isDark ? '0 24px 60px rgba(2,8,23,0.42)' : '0 24px 60px rgba(0,153,199,0.12)',
+    divider: isDark ? 'rgba(0,231,255,0.12)' : 'rgba(3,105,161,0.14)',
+    shadow: isDark ? '0 24px 60px rgba(2,8,23,0.42)' : '0 24px 60px rgba(3,105,161,0.12)',
   };
 };
 

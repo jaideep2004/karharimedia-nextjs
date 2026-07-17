@@ -1,4 +1,4 @@
-import mongoose, { Document, Schema } from 'mongoose';
+import mongoose, { Document, Model, Schema } from 'mongoose';
 
 export interface ISettings extends Document {
   key: string;
@@ -6,6 +6,11 @@ export interface ISettings extends Document {
   description?: string;
   createdAt: Date;
   updatedAt: Date;
+}
+
+export interface ISettingsModel extends Model<ISettings> {
+  getSetting(key: string, defaultValue?: any): Promise<any>;
+  setSetting(key: string, value: any, description?: string): Promise<ISettings>;
 }
 
 const settingsSchema = new Schema<ISettings>(
@@ -57,6 +62,6 @@ settingsSchema.statics.setSetting = async function (key: string, value: any, des
   );
 };
 
-const SettingsModel = mongoose.model<ISettings>('Settings', settingsSchema);
+const SettingsModel = mongoose.model<ISettings, ISettingsModel>('Settings', settingsSchema);
 
 export default SettingsModel;

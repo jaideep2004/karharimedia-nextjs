@@ -14,6 +14,7 @@ import {
   Typography,
   useTheme,
 } from '@mui/material';
+import { Theme } from '@mui/material/styles';
 import {
   ArrowForward,
   Email,
@@ -56,20 +57,20 @@ const featureCards = [
   },
 ];
 
-const authFieldSx = {
+const getAuthFieldSx = (theme: Theme) => ({
   '& .MuiOutlinedInput-root': {
     minHeight: 60,
     borderRadius: '18px',
     backgroundColor: 'var(--auth-field-bg, rgba(255,255,255,0.035))',
     '& fieldset': { borderColor: 'var(--auth-field-border, rgba(255,255,255,0.12))' },
     '&:hover fieldset': { borderColor: 'var(--auth-field-hover-border, rgba(237,30,121,0.38))' },
-    '&.Mui-focused fieldset': { borderColor: '#00e7ff' },
+    '&.Mui-focused fieldset': { borderColor: theme.palette.primary.main },
   },
   '& .MuiInputLabel-root': { color: 'var(--auth-field-label, rgba(255,255,255,0.58))' },
-  '& .MuiInputLabel-root.Mui-focused': { color: '#00e7ff' },
+  '& .MuiInputLabel-root.Mui-focused': { color: theme.palette.primary.main },
   '& .MuiInputBase-input': { color: 'var(--auth-field-text, #f8fafc)' },
   '& .MuiSvgIcon-root': { color: 'var(--auth-icon, rgba(255,255,255,0.42))' },
-};
+});
 
 export default function LoginPage() {
   const { login } = useAuth();
@@ -249,7 +250,7 @@ export default function LoginPage() {
                         width: 10,
                         height: 10,
                         borderRadius: '50%',
-                        bgcolor: '#00e7ff',
+                        bgcolor: theme.palette.primary.main,
                         boxShadow: '0 0 0 6px rgba(237,30,121,0.14)',
                         flexShrink: 0,
                       }}
@@ -384,7 +385,7 @@ export default function LoginPage() {
                           </InputAdornment>
                         ),
                       }}
-                      sx={authFieldSx}
+                      sx={getAuthFieldSx(theme)}
                     />
 
                     <TextField
@@ -415,7 +416,7 @@ export default function LoginPage() {
                           </InputAdornment>
                         ),
                       }}
-                      sx={authFieldSx}
+                      sx={getAuthFieldSx(theme)}
                     />
                   </Stack>
 
@@ -439,7 +440,7 @@ export default function LoginPage() {
                     >
                       Secure access for artists and labels
                     </Typography>
-                    <Link href="/forgot-password" style={{ color: '#00e7ff' }}>
+                    <Link href="/forgot-password" style={{ color: theme.palette.primary.main }}>
                       Forgot password?
                     </Link>
                   </Box>
@@ -487,7 +488,7 @@ export default function LoginPage() {
                     >
                       Need an account?
                     </Typography>
-                    <Link href="/signup" style={{ color: '#00e7ff', fontWeight: 700 }}>
+                    <Link href="/signup" style={{ color: theme.palette.primary.main, fontWeight: 700 }}>
                       Create an account
                     </Link>
                   </Box>

@@ -17,7 +17,9 @@ import {
   Tooltip,
   Button,
   Chip,
+  useTheme,
 } from '@mui/material';
+import { alpha } from '@mui/material/styles';
 import {
   Notifications as NotificationsIcon,
   Logout as LogoutIcon,
@@ -40,6 +42,7 @@ import DashboardSearch from '@/components/navigation/DashboardSearch';
 export default function AdminHeader() {
   const router = useRouter();
   const pathname = usePathname();
+  const theme = useTheme();
   const {
     notifications,
     unreadCount,
@@ -260,8 +263,8 @@ export default function AdminHeader() {
                       gap: 1,
                       bgcolor: isUnread
                         ? isDark
-                          ? 'rgba(0,231,255,0.1)'
-                          : 'rgba(0,231,255,0.06)'
+                          ? alpha(theme.palette.primary.main, 0.1)
+                          : alpha(theme.palette.primary.main, 0.06)
                         : 'transparent',
                     }}
                   >

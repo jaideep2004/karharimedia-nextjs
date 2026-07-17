@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { Alert, Box, Button, InputAdornment, Stack, TextField, Typography, useTheme } from '@mui/material';
+import { Theme } from '@mui/material/styles';
 import { Email, KeyboardBackspace } from '@mui/icons-material';
 import {
   AUTH_BUTTON_GRADIENT,
@@ -11,20 +12,20 @@ import {
   getAuthTokens,
 } from '@/components/auth/authBrand';
 
-const authFieldSx = {
+const getAuthFieldSx = (theme: Theme) => ({
   '& .MuiOutlinedInput-root': {
     minHeight: 60,
     borderRadius: '18px',
     backgroundColor: 'var(--auth-field-bg, rgba(255,255,255,0.035))',
     '& fieldset': { borderColor: 'var(--auth-field-border, rgba(255,255,255,0.12))' },
     '&:hover fieldset': { borderColor: 'var(--auth-field-hover-border, rgba(237,30,121,0.38))' },
-    '&.Mui-focused fieldset': { borderColor: '#00e7ff' },
+    '&.Mui-focused fieldset': { borderColor: theme.palette.primary.main },
   },
   '& .MuiInputLabel-root': { color: 'var(--auth-field-label, rgba(255,255,255,0.58))' },
-  '& .MuiInputLabel-root.Mui-focused': { color: '#00e7ff' },
+  '& .MuiInputLabel-root.Mui-focused': { color: theme.palette.primary.main },
   '& .MuiInputBase-input': { color: 'var(--auth-field-text, #f8fafc)' },
   '& .MuiSvgIcon-root': { color: 'var(--auth-icon, rgba(255,255,255,0.42))' },
-};
+});
 
 export default function ForgotPasswordPage() {
   const theme = useTheme();
@@ -112,7 +113,7 @@ export default function ForgotPasswordPage() {
             required
             autoFocus
             fullWidth
-            sx={authFieldSx}
+            sx={getAuthFieldSx(theme)}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -144,7 +145,7 @@ export default function ForgotPasswordPage() {
             href="/login"
             variant="text"
             startIcon={<KeyboardBackspace />}
-            sx={{ color: '#00e7ff', fontWeight: 700 }}
+            sx={{ color: theme.palette.primary.main, fontWeight: 700 }}
           >
             Back to Login
           </Button>

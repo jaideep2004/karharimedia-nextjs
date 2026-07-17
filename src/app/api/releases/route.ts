@@ -10,6 +10,7 @@ import {
   listReleasesWithTracks,
 } from '@/lib/repositories/releases';
 import { buildReleasePolicyProof } from '@/lib/releaseConsent';
+import { getFileUrl } from '@/lib/assetUrl';
 
 function getClientKey(req: NextRequest) {
   return (
@@ -42,8 +43,9 @@ export async function POST(req: NextRequest) {
       body.policyAcceptances,
       user
     );
+    const { artworkUrl, coverUrl, coverArt, audioUrl, fileUrl, ...cleanBody } = body;
     const releasePayload = {
-      ...body,
+      ...cleanBody,
       policyAcceptances,
       policyAcceptanceEvents: [policyAcceptances],
     };
@@ -65,7 +67,7 @@ export async function POST(req: NextRequest) {
         },
         release: {
           title: body.releaseTitle || body.title || 'Untitled release',
-          coverUrl: body.artworkUrl || body.artworkUploadedUrl || body.coverUrl,
+          coverUrl: body.artworkUrl || getFileUrl(body.artwork || body.artworkFile, 'image') || body.coverUrl,
           artist: body.primaryArtist || body.artist || user.artistName || user.name,
           label: body.label,
           genre: body.genre,
@@ -78,7 +80,8 @@ export async function POST(req: NextRequest) {
         },
         actionLabel: 'Review Releases',
         actionUrl: appUrl('/admin/releases?status=pending'),
-      }
+      },
+      'email_on_release_submitted'
     ).catch((error) => console.warn('Release submission email skipped:', error));
 
     return NextResponse.json({ success: true, id: result.insertedId });

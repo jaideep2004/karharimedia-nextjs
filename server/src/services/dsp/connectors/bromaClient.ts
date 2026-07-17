@@ -319,20 +319,29 @@ export class BromaClient {
     if (!source) throw new Error('Broma upload failed: missing file path');
     if (/^https?:\/\//i.test(source)) {
       const localPath = this.resolvePublicUploadUrl(source);
-      return localPath
-        ? this.buildLocalUploadForm(localPath)
-        : this.buildRemoteUploadForm(source, defaultDirectory === 'tracks' ? 'recording.mp3' : 'cover.jpg');
+      if (localPath) {
+        return this.buildLocalUploadForm(localPath, source);
+      }
+      return this.buildRemoteUploadForm(source, defaultDirectory === 'tracks' ? 'recording.mp3' : 'cover.jpg');
     }
 
     const fullPath = this.resolveUploadPath(source, defaultDirectory);
     return this.buildLocalUploadForm(fullPath);
   }
 
-  private async buildLocalUploadForm(fullPath: string) {
-    const data = await fs.readFile(fullPath);
-    const form = new FormData();
-    form.append('file', new Blob([new Uint8Array(data)]), path.basename(fullPath));
-    return form;
+  private async buildLocalUploadForm(fullPath: string, fallbackRemoteUrl?: string) {
+    try {
+      await fs.access(fullPath);
+      const data = await fs.readFile(fullPath);
+      const form = new FormData();
+      form.append('file', new Blob([new Uint8Array(data)]), path.basename(fullPath));
+      return form;
+    } catch {
+      if (fallbackRemoteUrl) {
+        return this.buildRemoteUploadForm(fallbackRemoteUrl, path.basename(fullPath));
+      }
+      throw new Error(`Broma upload failed: file not found at ${fullPath}`);
+    }
   }
 
   private async buildRemoteUploadForm(source: string, fallbackFilename: string) {

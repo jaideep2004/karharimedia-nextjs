@@ -27,6 +27,7 @@ import {
   TextField,
   alpha,
 } from '@mui/material';
+import StatusBadge from '@/components/StatusBadge';
 import {
   Album,
   Link as LinkIcon,
@@ -260,47 +261,13 @@ export default function AdminReleasesPage() {
   };
 
   const tabItems = [
-    { label: 'All', count: counts.all, icon: <Album fontSize="small" />, color: '#00e7ff' },
+    { label: 'All', count: counts.all, icon: <Album fontSize="small" />, color: theme.palette.primary.main },
     { label: 'Pending', count: pendingCount, icon: <Pending fontSize="small" />, color: '#f59e0b' },
     { label: 'In Process', count: inProcessCount, icon: <Sync fontSize="small" />, color: '#0ea5e9' },
     { label: 'Approved', count: approvedCount, icon: <CheckCircle fontSize="small" />, color: '#10b981' },
     { label: 'Rejected', count: rejectedCount, icon: <Cancel fontSize="small" />, color: '#ef4444' },
     { label: 'Export Catalog', count: null, icon: <UploadFile fontSize="small" />, color: '#0ea5e9' },
   ];
-
-  // Get status chip with proper styling
-  const getStatusChip = (status: string) => {
-    const statusConfig: Record<string, { label: string; color: string; icon: React.ReactNode }> = {
-      pending: { label: 'Pending', color: 'warning', icon: <Pending /> },
-      in_process: { label: 'In Process', color: 'info', icon: <Sync /> },
-      approved: { label: 'Approved', color: 'success', icon: <CheckCircle /> },
-      rejected: { label: 'Rejected', color: 'error', icon: <Cancel /> },
-      failed: { label: 'Failed', color: 'error', icon: <Cancel /> },
-    };
-
-    const displayStatus = status === 'failed' ? 'failed' : getNormalizedReleaseStatus(status);
-    const config = statusConfig[displayStatus] || {
-      label: getReleaseStatusLabel(status),
-      color: 'default',
-      icon: null,
-    };
-
-    return (
-      <Chip
-        icon={config.icon}
-        label={config.label}
-        color={config.color as any}
-        size="small"
-        sx={{
-          minWidth: 90,
-          fontWeight: 500,
-          '& .MuiChip-icon': {
-            color: 'inherit',
-          },
-        }}
-      />
-    );
-  };
 
   // Render DSP chips with icons
   const renderDSPChips = (stores: string[]) => {
@@ -648,7 +615,7 @@ export default function AdminReleasesPage() {
                       {release.label || 'N/A'}
                     </Typography>
                   </TableCell>
-                  <TableCell>{getStatusChip(release.status)}</TableCell>
+                  <TableCell><StatusBadge status={release.status} /></TableCell>
                   <TableCell>{renderDSPChips(release.stores || [])}</TableCell>
                   <TableCell>
                     <Typography variant="body2">

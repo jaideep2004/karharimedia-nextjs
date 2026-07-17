@@ -1,5 +1,6 @@
 import { Db, ObjectId, type AnyBulkWriteOperation } from 'mongodb';
 import { asString, getMusicPublishingTrackKey } from '@/lib/musicPublishing';
+import { getFileUrl, extractFilename } from '@/lib/assetUrl';
 import { getNormalizedReleaseStatus, RELEASE_STATUS_GROUPS, type ReleaseDisplayStatus } from '@/lib/releaseStatus';
 import {
   listTrackAssetsForTrackIds,
@@ -283,8 +284,8 @@ export function buildCanonicalTrackFromReleaseTrack(
     title: asString(track.title || track.name) || undefined,
     isrc: asString(track.isrc || track.ISRC) || undefined,
     genre: asString(track.genre) || undefined,
-    audioFile: asString(track.audioFile || track.audioUrl) || undefined,
-    artwork: asString(track.artwork || release.artworkUrl) || undefined,
+    audioFile: extractFilename(track.audioFile || track.audioUrl) || undefined,
+    artwork: extractFilename(track.artwork || release.artworkUrl) || undefined,
     status: asString(track.status || release.status) || undefined,
     publishingStatus: normalizePublishingStatus(track.publishingStatus || track.musicPublishingStatus),
     releaseTrackIndex: index,
@@ -420,10 +421,17 @@ export async function hydrateReleasesWithCanonicalTracks<T extends ReleaseLike>(
         ? release.tracks
         : [];
 
+    const resolvedTracks = tracks.map((t: Record<string, any>) => ({
+      ...t,
+      audioUrl: t.audioUrl || getFileUrl(t.audioFile, 'audio') || t.audio,
+      artworkUrl: t.artworkUrl || getFileUrl(t.artwork, 'image'),
+    }));
+    const resolvedArtworkUrl = release.artworkUrl || getFileUrl(release.artwork || release.artworkFile, 'image');
     return {
       ...release,
       ownerUserId: release.ownerUserId || getReleaseOwnerId(release),
-      tracks,
+      artworkUrl: resolvedArtworkUrl,
+      tracks: resolvedTracks,
       trackCount: tracks.length,
     };
   });

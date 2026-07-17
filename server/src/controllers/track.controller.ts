@@ -4,7 +4,9 @@ import { AuthRequest } from '../middleware/auth.middleware';
 import { ITrack } from '../models/track.model';
 import { successResponse, errorResponse, notFoundResponse } from '../utils/apiResponse';
 import { ApiError } from '../middleware/errorHandler.middleware';
-import { getFileUrl, deleteFile } from '../utils/fileUpload';
+import { getFileUrl, deleteFile, uploadToR2WithPath } from '../utils/fileUpload';
+import { r2 } from '../services/storage/r2Provider';
+import { getStorageProvider } from '../config/urlResolver';
 import { ReleaseStatus, TRACKS_DIR, ARTWORK_DIR, UserRole } from '../config/constants';
 import * as notificationService from '../services/notification.service';
 import { startTrackAcrCloudScan } from '../services/acrCloud.service';
@@ -80,6 +82,7 @@ export const uploadTrack = async (req: AuthRequest, res: Response): Promise<void
       artwork,
       stores: JSON.parse(stores),
       status: ReleaseStatus.PENDING,
+      storageProvider: getStorageProvider({}),
       format: analysis.format,
       duration: analysis.duration,
       bitrate: analysis.bitrate,
@@ -93,9 +96,19 @@ export const uploadTrack = async (req: AuthRequest, res: Response): Promise<void
     });
     await markTrackIsrcAssigned(assignedIsrc, track._id.toString());
 
+    const artworkPath = path.join(ARTWORK_DIR, artwork);
+    // Upload to R2 — keep local files for ACRCloud background scan
+    // @ts-ignore - multer types
+    const audioMime = req.files['audio']?.[0]?.mimetype;
+    // @ts-ignore - multer types
+    const artworkMime = req.files['artwork']?.[0]?.mimetype;
+    await Promise.allSettled([
+      uploadToR2WithPath(audioPath, audioFile, 'tracks', audioMime, false),
+      uploadToR2WithPath(artworkPath, artwork, 'artwork', artworkMime, false),
+    ]);
+
     void startTrackAcrCloudScan(track._id.toString(), audioPath, title);
 
-    // Generate file URLs
     const audioUrl = getFileUrl(audioFile, 'audio');
     const artworkUrl = getFileUrl(artwork, 'image');
 
@@ -110,7 +123,6 @@ export const uploadTrack = async (req: AuthRequest, res: Response): Promise<void
       201
     );
   } catch (error) {
-    // Clean up files if there was an error
     if (req.files) {
       // @ts-ignore - multer types
       if (req.files['audio'] && req.files['audio'][0]) {
@@ -307,12 +319,13 @@ export const deleteTrack = async (req: AuthRequest, res: Response): Promise<void
       throw new ApiError('Not authorized to delete this track', 403);
     }
 
-    // Delete associated files
     const audioPath = path.join(TRACKS_DIR, track.audioFile);
     const artworkPath = path.join(ARTWORK_DIR, track.artwork);
-    
-    deleteFile(audioPath);
-    deleteFile(artworkPath);
+    const audioR2Key = r2.getR2Key(track.audioFile, 'tracks');
+    const artworkR2Key = r2.getR2Key(track.artwork, 'artwork');
+
+    deleteFile(audioPath, audioR2Key);
+    deleteFile(artworkPath, artworkR2Key);
 
     // Delete the track from the database
     await deleteTrackDocument(track);

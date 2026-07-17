@@ -13,7 +13,7 @@ async function runCleanup(req: NextRequest) {
     return NextResponse.json({ success: false, error: 'Cron access denied' }, { status: 401 });
   }
 
-  const retentionDays = Math.max(1, Math.min(90, Number(req.nextUrl.searchParams.get('retentionDays') || 15)));
+  const retentionDays = Math.max(1, Math.min(90, Number(req.nextUrl.searchParams.get('retentionDays') || 7)));
   const dryRun = req.nextUrl.searchParams.get('dryRun') === 'true';
   const result = await fetchBackend(
     '/api/dsp/deliveries/cleanup',

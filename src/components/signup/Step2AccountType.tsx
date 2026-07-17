@@ -8,6 +8,7 @@ import {
   ToggleButtonGroup,
   ToggleButton,
 } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import { MusicNote, Business } from '@mui/icons-material';
 import { SignupFormValues } from '@/app/(public)/signup/types';
 import { formSectionSx, sectionCaptionSx, sectionTitleSx } from './styles';
@@ -23,6 +24,7 @@ export default function Step2AccountType({
   errors,
   onAccountTypeChange,
 }: Step2Props) {
+  const theme = useTheme();
   return (
     <Stack spacing={3} sx={formSectionSx}>
       <Box>
@@ -73,10 +75,10 @@ export default function Step2AccountType({
                   color: 'rgba(255,255,255,0.6)',
                   background: 'rgba(255,255,255,0.02)',
                   '&.Mui-selected': {
-                    color: '#00e7ff',
+                    color: theme.palette.primary.main,
                     background: 'rgba(237, 30, 121, 0.12)',
-                    borderColor: '#00e7ff !important',
-                    boxShadow: '0 0 0 1px #00e7ff',
+                    borderColor: `${theme.palette.primary.main} !important`,
+                    boxShadow: `0 0 0 1px ${theme.palette.primary.main}`,
                   },
                   '&:hover': {
                     background: 'rgba(237, 30, 121, 0.06)',
@@ -124,10 +126,10 @@ export default function Step2AccountType({
                   color: 'rgba(255,255,255,0.6)',
                   background: 'rgba(255,255,255,0.02)',
                   '&.Mui-selected': {
-                    color: '#00e7ff',
+                    color: theme.palette.primary.main,
                     background: 'rgba(237, 30, 121, 0.12)',
-                    borderColor: '#00e7ff !important',
-                    boxShadow: '0 0 0 1px #00e7ff',
+                    borderColor: `${theme.palette.primary.main} !important`,
+                    boxShadow: `0 0 0 1px ${theme.palette.primary.main}`,
                   },
                   '&:hover': {
                     background: 'rgba(237, 30, 121, 0.06)',
@@ -186,13 +188,13 @@ export default function Step2AccountType({
         }}
       >
         <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.55)', lineHeight: 1.7 }}>
-          <Box component="span" sx={{ color: '#00e7ff', fontWeight: 600 }}>
+          <Box component="span" sx={{ color: theme.palette.primary.main, fontWeight: 600 }}>
             Artist accounts
           </Box>{' '}
           are for individual musicians, producers, and performers who want to distribute their
           music and manage their catalog.
           <br />
-          <Box component="span" sx={{ color: '#00e7ff', fontWeight: 600 }}>
+          <Box component="span" sx={{ color: theme.palette.primary.main, fontWeight: 600 }}>
             Label accounts
           </Box>{' '}
           are for record labels and management companies that represent multiple artists and

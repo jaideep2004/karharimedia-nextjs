@@ -18,13 +18,10 @@ import {
   useTheme,
 } from '@mui/material';
 import {
-  AccessTime,
   Album as AlbumIcon,
   ArrowBack,
   CalendarToday,
-  CheckCircle,
   Edit,
-  ErrorOutline,
   Fingerprint,
   GraphicEq,
   InfoOutlined,
@@ -47,6 +44,7 @@ import {
 import { getDspDisplayName } from '@/lib/platforms';
 import PremiumAudioPlayer from '@/components/audio/PremiumAudioPlayer';
 import { getReleaseRejectionReason, getNormalizedReleaseStatus, getReleaseStatusLabel } from '@/lib/releaseStatus';
+import StatusBadge from '@/components/StatusBadge';
 
 type Track = {
   _id?: string;
@@ -119,32 +117,6 @@ const formatDuration = (value?: string | number) => {
   const mins = Math.floor(value / 60);
   const secs = Math.round(value % 60);
   return `${mins}:${secs.toString().padStart(2, '0')}`;
-};
-
-const getStatusStyle = (status?: string, isDark = false) => {
-  const normalized = status ? getNormalizedReleaseStatus(status) : 'pending';
-  const label = status ? getReleaseStatusLabel(status) : 'Pending';
-  const map: Record<string, { color: string; bg: string; label: string; icon: any }> = {
-    approved: {
-      color: '#10b981',
-      bg: isDark ? 'rgba(16,185,129,0.13)' : 'rgba(16,185,129,0.08)',
-      label,
-      icon: <CheckCircle sx={{ fontSize: 15 }} />,
-    },
-    pending: {
-      color: '#f59e0b',
-      bg: isDark ? 'rgba(245,158,11,0.14)' : 'rgba(245,158,11,0.09)',
-      label: 'Pending',
-      icon: <AccessTime sx={{ fontSize: 15 }} />,
-    },
-    rejected: {
-      color: '#ef4444',
-      bg: isDark ? 'rgba(239,68,68,0.14)' : 'rgba(239,68,68,0.09)',
-      label: 'Rejected',
-      icon: <ErrorOutline sx={{ fontSize: 15 }} />,
-    },
-  };
-  return map[normalized] || map.pending;
 };
 
 function ReleaseDetailPage() {
@@ -273,7 +245,6 @@ function ReleaseDetail() {
         .filter(track => Boolean(track.audioUrl)),
     [artistName, release?.artworkUrl, tracks]
   );
-  const statusStyle = getStatusStyle(release?.status, isDark);
   const stores = Array.isArray(release?.stores) ? release.stores : [];
   const readyAcrCount = tracks.filter((track) => getAcrCloudState(track.acrCloud) === 'ready').length;
   const pendingAcrCount = tracks.filter((track) => getAcrCloudState(track.acrCloud) === 'pending').length;
@@ -441,23 +412,7 @@ function ReleaseDetail() {
 
           <Box sx={{ flex: 1, minWidth: 0 }}>
             <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap sx={{ mb: 1.5 }}>
-              <Box
-                sx={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: 0.75,
-                  px: 1.2,
-                  py: 0.45,
-                  borderRadius: '8px',
-                  bgcolor: statusStyle.bg,
-                  color: statusStyle.color,
-                  fontSize: '0.74rem',
-                  fontWeight: 800,
-                }}
-              >
-                {statusStyle.icon}
-                {statusStyle.label}
-              </Box>
+              <StatusBadge status={release.status} size="medium" sx={{ fontWeight: 800 }} />
               <Chip
                 size="small"
                 label={release.releaseType || 'Single'}
@@ -653,7 +608,6 @@ function ReleaseDetail() {
           ) : (
             tracks.map((track, index) => {
               const trackId = track._id || `track-${index}`;
-              const trackStatus = getStatusStyle(track.status || release.status, isDark);
               const acrSummary = getAcrCloudSummary(track.acrCloud);
 
               return (
@@ -730,24 +684,11 @@ function ReleaseDetail() {
                     )}
                   </Box>
 
-                  <Box
-                    sx={{
-                      display: 'inline-flex',
-                      width: 'fit-content',
-                      alignItems: 'center',
-                      gap: 0.55,
-                      px: 1,
-                      py: 0.32,
-                      borderRadius: '7px',
-                      bgcolor: trackStatus.bg,
-                      color: trackStatus.color,
-                      fontSize: '0.7rem',
-                      fontWeight: 850,
-                    }}
-                  >
-                    {trackStatus.icon}
-                    {trackStatus.label}
-                  </Box>
+                  <StatusBadge
+                    status={track.status || release.status}
+                    size="small"
+                    sx={{ fontWeight: 850, fontSize: '0.7rem' }}
+                  />
                 </Box>
               );
             })
@@ -757,7 +698,7 @@ function ReleaseDetail() {
         <Stack spacing={3}>
           <Box sx={{ ...panelSx(isDark), p: 2.5 }}>
             <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 2 }}>
-              <InfoOutlined sx={{ fontSize: 19, color: '#00e7ff' }} />
+              <InfoOutlined sx={{ fontSize: 19, color: theme.palette.primary.main }} />
               <Typography sx={{ fontWeight: 900, color: isDark ? '#edf2f7' : '#111827' }}>Release facts</Typography>
             </Stack>
             {[

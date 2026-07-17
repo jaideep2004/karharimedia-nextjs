@@ -12,7 +12,7 @@ export interface IFileMeta extends Document {
 
 const FileMetaSchema: Schema = new Schema({
   key: { type: String, required: true },
-  url: { type: String, required: true },
+  url: { type: String },
   provider: { type: String, required: true },
   contentType: { type: String },
   size: { type: Number },

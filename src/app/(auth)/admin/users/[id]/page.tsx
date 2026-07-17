@@ -344,7 +344,7 @@ export default function EditUserPage() {
               },
             },
             '& .MuiTabs-indicator': {
-              backgroundColor: mode === 'dark' ? '#9bafff' : '#00e7ff',
+              backgroundColor: mode === 'dark' ? '#9bafff' : theme.palette.primary.main,
               height: 3,
               borderRadius: 99,
             },

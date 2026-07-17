@@ -17,6 +17,7 @@ import {
   Tooltip,
   Badge,
 } from '@mui/material';
+import { alpha } from '@mui/material/styles';
 import {
   Dashboard as DashboardIcon,
   Person as PersonIcon,
@@ -305,13 +306,13 @@ export default function AdminSidebar() {
                         transition: 'background-color 150ms ease, color 150ms ease',
                         '&.Mui-selected': {
                           backgroundColor: isDark
-                            ? 'rgba(0, 231, 255, 0.12)'
-                            : 'rgba(0, 231, 255, 0.08)',
+                            ? alpha(theme.palette.primary.main, 0.12)
+                            : alpha(theme.palette.primary.main, 0.08),
                           color: isDark ? '#7ad9ff' : '#0098c7',
                           '&:hover': {
                             backgroundColor: isDark
-                              ? 'rgba(0, 231, 255, 0.18)'
-                              : 'rgba(0, 231, 255, 0.12)',
+                              ? alpha(theme.palette.primary.main, 0.18)
+                              : alpha(theme.palette.primary.main, 0.12),
                           },
                           '& .MuiListItemIcon-root': {
                             color: isDark ? '#7ad9ff' : '#0098c7',
@@ -331,7 +332,7 @@ export default function AdminSidebar() {
                           width: 3,
                           height: 20,
                           borderRadius: '0 4px 4px 0',
-                          backgroundColor: '#00e7ff',
+                          backgroundColor: theme.palette.primary.main,
                         },
                       }}
                     >

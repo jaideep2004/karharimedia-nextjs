@@ -122,7 +122,7 @@ const months = [
   'December',
 ];
 
-const chartColors = ['#00e7ff', '#10b981', '#f59e0b', '#ef4444', '#14b8a6', '#8b5cf6'];
+
 
 function TabPanel({ children, value, index, ...other }: TabPanelProps) {
   return (
@@ -193,6 +193,7 @@ export default function RoyaltiesPage() {
 function RoyaltiesContent() {
   const theme = useTheme();
   const isDark = theme.palette.mode === 'dark';
+  const chartColors = [theme.palette.primary.main, '#10b981', '#f59e0b', '#ef4444', '#14b8a6', '#8b5cf6'];
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -433,7 +434,7 @@ function RoyaltiesContent() {
       value: totalStreams.toLocaleString(),
       helper: selectedTrack === 'all' ? 'All tracks' : 'Filtered track',
       icon: <ShowChart />,
-      color: '#00e7ff',
+      color: theme.palette.primary.main,
     },
     {
       label: 'Pending Payouts',
@@ -866,12 +867,12 @@ function RoyaltiesContent() {
                 fontSize: '0.84rem',
                 minHeight: 46,
                 color: isDark ? 'rgba(255,255,255,0.45)' : 'rgba(15,23,42,0.45)',
-                '&.Mui-selected': { color: '#00e7ff' },
+                '&.Mui-selected': { color: theme.palette.primary.main },
               },
               '& .MuiTabs-indicator': {
                 height: 2,
                 borderRadius: '1px 1px 0 0',
-                bgcolor: '#00e7ff',
+                bgcolor: theme.palette.primary.main,
               },
             }}
           >
@@ -908,7 +909,7 @@ function RoyaltiesContent() {
                       formatter={formatChartCurrency}
                       contentStyle={{ background: isDark ? '#1a2035' : '#fff', border: `1px solid ${isDark ? 'rgba(255,255,255,0.1)' : 'rgba(15,23,42,0.1)'}`, borderRadius: 10, fontSize: '0.8rem' }}
                     />
-                    <Bar dataKey="amount" fill="#00e7ff" radius={[8, 8, 0, 0]} />
+                    <Bar dataKey="amount" fill={theme.palette.primary.main} radius={[8, 8, 0, 0]} />
                   </BarChart>
                 </ResponsiveContainer>
               </Box>

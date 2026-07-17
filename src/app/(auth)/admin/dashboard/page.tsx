@@ -32,6 +32,7 @@ import {
   Skeleton,
   LinearProgress,
 } from '@mui/material';
+import { alpha } from '@mui/material/styles';
 import {
   MusicNote,
   Group,
@@ -44,6 +45,7 @@ import {
   ArrowForward,
   type SvgIconComponent,
 } from '@mui/icons-material';
+import StatusBadge from '@/components/StatusBadge';
 
 interface DashboardStats {
   totalUsers: number;
@@ -317,7 +319,7 @@ export default function AdminDashboard() {
     letterSpacing: 0,
   };
   const statAccent: Record<StatCardConfig['avatarColor'], { color: string; bg: string }> = {
-    primary: { color: '#00e7ff', bg: isDark ? 'rgba(0,231,255,0.16)' : 'rgba(0,231,255,0.10)' },
+    primary: { color: theme.palette.primary.main, bg: isDark ? alpha(theme.palette.primary.main, 0.16) : alpha(theme.palette.primary.main, 0.10) },
     secondary: { color: '#f59e0b', bg: isDark ? 'rgba(245,158,11,0.15)' : 'rgba(245,158,11,0.10)' },
     warning: { color: '#f59e0b', bg: isDark ? 'rgba(245,158,11,0.15)' : 'rgba(245,158,11,0.10)' },
     error: { color: '#fb7185', bg: isDark ? 'rgba(251,113,133,0.14)' : 'rgba(251,113,133,0.10)' },
@@ -603,12 +605,12 @@ export default function AdminDashboard() {
                   px: 2,
                   fontWeight: 900,
                   borderColor: isDark ? 'rgba(255,255,255,0.10)' : 'rgba(15,23,42,0.10)',
-                  color: item.primary ? '#fff' : '#00e7ff',
-                  bgcolor: item.primary ? '#00e7ff' : 'transparent',
+                  color: item.primary ? '#fff' : theme.palette.primary.main,
+                  bgcolor: item.primary ? theme.palette.primary.dark : 'transparent',
                   '& .MuiButton-endIcon': { ml: 'auto' },
                   '&:hover': {
-                    borderColor: '#00e7ff',
-                    bgcolor: item.primary ? '#4a4fe0' : isDark ? 'rgba(91,95,247,0.08)' : 'rgba(91,95,247,0.06)',
+                    borderColor: theme.palette.primary.main,
+                    bgcolor: item.primary ? theme.palette.primary.main : isDark ? 'rgba(91,95,247,0.08)' : 'rgba(91,95,247,0.06)',
                   },
                 }}
                 fullWidth
@@ -1015,20 +1017,8 @@ export default function AdminDashboard() {
                           </Typography>
                         </TableCell>
                         <TableCell>
-                          <Chip
-                            label={getReleaseStatusLabel(release.status)}
-                            color={
-                              displayStatus === 'approved'
-                                ? 'success'
-                                : displayStatus === 'pending'
-                                  ? 'warning'
-                                  : displayStatus === 'in_process'
-                                    ? 'info'
-                                    : displayStatus === 'rejected'
-                                      ? 'error'
-                                      : 'default'
-                            }
-                            size="small"
+                          <StatusBadge
+                            status={release.status}
                             sx={{
                               height: 24,
                               borderRadius: '999px',

@@ -18,7 +18,8 @@ import {
   updateSection,
 } from '../services/knowledgeBase.service';
 import { KnowledgeBaseArticleStatus } from '../models/knowledgeBaseArticle.model';
-import { getFileUrl } from '../utils/fileUpload';
+import { getFileUrl, uploadToR2 } from '../utils/fileUpload';
+import { getStorageProvider } from '../config/urlResolver';
 
 const toPositiveInt = (value: unknown, fallback: number) => {
   const parsed = Number(value);
@@ -182,10 +183,13 @@ export const uploadAdminKnowledgeBaseMedia = async (req: AuthRequest, res: Respo
       return;
     }
 
+    await uploadToR2(file, 'knowledge-base');
+    const sp = getStorageProvider({});
+
     successResponse(res, {
       fileName: file.originalname,
       key: file.filename,
-      url: getFileUrl(file.filename, 'knowledge-base'),
+      url: getFileUrl(file.filename, 'knowledge-base', sp),
       contentType: file.mimetype,
       mediaType: file.mimetype.startsWith('video/') ? 'video' : 'image',
       size: file.size,

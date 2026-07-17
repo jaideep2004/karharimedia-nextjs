@@ -62,10 +62,26 @@
   --foreground: #0f172a;
 }
 
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: light) {
   :root {
-    --background: #08061a;
-    --foreground: #e9fbff;
+    --sa-primary: #0369a1;
+    --sa-primary-light: #38bdf8;
+    --sa-primary-dark: #0284c7;
+    --sa-bg-deepest: #f3f8fb;
+    --sa-bg-deep: #e8eef5;
+    --sa-bg-base: #ffffff;
+    --sa-bg-elevated: #f0f5fa;
+    --sa-bg-surface: #e2e8f0;
+    --sa-bg-hover: rgba(0, 0, 0, 0.04);
+    --sa-bg-active: rgba(3, 105, 161, 0.10);
+    --sa-border-subtle: rgba(3, 105, 161, 0.08);
+    --sa-border-default: rgba(3, 105, 161, 0.14);
+    --sa-border-strong: rgba(3, 105, 161, 0.22);
+    --sa-text-primary: rgba(17, 24, 39, 0.94);
+    --sa-text-secondary: rgba(83, 97, 115, 0.82);
+    --sa-text-muted: rgba(83, 97, 115, 0.5);
+    --background: #f3f8fb;
+    --foreground: #0f172a;
   }
 }
 
@@ -80,12 +96,11 @@ body {
   color: var(--foreground);
   background-color: var(--background);
   background-image:
-    radial-gradient(900px 520px at 78% 22%, rgba(0, 231, 255, 0.18), transparent 62%),
+    radial-gradient(900px 520px at 78% 22%, rgba(var(--sa-primary-rgb, 0, 231, 255), 0.18), transparent 62%),
     radial-gradient(760px 520px at 14% 14%, rgba(67, 29, 140, 0.34), transparent 64%),
-    linear-gradient(rgba(0, 231, 255, 0.085) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 231, 255, 0.085) 1px, transparent 1px),
-    linear-gradient(135deg, #08061a 0%, #100725 45%, #061426 100%);
-  background-size: auto, auto, 96px 96px, 96px 96px, auto;
+    linear-gradient(rgba(var(--sa-primary-rgb, 0, 231, 255), 0.085) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(var(--sa-primary-rgb, 0, 231, 255), 0.085) 1px, transparent 1px);
+  background-size: auto, auto, 96px 96px, 96px 96px;
   background-attachment: fixed;
   font-family: 'Plus Jakarta Sans', 'DM Sans', system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;

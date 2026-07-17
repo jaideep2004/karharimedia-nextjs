@@ -25,6 +25,7 @@ import {
   useTheme,
 } from '@mui/material';
 import { Album, MusicNote, Search } from '@mui/icons-material';
+import StatusBadge from '@/components/StatusBadge';
 import useAdminAuth from '@/hooks/useAdminAuth';
 import { adminAPI } from '@/services/api';
 import { PremiumHeader, premiumSurfaceSx } from '@/components/premium/PremiumSurface';
@@ -218,12 +219,7 @@ export default function AdminTracksPage() {
                     </TableCell>
                     <TableCell>{track.isrc || '-'}</TableCell>
                     <TableCell>
-                      <Chip
-                        size="small"
-                        label={getReleaseStatusLabel(track.status)}
-                        color={normalized === 'approved' ? 'success' : normalized === 'rejected' ? 'error' : normalized === 'in_process' ? 'info' : 'warning'}
-                        sx={{ fontWeight: 850, borderRadius: '999px' }}
-                      />
+                      <StatusBadge status={track.status} sx={{ fontWeight: 850 }} />
                     </TableCell>
                     <TableCell>{formatDate(track.updatedAt)}</TableCell>
                   </TableRow>

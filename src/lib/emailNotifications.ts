@@ -377,9 +377,25 @@ export const getAdminRecipients = async (db: Db): Promise<Recipient[]> => {
   }));
 };
 
-export const sendActionEmail = async (recipients: Recipient[], email: ActionEmail, db?: Db) => {
+const isNotificationEnabled = async (db: Db | undefined, notificationType?: string): Promise<boolean> => {
+  if (!notificationType || !db) return true;
+  try {
+    const setting = await db.collection('settings').findOne({ key: notificationType });
+    return setting ? setting.value === true : true;
+  } catch {
+    return true;
+  }
+};
+
+export const sendActionEmail = async (recipients: Recipient[], email: ActionEmail, db?: Db, notificationType?: string) => {
   const to = uniqueRecipients(recipients);
   if (!to.length) return;
+
+  const enabled = await isNotificationEnabled(db, notificationType);
+  if (!enabled) {
+    console.warn(`Karhari Media Distribution email skipped: notification type "${notificationType}" is disabled`);
+    return;
+  }
 
   const results = await Promise.allSettled(to.map(recipient => sendOne(recipient, email)));
   results.forEach(result => {
@@ -390,9 +406,9 @@ export const sendActionEmail = async (recipients: Recipient[], email: ActionEmai
   if (db) await createEmailNotifications(db, to, email);
 };
 
-export const sendUserAndAdminEmail = async (db: Db, user: Recipient, email: ActionEmail) => {
+export const sendUserAndAdminEmail = async (db: Db, user: Recipient, email: ActionEmail, notificationType?: string) => {
   const admins = await getAdminRecipients(db);
-  await sendActionEmail([user, ...admins], email, db);
+  await sendActionEmail([user, ...admins], email, db, notificationType);
 };
 
 export const appUrl = (path: string) =>

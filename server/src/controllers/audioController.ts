@@ -14,19 +14,21 @@ import { LOCAL_FFMPEG_ENABLED, UserRole } from '../config/constants';
 import { findTrackByAcrCloudFileId } from '../repositories/track.repository';
 
 export async function analyzeAudioHandler(req: Request, res: Response) {
+  const filePath = req.file?.path;
   try {
     if (!LOCAL_FFMPEG_ENABLED) {
       return res.status(503).json({ error: 'Local ffmpeg analysis is disabled in this environment' });
     }
 
-    if (!req.file) {
+    if (!filePath) {
       return res.status(400).json({ error: 'No file uploaded' });
     }
-    const filePath = req.file.path;
     const result = await analyzeAudio(filePath);
     res.json(result);
   } catch (err) {
     res.status(500).json({ error: (err as Error).message });
+  } finally {
+    await deleteTempFile(filePath);
   }
 }
 

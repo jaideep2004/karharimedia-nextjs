@@ -1,5 +1,6 @@
 import { Db, ObjectId, type CreateIndexesOptions, type IndexSpecification } from 'mongodb';
 import { getReleaseOwnerQuery } from '@/lib/musicPublishing';
+import { getFileUrl } from '@/lib/assetUrl';
 import {
   hydrateReleasesWithCanonicalTracks,
   replaceReleaseCanonicalTracks,
@@ -240,6 +241,7 @@ async function attachSummaryTrackCounts(db: Db, releases: Record<string, any>[])
     const { legacyTrackCount, ...summary } = release;
     return {
       ...summary,
+      artworkUrl: release.artworkUrl || getFileUrl(release.artwork || release.artworkFile, 'image') || '',
       ownerUserId: release.ownerUserId || release.userId || release.artistId || release.ownerId || release.createdBy,
       trackCount: countsByReleaseId.get(releaseId) ?? Number(legacyTrackCount || 0),
     };
@@ -273,6 +275,8 @@ async function listReleaseSummaries(db: Db, query: Record<string, any>) {
           primaryArtist: 1,
           artist: 1,
           territories: 1,
+          artwork: 1,
+          artworkFile: 1,
           artworkUrl: 1,
           stores: 1,
           updatedAt: 1,

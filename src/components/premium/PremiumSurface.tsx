@@ -76,7 +76,7 @@ export function PremiumMetric({
   label,
   value,
   hint,
-  accent = '#00e7ff',
+  accent,
 }: {
   label: string;
   value: string | number;
@@ -100,7 +100,7 @@ export function PremiumMetric({
           right: 0,
           bottom: 0,
           height: 4,
-          bgcolor: accent,
+          bgcolor: accent ?? theme.palette.primary.main,
         },
       }}
     >

@@ -11,6 +11,7 @@ import {
   InputAdornment,
   CircularProgress,
 } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import {
   Person,
   Phone,
@@ -43,8 +44,9 @@ export interface Step3ArtistProps {
 }
 
 function ArtistNameAdornment({ status }: { status: ArtistNameStatus }) {
-  if (status === 'checking') return <CircularProgress size={18} sx={{ color: '#00e7ff' }} />;
-  if (status === 'available') return <CheckCircle sx={{ color: '#00e7ff', fontSize: 20 }} />;
+  const theme = useTheme();
+  if (status === 'checking') return <CircularProgress size={18} sx={{ color: theme.palette.primary.main }} />;
+  if (status === 'available') return <CheckCircle sx={{ color: theme.palette.primary.main, fontSize: 20 }} />;
   if (status === 'taken' || status === 'error')
     return <ErrorIcon sx={{ color: '#ef4444', fontSize: 20 }} />;
   return null;
@@ -57,6 +59,7 @@ export default function Step3Artist({
   artistNameStatus,
   onArtistNameBlur,
 }: Step3ArtistProps) {
+  const theme = useTheme();
   return (
     <Stack spacing={2.5} sx={formSectionSx}>
       <Box>
@@ -94,7 +97,7 @@ export default function Step3Artist({
                 sx: {
                   color:
                     artistNameStatus === 'available'
-                      ? '#00e7ff'
+                      ? theme.palette.primary.main
                       : artistNameStatus === 'taken' || artistNameStatus === 'error'
                       ? '#ef4444'
                       : undefined,

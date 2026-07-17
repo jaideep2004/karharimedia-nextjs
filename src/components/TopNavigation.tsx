@@ -18,6 +18,7 @@ import {
   Button,
   ListItemIcon,
 } from '@mui/material';
+import { alpha } from '@mui/material/styles';
 import {
   AccountBalanceWallet,
   NotificationsOutlined,
@@ -307,7 +308,7 @@ export default function TopNavigation({ title = 'Karhari Media Distribution' }: 
                       py: 1.5,
                       alignItems: 'flex-start',
                       gap: 1,
-                      bgcolor: isUnread ? (isDarkMode ? 'rgba(0,231,255,0.1)' : 'rgba(0,231,255,0.06)') : 'transparent',
+                      bgcolor: isUnread ? (isDarkMode ? alpha(theme.palette.primary.main, 0.1) : alpha(theme.palette.primary.main, 0.06)) : 'transparent',
                     }}
                   >
                     <Box sx={{ minWidth: 0, flex: 1 }}>

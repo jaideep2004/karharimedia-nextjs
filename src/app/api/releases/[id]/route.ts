@@ -114,7 +114,7 @@ export async function PATCH(
         'autoGenerateCodes',
         'releaseDate',
         'originalReleaseDate',
-        'artworkUrl',
+        'artwork',
         'artworkFile',
         'territories',
         'stores',

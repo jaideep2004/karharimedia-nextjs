@@ -17,7 +17,8 @@ import {
   verifyOtpHash,
 } from '../services/otp.service';
 import { buildDashboardUrl, sendUserAndAdminEmail } from '../services/emailNotification.service';
-import { getFileUrl } from '../utils/fileUpload';
+import { getFileUrl, uploadToR2 } from '../utils/fileUpload';
+import { getStorageProvider } from '../config/urlResolver';
 import { getFrontendUrl } from '../utils/frontendUrl';
 
 // Escape special regex characters in a string
@@ -230,7 +231,8 @@ export const register = async (req: Request, res: Response): Promise<void> => {
         },
         actionLabel: 'Open Dashboard',
         actionUrl: buildDashboardUrl(user.role === 'admin' || user.role === 'subadmin' ? '/admin/dashboard' : '/dashboard'),
-      }
+      },
+      'email_on_account_created'
     ).catch((error) => console.warn('Account creation email skipped:', error));
 
     successResponse(
@@ -397,7 +399,8 @@ export const verifySignup = async (req: Request, res: Response): Promise<void> =
         },
         actionLabel: 'Open Dashboard',
         actionUrl: buildDashboardUrl('/dashboard'),
-      }
+      },
+      'email_on_signup_completed'
     ).catch((error) => console.warn('Signup email skipped:', error));
 
     successResponse(res, authPayload(user), 'User registered successfully', 201);
@@ -745,7 +748,8 @@ export const submitKyc = async (req: AuthRequest, res: Response): Promise<void> 
         },
         actionLabel: 'Review User',
         actionUrl: buildDashboardUrl(`/admin/users/${user._id}`),
-      }
+      },
+      'email_on_kyc_submitted'
     ).catch((error) => console.warn('KYC submission email skipped:', error));
 
     successResponse(
@@ -818,7 +822,8 @@ export const updateProfile = async (req: AuthRequest, res: Response): Promise<vo
         },
         actionLabel: 'Open Profile',
         actionUrl: buildDashboardUrl('/dashboard/profile'),
-      }
+      },
+      'email_on_profile_updated'
     ).catch((error) => console.warn('Profile update email skipped:', error));
 
     successResponse(res, {
@@ -850,8 +855,13 @@ export const updateProfilePicture = async (req: AuthRequest, res: Response): Pro
       throw new ApiError('User not found', 404);
     }
 
-    user.profilePicture = getFileUrl(file.filename, 'image');
+    await uploadToR2(file, 'artwork');
+    const sp = getStorageProvider({});
+    user.profilePictureFile = file.filename;
+    user.storageProvider = sp as any;
     await user.save();
+
+    const profilePictureUrl = getFileUrl(file.filename, 'image', sp);
 
     successResponse(res, {
       _id: user._id,
@@ -860,7 +870,7 @@ export const updateProfilePicture = async (req: AuthRequest, res: Response): Pro
       role: user.role,
       artistName: user.artistName,
       accountType: user.accountType,
-      profilePicture: user.profilePicture,
+      profilePicture: profilePictureUrl,
       verification: user.verification,
       onboarding: user.onboarding,
       payoutMethod: user.payoutMethod,

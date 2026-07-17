@@ -48,9 +48,14 @@ import {
 const BASE_RETRY_DELAY_MS = 15_000;
 const WORKER_LOCK_MS = 5 * 60_000;
 const DEFAULT_WORKER_BATCH_SIZE = 25;
-const TERMINAL_JOB_RETENTION_DAYS = 15;
+const TERMINAL_JOB_RETENTION_DAYS = 7;
+const STUCK_PROCESSING_RETENTION_DAYS = 7;
 const TERMINAL_STATES: DspDeliveryState[] = ['delivered', 'failed', 'cancelled', 'needs_attention'];
 const TERMINAL_STATES_SET = new Set(TERMINAL_STATES);
+const MAX_ATTEMPTS = 20;
+const MAX_EVENTS = 100;
+const CLUSTER_STORAGE_LIMIT_MB = 512;
+const AUTO_CLEANUP_THRESHOLD_PCT = 0.7;
 const SENSITIVE_CONFIG_KEYS = new Set(['webhookSecret']);
 const ALLOWED_WEBHOOK_STATES: DspDeliveryState[] = [
   'queued',
@@ -665,15 +670,62 @@ class DspDeliveryService {
     });
   }
 
-  async cleanupOldDeliveryJobs(retentionDays = TERMINAL_JOB_RETENTION_DAYS, dryRun = false) {
-    const cutoff = new Date(Date.now() - retentionDays * 24 * 60 * 60 * 1000);
-    const match = { state: { $in: TERMINAL_STATES }, createdAt: { $lt: cutoff } };
-    const matchingCount = await DeliveryJob.countDocuments(match);
-    if (dryRun) {
-      return { dryRun: true, matchingCount, retentionDays, cutoff: cutoff.toISOString() };
+  private async getCollectionSizeMB(): Promise<number> {
+    try {
+      const stats = await DeliveryJob.aggregate([{ $collStats: { storageStats: {} } }]).exec();
+      return Math.round(((stats[0]?.storageStats?.size || 0) / (1024 * 1024)) * 100) / 100;
+    } catch {
+      return 0;
     }
-    const result = await DeliveryJob.deleteMany(match);
-    return { deletedCount: result.deletedCount, retentionDays, cutoff: cutoff.toISOString() };
+  }
+
+  async cleanupOldDeliveryJobs(retentionDays = TERMINAL_JOB_RETENTION_DAYS, dryRun = false) {
+    const collectionSizeMB = await this.getCollectionSizeMB();
+    const thresholdMB = CLUSTER_STORAGE_LIMIT_MB * AUTO_CLEANUP_THRESHOLD_PCT;
+    const overThreshold = collectionSizeMB > thresholdMB;
+    let actualRetentionDays = retentionDays;
+    let triggeredBySize = false;
+
+    if (overThreshold && retentionDays > 3) {
+      actualRetentionDays = 3;
+      triggeredBySize = true;
+    }
+
+    const cutoff = new Date(Date.now() - actualRetentionDays * 24 * 60 * 60 * 1000);
+    const stuckCutoff = new Date(Date.now() - STUCK_PROCESSING_RETENTION_DAYS * 24 * 60 * 60 * 1000);
+
+    const terminalMatch = { state: { $in: TERMINAL_STATES }, createdAt: { $lt: cutoff } };
+    const stuckMatch = { state: 'processing', createdAt: { $lt: stuckCutoff } };
+
+    const terminalCount = await DeliveryJob.countDocuments(terminalMatch);
+    const stuckCount = await DeliveryJob.countDocuments(stuckMatch);
+
+    if (dryRun) {
+      return {
+        dryRun: true,
+        terminalCount,
+        stuckProcessingCount: stuckCount,
+        retentionDays: actualRetentionDays,
+        stuckRetentionDays: STUCK_PROCESSING_RETENTION_DAYS,
+        collectionSizeMB,
+        clusterLimitMB: CLUSTER_STORAGE_LIMIT_MB,
+        overThreshold,
+        triggeredBySize,
+      };
+    }
+
+    const terminalResult = await DeliveryJob.deleteMany(terminalMatch);
+    const stuckResult = await DeliveryJob.deleteMany(stuckMatch);
+    return {
+      terminalDeleted: terminalResult.deletedCount,
+      stuckProcessingDeleted: stuckResult.deletedCount,
+      retentionDays: actualRetentionDays,
+      stuckRetentionDays: STUCK_PROCESSING_RETENTION_DAYS,
+      collectionSizeMB,
+      clusterLimitMB: CLUSTER_STORAGE_LIMIT_MB,
+      overThreshold,
+      triggeredBySize,
+    };
   }
 
   private async updateReleaseLifecycle(job: IDeliveryJob, state: string, metadata: Record<string, any> = {}, errorMessage?: string) {
@@ -849,12 +901,15 @@ class DspDeliveryService {
         $unset: { lockedAt: '', lockedBy: '', lockExpiresAt: '' },
         $push: {
           attempts: {
-            attemptNo: job.retryCount + 1,
-            status: successLike ? 'success' : 'failed',
-            responseCode: successLike ? 'ACCEPTED' : 'FAILED',
-            requestHash: hashPayload(payloadResult.payload),
-            responseBody: result,
-            retryable: finalState === 'failed',
+            $each: [{
+              attemptNo: job.retryCount + 1,
+              status: successLike ? 'success' : 'failed',
+              responseCode: successLike ? 'ACCEPTED' : 'FAILED',
+              requestHash: hashPayload(payloadResult.payload),
+              responseBody: result,
+              retryable: finalState === 'failed',
+            }],
+            $slice: -MAX_ATTEMPTS,
           },
           events: {
             state: finalState,
@@ -899,12 +954,15 @@ class DspDeliveryService {
         $unset: { lockedAt: '', lockedBy: '', lockExpiresAt: '' },
         $push: {
           attempts: {
-            attemptNo: retryCount,
-            status: 'failed',
-            responseCode,
-            responseBody,
-            errorMessage: message,
-            retryable: shouldRetry,
+            $each: [{
+              attemptNo: retryCount,
+              status: 'failed',
+              responseCode,
+              responseBody,
+              errorMessage: message,
+              retryable: shouldRetry,
+            }],
+            $slice: -MAX_ATTEMPTS,
           },
           events: {
             state: needsAttention ? 'needs_attention' : shouldRetry ? 'queued' : 'failed',
@@ -1108,8 +1166,8 @@ class DspDeliveryService {
         genre: track.genre,
         explicit: track.explicit,
         releaseDate: track.releaseDate || release.releaseDate,
-        audioFile: track.audioUrl || track.fileUrl || track.audioFile,
-        artwork: track.artworkUrl || track.artwork || release.artworkUrl || release.artwork,
+        audioFile: track.audioFile || track.audioUrl || track.fileUrl,
+        artwork: track.artwork || track.artworkUrl || release.artwork || release.artworkUrl,
         duration: track.duration,
         contributors: track.contributors || track.rightsHolders || [],
         composers: track.composers || [],
@@ -1130,7 +1188,7 @@ class DspDeliveryService {
       territories: release.territories || ['WORLD'],
       assetChecks: release.deliveryAssetReadiness?.checks || [],
       metadata: {
-        artwork: release.artworkUrl || release.artwork,
+        artwork: release.artwork || release.artworkUrl,
         releaseType: release.releaseType,
         catalogNumber,
         createdDate: release.createdDate || release.created_date,

@@ -80,7 +80,24 @@ const getUploadLimit = catchAsync(async (_req: Request, res: Response) => {
 });
 
 const normalizeSettingValue = (key: string, value: unknown) => {
-  if (['signupEnabled', 'maintenanceMode', 'enableEmailNotifications'].includes(key)) {
+  const booleanKeys = [
+    'signupEnabled',
+    'maintenanceMode',
+    'enableEmailNotifications',
+    'email_on_release_submitted',
+    'email_on_release_approved',
+    'email_on_release_rejected',
+    'email_on_gs1_upc_assigned',
+    'email_on_gs1_upc_failed',
+    'email_on_account_created',
+    'email_on_signup_completed',
+    'email_on_kyc_submitted',
+    'email_on_profile_updated',
+    'email_on_admin_user_created',
+    'email_on_admin_user_updated',
+    'email_on_kyc_reviewed',
+  ];
+  if (booleanKeys.includes(key)) {
     return value === true;
   }
 

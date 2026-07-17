@@ -2,6 +2,8 @@ import mongoose, { Document, Schema } from 'mongoose';
 import { ReleaseStatus, STORES } from '../config/constants';
 import { AcrCloudAiDetection, AcrCloudFingerprintMatch, AcrCloudScanState } from '../types/acrCloud';
 
+export type StorageProvider = 'r2' | 'local' | 'external';
+
 export interface ITrack extends Document {
   title: string;
   artistId: mongoose.Types.ObjectId;
@@ -52,6 +54,7 @@ export interface ITrack extends Document {
   language?: string;
   audioFile: string;
   artwork: string;
+  storageProvider?: StorageProvider;
   duration?: number;
   format?: string;
   bitrate?: number;
@@ -178,6 +181,10 @@ const TrackSchema: Schema = new Schema(
     artwork: {
       type: String,
       required: [true, 'Artwork is required']
+    },
+    storageProvider: {
+      type: String,
+      enum: ['r2', 'local', 'external'],
     },
     duration: {
       type: Number

@@ -16,6 +16,7 @@ import {
   useTheme,
   Button,
 } from '@mui/material';
+import { alpha } from '@mui/material/styles';
 import MenuIcon from '@mui/icons-material/Menu';
 import DarkModeRoundedIcon from '@mui/icons-material/DarkModeRounded';
 import LightModeRoundedIcon from '@mui/icons-material/LightModeRounded';
@@ -49,21 +50,21 @@ export default function PublicNavBar() {
         mx: { xs: 0.5, md: 1.25 },
         borderRadius: 999,
         border: '1px solid',
-        borderColor: mode === 'dark' ? 'rgba(0,231,255,0.42)' : 'rgba(214,215,13,0.22)',
+        borderColor: mode === 'dark' ? alpha(theme.palette.primary.main, 0.42) : 'rgba(214,215,13,0.22)',
         background:
           mode === 'dark'
-            ? 'linear-gradient(135deg, rgba(0,231,255,0.18), rgba(214,215,13,0.16))'
+            ? `linear-gradient(135deg, ${alpha(theme.palette.primary.main, 0.18)}, rgba(214,215,13,0.16))`
             : 'linear-gradient(135deg, rgba(255,255,255,0.92), rgba(255,232,245,0.92))',
         boxShadow:
           mode === 'dark'
-            ? '0 10px 24px rgba(0,231,255,0.16), inset 0 1px 0 rgba(255,255,255,0.12)'
+            ? `0 10px 24px ${alpha(theme.palette.primary.main, 0.16)}, inset 0 1px 0 rgba(255,255,255,0.12)`
             : '0 10px 24px rgba(214,215,13,0.12), inset 0 1px 0 rgba(255,255,255,0.9)',
         color: mode === 'dark' ? '#ffffff' : '#d6d70d',
         transition: 'background 180ms ease, border-color 180ms ease, box-shadow 180ms ease',
         '&:hover': {
           background:
             mode === 'dark'
-              ? 'linear-gradient(135deg, rgba(0,231,255,0.26), rgba(123,31,162,0.3))'
+              ? `linear-gradient(135deg, ${alpha(theme.palette.primary.main, 0.26)}, rgba(123,31,162,0.3))`
               : 'linear-gradient(135deg, #ffffff, rgba(255,220,240,0.96))',
         },
         '&::before': {
@@ -74,7 +75,7 @@ export default function PublicNavBar() {
           borderRadius: '50%',
           left: mode === 'dark' ? 4 : 25,
           background: mode === 'dark' ? '#05050a' : '#ffffff',
-          boxShadow: mode === 'dark' ? '0 0 16px rgba(0,231,255,0.55)' : '0 6px 14px rgba(214,215,13,0.16)',
+          boxShadow: mode === 'dark' ? `0 0 16px ${alpha(theme.palette.primary.main, 0.55)}` : '0 6px 14px rgba(214,215,13,0.16)',
           transition: 'left 180ms ease, background 180ms ease, box-shadow 180ms ease',
         },
         '& svg': {

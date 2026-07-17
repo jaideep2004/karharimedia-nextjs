@@ -321,7 +321,7 @@ export default function AdminExportPage() {
 
   const metrics = useMemo(
     () => [
-      { label: 'Releases', value: latestJob?.counts.releases || 0, accent: '#00e7ff' },
+      { label: 'Releases', value: latestJob?.counts.releases || 0, accent: theme.palette.primary.main },
       { label: 'Tracks', value: latestJob?.counts.tracks || 0, accent: '#21a67a' },
       { label: 'Files', value: latestJob?.counts.files || 0, accent: '#f5a524' },
       { label: 'Missing', value: latestJob?.counts.missing || 0, accent: '#ef4444' },
@@ -331,7 +331,7 @@ export default function AdminExportPage() {
 
   const downloadable = latestJob?.parts?.length ? latestJob.parts : [];
   const tabItems = [
-    { label: 'All', href: '/admin/releases', icon: <Album fontSize="small" />, color: '#00e7ff' },
+    { label: 'All', href: '/admin/releases', icon: <Album fontSize="small" />, color: theme.palette.primary.main },
     { label: 'Pending', href: '/admin/releases?status=pending', icon: <Pending fontSize="small" />, color: '#f59e0b' },
     { label: 'Approved', href: '/admin/releases?status=approved', icon: <CheckCircle fontSize="small" />, color: '#10b981' },
     { label: 'Rejected', href: '/admin/releases?status=rejected', icon: <Cancel fontSize="small" />, color: '#ef4444' },

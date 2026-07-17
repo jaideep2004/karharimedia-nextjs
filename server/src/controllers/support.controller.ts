@@ -2,7 +2,8 @@ import { Response } from 'express';
 import { AuthRequest } from '../middleware/auth.middleware';
 import { SupportMessageVisibility, SupportTicketSource, SupportTicketStatus } from '../config/constants';
 import { errorResponse, successResponse } from '../utils/apiResponse';
-import { getFileUrl } from '../utils/fileUpload';
+import { getFileUrl, uploadToR2 } from '../utils/fileUpload';
+import { getStorageProvider } from '../config/urlResolver';
 import {
   addTicketMessage,
   assignTicket,
@@ -131,11 +132,14 @@ export const uploadSupportAttachment = async (req: AuthRequest, res: Response): 
       return;
     }
 
+    await uploadToR2(file, 'support');
+
+    const sp = getStorageProvider({});
     const attachment = {
       fileName: file.originalname,
       key: file.filename,
-      url: getFileUrl(file.filename, 'support'),
-      provider: 'local',
+      url: file.filename,
+      provider: sp,
       contentType: file.mimetype,
       size: file.size,
     };

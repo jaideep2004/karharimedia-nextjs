@@ -93,7 +93,7 @@ function AnalyticsContent() {
       />
 
       <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr 1fr', lg: 'repeat(4, 1fr)' }, gap: 2, mb: 3 }}>
-        <PremiumMetric label="Total Streams" value={formatCompact(analytics.metrics.totalStreams)} hint="Across DSPs" accent="#00e7ff" />
+        <PremiumMetric label="Total Streams" value={formatCompact(analytics.metrics.totalStreams)} hint="Across DSPs" accent={theme.palette.primary.main} />
         <PremiumMetric label="Unique Listeners" value={formatCompact(analytics.metrics.uniqueListeners)} hint="Reported audience" accent="#10b981" />
         <PremiumMetric label="Avg. Daily Streams" value={formatCompact(analytics.metrics.averageDailyStreams)} hint="Current window" accent="#f59e0b" />
         <PremiumMetric label="Profile Views" value={formatCompact(analytics.metrics.profileViews)} hint="DSP profile visits" accent="#8b5cf6" />
@@ -112,7 +112,7 @@ function AnalyticsContent() {
 
       <PremiumPanel sx={{ mb: 3 }}>
         <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 2 }}>
-          <TrendingUp sx={{ color: '#00e7ff' }} />
+          <TrendingUp sx={{ color: theme.palette.primary.main }} />
           <Typography variant="h6" sx={{ fontWeight: 900 }}>Stream Activity</Typography>
           <Chip size="small" label="DSP data" />
           {analytics.lastSyncedAt ? (
@@ -124,7 +124,7 @@ function AnalyticsContent() {
             <CircularProgress size={28} />
           ) : currentData.length > 0 ? (
             currentData.map((row, index) => (
-              <Box key={`${row.date}-${index}`} sx={{ flex: 1, height: `${Math.max(4, (row.value / maxValue) * 100)}%`, bgcolor: '#00e7ff', opacity: 0.7, borderRadius: '6px 6px 2px 2px' }} />
+              <Box key={`${row.date}-${index}`} sx={{ flex: 1, height: `${Math.max(4, (row.value / maxValue) * 100)}%`, bgcolor: theme.palette.primary.main, opacity: 0.7, borderRadius: '6px 6px 2px 2px' }} />
             ))
           ) : (
             <Typography color="text.secondary">Waiting for synced Broma stream data.</Typography>

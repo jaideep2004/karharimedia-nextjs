@@ -3,6 +3,7 @@ import { NotificationType, UserRole } from '../config/constants';
 import { sendEmailMessage } from './otp.service';
 import { createNotification } from './notification.service';
 import { getFrontendUrl } from '../utils/frontendUrl';
+import SettingsModel from '../models/settings.model';
 
 type MailRecipient = {
   email?: string;
@@ -135,9 +136,25 @@ export const getAdminEmailRecipients = async (): Promise<MailRecipient[]> => {
   return admins.map((admin) => ({ name: admin.name, email: admin.email }));
 };
 
-export const sendActionEmail = async (recipients: MailRecipient[], email: ActionEmail): Promise<void> => {
+const isNotificationEnabled = async (notificationType?: string): Promise<boolean> => {
+  if (!notificationType) return true;
+  try {
+    const enabled = await SettingsModel.getSetting(notificationType, true);
+    return enabled === true;
+  } catch {
+    return true;
+  }
+};
+
+export const sendActionEmail = async (recipients: MailRecipient[], email: ActionEmail, notificationType?: string): Promise<void> => {
   const to = uniqueRecipients(recipients);
   if (!to.length) return;
+
+  const enabled = await isNotificationEnabled(notificationType);
+  if (!enabled) {
+    console.warn(`Karhari Media Distribution email skipped: notification type "${notificationType}" is disabled`);
+    return;
+  }
 
   const html = renderEmail(email);
   const text = textFromEmail(email);
@@ -154,9 +171,9 @@ export const sendActionEmail = async (recipients: MailRecipient[], email: Action
   await createEmailNotifications(to, email);
 };
 
-export const sendUserAndAdminEmail = async (user: MailRecipient, email: ActionEmail): Promise<void> => {
+export const sendUserAndAdminEmail = async (user: MailRecipient, email: ActionEmail, notificationType?: string): Promise<void> => {
   const admins = await getAdminEmailRecipients();
-  await sendActionEmail([user, ...admins], email);
+  await sendActionEmail([user, ...admins], email, notificationType);
 };
 
 export const buildDashboardUrl = (path: string) => `${getFrontendUrl()}${path.startsWith('/') ? path : `/${path}`}`;

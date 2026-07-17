@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { Alert, Avatar, Box, Button, Chip, CircularProgress, Divider, Stack, Typography, useTheme } from '@mui/material';
+import { alpha } from '@mui/material/styles';
 import {
   AccountBalance,
   ArrowBack,
@@ -20,6 +21,7 @@ import { adminAPI } from '@/services/api';
 import { PremiumHeader, PremiumPanel, premiumSurfaceSx } from '@/components/premium/PremiumSurface';
 import AdminKycFileDialog from '../components/AdminKycFileDialog';
 import { getNormalizedReleaseStatus, getReleaseStatusLabel } from '@/lib/releaseStatus';
+import StatusBadge from '@/components/StatusBadge';
 
 export default function UserPreviewPage() {
   const params = useParams<{ id: string }>();
@@ -205,7 +207,7 @@ export default function UserPreviewPage() {
       </Box>
       <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr 1fr' }, gap: 2.5 }}>
         {[
-          { icon: <Person />, title: 'Profile', text: `${user?.role || 'artist'} account`, meta: `${user?.verification?.status || 'pending'} KYC · ${user?.accountType || 'artist'}`, color: '#00e7ff' },
+          { icon: <Person />, title: 'Profile', text: `${user?.role || 'artist'} account`, meta: `${user?.verification?.status || 'pending'} KYC · ${user?.accountType || 'artist'}`, color: theme.palette.primary.main },
           { icon: <Album />, title: 'Releases', text: `${releases.length} matched`, meta: `${releasesStats.approved} approved · ${releasesStats.rejected} rejected · ${releasesStats.pending} pending`, color: '#f59e0b' },
           { icon: <RequestQuote />, title: 'Payouts', text: user?.payoutMethod?.method ? 'Method Saved' : 'No Method', meta: user?.payoutMethod?.method ? user.payoutMethod.method.replace('_', ' ') : 'No saved payout method yet', color: '#10b981' },
           { icon: <Phone />, title: 'Contact', text: user?.onboarding?.phoneNumber || user?.verification?.phoneNumber || 'No phone', meta: user?.email || 'No email', color: '#0ea5e9' },
@@ -336,9 +338,9 @@ export default function UserPreviewPage() {
                   bgcolor: isDark ? 'rgba(255,255,255,0.025)' : 'rgba(248,250,252,0.72)',
                   transition: 'border-color 160ms ease, transform 160ms ease, background-color 160ms ease',
                   '&:hover': {
-                    borderColor: '#00e7ff',
+                    borderColor: theme.palette.primary.main,
                     transform: 'translateY(-1px)',
-                    bgcolor: isDark ? 'rgba(0,231,255,0.10)' : 'rgba(91,95,247,0.06)',
+                    bgcolor: isDark ? alpha(theme.palette.primary.main, 0.10) : 'rgba(91,95,247,0.06)',
                   },
                 }}
               >
@@ -354,11 +356,9 @@ export default function UserPreviewPage() {
                       </Typography>
                     </Box>
                   </Stack>
-                  <Chip
-                    label={getReleaseStatusLabel(release.status)}
-                    size="small"
+                  <StatusBadge
+                    status={release.status}
                     sx={{ borderRadius: '999px', fontWeight: 900 }}
-                    color={getNormalizedReleaseStatus(release.status) === 'approved' ? 'success' : getNormalizedReleaseStatus(release.status) === 'rejected' ? 'error' : 'warning'}
                   />
                 </Stack>
               </Box>

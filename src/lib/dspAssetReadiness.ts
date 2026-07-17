@@ -112,15 +112,15 @@ async function checkLocalAsset(kind: 'audio' | 'artwork', owner: string, value?:
 
 export async function validateReleaseAssetsForDelivery(release: ReleaseLike): Promise<AssetReadiness> {
   const tracks = Array.isArray(release.tracks) ? release.tracks : [];
-  const releaseArtwork = firstString(release.artworkUrl, release.artwork, release.coverArt, release.artworkFile);
+  const releaseArtwork = firstString(release.artwork, release.artworkUrl, release.artworkFile, release.coverArt);
   const checks: AssetCheck[] = [];
 
   checks.push(await checkLocalAsset('artwork', 'release', releaseArtwork));
 
   for (const [index, track] of tracks.entries()) {
     const owner = `track ${index + 1}`;
-    const audio = firstString(track.audioUrl, track.audioFile, track.audio, track.fileUrl);
-    const artwork = firstString(track.artworkUrl, track.artwork, track.coverArt, releaseArtwork);
+    const audio = firstString(track.audioFile, track.audioUrl, track.audio, track.fileUrl);
+    const artwork = firstString(track.artwork, track.artworkUrl, track.coverArt, releaseArtwork);
     checks.push(await checkLocalAsset('audio', owner, audio));
     checks.push(await checkLocalAsset('artwork', owner, artwork));
   }

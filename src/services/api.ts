@@ -328,6 +328,15 @@ export const releaseAPI = {
       return handleApiError(error);
     }
   },
+
+  adminUpdateRelease: async (id: string, fields: Record<string, any>) => {
+    try {
+      const response = await api.patch(`/releases/${id}/admin-edit`, fields);
+      return response.data;
+    } catch (error) {
+      return handleApiError(error);
+    }
+  },
 };
 
 // API functions for Royalties

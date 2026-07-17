@@ -2,6 +2,7 @@
 
 import { useRef, useState, DragEvent, ChangeEvent } from 'react';
 import { Box, Typography, IconButton } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import { CloudUpload, Close, InsertDriveFile } from '@mui/icons-material';
 
 export interface FileDropZoneProps {
@@ -25,6 +26,7 @@ export default function FileDropZone({
   disabled,
   maxSizeMB = 10,
 }: FileDropZoneProps) {
+  const theme = useTheme();
   const inputRef = useRef<HTMLInputElement>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [localError, setLocalError] = useState<string | null>(null);
@@ -101,7 +103,7 @@ export default function FileDropZone({
             background: 'rgba(237, 30, 121, 0.08)',
           }}
         >
-          <InsertDriveFile sx={{ color: '#00e7ff', flexShrink: 0 }} />
+          <InsertDriveFile sx={{ color: theme.palette.primary.main, flexShrink: 0 }} />
           <Typography
             variant="body2"
             sx={{
@@ -135,7 +137,7 @@ export default function FileDropZone({
               displayError
                 ? '#ef4444'
                 : isDragging
-                ? '#00e7ff'
+                ? theme.palette.primary.main
                 : 'rgba(255,255,255,0.15)'
             }`,
             borderRadius: '14px',
@@ -166,7 +168,7 @@ export default function FileDropZone({
           <CloudUpload
             sx={{
               fontSize: 36,
-              color: isDragging ? '#00e7ff' : 'rgba(255,255,255,0.3)',
+              color: isDragging ? theme.palette.primary.main : 'rgba(255,255,255,0.3)',
               mb: 1,
             }}
           />
@@ -174,7 +176,7 @@ export default function FileDropZone({
             Drag & drop here, or{' '}
             <Box
               component="span"
-              sx={{ color: '#00e7ff', fontWeight: 600, cursor: 'pointer' }}
+              sx={{ color: theme.palette.primary.main, fontWeight: 600, cursor: 'pointer' }}
             >
               browse
             </Box>

@@ -13,6 +13,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  MenuItem,
   Paper,
   Stack,
   TextField,
@@ -23,6 +24,7 @@ import {
   Tooltip,
   FormControlLabel,
 } from "@mui/material";
+import StatusBadge from '@/components/StatusBadge';
 import {
   CheckCircle,
   Pending,
@@ -35,6 +37,7 @@ import {
   PlayArrow,
   PlaylistAddCheck,
   Delete,
+  Edit,
   Replay,
   Sync,
 } from "@mui/icons-material";
@@ -52,9 +55,10 @@ import {
   getAcrCloudSummary,
 } from '@/lib/acrCloud';
 import { DspLogo } from '@/components/dsp/DspLogo';
-import { getDspDisplayName } from '@/lib/platforms';
+import { getDspDisplayName, ALL_DSP_KEYS } from '@/lib/platforms';
 import PremiumAudioPlayer from '@/components/audio/PremiumAudioPlayer';
 import { resolveMediaUrl } from '@/lib/urlConfig';
+import { uploadDirectlyToR2 } from '@/lib/directUpload';
 import { getNormalizedReleaseStatus, getReleaseRejectionReason, getReleaseStatusLabel } from '@/lib/releaseStatus';
 import { toast } from 'sonner';
 
@@ -125,24 +129,37 @@ export default function AdminReleaseDetailPage() {
   const [selectedTakedownProviders, setSelectedTakedownProviders] = useState<string[]>([]);
   const [takedownNote, setTakedownNote] = useState('');
 
+  const [editOpen, setEditOpen] = useState(false);
+  const [editSaving, setEditSaving] = useState(false);
+  const [editArtworkFile, setEditArtworkFile] = useState<File | null>(null);
+  const [editArtworkPreview, setEditArtworkPreview] = useState('');
+  const [editTrackAudioFiles, setEditTrackAudioFiles] = useState<(File | null)[]>([]);
+  const [editForm, setEditForm] = useState<{
+    releaseType: string;
+    releaseTitle: string;
+    primaryArtist: string;
+    label: string;
+    releaseDate: string;
+    originalReleaseDate: string;
+    stores: string[];
+    tracks: { title: string; artist: string; isrc: string; genre: string }[];
+  }>({
+    releaseType: '',
+    releaseTitle: '',
+    primaryArtist: '',
+    label: '',
+    releaseDate: '',
+    originalReleaseDate: '',
+    stores: [],
+    tracks: [],
+  });
+
   const mergeTrackAcrCloudStatus = (tracks: any[], fileId: string, acrCloud: any) =>
     tracks.map((track: any) =>
       track?.acrCloud?.fileId === fileId
         ? { ...track, acrCloud: { ...(track.acrCloud || {}), ...acrCloud } }
         : track
     );
-
-  const statusColor = useMemo(() => {
-    if (!release?.status) return "default" as const;
-    const displayStatus = getNormalizedReleaseStatus(release.status);
-    return displayStatus === "approved"
-      ? ("success" as const)
-      : displayStatus === "pending"
-      ? ("warning" as const)
-      : displayStatus === "in_process"
-      ? ("info" as const)
-      : ("error" as const);
-  }, [release?.status]);
 
   useEffect(() => {
     let mounted = true;
@@ -326,6 +343,100 @@ export default function AdminReleaseDetailPage() {
     } finally {
       setSaving(false);
     }
+  };
+
+  const openEditDialog = () => {
+    const releaseTracks = Array.isArray(release?.tracks) ? release.tracks : [];
+    setEditArtworkFile(null);
+    setEditArtworkPreview('');
+    setEditTrackAudioFiles([]);
+    setEditForm({
+      releaseType: release?.releaseType || 'single',
+      releaseTitle: release?.releaseTitle || release?.title || '',
+      primaryArtist: release?.primaryArtist || '',
+      label: release?.label || '',
+      releaseDate: release?.releaseDate ? new Date(release.releaseDate).toISOString().split('T')[0] : '',
+      originalReleaseDate: release?.originalReleaseDate ? new Date(release.originalReleaseDate).toISOString().split('T')[0] : '',
+      stores: Array.isArray(release?.stores) ? [...release.stores] : [],
+      tracks: releaseTracks.map((t: any) => ({
+        title: t.title || '',
+        artist: t.artist || t.primaryArtist || '',
+        isrc: t.isrc || '',
+        genre: t.genre || '',
+      })),
+    });
+    setEditOpen(true);
+  };
+
+  const handleEditSave = async () => {
+    try {
+      setEditSaving(true);
+      const isRejected = ['rejected', 'declined', 'failed', 'error', 'cancelled', 'not_ready'].includes(release?.status);
+      const originalTracks = Array.isArray(release?.tracks) ? release.tracks : [];
+      const mergedTracks = originalTracks.map((orig: any, idx: number) => ({
+        ...orig,
+        ...(editForm.tracks[idx] || {}),
+      }));
+      const payload: Record<string, any> = {
+        releaseType: editForm.releaseType,
+        releaseTitle: editForm.releaseTitle,
+        primaryArtist: editForm.primaryArtist,
+        label: editForm.label,
+        releaseDate: editForm.releaseDate || undefined,
+        originalReleaseDate: editForm.originalReleaseDate || undefined,
+        stores: editForm.stores,
+        tracks: mergedTracks,
+      };
+
+      // Upload artwork if changed — direct to R2
+      if (editArtworkFile) {
+        const { filename } = await uploadDirectlyToR2(editArtworkFile, 'artwork');
+        if (filename) { payload.artwork = filename; payload.artworkFile = filename; }
+      }
+
+      // Upload per-track audio files if changed — direct to R2
+      const hasAudioUploads = editTrackAudioFiles.some(Boolean);
+      if (hasAudioUploads) {
+        const updatedTracks = [...payload.tracks];
+        for (let i = 0; i < editTrackAudioFiles.length; i++) {
+          const file = editTrackAudioFiles[i];
+          if (!file || !updatedTracks[i]) continue;
+          const { filename } = await uploadDirectlyToR2(file, 'audio');
+          if (filename) updatedTracks[i] = { ...updatedTracks[i], audioFile: filename };
+        }
+        payload.tracks = updatedTracks;
+      }
+
+      const resp = await releaseAPI.adminUpdateRelease(releaseId, payload);
+      if (resp?.success) {
+        setRelease(resp.release || { ...release, ...payload });
+        setEditOpen(false);
+        toast.success(isRejected ? 'Release updated and resubmitted' : 'Release updated');
+      } else {
+        toast.error(resp?.error || 'Failed to update release');
+      }
+    } catch (e: any) {
+      toast.error(e?.message || 'Failed to update release');
+    } finally {
+      setEditSaving(false);
+    }
+  };
+
+  const toggleEditStore = (key: string) => {
+    setEditForm((prev) => ({
+      ...prev,
+      stores: prev.stores.includes(key)
+        ? prev.stores.filter((s) => s !== key)
+        : [...prev.stores, key],
+    }));
+  };
+
+  const updateEditTrack = (index: number, field: string, value: string) => {
+    setEditForm((prev) => {
+      const tracks = [...prev.tracks];
+      tracks[index] = { ...tracks[index], [field]: value };
+      return { ...prev, tracks };
+    });
   };
 
   const handleDeleteReleaseTrack = async () => {
@@ -1017,15 +1128,8 @@ export default function AdminReleaseDetailPage() {
           Back to Releases
         </Button>
         
-        <Chip
-          icon={
-            getNormalizedReleaseStatus(release.status) === "approved" ? <CheckCircle /> :
-            getNormalizedReleaseStatus(release.status) === "pending" ? <Pending /> :
-            getNormalizedReleaseStatus(release.status) === "in_process" ? <Sync /> :
-            <Cancel />
-          }
-          label={getReleaseStatusLabel(release.status)}
-          color={statusColor}
+        <StatusBadge
+          status={release.status}
           size="medium"
           sx={{ fontWeight: 600 }}
         />
@@ -1119,39 +1223,62 @@ export default function AdminReleaseDetailPage() {
             
             {!["approved", "in_process"].includes(getNormalizedReleaseStatus(release.status)) && (
               <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, mt: 2 }}>
-                <Button
-                  variant="contained"
-                  color="success"
-                  startIcon={<ThumbUp />}
-                  onClick={handleApprove}
-                  disabled={saving}
-                  sx={{ minWidth: 140 }}
-                >
-                  {saving ? <CircularProgress size={20} /> : release.status === 'rejected' ? 'Approve Again' : 'Approve'}
-                </Button>
-                {release.status !== 'rejected' && (
-                  <Button
-                    variant="contained"
-                    color="error"
-                    startIcon={<ThumbDown />}
-                    onClick={() => setRejectOpen(true)}
-                    disabled={saving}
-                    sx={{ minWidth: 120 }}
-                  >
-                    Reject
-                  </Button>
-                )}
-                {['rejected', 'failed'].includes(release.status) && (
-                  <Button
-                    variant="outlined"
-                    color="error"
-                    startIcon={<Delete />}
-                    onClick={() => setDeleteReleaseOpen(true)}
-                    disabled={deletingRelease}
-                    sx={{ minWidth: 170 }}
-                  >
-                    {deletingRelease ? <CircularProgress size={20} /> : 'Delete Permanently'}
-                  </Button>
+                {['rejected', 'declined', 'failed', 'error', 'cancelled', 'not_ready'].includes(release.status) ? (
+                  <>
+                    <Button
+                      variant="outlined"
+                      color="primary"
+                      startIcon={<Edit />}
+                      onClick={openEditDialog}
+                      disabled={saving}
+                      sx={{ minWidth: 170 }}
+                    >
+                      Edit & Resubmit
+                    </Button>
+                    <Button
+                      variant="outlined"
+                      color="error"
+                      startIcon={<Delete />}
+                      onClick={() => setDeleteReleaseOpen(true)}
+                      disabled={deletingRelease}
+                      sx={{ minWidth: 170 }}
+                    >
+                      {deletingRelease ? <CircularProgress size={20} /> : 'Delete Permanently'}
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Button
+                      variant="contained"
+                      color="success"
+                      startIcon={<ThumbUp />}
+                      onClick={handleApprove}
+                      disabled={saving}
+                      sx={{ minWidth: 140 }}
+                    >
+                      {saving ? <CircularProgress size={20} /> : 'Approve'}
+                    </Button>
+                    <Button
+                      variant="outlined"
+                      color="primary"
+                      startIcon={<Edit />}
+                      onClick={openEditDialog}
+                      disabled={saving}
+                      sx={{ minWidth: 120 }}
+                    >
+                      Edit Release
+                    </Button>
+                    <Button
+                      variant="contained"
+                      color="error"
+                      startIcon={<ThumbDown />}
+                      onClick={() => setRejectOpen(true)}
+                      disabled={saving}
+                      sx={{ minWidth: 120 }}
+                    >
+                      Reject
+                    </Button>
+                  </>
                 )}
               </Box>
             )}
@@ -1463,6 +1590,158 @@ export default function AdminReleaseDetailPage() {
             disabled={saving || !rejectReason.trim()}
           >
             {saving ? <CircularProgress size={20} /> : 'Reject Release'}
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Edit Release Dialog */}
+      <Dialog open={editOpen} onClose={() => !editSaving && setEditOpen(false)} maxWidth="lg" fullWidth>
+        <DialogTitle sx={{ fontWeight: 800 }}>
+          {['rejected', 'declined', 'failed', 'error', 'cancelled', 'not_ready'].includes(release?.status)
+            ? 'Edit & Resubmit Release'
+            : 'Edit Release'}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText sx={{ mb: 2 }}>
+            {['rejected', 'declined', 'failed', 'error', 'cancelled', 'not_ready'].includes(release?.status)
+              ? 'Fix the release details and resubmit for review. The UPC will be preserved.'
+              : 'Edit the release details before approving. Changes will be saved immediately.'}
+          </DialogContentText>
+
+          {/* Release Info Section */}
+          <Typography variant="subtitle1" fontWeight={700} sx={{ mb: 1.5, mt: 1 }}>Release Information</Typography>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, mb: 3 }}>
+            <Box sx={{ display: 'flex', gap: 2 }}>
+              <TextField select label="Release Type" value={editForm.releaseType} onChange={(e) => setEditForm((prev) => ({ ...prev, releaseType: e.target.value }))} fullWidth size="small">
+                <MenuItem value="single">Single</MenuItem>
+                <MenuItem value="ep">EP</MenuItem>
+                <MenuItem value="album">Album</MenuItem>
+              </TextField>
+              <TextField label="Label" value={editForm.label} onChange={(e) => setEditForm((prev) => ({ ...prev, label: e.target.value }))} fullWidth size="small" />
+            </Box>
+            <TextField label="Release Title" value={editForm.releaseTitle} onChange={(e) => setEditForm((prev) => ({ ...prev, releaseTitle: e.target.value }))} fullWidth size="small" />
+            <TextField label="Primary Artist" value={editForm.primaryArtist} onChange={(e) => setEditForm((prev) => ({ ...prev, primaryArtist: e.target.value }))} fullWidth size="small" />
+            <Box sx={{ display: 'flex', gap: 2 }}>
+              <TextField label="Digital Release Date" type="date" value={editForm.releaseDate} onChange={(e) => setEditForm((prev) => ({ ...prev, releaseDate: e.target.value }))} fullWidth size="small" InputLabelProps={{ shrink: true }} />
+              <TextField label="Original Release Date" type="date" value={editForm.originalReleaseDate} onChange={(e) => setEditForm((prev) => ({ ...prev, originalReleaseDate: e.target.value }))} fullWidth size="small" InputLabelProps={{ shrink: true }} />
+            </Box>
+          </Box>
+
+          {/* DSP Stores Section */}
+          <Typography variant="subtitle1" fontWeight={700} sx={{ mb: 1 }}>
+            DSP Stores ({editForm.stores.length} selected)
+          </Typography>
+          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.75 }}>
+            {ALL_DSP_KEYS.filter((key) => !['facebook-rights-management', 'youtube-delivery', 'acr-cloud'].includes(key)).map((key) => {
+              const selected = editForm.stores.includes(key);
+              const logoPath = `/images/dsp/${key === 'facebook' ? 'facebook-audio-library' : key}.png`;
+              return (
+                <Box
+                  key={key}
+                  onClick={() => toggleEditStore(key)}
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 0.75,
+                    px: 1,
+                    py: 0.5,
+                    borderRadius: '8px',
+                    cursor: 'pointer',
+                    border: '1px solid',
+                    borderColor: selected ? 'primary.main' : 'divider',
+                    bgcolor: selected ? (mode === 'dark' ? 'rgba(3,105,161,0.15)' : 'rgba(3,105,161,0.08)') : 'transparent',
+                    opacity: selected ? 1 : 0.55,
+                    transition: 'all 150ms ease',
+                    '&:hover': { opacity: 1, borderColor: 'primary.main' },
+                  }}
+                >
+                  <Box
+                    component="img"
+                    src={logoPath}
+                    alt={getDspDisplayName(key)}
+                    sx={{ width: 20, height: 20, borderRadius: '4px', objectFit: 'contain', bgcolor: '#fff', p: 0.25 }}
+                    onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
+                  />
+                  <Typography variant="caption" fontWeight={600} noWrap>{getDspDisplayName(key)}</Typography>
+                </Box>
+              );
+            })}
+          </Box>
+
+          {/* Artwork Section */}
+          <Typography variant="subtitle1" fontWeight={700} sx={{ mb: 1.5, mt: 3 }}>Artwork</Typography>
+          <Box sx={{ display: 'flex', gap: 2, alignItems: 'center', mb: 3 }}>
+            <Box
+              component="img"
+              src={editArtworkPreview || releaseArtworkUrl}
+              alt="Release artwork"
+              sx={{ width: 100, height: 100, borderRadius: 2, objectFit: 'cover', border: '1px solid', borderColor: 'divider', bgcolor: 'action.hover' }}
+              onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
+            />
+            <Button variant="outlined" size="small" component="label">
+              {editArtworkFile ? 'Replace Artwork' : 'Upload Artwork'}
+              <input type="file" accept="image/png,image/jpeg,image/jpg,image/webp" hidden onChange={(e) => {
+                const file = e.target.files?.[0];
+                if (file) {
+                  setEditArtworkFile(file);
+                  setEditArtworkPreview(URL.createObjectURL(file));
+                }
+              }} />
+            </Button>
+            {editArtworkFile && (
+              <Typography variant="caption" color="text.secondary" noWrap>{editArtworkFile.name}</Typography>
+            )}
+          </Box>
+
+          {/* Tracks Section */}
+          {editForm.tracks.length > 0 && (
+            <>
+              <Typography variant="subtitle1" fontWeight={700} sx={{ mb: 1.5, mt: 3 }}>Tracks ({editForm.tracks.length})</Typography>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, mb: 2 }}>
+                {editForm.tracks.map((track, idx) => (
+                  <Paper key={idx} variant="outlined" sx={{ p: 2, borderRadius: 2 }}>
+                    <Typography variant="caption" color="text.secondary" fontWeight={700} sx={{ mb: 1, display: 'block' }}>Track {idx + 1}</Typography>
+                    <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+                      <TextField label="Title" value={track.title} onChange={(e) => updateEditTrack(idx, 'title', e.target.value)} size="small" sx={{ flex: '1 1 200px' }} />
+                      <TextField label="Artist" value={track.artist} onChange={(e) => updateEditTrack(idx, 'artist', e.target.value)} size="small" sx={{ flex: '1 1 180px' }} />
+                      <TextField label="ISRC" value={track.isrc} onChange={(e) => updateEditTrack(idx, 'isrc', e.target.value)} size="small" sx={{ flex: '1 1 140px' }} />
+                      <TextField label="Genre" value={track.genre} onChange={(e) => updateEditTrack(idx, 'genre', e.target.value)} size="small" sx={{ flex: '1 1 140px' }} />
+                    </Box>
+                    <Box sx={{ mt: 1.5, display: 'flex', alignItems: 'center', gap: 1.5 }}>
+                      {release?.tracks?.[idx]?.audioUrl ? (
+                        <Typography variant="caption" color="text.secondary" noWrap sx={{ maxWidth: 220, fontFamily: 'monospace' }}>
+                          {decodeURIComponent(release.tracks[idx].audioUrl.split('/').pop() || '')}
+                        </Typography>
+                      ) : (
+                        <Typography variant="caption" color="text.disabled">No audio file</Typography>
+                      )}
+                      <Button variant="outlined" size="small" component="label">
+                        {editTrackAudioFiles[idx] ? 'Change Audio' : 'Upload Audio'}
+                        <input type="file" accept="audio/mpeg,audio/wav,audio/flac,audio/aac,audio/*" hidden onChange={(e) => {
+                          const file = e.target.files?.[0];
+                          if (file) {
+                            setEditTrackAudioFiles((prev) => {
+                              const next = [...prev];
+                              next[idx] = file;
+                              return next;
+                            });
+                          }
+                        }} />
+                      </Button>
+                      {editTrackAudioFiles[idx] && (
+                        <Typography variant="caption" color="success.main" noWrap>{editTrackAudioFiles[idx].name}</Typography>
+                      )}
+                    </Box>
+                  </Paper>
+                ))}
+              </Box>
+            </>
+          )}
+        </DialogContent>
+        <DialogActions sx={{ px: 3, pb: 2 }}>
+          <Button onClick={() => setEditOpen(false)} disabled={editSaving}>Cancel</Button>
+          <Button onClick={handleEditSave} color="primary" variant="contained" disabled={editSaving || !editForm.releaseTitle.trim()}>
+            {editSaving ? <CircularProgress size={20} /> : ['rejected', 'declined', 'failed', 'error', 'cancelled', 'not_ready'].includes(release?.status) ? 'Save & Resubmit' : 'Save Changes'}
           </Button>
         </DialogActions>
       </Dialog>

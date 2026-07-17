@@ -84,6 +84,7 @@ import {
   requiresYoutubePolicy,
 } from '@/lib/releaseConsent';
 import { getConfiguredApiBaseUrl } from '@/lib/urlConfig';
+import { uploadDirectlyToR2 } from '@/lib/directUpload';
 import { getReleaseRejectionReason } from '@/lib/releaseStatus';
 
 // Helper: call Express API for uploads (uses NEXT_PUBLIC_API_URL in browser)
@@ -116,20 +117,7 @@ const resizeList = <T,>(items: T[], length: number, fallback: T): T[] => {
 
 async function uploadArtworkToServer(file: File): Promise<{ url: string; filename: string }> {
   assertVercelUploadSize(file, 'artwork');
-  const fd = new FormData();
-  fd.append('artwork', file);
-  const token = Cookies.get('token');
-  const res = await fetch(`${API_BASE}/uploads/artwork`, {
-    method: 'POST',
-    body: fd,
-    headers: token ? { Authorization: `Bearer ${token}` } : undefined,
-  });
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({}));
-    throw new Error(err?.error || 'Failed to upload artwork');
-  }
-  const data = await res.json();
-  return { url: data.url, filename: data.filename };
+  return uploadDirectlyToR2(file, 'artwork');
 }
 
 async function uploadAudioToServer(
@@ -893,7 +881,7 @@ export default function UploadPage() {
       autoGenerateCodes,
       releaseDate,
       originalReleaseDate,
-      artworkUrl: artworkUploadedUrl,
+      artwork: artworkUploadedFilename,
       artworkFile: artworkUploadedFilename,
       territories: territoryCountries,
       stores: selectedDSPs,

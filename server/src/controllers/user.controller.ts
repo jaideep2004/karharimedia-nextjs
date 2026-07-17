@@ -92,7 +92,8 @@ export const createUser = async (req: AuthRequest, res: Response): Promise<void>
         },
         actionLabel: 'Open Account',
         actionUrl: buildDashboardUrl(user.role === UserRole.ADMIN || user.role === UserRole.SUBADMIN ? '/admin/dashboard' : '/dashboard'),
-      }
+      },
+      'email_on_admin_user_created'
     ).catch((error) => console.warn('Admin user creation email skipped:', error));
 
     successResponse(
@@ -314,7 +315,8 @@ export const updateUser = async (req: AuthRequest, res: Response): Promise<void>
         },
         actionLabel: 'Open User',
         actionUrl: buildDashboardUrl(`/admin/users/${user._id}`),
-      }
+      },
+      'email_on_admin_user_updated'
     ).catch((error) => console.warn('Admin user update email skipped:', error));
 
     successResponse(res, user, 'User updated successfully');
@@ -406,7 +408,8 @@ export const reviewUserVerification = async (req: AuthRequest, res: Response): P
         },
         actionLabel: status === 'rejected' ? 'Resubmit KYC' : 'Open Dashboard',
         actionUrl: buildDashboardUrl(status === 'rejected' ? '/dashboard' : '/dashboard'),
-      }
+      },
+      'email_on_kyc_reviewed'
     ).catch((error) => console.warn('KYC review email skipped:', error));
 
     successResponse(res, user, 'User verification updated successfully');

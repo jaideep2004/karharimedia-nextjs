@@ -15,6 +15,7 @@ import SupportTicket, { ISupportTicket } from '../models/supportTicket.model';
 import UserRepository from '../repositories/user.repository';
 import { createNotification } from './notification.service';
 import { ApiError } from '../middleware/errorHandler.middleware';
+import { getFileUrl } from '../utils/fileUpload';
 
 type Actor = {
   _id: mongoose.Types.ObjectId | string;
@@ -439,7 +440,18 @@ export async function getTicketWithMessages(ticketId: string, actor: Actor) {
     .populate('authorId', 'name email role artistName')
     .sort({ createdAt: 1 });
 
-  return { ticket, messages };
+  const resolvedMessages = messages.map((msg) => {
+    const m = msg.toObject();
+    if (m.attachments?.length) {
+      m.attachments = m.attachments.map((a: ISupportAttachment) => ({
+        ...a,
+        url: getFileUrl(a.key || a.url || a.fileName, 'support', a.provider as any),
+      }));
+    }
+    return m;
+  });
+
+  return { ticket, messages: resolvedMessages };
 }
 
 export async function markTicketRead(ticketId: string, actor: Actor) {

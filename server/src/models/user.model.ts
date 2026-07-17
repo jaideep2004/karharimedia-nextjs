@@ -59,6 +59,8 @@ export interface IUser extends Document {
   password: string;
   role: UserRole;
   profilePicture?: string;
+  profilePictureFile?: string;
+  storageProvider?: 'r2' | 'local' | 'external';
   artistName?: string;
   bio?: string;
   accountType?: 'artist' | 'label';
@@ -129,6 +131,13 @@ const UserSchema: Schema = new Schema(
     },
     profilePicture: {
       type: String,
+    },
+    profilePictureFile: {
+      type: String,
+    },
+    storageProvider: {
+      type: String,
+      enum: ['r2', 'local', 'external'],
     },
     artistName: {
       type: String,

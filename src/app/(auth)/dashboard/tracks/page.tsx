@@ -16,11 +16,13 @@ import {
   Tabs,
   TextField,
   Stack,
+  TablePagination,
   Typography,
   useTheme,
 } from '@mui/material';
 import { getNormalizedReleaseStatus, getReleaseStatusLabel } from '@/lib/releaseStatus';
 import { Album, CloudUpload, Pause, PlayArrow, Search } from '@mui/icons-material';
+import StatusBadge from '@/components/StatusBadge';
 import AuthGuard from '@/components/AuthGuard';
 import { PremiumHeader, premiumSurfaceSx } from '@/components/premium/PremiumSurface';
 import { trackAPI } from '@/services/api';
@@ -63,19 +65,25 @@ function TracksContent() {
   const [counts, setCounts] = useState({ all: 0, pending: 0, in_process: 0, approved: 0, rejected: 0, other: 0 });
   const [playing, setPlaying] = useState<string | null>(null);
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
+  const [page, setPage] = useState(0);
+  const [totalCount, setTotalCount] = useState(0);
+  const rowsPerPage = 25;
 
   useEffect(() => {
     const load = async () => {
       try {
         setLoading(true);
         const response = await trackAPI.getTracks({
-          page: 1,
-          limit: 100,
+          page: page + 1,
+          limit: rowsPerPage,
           status: statusFilter !== 'all' ? statusFilter : undefined,
           search: search.trim() || undefined,
         });
         if (!response.success) throw new Error(response.error || 'Failed to load tracks');
         setRows(Array.isArray(response.data) ? response.data : []);
+        if (response.pagination) {
+          setTotalCount(Number(response.pagination.total || response.pagination.totalCount || 0));
+        }
         if (response.counts) {
           setCounts({
             all: Number(response.counts.all || 0),
@@ -93,9 +101,11 @@ function TracksContent() {
       }
     };
     void load();
-  }, [statusFilter, search]);
+  }, [statusFilter, search, page]);
 
   useEffect(() => () => audio?.pause(), [audio]);
+
+  useEffect(() => { setPage(0); }, [statusFilter, search]);
 
   const togglePlay = (row: TrackRow) => {
     if (!row.audioUrl) return;
@@ -218,11 +228,23 @@ function TracksContent() {
               </Typography>
               <Typography color="text.secondary" sx={{ fontSize: '0.86rem' }}>{row.isrc || 'No ISRC'}</Typography>
               <Typography color="text.secondary" sx={{ fontSize: '0.86rem' }}>{formatDate(row.releaseDate)}</Typography>
-              <Chip label={getReleaseStatusLabel(row.status)} size="small" color={getNormalizedReleaseStatus(row.status) === 'approved' ? 'success' : getNormalizedReleaseStatus(row.status) === 'rejected' ? 'error' : 'warning'} sx={{ height: 26, maxWidth: 112 }} />
+              <StatusBadge status={row.status} sx={{ maxWidth: 112 }} />
             </Box>
           ))
         )}
       </Paper>
+
+      {!loading && totalCount > 0 && (
+        <TablePagination
+          component="div"
+          count={totalCount}
+          page={page}
+          onPageChange={(_, newPage) => setPage(newPage)}
+          rowsPerPage={rowsPerPage}
+          rowsPerPageOptions={[rowsPerPage]}
+          sx={{ mt: 1 }}
+        />
+      )}
     </Box>
   );
 }

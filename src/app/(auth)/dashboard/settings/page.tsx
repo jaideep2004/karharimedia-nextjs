@@ -15,6 +15,7 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 import { Notifications, Palette, Person, Save, Security } from "@mui/icons-material";
 import { PremiumHeader, premiumSurfaceSx } from "@/components/premium/PremiumSurface";
 import { useAuth } from "@/context/AppContext";
@@ -83,7 +84,7 @@ export default function SettingsPage() {
                   display: "grid",
                   placeItems: "center",
                   color: "primary.main",
-                  bgcolor: theme.palette.mode === "dark" ? "rgba(91,95,247,0.14)" : "rgba(0,231,255,0.10)",
+                  bgcolor: theme.palette.mode === "dark" ? "rgba(91,95,247,0.14)" : alpha(theme.palette.primary.main, 0.10),
                 }}
               >
                 {item.icon}

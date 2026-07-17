@@ -1,17 +1,17 @@
 import 'dotenv/config';
 import express, { Express, Request, Response } from 'express';
 import mongoose from 'mongoose';
-import path from 'path';
 import cors from 'cors';
 import helmet from 'helmet';
 import compression from 'compression';
 import apiRoutes from './routes';
 import { errorHandler, notFoundHandler } from './middleware/errorHandler.middleware';
 import { setupCors } from './middleware/cors.middleware';
-import { PORT, API_PREFIX, UPLOAD_DIR } from './config/constants';
+import { PORT, API_PREFIX } from './config/constants';
 import settingsController from './controllers/settings.controller';
 import { startDspWorkerScheduler } from './services/dsp/dspWorkerScheduler';
 import { syncBromaOutlets } from './services/dsp/bromaOutlet.service';
+import { r2 } from './services/storage/r2Provider';
 
 // .env already loaded by the side-effect import above
 
@@ -27,9 +27,6 @@ app.use(helmet({
   crossOriginResourcePolicy: { policy: 'cross-origin' },
 }));
 app.use(compression());
-
-// Static files
-app.use('/uploads', express.static(path.join(UPLOAD_DIR)));
 
 // Routes
 app.use('/', apiRoutes);

@@ -21,6 +21,7 @@ import {
   withOptionalLegacyTrackSnapshot,
 } from '@/lib/repositories/releases';
 import { replaceReleaseCanonicalTracks } from '@/lib/repositories/tracks';
+import { getFileUrl } from '@/lib/assetUrl';
 
 export async function PATCH(
   req: NextRequest,
@@ -157,7 +158,8 @@ export async function PATCH(
               actionLabel: 'Open Release',
               actionUrl: appUrl(`/admin/releases/${id}`),
             },
-            db
+            db,
+            'email_on_gs1_upc_assigned'
           )
         )
         .catch((error) =>
@@ -216,7 +218,7 @@ export async function PATCH(
           },
           release: {
             title: existing.releaseTitle || existing.title || 'Untitled release',
-            coverUrl: existing.artworkUrl || existing.artwork || existing.coverUrl,
+            coverUrl: existing.artworkUrl || getFileUrl(existing.artwork || existing.artworkFile || existing.coverArt, 'image') || existing.coverUrl,
             artist: existing.primaryArtist || existing.artist || existing.ownerName,
             label: existing.label,
             genre: existing.genre,
@@ -229,7 +231,8 @@ export async function PATCH(
           },
           actionLabel: approvedAction ? 'Open Releases' : 'Review Release',
           actionUrl: appUrl(approvedAction ? '/dashboard/releases?status=in_process' : `/dashboard/releases/${id}`),
-        }
+        },
+        approvedAction ? 'email_on_release_approved' : 'email_on_release_rejected'
       ).catch((error) => console.warn('Release status email skipped:', error));
     }
 
@@ -271,7 +274,8 @@ export async function PATCH(
               actionLabel: 'Open Release',
               actionUrl: appUrl(`/admin/releases/${id}`),
             },
-            dbForFailure || undefined
+            dbForFailure || undefined,
+            'email_on_gs1_upc_failed'
           )
         )
         .catch((error) =>

@@ -20,8 +20,25 @@ import {
 } from '../config/constants';
 import { ApiError } from '../middleware/errorHandler.middleware';
 import SettingsModel from '../models/settings.model';
+import { r2 } from '../services/storage/r2Provider';
+import { resolveAssetUrl } from '../config/urlResolver';
 
-// Ensure upload directories exist
+const UPLOAD_DIRECTORIES: Record<string, string> = {
+  tracks: TRACKS_DIR,
+  artwork: ARTWORK_DIR,
+  registration: REGISTRATION_DIR,
+  support: SUPPORT_ATTACHMENT_DIR,
+  'knowledge-base': KNOWLEDGE_BASE_MEDIA_DIR,
+};
+
+const DIRECTORY_NAMES: Record<string, string> = {
+  tracks: 'tracks',
+  artwork: 'artwork',
+  registration: 'registration',
+  support: 'support',
+  'knowledge-base': 'knowledge-base',
+};
+
 [TRACKS_DIR, ARTWORK_DIR, REGISTRATION_DIR, SUPPORT_ATTACHMENT_DIR, KNOWLEDGE_BASE_MEDIA_DIR].forEach(dir => {
   try {
     if (!fs.existsSync(dir)) {
@@ -101,7 +118,6 @@ const mixedTrackStorage = multer.diskStorage({
   }
 });
 
-// File filter for audio files
 const audioFileFilter = (_req: Request, file: Express.Multer.File, cb: multer.FileFilterCallback) => {
   void (async () => {
     const configuredSetting = await SettingsModel.findOne({ key: 'allowedFileTypes' }).lean();
@@ -135,7 +151,6 @@ const audioFileFilter = (_req: Request, file: Express.Multer.File, cb: multer.Fi
   });
 };
 
-// File filter for image files
 const imageFileFilter = (_req: Request, file: Express.Multer.File, cb: multer.FileFilterCallback) => {
   if (ALLOWED_IMAGE_TYPES.includes(file.mimetype)) {
     cb(null, true);
@@ -158,7 +173,6 @@ const trackUploadFileFilter = (req: Request, file: Express.Multer.File, cb: mult
   cb(new ApiError(`Unsupported upload field: ${file.fieldname}`, 400));
 };
 
-// Configure upload for audio files
 export const uploadAudio = multer({
   storage: audioStorage,
   limits: {
@@ -167,7 +181,6 @@ export const uploadAudio = multer({
   fileFilter: audioFileFilter
 });
 
-// Configure upload for image files
 export const uploadImage = multer({
   storage: imageStorage,
   limits: {
@@ -214,7 +227,7 @@ const registrationFileFilter = (
 
 export const uploadRegistrationFiles = multer({
   storage: registrationStorage,
-  limits: { fileSize: 10 * 1024 * 1024 }, // 10 MB
+  limits: { fileSize: 10 * 1024 * 1024 },
   fileFilter: registrationFileFilter,
 }).fields([
   { name: 'governmentIdFile', maxCount: 1 },
@@ -294,8 +307,12 @@ export const uploadKnowledgeBaseMedia = multer({
   fileFilter: knowledgeBaseMediaFileFilter,
 });
 
-// Delete file
-export const deleteFile = (filePath: string): void => {
+export const deleteFile = (filePath: string, r2Key?: string): void => {
+  if (r2Key && r2.isConfigured) {
+    r2.deleteFile(r2Key).catch((error) => {
+      console.error(`[R2] Failed to delete ${r2Key}:`, error);
+    });
+  }
   try {
     if (fs.existsSync(filePath)) {
       fs.unlinkSync(filePath);
@@ -305,20 +322,36 @@ export const deleteFile = (filePath: string): void => {
   }
 };
 
-// Get file URL (in a real app, this would be a CDN or S3 URL)
-export const getFileUrl = (filename: string, type: 'audio' | 'image' | 'support' | 'knowledge-base'): string => {
-  const configuredBaseUrl = process.env.API_URL || process.env.BACKEND_URL || process.env.PUBLIC_API_URL || '';
-  const baseUrl = configuredBaseUrl
-    ? configuredBaseUrl.replace(/\/api\/?$/, '').replace(/\/+$/, '')
-    : process.env.NODE_ENV === 'production'
-      ? ''
-      : `http://${'localhost'}:${process.env.PORT || 5000}`;
-  const directory = type === 'audio'
-    ? 'tracks'
-    : type === 'image'
-      ? 'artwork'
-      : type === 'knowledge-base'
-        ? 'knowledge-base'
-        : 'support';
-  return `${baseUrl}/uploads/${directory}/${filename}`;
-}; 
+export const uploadToR2 = async (file: Express.Multer.File, directory: string): Promise<string | null> => {
+  if (!r2.isConfigured) return null;
+  try {
+    const key = r2.getR2Key(file.filename, directory);
+    const result = await r2.uploadAndCleanup(file.path, key, file.mimetype);
+    return result.url;
+  } catch (error) {
+    console.error(`[R2] Failed to upload ${file.filename}:`, error);
+    return null;
+  }
+};
+
+export const uploadToR2WithPath = async (localPath: string, filename: string, directory: string, mimeType?: string, cleanupLocal = true): Promise<string | null> => {
+  if (!r2.isConfigured) return null;
+  try {
+    const key = r2.getR2Key(filename, directory);
+    const result = cleanupLocal
+      ? await r2.uploadAndCleanup(localPath, key, mimeType)
+      : await r2.uploadFile(localPath, key, mimeType);
+    return result.url;
+  } catch (error) {
+    console.error(`[R2] Failed to upload ${filename}:`, error);
+    return null;
+  }
+};
+
+export const getFileUrl = (filename: string, type: 'audio' | 'image' | 'support' | 'knowledge-base', provider?: string): string => {
+  return resolveAssetUrl(filename, type, provider || (r2.isConfigured ? 'r2' : 'local'));
+};
+
+export const getDirectoryForType = (type: string): string => {
+  return DIRECTORY_NAMES[type] || type;
+};

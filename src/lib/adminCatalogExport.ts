@@ -209,6 +209,16 @@ function isExternalOnly(source: string) {
   }
 }
 
+function isR2Url(url: string): boolean {
+  const r2Domain = process.env.NEXT_PUBLIC_R2_PUBLIC_DOMAIN || process.env.R2_PUBLIC_DOMAIN || '';
+  if (!r2Domain) return false;
+  try {
+    return new URL(url).hostname === r2Domain;
+  } catch {
+    return false;
+  }
+}
+
 export async function resolveTrackFile(track: Record<string, unknown>): Promise<TrackFileResolution> {
   const sources = [asString(track.audioFile), asString(track.audioUrl), asString(track.audio)]
     .map((value) => value.trim())
@@ -221,6 +231,11 @@ export async function resolveTrackFile(track: Record<string, unknown>): Promise<
   let lastFailure = { reason: 'Local audio file not found', source: sources[0] };
 
   for (const source of sources) {
+    if (isR2Url(source)) {
+      lastFailure = { reason: 'R2-hosted audio file — download separately from bucket', source };
+      continue;
+    }
+
     if (isExternalOnly(source)) {
       lastFailure = { reason: 'External audio URL skipped in v1 export', source };
       continue;

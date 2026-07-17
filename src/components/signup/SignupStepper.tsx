@@ -8,6 +8,7 @@ import {
   LinearProgress,
   Typography,
 } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 
 export interface SignupStepperProps {
   currentStep: 1 | 2 | 3;
@@ -15,6 +16,7 @@ export interface SignupStepperProps {
 }
 
 export default function SignupStepper({ currentStep, steps }: SignupStepperProps) {
+  const theme = useTheme();
   const progressValue = ((currentStep - 1) / (steps.length - 1)) * 100;
 
   return (
@@ -29,7 +31,7 @@ export default function SignupStepper({ currentStep, steps }: SignupStepperProps
             fontWeight: 500,
           },
           '& .MuiStepLabel-label.Mui-active': {
-            color: '#00e7ff',
+            color: theme.palette.primary.main,
             fontWeight: 700,
           },
           '& .MuiStepLabel-label.Mui-completed': {
@@ -39,7 +41,7 @@ export default function SignupStepper({ currentStep, steps }: SignupStepperProps
             color: 'var(--auth-field-border, rgba(255,255,255,0.15))',
           },
           '& .MuiStepIcon-root.Mui-active': {
-            color: '#00e7ff',
+            color: theme.palette.primary.main,
           },
           '& .MuiStepIcon-root.Mui-completed': {
             color: '#d6d70d',
@@ -65,7 +67,7 @@ export default function SignupStepper({ currentStep, steps }: SignupStepperProps
           backgroundColor: 'var(--auth-field-border, rgba(255,255,255,0.08))',
           '& .MuiLinearProgress-bar': {
             borderRadius: 2,
-            background: 'linear-gradient(90deg, #00e7ff, #d6d70d)',
+            background: `linear-gradient(90deg, ${theme.palette.primary.main}, #d6d70d)`,
           },
         }}
       />

@@ -9,9 +9,13 @@
     "dev": "nodemon --exec ts-node src/index.ts",
     "lint": "eslint .",
     "seed:admin": "ts-node src/scripts/seedAdmin.ts",
-    "backfill:broma": "ts-node src/scripts/backfillBromaStatuses.ts"
+    "backfill:broma": "ts-node src/scripts/backfillBromaStatuses.ts",
+    "r2:verify-cleanup": "ts-node src/scripts/r2VerifyCleanup.ts",
+    "r2:verify-logic": "ts-node src/scripts/r2VerifyLogic.ts"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.1088.0",
+    "@aws-sdk/s3-request-presigner": "^3.1088.0",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
     "@mui/icons-material": "^7.2.0",

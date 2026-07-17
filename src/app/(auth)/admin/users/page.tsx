@@ -345,7 +345,7 @@ export default function AdminUsersPage() {
                   borderColor: mode === 'dark' ? 'rgba(255, 255, 255, 0.5)' : 'rgba(0, 0, 0, 0.5)',
                 },
                 '&.Mui-focused fieldset': {
-                  borderColor: mode === 'dark' ? '#9bafff' : '#00e7ff',
+                  borderColor: mode === 'dark' ? '#9bafff' : theme.palette.primary.main,
                 },
               },
             }}
