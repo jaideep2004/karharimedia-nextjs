@@ -59,7 +59,8 @@ router.post('/deliveries/process-all', protect, authorize([UserRole.ADMIN]), dsp
 router.post('/deliveries/:jobId/retry', protect, authorize([UserRole.ADMIN]), dspController.retryDelivery);
 router.post('/deliveries/:jobId/retry-individual', protect, authorize([UserRole.ADMIN]), dspController.retryIndividualDelivery);
 router.post('/deliveries/:jobId/refresh-status', protect, authorize([UserRole.ADMIN]), dspController.refreshDeliveryStatus);
-router.delete('/deliveries/:jobId/logs', protect, authorize([UserRole.ADMIN]), dspController.clearDeliveryLogs);
+  router.delete('/deliveries/:jobId/logs', protect, authorize([UserRole.ADMIN]), dspController.clearDeliveryLogs);
+  router.delete('/deliveries/:jobId', protect, authorize([UserRole.ADMIN]), dspController.deleteDelivery);
 router.post('/deliveries/cleanup', protectAdminOrCronSecret, dspController.cleanupOldDeliveryJobs);
 
 router.post('/rights/claims', protect, authorize([UserRole.ADMIN]), dspController.createRightsClaim);

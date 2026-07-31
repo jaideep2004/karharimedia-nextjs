@@ -2,7 +2,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import { SOCIAL_VIDEO_DIR } from '../config/constants';
 
-const DEFAULT_MAX_AGE_MS = 24 * 60 * 60 * 1000; // 1 day
+const DEFAULT_MAX_AGE_MS = 60 * 60 * 1000; // 1 hour
 
 export interface SocialCleanupResult {
   removedDirs: number;

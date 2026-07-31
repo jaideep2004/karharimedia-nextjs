@@ -83,6 +83,7 @@ export class FacebookConnector extends BaseDspConnector implements DspConnector 
     }
 
     try {
+      if (context.signal?.aborted) throw new Error('Upload cancelled');
       const localVideoPath = (context.config?.videoLocalPath as string) || '';
       if (!localVideoPath) {
         throw new Error('No local video path provided. Generate the video first.');
@@ -96,7 +97,7 @@ export class FacebookConnector extends BaseDspConnector implements DspConnector 
         : `${(payload as DspTrackPayload).title} by ${(payload as DspTrackPayload).artistName}`;
 
       const onProgress = context.onProgress;
-      const videoId = await this.uploadToFacebook(localVideoPath, title, description, activePageId, activeToken, onProgress);
+      const videoId = await this.uploadToFacebook(localVideoPath, title, description, activePageId, activeToken, onProgress, context.signal);
 
       const metadata: Record<string, unknown> = {
         videoUrl: `https://facebook.com/${activePageId}/videos/${videoId}`,
@@ -135,6 +136,7 @@ export class FacebookConnector extends BaseDspConnector implements DspConnector 
     pageId: string,
     pageAccessToken: string,
     onProgress?: (pct: number, bytes?: number, total?: number) => void,
+    signal?: AbortSignal,
   ): Promise<string> {
     const tag = `[FB:${pageId.slice(0, 6)}]`;
     const filename = path.basename(videoPath);
@@ -177,6 +179,11 @@ export class FacebookConnector extends BaseDspConnector implements DspConnector 
       req.on('error', reject);
       req.on('timeout', () => { req.destroy(); reject(new Error('R2 upload timed out')); });
 
+      const onAbort = () => { req.destroy(new Error('Upload cancelled')); };
+      signal?.addEventListener('abort', onAbort, { once: true });
+      const detach = () => signal?.removeEventListener('abort', onAbort);
+      req.on('close', detach);
+
       // Stream file with byte-level progress 10% → 60%
       const stream = fs.createReadStream(videoPath, { highWaterMark: 256 * 1024 }); // 256KB chunks
       let bytesDone = 0;
@@ -192,6 +199,8 @@ export class FacebookConnector extends BaseDspConnector implements DspConnector 
       req.on('drain', () => stream.resume());
     });
 
+    if (signal?.aborted) throw new Error('Upload cancelled');
+
     console.log(`${tag} R2 upload complete: ${r2PublicUrl}`);
     if (onProgress) onProgress(60);
 
@@ -199,7 +208,7 @@ export class FacebookConnector extends BaseDspConnector implements DspConnector 
       // 2. Tell Facebook to download from R2 URL
       console.log(`${tag} Calling Facebook API with file_url...`);
       const qs = `file_url=${encodeURIComponent(r2PublicUrl)}&title=${encodeURIComponent(title)}&description=${encodeURIComponent(description)}&published=true&access_token=${encodeURIComponent(pageAccessToken)}`;
-      const result = await this.fbGetSimple(`/${pageId}/videos`, qs, tag);
+      const result = await this.fbGetSimple(`/${pageId}/videos`, qs, tag, signal);
       const videoId = (result.id || '') as string;
       if (!videoId) throw new Error(`Facebook did not return video ID: ${JSON.stringify(result)}`);
       console.log(`${tag} Facebook accepted: video_id=${videoId}`);
@@ -213,7 +222,7 @@ export class FacebookConnector extends BaseDspConnector implements DspConnector 
   }
 
   /** POST to Facebook Graph API with JSON response (params in query string, no body) */
-  private fbGetSimple(path: string, queryString: string, tag?: string): Promise<Record<string, unknown>> {
+  private fbGetSimple(path: string, queryString: string, tag?: string, signal?: AbortSignal): Promise<Record<string, unknown>> {
     return new Promise((resolve, reject) => {
       const u = new URL(FB_GRAPH_API + path);
       const req = https.request({
@@ -234,6 +243,10 @@ export class FacebookConnector extends BaseDspConnector implements DspConnector 
       });
       req.on('error', reject);
       req.on('timeout', () => { req.destroy(); reject(new Error('Facebook API timed out')); });
+      const onAbort = () => { req.destroy(new Error('Upload cancelled')); };
+      signal?.addEventListener('abort', onAbort, { once: true });
+      const detach = () => signal?.removeEventListener('abort', onAbort);
+      req.on('close', detach);
       req.end();
     });
   }

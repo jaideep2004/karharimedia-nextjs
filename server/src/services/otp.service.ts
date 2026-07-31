@@ -25,14 +25,14 @@ export async function sendAmazeSmsOtp(phoneNumber: string, otp: string): Promise
     return;
   }
 
-  const body = `Your OTP for Single Audio Login is ${otp}. It is valid for ${OTP_TTL_MINUTES} minutes. Do not share this OTP.`;
+  const body = `Dear User, ${otp} is Your OTP for login at Karhari Media. It is valid for 10 minutes. Do not share this OTP with anyone. - Karhari Media`;
   const url = new URL(baseUrl);
   url.searchParams.set('key', apiKey);
-  url.searchParams.set('from', process.env.AMAZE_SMS_SENDER_ID || 'SNGLAU');
+  url.searchParams.set('from', process.env.AMAZE_SMS_SENDER_ID || 'KMIPLT');
   url.searchParams.set('to', phoneNumber);
   url.searchParams.set('body', body);
-  url.searchParams.set('templateid', process.env.AMAZE_SMS_TEMPLATE_ID || '1007380632079936419');
-  url.searchParams.set('entityid', process.env.AMAZE_SMS_ENTITY_ID || '1001529360956910382');
+  url.searchParams.set('templateid', process.env.AMAZE_SMS_TEMPLATE_ID || '1077195290005183021');
+  url.searchParams.set('entityid', process.env.AMAZE_SMS_ENTITY_ID || '1001612566818532847');
 
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), AMAZE_SMS_TIMEOUT_MS);

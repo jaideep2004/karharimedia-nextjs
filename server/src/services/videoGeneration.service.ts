@@ -293,27 +293,6 @@ export async function generateVideo(input: GenerateVideoInput): Promise<Generate
     let filterComplex: string;
     let filterOutputs: string[];
     switch (input.preset) {
-      // ── spectrum (full-width rainbow, NCS-style) ──────────────────────
-      case 'spectrum': {
-        let fc = bgChain + ';[0:a]asplit[a_spec][a_out];' +
-          '[a_spec]showspectrum=s=1920x300:mode=combined:color=rainbow:slide=1:scale=sqrt:gain=6[spec];';
-        if (hasArtwork) {
-          fc += '[bg][art]overlay=(W-w)/2:(H-h)/2-40,format=yuv420p[bg_with_art];' +
-            '[bg_with_art][spec]overlay=0:1080-300,format=yuv420p[comp];';
-        } else {
-          fc += '[bg][spec]overlay=0:1080-300,format=yuv420p[comp];';
-        }
-        if (hasText) {
-          fc += `[comp]drawtext=text='${titleTxt}':x=(w-text_w)/2:y=60:fontsize=34:fontcolor=White:shadowy=2:shadowcolor=black@0.7:${FONT_SPEC}[vid1];`;
-          if (input.artist) {
-            fc += `[vid1]drawtext=text='${artistTxt}':x=(w-text_w)/2:y=102:fontsize=20:fontcolor=White@0.75:shadowy=2:shadowcolor=black@0.6:${FONT_SPEC}[vid]`;
-          }
-        }
-        filterComplex = fc;
-        filterOutputs = [hasText && input.artist ? 'vid' : (hasText ? 'vid1' : 'comp'), 'a_out'];
-        break;
-      }
-
       // ── circular (NCS-style canvas-powered ring + bars) ───────────────
       case 'circular': {
         if (!circleVideoPath) {

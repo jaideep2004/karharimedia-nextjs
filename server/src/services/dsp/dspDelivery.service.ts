@@ -198,16 +198,16 @@ class DspDeliveryService {
       || null;
 
     // Fallback artwork from parent release if not set on track
-    let artwork = trackDoc.artwork || trackDoc.artworkUrl || '';
+    let artwork = trackDoc.artwork || trackDoc.artworkFile || trackDoc.artworkUrl || '';
     const releaseId = trackDoc.releaseId || trackDoc.release_id || trackDoc.albumId || trackDoc.album_id;
     if (!artwork && releaseId) {
       try {
         const oid = typeof releaseId === 'string' ? new mongoose.Types.ObjectId(releaseId) : releaseId;
         const release = await mongoose.connection.collection('releases').findOne(
           { _id: oid },
-          { projection: { artwork: 1, artworkUrl: 1 } }
+          { projection: { artwork: 1, artworkFile: 1, artworkUrl: 1, coverArt: 1 } }
         );
-        artwork = release?.artwork || release?.artworkUrl || '';
+        artwork = release?.artwork || release?.artworkFile || release?.artworkUrl || release?.coverArt || '';
       } catch { /* non-fatal */ }
     }
 
@@ -1509,7 +1509,7 @@ class DspDeliveryService {
         explicit: track.explicit,
         releaseDate: track.releaseDate || release.releaseDate,
         audioFile: track.audioFile || track.audioUrl || track.fileUrl,
-        artwork: track.artwork || track.artworkUrl || release.artwork || release.artworkUrl,
+        artwork: track.artwork || track.artworkFile || track.artworkUrl || release.artwork || release.artworkFile || release.artworkUrl,
         duration: track.duration,
         contributors: track.contributors || track.rightsHolders || [],
         composers: track.composers || [],
@@ -1530,7 +1530,7 @@ class DspDeliveryService {
       territories: release.territories || ['WORLD'],
       assetChecks: release.deliveryAssetReadiness?.checks || [],
       metadata: {
-        artwork: release.artwork || release.artworkUrl,
+        artwork: release.artwork || release.artworkFile || release.artworkUrl,
         releaseType: release.releaseType,
         catalogNumber,
         createdDate: release.createdDate || release.created_date,
@@ -2285,6 +2285,45 @@ class DspDeliveryService {
       releaseReset,
       releaseMissing,
     };
+  }
+
+  async deleteJob(jobId: string, actorId?: string) {
+    const job = await DeliveryJob.findById(jobId);
+    if (!job) throw new Error('Delivery job not found');
+
+    const deletedAt = new Date();
+    const events = job.events || [];
+    events.push({
+      state: 'cancelled',
+      message: `Admin deleted delivery job (${job.providerKey})`,
+      source: 'user',
+      createdAt: deletedAt,
+    });
+
+    await DeliveryJob.updateOne(
+      { _id: job._id },
+      {
+        $set: {
+          state: 'cancelled',
+          hiddenFromOps: true,
+          updatedAt: deletedAt,
+          events,
+          metadata: {
+            ...(job.metadata || {}),
+            deletedAt: deletedAt.toISOString(),
+            deletedBy: actorId || null,
+          },
+        },
+        $unset: {
+          lockedAt: '',
+          lockedBy: '',
+          lockExpiresAt: '',
+          nextRetryAt: '',
+        },
+      }
+    );
+
+    return { jobId, deleted: true, providerKey: job.providerKey };
   }
 
   async listJobs(filters: { providerKey?: string; state?: string; releaseId?: string; trackIds?: string[]; page?: number; limit?: number }) {

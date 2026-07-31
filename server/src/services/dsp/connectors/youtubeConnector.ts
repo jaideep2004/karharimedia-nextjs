@@ -58,6 +58,7 @@ export class YoutubeConnector extends BaseDspConnector implements DspConnector {
     }
 
     try {
+      if (context.signal?.aborted) throw new Error('Upload cancelled');
       const localVideoPath = (context.config?.videoLocalPath as string) || '';
       if (!localVideoPath) {
         throw new Error('No local video path provided. Generate the video first.');
@@ -70,7 +71,7 @@ export class YoutubeConnector extends BaseDspConnector implements DspConnector {
         ? (payload as DspReleasePayload).releaseTitle || ''
         : `${(payload as DspTrackPayload).title} by ${(payload as DspTrackPayload).artistName}`;
 
-      const videoId = await this.uploadToYouTubeFromUrl(localVideoPath, title, description, accessToken, visibility, scheduleAt, context.onProgress);
+      const videoId = await this.uploadToYouTubeFromUrl(localVideoPath, title, description, accessToken, visibility, scheduleAt, context.onProgress, context.signal);
       const videoUrl = `https://youtu.be/${videoId}`;
 
       const metadata: Record<string, unknown> = {
@@ -138,9 +139,10 @@ export class YoutubeConnector extends BaseDspConnector implements DspConnector {
     accessToken: string,
     visibility: string,
     scheduleAt?: string,
-    onProgress?: (pct: number, bytes?: number, total?: number) => void
+    onProgress?: (pct: number, bytes?: number, total?: number) => void,
+    signal?: AbortSignal
   ): Promise<string> {
-    return await this.resumableUpload(videoPath, title, description, accessToken, visibility, scheduleAt, onProgress);
+    return await this.resumableUpload(videoPath, title, description, accessToken, visibility, scheduleAt, onProgress, signal);
   }
 
   private async resumableUpload(
@@ -150,7 +152,8 @@ export class YoutubeConnector extends BaseDspConnector implements DspConnector {
     accessToken: string,
     visibility: string,
     scheduleAt?: string,
-    onProgress?: (pct: number, bytes?: number, total?: number) => void
+    onProgress?: (pct: number, bytes?: number, total?: number) => void,
+    signal?: AbortSignal
   ): Promise<string> {
     const [fsPromises, { request: httpsRequest }] = await Promise.all([
       import('fs/promises'),
@@ -178,6 +181,7 @@ export class YoutubeConnector extends BaseDspConnector implements DspConnector {
 
       // 4. Upload chunks
       while (uploadedBytes < fileSize) {
+        if (signal?.aborted) throw new Error('Upload cancelled');
         const chunkEnd = Math.min(uploadedBytes + CHUNK_SIZE, fileSize);
         const chunkSize = chunkEnd - uploadedBytes;
         const buf = Buffer.alloc(chunkSize);
@@ -186,7 +190,7 @@ export class YoutubeConnector extends BaseDspConnector implements DspConnector {
         // Upload this chunk — retry on failure
         const result = await this.sendChunkWithRetry(
           uploadUrl, buf, uploadedBytes, chunkEnd - 1, fileSize,
-          httpsRequest, TAG, 3
+          httpsRequest, TAG, 3, signal
         );
 
         if (result.complete) {
@@ -330,10 +334,12 @@ export class YoutubeConnector extends BaseDspConnector implements DspConnector {
     fileSize: number,
     httpsRequest: typeof import('https').request,
     tag: string,
-    retries = 3
+    retries = 3,
+    signal?: AbortSignal
   ): Promise<{ complete: boolean; videoId?: string; resumeAt?: number }> {
     let lastErr: Error | undefined;
     for (let attempt = 1; attempt <= retries; attempt++) {
+      if (signal?.aborted) throw new Error('Upload cancelled');
       try {
         const result = await this.httpsRequestPromise(uploadUrl, httpsRequest, {
           method: 'PUT',
@@ -343,7 +349,7 @@ export class YoutubeConnector extends BaseDspConnector implements DspConnector {
             'Content-Range': `bytes ${startByte}-${endByte}/${fileSize}`,
           },
           timeout: 0,
-        }, 240_000, buffer); // 4 min per chunk
+        }, 240_000, buffer, signal); // 4 min per chunk
 
         if (result.statusCode === 308) {
           return { complete: false };
@@ -356,6 +362,7 @@ export class YoutubeConnector extends BaseDspConnector implements DspConnector {
 
         throw new Error(`YouTube chunk upload failed (${result.statusCode}): ${result.body.slice(0, 500)}`);
       } catch (err) {
+        if (signal?.aborted) throw new Error('Upload cancelled');
         lastErr = err instanceof Error ? err : new Error(String(err));
         console.error(`${tag} Chunk ${startByte}-${endByte} attempt ${attempt}/${retries} failed:`, lastErr.message);
 
@@ -379,7 +386,8 @@ export class YoutubeConnector extends BaseDspConnector implements DspConnector {
     httpsRequest: typeof import('https').request,
     options: import('http').RequestOptions,
     timeoutMs: number,
-    body: Buffer | number | null
+    body: Buffer | number | null,
+    signal?: AbortSignal
   ): Promise<{ statusCode: number; headers: Record<string, string>; body: string }> {
     return new Promise((resolve, reject) => {
       const req = httpsRequest(url, options, (res) => {
@@ -403,6 +411,11 @@ export class YoutubeConnector extends BaseDspConnector implements DspConnector {
       req.on('error', (err: Error) => reject(new Error(`https.request failed: ${err.message}`)));
       req.on('timeout', () => { req.destroy(); reject(new Error('chunk timed out')); });
       req.setTimeout(timeoutMs);
+
+      const onAbort = () => { req.destroy(new Error('Upload cancelled')); };
+      signal?.addEventListener('abort', onAbort, { once: true });
+      const detach = () => signal?.removeEventListener('abort', onAbort);
+      req.on('close', detach);
 
       if (typeof body === 'number' && body === 0) {
         req.end();

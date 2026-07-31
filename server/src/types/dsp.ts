@@ -74,6 +74,7 @@ export interface DspConnectorContext {
   jobId?: string;
   jobMetadata?: Record<string, unknown>;
   onProgress?: (pct: number, bytes?: number, total?: number) => void;
+  signal?: AbortSignal;
 }
 
 export interface DspDeliveryResult {

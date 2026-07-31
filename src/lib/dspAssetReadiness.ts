@@ -81,7 +81,7 @@ export async function validateReleaseAssetsForDelivery(release: ReleaseLike): Pr
   for (const [index, track] of tracks.entries()) {
     const owner = `track ${index + 1}`;
     const audio = firstString(track.audioFile, track.audioUrl, track.audio, track.fileUrl);
-    const artwork = firstString(track.artwork, track.artworkUrl, track.coverArt, releaseArtwork);
+    const artwork = firstString(track.artwork, track.artworkFile, track.artworkUrl, track.coverArt, releaseArtwork);
     checks.push(await checkLocalAsset('audio', owner, audio));
     checks.push(await checkLocalAsset('artwork', owner, artwork));
   }

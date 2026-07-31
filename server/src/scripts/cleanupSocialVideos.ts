@@ -13,7 +13,7 @@ import { cleanupExpiredSocialVideos } from '../services/socialVideoCleanup.servi
 
 async function main() {
   const ageArg = process.argv.find((a) => a.startsWith('--max-age-hours='))?.split('=')[1];
-  const maxAgeHours = ageArg ? Number(ageArg) : 24;
+  const maxAgeHours = ageArg ? Number(ageArg) : 1;
   if (!Number.isFinite(maxAgeHours) || maxAgeHours <= 0) {
     console.error('Invalid --max-age-hours value');
     process.exit(1);

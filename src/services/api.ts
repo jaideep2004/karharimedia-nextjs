@@ -1386,6 +1386,15 @@ export const adminAPI = {
     }
   },
 
+  deleteSocialDelivery: async (jobId: string) => {
+    try {
+      const response = await api.delete<ApiResponse<any>>(`/admin/dsp/deliveries/${jobId}`);
+      return response.data;
+    } catch (error) {
+      return handleApiError(error);
+    }
+  },
+
   verifyYoutubeConnection: async () => {
     try {
       const response = await api.get<ApiResponse<any>>('/admin/dsp/auth/youtube/verify');

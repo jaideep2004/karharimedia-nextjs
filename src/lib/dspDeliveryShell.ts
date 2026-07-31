@@ -129,7 +129,7 @@ function buildSnapshot(
       explicit: track.explicit,
       releaseDate: track.releaseDate || release.releaseDate,
       audioFile: track.audioFile || track.audioUrl || track.fileUrl,
-      artwork: track.artwork || track.artworkUrl || release.artwork || release.artworkUrl || release.coverArt,
+      artwork: track.artwork || track.artworkFile || track.artworkUrl || release.artwork || release.artworkFile || release.artworkUrl || release.coverArt,
       duration: track.duration,
       contributors: track.contributors || track.rightsHolders || [],
       composers: track.composers || [],
@@ -156,7 +156,7 @@ function buildSnapshot(
       checksumSha256: check.checksumSha256,
     })),
     metadata: {
-      artwork: release.artwork || release.artworkUrl || release.coverArt,
+      artwork: release.artwork || release.artworkFile || release.artworkUrl || release.coverArt,
       releaseType: release.releaseType,
       catalogNumber,
       createdDate: release.createdDate || release.created_date,

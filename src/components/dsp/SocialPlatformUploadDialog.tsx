@@ -113,7 +113,7 @@ export default function SocialPlatformUploadDialog({
   const [title, setTitle] = useState(release?.title || release?.releaseTitle || '');
   const [description, setDescription] = useState('');
   const [visibility, setVisibility] = useState<'public' | 'unlisted' | 'private'>('public');
-  const [preset, setPreset] = useState<'bars' | 'spectrum' | 'circular'>('bars');
+  const [preset, setPreset] = useState<'bars' | 'circular'>('bars');
   const [color, setColor] = useState<'cyan' | 'green' | 'pink' | 'purple' | 'red' | 'white'>('cyan');
   const [albumMode, setAlbumMode] = useState(tracks.length > 1);
   const [scheduleAt, setScheduleAt] = useState('');
@@ -436,7 +436,6 @@ export default function SocialPlatformUploadDialog({
                 onChange={(e) => setPreset(e.target.value as any)}
               >
                 <MenuItem value="bars">Waveform Bars</MenuItem>
-                <MenuItem value="spectrum">Frequency Spectrum</MenuItem>
                 <MenuItem value="circular">Circular Ring</MenuItem>
               </Select>
             </FormControl>

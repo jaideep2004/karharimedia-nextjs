@@ -333,6 +333,15 @@ export const clearDeliveryLogs = async (req: AuthRequest, res: Response): Promis
   }
 };
 
+export const deleteDelivery = async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    const result = await dspDeliveryService.deleteJob(req.params.jobId, req.user?._id?.toString());
+    successResponse(res, result, 'Delivery job removed');
+  } catch (error) {
+    errorResponse(res, 'Failed to delete delivery job', error);
+  }
+};
+
 export const processAllDeliveries = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const result = await dspDeliveryService.processAllQueuedJobs(

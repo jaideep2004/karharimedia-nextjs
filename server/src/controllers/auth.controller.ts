@@ -24,6 +24,18 @@ import { getFrontendUrl } from '../utils/frontendUrl';
 // Escape special regex characters in a string
 const escapeRegex = (str: string) => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
+// Resolve profile picture from the authoritative file reference (R2/local), falling back to any stored URL
+const resolveUserProfilePicture = (user: {
+  profilePicture?: string;
+  profilePictureFile?: string;
+  storageProvider?: 'r2' | 'local' | 'external';
+}): string => {
+  if (user.profilePictureFile) {
+    return getFileUrl(user.profilePictureFile, 'image', getStorageProvider(user));
+  }
+  return user.profilePicture || '';
+};
+
 const parseJsonObject = (value: unknown): Record<string, string> => {
   if (!value) return {};
   if (typeof value === 'object') return value as Record<string, string>;
@@ -531,7 +543,7 @@ export const getMe = async (req: AuthRequest, res: Response): Promise<void> => {
       verification: user.verification || { status: 'pending' },
       bio: user.bio,
       socialLinks: user.socialLinks,
-      profilePicture: user.profilePicture,
+      profilePicture: resolveUserProfilePicture(user),
       payoutMethod: user.payoutMethod,
       onboarding: user.onboarding,
       createdAt: user.createdAt
@@ -834,7 +846,7 @@ export const updateProfile = async (req: AuthRequest, res: Response): Promise<vo
       artistName: user.artistName,
       bio: user.bio,
       socialLinks: user.socialLinks,
-      profilePicture: user.profilePicture,
+      profilePicture: resolveUserProfilePicture(user),
       payoutMethod: user.payoutMethod,
       onboarding: user.onboarding,
     }, 'Profile updated successfully');

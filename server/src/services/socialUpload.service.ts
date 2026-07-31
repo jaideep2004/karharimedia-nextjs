@@ -254,11 +254,11 @@ async function processBatch(sessionId: string): Promise<void> {
       throw new Error(`No tracks were uploaded: ${errors}`);
     }
 
-    // Cleanup: remove release dir after 1 day (admin may still need the files for retries)
-    console.log(`${tag} Cleanup: scheduling removal of ${batch.releaseDir} in 24h`);
+    // Cleanup: remove release dir after 1 hour (R2 video cache is the source of truth)
+    console.log(`${tag} Cleanup: scheduling removal of ${batch.releaseDir} in 1h`);
     setTimeout(() => {
       fs.rm(batch.releaseDir, { recursive: true, force: true }).catch(() => {});
-    }, 24 * 60 * 60 * 1000).unref();
+    }, 60 * 60 * 1000).unref();
 
     updateProgress(sessionId, { step: 'done', overallProgress: 100 });
     console.log(`${tag} Batch complete — ${uploadedCount} track(s) uploaded`);
@@ -293,7 +293,7 @@ async function downloadAssets(batch: BatchProgress): Promise<void> {
       }
       const td = trackDoc as any;
       const audioFile = td.audioFile || td.audioUrl || td.fileUrl || '';
-      let artwork = td.artwork || td.artworkUrl || '';
+      let artwork = td.artwork || td.artworkFile || td.artworkUrl || '';
 
       if (!artwork) {
         const releaseId = td.releaseId || td.release_id || td.albumId || td.album_id;
@@ -302,9 +302,9 @@ async function downloadAssets(batch: BatchProgress): Promise<void> {
             const oid = typeof releaseId === 'string' ? new mongoose.Types.ObjectId(releaseId) : releaseId;
             const release = await mongoose.connection.collection('releases').findOne(
               { _id: oid },
-              { projection: { artwork: 1, artworkUrl: 1 } }
+              { projection: { artwork: 1, artworkFile: 1, artworkUrl: 1, coverArt: 1 } }
             );
-            artwork = release?.artwork || release?.artworkUrl || '';
+            artwork = release?.artwork || release?.artworkFile || release?.artworkUrl || release?.coverArt || '';
           } catch { /* ignore */ }
         }
       }
@@ -539,6 +539,7 @@ async function uploadAll(batch: BatchProgress, signal?: AbortSignal): Promise<vo
       operation: 'deliver',
       jobId: batch.sessionId,
       onProgress: albumUploadProgress,
+      signal,
     };
 
     const fallbackArtist = batch.tracks[0]?.artist || 'Unknown Artist';
@@ -561,6 +562,9 @@ async function uploadAll(batch: BatchProgress, signal?: AbortSignal): Promise<vo
       batch.tracks.forEach(t => { t.status = 'failed'; t.error = result.message || `${batch.platform} rejected`; });
     } else {
       batch.tracks.forEach(t => { t.externalId = result.externalId; t.status = 'uploaded'; });
+    }
+    if (signal?.aborted) {
+      throw new Error('Upload cancelled');
     }
     return;
   }
@@ -604,6 +608,7 @@ async function uploadAll(batch: BatchProgress, signal?: AbortSignal): Promise<vo
         operation: 'deliver',
         jobId: `${batch.sessionId}:${track.trackId}`,
         onProgress: onUploadProgress,
+        signal,
       };
 
       try {
@@ -634,6 +639,10 @@ async function uploadAll(batch: BatchProgress, signal?: AbortSignal): Promise<vo
       }
     })
   );
+
+  if (signal?.aborted) {
+    throw new Error('Upload cancelled');
+  }
 }
 
 // Clean up old batches periodically

@@ -37,6 +37,7 @@ import {
   PlayArrow,
   PlaylistAddCheck,
   Delete,
+  DeleteOutline,
   Edit,
   Replay,
   Sync,
@@ -1552,7 +1553,7 @@ export default function AdminReleaseDetailPage() {
                         label={`${job.providerKey === 'youtube' ? 'YouTube' : 'Facebook'}: ${job.state}${job.retryCount ? ` (${job.retryCount})` : ''}`}
                         color={job.state === 'delivered' ? 'success' : job.state === 'failed' || job.state === 'deadLettered' ? 'error' : job.state === 'processing' || job.state === 'queued' ? 'info' : 'warning'}
                         variant="outlined"
-                        onDelete={['failed', 'deadLettered'].includes(job.state) ? async () => {
+                        onClick={['failed', 'deadLettered'].includes(job.state) ? async () => {
                           const resp = await adminAPI.retrySocialDelivery(job._id);
                           if (resp?.success) {
                             toast.success('Delivery retry queued');
@@ -1562,7 +1563,19 @@ export default function AdminReleaseDetailPage() {
                             toast.error(resp?.message || 'Retry failed');
                           }
                         } : undefined}
-                        deleteIcon={['failed', 'deadLettered'].includes(job.state) ? <Replay fontSize="small" /> : undefined}
+                        onDelete={async () => {
+                          const confirmed = window.confirm(`Remove this ${job.providerKey === 'youtube' ? 'YouTube' : 'Facebook'} delivery job (${job.state})?`);
+                          if (!confirmed) return;
+                          const resp = await adminAPI.deleteSocialDelivery(job._id);
+                          if (resp?.success) {
+                            toast.success('Delivery job removed');
+                            const refreshed = await adminAPI.getSocialDeliveries(releaseId);
+                            if (refreshed?.success) setDeliveryJobs(extractDeliveryJobs(refreshed));
+                          } else {
+                            toast.error(resp?.message || 'Delete failed');
+                          }
+                        }}
+                        deleteIcon={<DeleteOutline fontSize="small" />}
                       />
                     </Tooltip>
                   ))}
