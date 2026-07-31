@@ -44,7 +44,6 @@ export const SUBADMIN_PERMISSION_PRESETS: Record<string, AdminPermission[]> = {
 // File Upload
 export const IS_SERVERLESS_RUNTIME = !!process.env.VERCEL || !!process.env.AWS_LAMBDA_FUNCTION_NAME;
 export const LOCAL_FFMPEG_ENABLED =
-  !IS_PRODUCTION &&
   !IS_SERVERLESS_RUNTIME &&
   process.env.ENABLE_LOCAL_FFMPEG !== 'false';
 export const UPLOAD_DIR = IS_SERVERLESS_RUNTIME
@@ -53,6 +52,7 @@ export const UPLOAD_DIR = IS_SERVERLESS_RUNTIME
 export const TRACKS_DIR = path.join(UPLOAD_DIR, 'tracks');
 export const ARTWORK_DIR = path.join(UPLOAD_DIR, 'artwork');
 export const REGISTRATION_DIR = path.join(UPLOAD_DIR, 'registration');
+export const SOCIAL_VIDEO_DIR = path.join(UPLOAD_DIR, 'social-videos');
 export const MAX_FILE_SIZE = 200 * 1024 * 1024; // 200MB ceiling for audio files
 export const PROFILE_IMAGE_MAX_FILE_SIZE = 15 * 1024 * 1024;
 

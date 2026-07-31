@@ -46,8 +46,9 @@ import {
 } from '../../config/constants';
 
 const BASE_RETRY_DELAY_MS = 15_000;
-const WORKER_LOCK_MS = 5 * 60_000;
+const WORKER_LOCK_MS = 15 * 60_000;
 const DEFAULT_WORKER_BATCH_SIZE = 25;
+const SOCIAL_PROVIDERS = new Set(['youtube', 'facebook']);
 const TERMINAL_JOB_RETENTION_DAYS = 7;
 const STUCK_PROCESSING_RETENTION_DAYS = 7;
 const TERMINAL_STATES: DspDeliveryState[] = ['delivered', 'failed', 'cancelled', 'needs_attention'];
@@ -183,22 +184,48 @@ class DspDeliveryService {
     return created;
   }
 
-  private buildTrackPayload(trackDoc: any): DspTrackPayload {
+  private async buildTrackPayload(trackDoc: any): Promise<DspTrackPayload> {
+    const legacy = trackDoc.legacyMetadata || {};
+    const artistName = trackDoc.artistName?.trim()
+      || trackDoc.artist?.trim()
+      || legacy.artist?.trim()
+      || legacy.artistName?.trim()
+      || '';
+    const releaseDate = trackDoc.releaseDate
+      || trackDoc.originalReleaseDate
+      || legacy.releaseDate
+      || legacy.originalReleaseDate
+      || null;
+
+    // Fallback artwork from parent release if not set on track
+    let artwork = trackDoc.artwork || trackDoc.artworkUrl || '';
+    const releaseId = trackDoc.releaseId || trackDoc.release_id || trackDoc.albumId || trackDoc.album_id;
+    if (!artwork && releaseId) {
+      try {
+        const oid = typeof releaseId === 'string' ? new mongoose.Types.ObjectId(releaseId) : releaseId;
+        const release = await mongoose.connection.collection('releases').findOne(
+          { _id: oid },
+          { projection: { artwork: 1, artworkUrl: 1 } }
+        );
+        artwork = release?.artwork || release?.artworkUrl || '';
+      } catch { /* non-fatal */ }
+    }
+
     return {
-      trackId: trackDoc._id.toString(),
-      title: trackDoc.title,
-      artistName: trackDoc.artistName,
+      trackId: trackDoc._id?.toString() || '',
+      title: trackDoc.title || '',
+      artistName,
       isrc: trackDoc.isrc,
       upc: trackDoc.upc,
       genre: trackDoc.genre,
       language: trackDoc.language,
       explicit: trackDoc.explicit,
-      releaseDate: trackDoc.releaseDate ? new Date(trackDoc.releaseDate).toISOString() : undefined,
-      audioFile: trackDoc.audioFile,
-      artwork: trackDoc.artwork,
+      releaseDate: releaseDate ? new Date(releaseDate).toISOString() : undefined,
+      audioFile: trackDoc.audioFile || trackDoc.audioUrl || trackDoc.fileUrl,
+      artwork,
       contributors: [
         {
-          name: trackDoc.artistName,
+          name: artistName,
           role: 'main_artist',
         },
       ],
@@ -334,6 +361,34 @@ class DspDeliveryService {
     }
 
     return { provider, credentials };
+  }
+
+  private async refreshOAuthToken(providerKey: string, refreshToken: string): Promise<Record<string, any> | null> {
+    const clientId = process.env.YOUTUBE_CLIENT_ID;
+    const clientSecret = process.env.YOUTUBE_CLIENT_SECRET;
+    if (!clientId || !clientSecret) {
+      console.warn(`[tokenRefresh] ${providerKey}: YOUTUBE_CLIENT_ID or YOUTUBE_CLIENT_SECRET not configured`);
+      return null;
+    }
+
+    const response = await fetch('https://oauth2.googleapis.com/token', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({
+        client_id: clientId,
+        client_secret: clientSecret,
+        refresh_token: refreshToken,
+        grant_type: 'refresh_token',
+      }),
+    });
+
+    if (!response.ok) {
+      const body = await response.text().catch(() => '');
+      console.error(`[tokenRefresh] ${providerKey} Google token refresh failed (${response.status}): ${body}`);
+      return null;
+    }
+
+    return response.json() as Promise<Record<string, any>>;
   }
 
   async registerProvider(input: {
@@ -523,14 +578,21 @@ class DspDeliveryService {
 
   async dispatchDelivery(trackId: string, providerKey: string, operation: DspDeliveryOperation, createdBy?: string) {
     const normalizedProviderKey = providerKey.toLowerCase().trim();
+    const logSocial = (...args: any[]) => { if (SOCIAL_PROVIDERS.has(normalizedProviderKey)) console.log(...args); };
+    logSocial(`[dispatchDelivery] provider=${normalizedProviderKey} trackId=${trackId} op=${operation}`);
     const providerRecord = await this.getProviderWithDecryptedCredentials(normalizedProviderKey);
     if (!providerRecord || !providerRecord.provider.enabled) throw new Error(`Provider ${normalizedProviderKey} is not active`);
     if (providerRecord.provider.maintenanceMode) throw new Error(`Provider ${normalizedProviderKey} is in maintenance mode`);
 
     const track = await findTrackById(trackId);
-    if (!track) throw new Error('Track not found');
+    if (!track) {
+      console.error(`[dispatchDelivery] Track not found: ${trackId}`);
+      throw new Error('Track not found');
+    }
+    logSocial(`[dispatchDelivery] Track found: ${track.title}`);
 
-    const payload = this.buildTrackPayload(track);
+    const payload = await this.buildTrackPayload(track);
+    logSocial(`[dispatchDelivery] Payload: artist="${payload.artistName}" isrc="${payload.isrc}"`);
     const connector = dspRegistry.get(normalizedProviderKey);
     const ruleResult = applyMetadataRules(normalizedProviderKey, payload);
     if (!ruleResult.valid) {
@@ -543,6 +605,7 @@ class DspDeliveryService {
       payload: ruleResult.normalized,
       createdBy,
     });
+    logSocial(`[dispatchDelivery] v${version.versionNumber} queued`);
 
     const idempotencyKey = this.generateIdempotencyKey(trackId, normalizedProviderKey, operation, version.versionNumber);
     const existing = await DeliveryJob.findOne({ idempotencyKey });
@@ -591,6 +654,85 @@ class DspDeliveryService {
     return job;
   }
 
+  async dispatchAlbumDelivery(
+    releaseId: string,
+    trackIds: string[],
+    providerKey: string,
+    operation: DspDeliveryOperation,
+    createdBy?: string,
+    config?: Record<string, unknown>
+  ) {
+    const normalizedProviderKey = providerKey.toLowerCase().trim();
+    if (SOCIAL_PROVIDERS.has(normalizedProviderKey)) {
+      console.log(`[dispatchAlbumDelivery] release=${releaseId} tracks=${trackIds.length} provider=${normalizedProviderKey}`);
+    }
+    const providerRecord = await this.getProviderWithDecryptedCredentials(normalizedProviderKey);
+    if (!providerRecord || !providerRecord.provider.enabled) throw new Error(`Provider ${normalizedProviderKey} is not active`);
+    if (providerRecord.provider.maintenanceMode) throw new Error(`Provider ${normalizedProviderKey} is in maintenance mode`);
+
+    if (trackIds.length === 0) throw new Error('No tracks provided for album delivery');
+
+    const firstTrack = await findTrackById(trackIds[0]);
+    if (!firstTrack) throw new Error('First track not found');
+
+    const connector = dspRegistry.get(normalizedProviderKey);
+
+    const idempotencyKey = this.generateIdempotencyKey(
+      `album:${releaseId}`, normalizedProviderKey, operation, 1
+    );
+    const existing = await DeliveryJob.findOne({ idempotencyKey });
+    if (existing && ['queued', 'processing', 'delivered'].includes(existing.state)) {
+      return existing;
+    }
+
+    const validation = await connector.validateTrack({
+      trackId: String(firstTrack._id),
+      title: firstTrack.title,
+      artistName: firstTrack.artistName,
+      audioFile: firstTrack.audioFile,
+      artwork: firstTrack.artwork,
+      metadata: {},
+    } as DspTrackPayload);
+    if (!validation.valid) {
+      throw new Error(`Connector validation failed: ${validation.errors.join(', ')}`);
+    }
+
+    const job = await DeliveryJob.create({
+      targetType: 'track',
+      trackId: firstTrack._id,
+      providerKey: normalizedProviderKey,
+      operation,
+      state: 'queued',
+      idempotencyKey,
+      retryCount: 0,
+      maxRetries: 5,
+      nextRetryAt: new Date(),
+      metadata: {
+        config: {
+          ...((config || {}) as Record<string, unknown>),
+          albumMode: 'album',
+          releaseId,
+          trackIds,
+        },
+        deliverySnapshot: {
+          title: firstTrack.title,
+          artistName: firstTrack.artistName,
+          isrc: firstTrack.isrc,
+        },
+      },
+      createdBy,
+      events: [
+        {
+          state: 'queued',
+          message: 'Album delivery job created',
+          source: 'system',
+        },
+      ],
+    });
+
+    return job;
+  }
+
   private async loadJobPayload(job: IDeliveryJob): Promise<{ payload?: DspDeliveryPayload; errors: string[]; warnings: string[] }> {
     if (job.targetType === 'release') {
       if (!job.snapshotId) return { errors: ['Release delivery snapshot missing'], warnings: [] };
@@ -620,14 +762,82 @@ class DspDeliveryService {
     }
 
     if (!job.trackId) return { errors: ['Track id missing'], warnings: [] };
+
+    const meta = (job.metadata || {}) as Record<string, any>;
+    if (meta?.config?.albumMode === 'album') {
+      return await this.loadAlbumPayload(job);
+    }
+
     const track = await findTrackById(job.trackId.toString());
     if (!track) return { errors: ['Track not found'], warnings: [] };
-    const ruleResult = applyMetadataRules(job.providerKey, this.buildTrackPayload(track));
+    const ruleResult = applyMetadataRules(job.providerKey, await this.buildTrackPayload(track));
     return {
       payload: ruleResult.normalized,
       errors: ruleResult.errors,
       warnings: ruleResult.warnings,
     };
+  }
+
+  private async loadAlbumPayload(job: IDeliveryJob): Promise<{ payload?: DspReleasePayload; errors: string[]; warnings: string[] }> {
+    const meta = (job.metadata || {}) as Record<string, any>;
+    const trackIds: string[] = meta.config?.trackIds || [];
+    const releaseId = meta.config?.releaseId || (job.metadata as any)?.releaseId;
+
+    if (!releaseId && trackIds.length === 0) {
+      return { errors: ['Album delivery requires releaseId or trackIds'], warnings: [] };
+    }
+
+    const release = releaseId
+      ? await mongoose.connection.collection('releases').findOne({ _id: new mongoose.Types.ObjectId(String(releaseId)) })
+      : null;
+
+    const tracks: any[] = [];
+    for (const id of trackIds) {
+      const track = await findTrackById(id);
+      if (track) tracks.push(track);
+    }
+
+    if (tracks.length === 0) {
+      return { errors: ['No tracks found for album delivery'], warnings: [] };
+    }
+
+    const firstTrack = tracks[0];
+    const payload: DspReleasePayload = {
+      releaseId: releaseId ? String(releaseId) : 'album',
+      releaseTitle: meta.config?.title || release?.releaseTitle || release?.title || firstTrack.title || 'Album',
+      primaryArtist: release?.primaryArtist || release?.artist || release?.artistName || firstTrack.artistName,
+      upc: release?.upc,
+      genre: release?.genre || firstTrack.genre,
+      language: release?.language,
+      releaseDate: release?.releaseDate,
+      stores: Array.isArray(release?.stores) ? release.stores : [],
+      tracks: tracks.map((track, index) => ({
+        trackId: String(track._id),
+        title: track.title,
+        artistName: track.artistName,
+        isrc: track.isrc,
+        upc: track.upc || release?.upc,
+        genre: track.genre,
+        explicit: track.explicit,
+        audioFile: track.audioFile,
+        artwork: track.artwork || release?.artwork,
+        releaseDate: track.releaseDate || release?.releaseDate,
+        contributors: track.contributors || [],
+        contentRating: track.explicit ? 'explicit' : 'clean',
+        ddexProfile: 'ERN-4',
+        metadata: {
+          source: 'albumDelivery',
+          releaseId: releaseId ? String(releaseId) : undefined,
+        },
+      })),
+      territories: release?.territories || ['WORLD'],
+      metadata: {
+        artwork: release?.artwork || tracks[0]?.artwork,
+        releaseType: release?.releaseType,
+      },
+    };
+
+    return { payload, errors: [], warnings: [] };
   }
 
   private async markJobNeedsAttention(jobId: string, job: IDeliveryJob, message: string, metadata?: Record<string, unknown>) {
@@ -817,6 +1027,31 @@ class DspDeliveryService {
     }
 
     const { provider, credentials } = providerRecord;
+
+    // Auto-refresh expired YouTube/Facebook OAuth tokens
+    if (credentials.refreshToken) {
+      const expiresAt = Number(credentials.tokenExpiresAt || 0);
+      if (!expiresAt || Date.now() >= expiresAt) {
+        const isSocial = SOCIAL_PROVIDERS.has(provider.key);
+        if (isSocial) console.log(`[tokenRefresh] ${provider.key} token expired, refreshing...`);
+        try {
+          const newTokens = await this.refreshOAuthToken(provider.key, String(credentials.refreshToken));
+          if (newTokens) {
+            credentials.accessToken = newTokens.access_token;
+            credentials.tokenExpiresAt = String(Date.now() + Number(newTokens.expires_in || 3600) * 1000);
+            if (newTokens.refresh_token) credentials.refreshToken = newTokens.refresh_token;
+            await DspProvider.updateOne(
+              { key: provider.key },
+              { $set: { credentials: encryptCredentialMap({ ...credentials }) } }
+            );
+            if (isSocial) console.log(`[tokenRefresh] ${provider.key} token refreshed`);
+          }
+        } catch (refreshError) {
+          console.error(`[tokenRefresh] ${provider.key} token refresh failed:`, getErrorMessage(refreshError));
+        }
+      }
+    }
+
     const readiness = evaluateDspReadiness({
       key: provider.key,
       displayName: provider.displayName,
@@ -874,7 +1109,11 @@ class DspDeliveryService {
         (context.config as Record<string, unknown>).expandToAllOutlets = true;
       }
       if (job.operation === 'deliver') {
+        const isSocial = SOCIAL_PROVIDERS.has(job.providerKey);
+        if (isSocial) console.log(`[processJob] Calling ${job.providerKey} deliver job=${jobId}`);
+        const t0 = Date.now();
         result = await connector.deliver(payloadResult.payload, context);
+        if (isSocial) console.log(`[processJob] ${job.providerKey} deliver done in ${Date.now() - t0}ms state=${result.state}`);
       } else if (job.operation === 'update' && connector.update) {
         result = await connector.update(payloadResult.payload, context);
       } else if (job.operation === 'takedown' && connector.takedown) {
@@ -928,24 +1167,63 @@ class DspDeliveryService {
         ...job.metadata,
         ...connectorMetadata,
       });
+      if (SOCIAL_PROVIDERS.has(job.providerKey)) console.log(`[processJob] Job ${jobId} done: state=${finalState}`);
       return DeliveryJob.findById(jobId);
     } catch (error) {
+      console.error(`[processJob] Job ${jobId} failed:`, getErrorMessage(error), (error as any)?.statusCode);
       const latestJob = await DeliveryJob.findById(jobId).select('metadata');
       const latestMetadata = (latestJob?.metadata || job.metadata || {}) as Record<string, any>;
       const message = getErrorMessage(error);
       const statusCode = typeof (error as any)?.statusCode === 'number' ? (error as any).statusCode : undefined;
       const responseBody = getProviderErrorResponseBody(error);
       const responseCode = statusCode ? `HTTP_${statusCode}` : undefined;
+      const isSocial = SOCIAL_PROVIDERS.has(job.providerKey);
       const needsAttention = Boolean(statusCode && statusCode >= 400 && statusCode < 500 && statusCode !== 401 && statusCode !== 429);
       const retryCount = job.retryCount + 1;
-      const shouldRetry = !needsAttention && retryCount <= job.maxRetries;
-      const nextRetryAt = shouldRetry ? new Date(Date.now() + BASE_RETRY_DELAY_MS * retryCount) : undefined;
+      const isRateLimit = statusCode === 429;
 
+      let shouldRetry: boolean;
+      let nextRetryAt: Date | undefined;
+
+      // For social providers (YouTube, Facebook): never auto-retry on any failure.
+      // Mark dead-lettered immediately so admin must retry manually.
+      if (isSocial) {
+        shouldRetry = false;
+        nextRetryAt = undefined;
+      } else if (needsAttention) {
+        shouldRetry = false;
+        nextRetryAt = undefined;
+      } else if (retryCount > job.maxRetries) {
+        shouldRetry = false;
+        nextRetryAt = undefined;
+      } else {
+        shouldRetry = true;
+        if (isRateLimit) {
+          const retryAfter = (error as any)?.retryAfter
+            ? parseInt((error as any).retryAfter, 10)
+            : undefined;
+          const retryAfterMs = retryAfter ? retryAfter * 1000 : undefined;
+          const exponentialMs = BASE_RETRY_DELAY_MS * Math.pow(2, retryCount - 1);
+          const cappedMs = Math.min(exponentialMs, 3_600_000);
+          const jitter = Math.random() * 0.3 * cappedMs;
+          const delayMs = retryAfterMs
+            ? Math.max(retryAfterMs + jitter * 0.1, cappedMs)
+            : cappedMs + jitter;
+          nextRetryAt = new Date(Date.now() + delayMs);
+        } else {
+          const exponentialMs = BASE_RETRY_DELAY_MS * Math.pow(2, retryCount - 1);
+          const cappedMs = Math.min(exponentialMs, 3_600_000);
+          const jitter = Math.random() * 0.3 * cappedMs;
+          nextRetryAt = new Date(Date.now() + cappedMs + jitter);
+        }
+      }
+
+      const socialDeadLettered = isSocial && !shouldRetry;
       await DeliveryJob.findByIdAndUpdate(jobId, {
-        state: needsAttention ? 'needs_attention' : shouldRetry ? 'queued' : 'failed',
+        state: socialDeadLettered ? 'failed' : needsAttention ? 'needs_attention' : shouldRetry ? 'queued' : 'failed',
         retryCount,
         nextRetryAt,
-        deadLettered: !needsAttention && !shouldRetry,
+        deadLettered: socialDeadLettered || (!needsAttention && !shouldRetry),
         errorMessage: message,
         metadata: {
           ...latestMetadata,
@@ -965,14 +1243,14 @@ class DspDeliveryService {
             $slice: -MAX_ATTEMPTS,
           },
           events: {
-            state: needsAttention ? 'needs_attention' : shouldRetry ? 'queued' : 'failed',
-            message: needsAttention ? `Broma needs attention: ${message}` : shouldRetry ? `Retry scheduled: ${message}` : `Dead-lettered: ${message}`,
+            state: socialDeadLettered ? 'failed' : needsAttention ? 'needs_attention' : shouldRetry ? 'queued' : 'failed',
+            message: socialDeadLettered ? `YouTube/Facebook job dead-lettered (admin retry only): ${message}` : needsAttention ? `Provider needs attention: ${message}` : isRateLimit ? `Rate limited, retry scheduled: ${message}` : shouldRetry ? `Retry scheduled: ${message}` : `Dead-lettered: ${message}`,
             source: 'system',
           },
         },
       });
 
-      const errorState: DspDeliveryState = needsAttention ? 'needs_attention' : shouldRetry ? 'queued' : 'failed';
+      const errorState: DspDeliveryState = socialDeadLettered ? 'failed' : needsAttention ? 'needs_attention' : shouldRetry ? 'queued' : 'failed';
       await this.setJobExpiry(jobId, errorState);
 
       if (needsAttention) {
@@ -983,38 +1261,45 @@ class DspDeliveryService {
     }
   }
 
-  async claimNextDeliveryJob(workerId: string) {
+  async claimNextDeliveryJob(workerId: string, preferredProvider?: string) {
     const now = new Date();
     const lockExpiresAt = new Date(now.getTime() + WORKER_LOCK_MS);
-    return DeliveryJob.findOneAndUpdate(
-      {
-        deadLettered: false,
-        $and: [
-          {
-            $or: [
-              {
-                state: 'queued',
-                $or: [
-                  { nextRetryAt: { $exists: false } },
-                  { nextRetryAt: null },
-                  { nextRetryAt: { $lte: now } },
-                ],
-              },
-              {
-                state: 'processing',
-                nextRetryAt: { $lte: now },
-              },
-            ],
-          },
-          {
-            $or: [
-              { lockExpiresAt: { $exists: false } },
-              { lockExpiresAt: null },
-              { lockExpiresAt: { $lte: now } },
-            ],
-          },
-        ],
-      },
+
+    const baseFilter: Record<string, any> = {
+      deadLettered: false,
+      $and: [
+        {
+          $or: [
+            {
+              state: 'queued',
+              $or: [
+                { nextRetryAt: { $exists: false } },
+                { nextRetryAt: null },
+                { nextRetryAt: { $lte: now } },
+              ],
+            },
+            {
+              state: 'processing',
+              nextRetryAt: { $lte: now },
+            },
+          ],
+        },
+        {
+          $or: [
+            { lockExpiresAt: { $exists: false } },
+            { lockExpiresAt: null },
+            { lockExpiresAt: { $lte: now } },
+          ],
+        },
+      ],
+    };
+
+    if (preferredProvider) {
+      baseFilter.providerKey = preferredProvider;
+    }
+
+    const job = await DeliveryJob.findOneAndUpdate(
+      baseFilter,
       {
         lockedAt: now,
         lockedBy: workerId,
@@ -1022,13 +1307,15 @@ class DspDeliveryService {
       },
       { new: true, sort: { priority: 1, createdAt: 1 } }
     );
+    if (job && SOCIAL_PROVIDERS.has(job.providerKey)) console.log(`[claimJob] Claimed ${job.providerKey} job=${job._id}`);
+    return job;
   }
 
   async releaseExpiredLocks() {
     const now = new Date();
     const result = await DeliveryJob.updateMany(
       {
-        state: 'processing',
+        state: { $in: ['processing', 'queued'] },
         lockExpiresAt: { $lte: now },
         deadLettered: false,
       },
@@ -1078,32 +1365,87 @@ class DspDeliveryService {
     return { workerId: id, dispatched };
   }
 
+  private lastProviderTimestamps = new Map<string, number>();
+  private readonly PROVIDER_THROTTLE_MS = 1000;
+
   async processDueDeliveryJobs(input: { maxJobs?: number; workerId?: string; dispatchOnly?: boolean } = {}) {
     const workerId = input.workerId || `dsp-worker:${process.pid}:${Date.now()}`;
     const maxJobs = Math.min(50, Math.max(1, input.maxJobs || DEFAULT_WORKER_BATCH_SIZE));
     const expiredLocksReleased = await this.releaseExpiredLocks();
-    const processed: Array<{ jobId: string; state: string; error?: string }> = [];
 
-    for (let index = 0; index < maxJobs; index += 1) {
-      const job = await this.claimNextDeliveryJob(workerId);
-      if (!job) break;
-      if (input.dispatchOnly) {
-        this.processJobDetached(job._id.toString());
-        processed.push({
-          jobId: job._id.toString(),
-          state: 'processing',
-        });
-        continue;
+    // Prioritize social video jobs (youtube, facebook) so they don't get buried by Broma batch jobs
+    const priorityProviders = ['youtube', 'facebook'];
+    const claimedJobs: Array<{ jobId: string; providerKey: string }> = [];
+    const claimedIds = new Set<string>();
+
+    // Round 1: claim one per priority provider to ensure social video gets through
+    for (const pp of priorityProviders) {
+      if (claimedJobs.length >= maxJobs) break;
+      const job = await this.claimNextDeliveryJob(workerId, pp);
+      if (job) {
+        claimedIds.add(job._id.toString());
+        claimedJobs.push({ jobId: job._id.toString(), providerKey: job.providerKey });
       }
-      const result = await this.processJob(job._id.toString());
-      processed.push({
-        jobId: job._id.toString(),
-        state: result?.state || 'missing',
-        error: result?.errorMessage,
-      });
     }
 
+    // Round 2: fill remaining slots from any provider
+    for (let index = claimedJobs.length; index < maxJobs; index += 1) {
+      const job = await this.claimNextDeliveryJob(workerId);
+      if (!job) break;
+      if (claimedIds.has(job._id.toString())) continue;
+      claimedIds.add(job._id.toString());
+      claimedJobs.push({ jobId: job._id.toString(), providerKey: job.providerKey });
+    }
+
+    if (claimedJobs.length === 0) {
+      this.lastProviderTimestamps.clear();
+      return { workerId, expiredLocksReleased, processed: [] };
+    }
+
+    const socialJobs = claimedJobs.filter(j => SOCIAL_PROVIDERS.has(j.providerKey));
+    if (socialJobs.length > 0) {
+      console.log(`[scheduler] Processing ${socialJobs.length} social jobs: ${socialJobs.map(j => `${j.providerKey}:${j.jobId.slice(-6)}`).join(', ')}`);
+    }
+
+    const results = await Promise.allSettled(
+      claimedJobs.map(async ({ jobId, providerKey }) => {
+        await this.throttleProvider(providerKey);
+        if (input.dispatchOnly) {
+          this.processJobDetached(jobId);
+          return { jobId, state: 'processing' as const };
+        }
+        const result = await this.processJob(jobId);
+        return {
+          jobId,
+          state: result?.state || 'missing',
+          error: result?.errorMessage,
+        };
+      })
+    );
+
+    const processed: Array<{ jobId: string; state: string; error?: string }> = [];
+    for (const r of results) {
+      if (r.status === 'fulfilled') {
+        processed.push(r.value);
+      } else {
+        const jobId = claimedJobs[results.indexOf(r)]?.jobId || 'unknown';
+        console.error(`[scheduler] Job ${jobId} failed:`, r.reason);
+        processed.push({ jobId, state: 'failed', error: r.reason?.message || String(r.reason) });
+      }
+    }
+
+    this.lastProviderTimestamps.clear();
     return { workerId, expiredLocksReleased, processed };
+  }
+
+  private async throttleProvider(providerKey: string) {
+    const now = Date.now();
+    const last = this.lastProviderTimestamps.get(providerKey) || 0;
+    const elapsed = now - last;
+    if (elapsed < this.PROVIDER_THROTTLE_MS) {
+      await new Promise((resolve) => setTimeout(resolve, this.PROVIDER_THROTTLE_MS - elapsed));
+    }
+    this.lastProviderTimestamps.set(providerKey, Date.now());
   }
 
   async retryJob(jobId: string) {
@@ -1945,13 +2287,21 @@ class DspDeliveryService {
     };
   }
 
-  async listJobs(filters: { providerKey?: string; state?: string; page?: number; limit?: number }) {
+  async listJobs(filters: { providerKey?: string; state?: string; releaseId?: string; trackIds?: string[]; page?: number; limit?: number }) {
     const page = Math.max(1, filters.page || 1);
     const limit = Math.min(100, Math.max(1, filters.limit || 20));
     const query: Record<string, unknown> = {};
     query.hiddenFromOps = { $ne: true };
     query['metadata.resetForApproval'] = { $ne: true };
     if (filters.providerKey) query.providerKey = filters.providerKey;
+    if (filters.trackIds?.length) {
+      query.$or = [
+        { releaseId: filters.releaseId },
+        { trackId: { $in: filters.trackIds.map(id => new mongoose.Types.ObjectId(id)) } },
+      ];
+    } else if (filters.releaseId) {
+      query.releaseId = filters.releaseId;
+    }
 
     const pipeline: any[] = [
       { $match: query },
@@ -1987,7 +2337,7 @@ class DspDeliveryService {
       }
     );
 
-    const [result] = await DeliveryJob.aggregate(pipeline);
+    const [result] = await DeliveryJob.aggregate(pipeline).allowDiskUse(true);
     const items = await DeliveryJob.populate(result?.data || [], {
       path: 'trackId',
       select: 'title artistName isrc',

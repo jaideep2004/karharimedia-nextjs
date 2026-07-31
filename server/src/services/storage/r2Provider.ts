@@ -3,6 +3,7 @@ import {
   PutObjectCommand,
   DeleteObjectCommand,
   GetObjectCommand,
+  HeadObjectCommand,
   CreateMultipartUploadCommand,
   UploadPartCommand,
   CompleteMultipartUploadCommand,
@@ -29,7 +30,8 @@ export class R2Provider {
         secretAccessKey: R2_SECRET_ACCESS_KEY(),
       },
       requestHandler: {
-        requestTimeout: 300_000,
+        connectionTimeout: 30_000,
+        requestTimeout: 600_000,
       },
     });
   }
@@ -96,6 +98,18 @@ export class R2Provider {
       Key: key,
     });
     return s3GetSignedUrl(this.client, command, { expiresIn: expiresInSeconds });
+  }
+
+  async objectExists(key: string): Promise<boolean> {
+    try {
+      await this.client.send(new HeadObjectCommand({
+        Bucket: R2_BUCKET_NAME(),
+        Key: key,
+      }));
+      return true;
+    } catch {
+      return false;
+    }
   }
 
   async generateSignedDownloadUrl(key: string, expiresInSeconds = 3600): Promise<string> {

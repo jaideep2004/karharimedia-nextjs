@@ -1300,4 +1300,162 @@ export const adminAPI = {
       return handleApiError(error);
     }
   },
+
+  dispatchSocialDelivery: async (
+    trackId: string,
+    providerKey: string,
+    config: {
+      title: string;
+      description: string;
+      visibility: string;
+      preset: string;
+    },
+    isrc?: string
+  ) => {
+    try {
+      const response = await api.post<ApiResponse<any>>('/admin/dsp/deliveries/dispatch', {
+        trackId,
+        isrc: isrc || undefined,
+        providerKey,
+        operation: 'deliver',
+        config,
+      });
+      return response.data;
+    } catch (error: any) {
+      return {
+        success: false,
+        data: null,
+        message: error?.response?.data?.message || error?.message || 'Failed to dispatch delivery',
+        error: error?.response?.data || error?.message,
+      };
+    }
+  },
+
+  dispatchAlbumDelivery: async (
+    releaseId: string,
+    trackIds: string[],
+    providerKey: string,
+    config: {
+      title: string;
+      description: string;
+      visibility: string;
+      preset: string;
+    }
+  ) => {
+    try {
+      const response = await api.post<ApiResponse<any>>('/admin/dsp/deliveries/dispatch', {
+        releaseId,
+        trackIds,
+        providerKey,
+        operation: 'deliver',
+        config: { ...config, albumMode: 'album' },
+      });
+      return response.data;
+    } catch (error: any) {
+      return {
+        success: false,
+        data: null,
+        message: error?.response?.data?.message || error?.message || 'Failed to dispatch album delivery',
+        error: error?.response?.data || error?.message,
+      };
+    }
+  },
+
+  getSocialDeliveries: async (releaseId: string) => {
+    try {
+      const response = await api.get<ApiResponse<any>>('/admin/dsp/deliveries', {
+        params: { releaseId },
+      });
+      return response.data;
+    } catch (error: any) {
+      return {
+        success: false,
+        data: [],
+        message: error?.response?.data?.message || error?.message || 'Failed to fetch delivery jobs',
+        error: error?.response?.data || error?.message,
+      };
+    }
+  },
+
+  retrySocialDelivery: async (jobId: string) => {
+    try {
+      const response = await api.post<ApiResponse<any>>(`/admin/dsp/deliveries/${jobId}/retry`);
+      return response.data;
+    } catch (error) {
+      return handleApiError(error);
+    }
+  },
+
+  verifyYoutubeConnection: async () => {
+    try {
+      const response = await api.get<ApiResponse<any>>('/admin/dsp/auth/youtube/verify');
+      return response.data;
+    } catch (error: any) {
+      return {
+        success: false,
+        data: null,
+        message: error?.response?.data?.message || error?.response?.data?.error || error?.message || 'Failed to verify YouTube connection',
+        error: error?.response?.data || error?.message,
+      };
+    }
+  },
+
+  // --- Social Upload (dedicated pipeline) ---
+  startSocialUpload: async (payload: {
+    releaseId: string;
+    tracks: Array<{ trackId: string; title: string; artist: string; isrc: string }>;
+    platform: 'youtube' | 'facebook';
+    config: { title: string; description: string; visibility: string; preset: string; color?: string; albumMode?: string; scheduleAt?: string };
+  }) => {
+    const response = await api.post<ApiResponse<{ sessionId: string }>>('/admin/dsp/social-upload/start', payload);
+    return response.data;
+  },
+
+  getSocialUploadProgress: async (sessionId: string) => {
+    const response = await api.get<ApiResponse<any>>(`/admin/dsp/social-upload/progress/${sessionId}`);
+    return response.data;
+  },
+
+  getSocialUploadStatus: async (releaseId: string) => {
+    const response = await api.get<ApiResponse<any>>(`/admin/dsp/social-upload/status/${releaseId}`);
+    return response.data;
+  },
+
+  backfillSocialUploadStatus: async (releaseId: string) => {
+    const response = await api.post<ApiResponse<any>>(`/admin/dsp/social-upload/backfill/${releaseId}`);
+    return response.data;
+  },
+
+  cancelSocialUpload: async (sessionId: string) => {
+    const response = await api.post<ApiResponse<any>>(`/admin/dsp/social-upload/cancel/${sessionId}`);
+    return response.data;
+  },
+
+  // --- Facebook Page Management ---
+  getFacebookPages: async () => {
+    try {
+      const response = await api.get<ApiResponse<any[]>>('/admin/dsp/facebook/pages');
+      return response.data;
+    } catch (error: any) {
+      return { success: false, data: [], message: error?.response?.data?.message || error?.message || 'Failed to fetch pages' };
+    }
+  },
+
+  saveFacebookPages: async (pages: Array<{ id: string; name: string; accessToken: string; picture?: string }>) => {
+    try {
+      const response = await api.post<ApiResponse<any[]>>('/admin/dsp/facebook/pages', { pages });
+      return response.data;
+    } catch (error: any) {
+      return { success: false, data: [], message: error?.response?.data?.message || error?.message || 'Failed to save pages' };
+    }
+  },
+
+  fetchFacebookPagesFromApi: async (userAccessToken: string) => {
+    try {
+      const response = await api.post<ApiResponse<any[]>>('/admin/dsp/facebook/fetch-pages', { userAccessToken });
+      return response.data;
+    } catch (error: any) {
+      return { success: false, data: [], message: error?.response?.data?.message || error?.message || 'Failed to fetch pages from Facebook' };
+    }
+  },
 };

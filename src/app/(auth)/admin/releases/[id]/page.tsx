@@ -40,10 +40,12 @@ import {
   Edit,
   Replay,
   Sync,
+  YouTube,
+  Facebook,
 } from "@mui/icons-material";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
-import { releaseAPI } from "@/services/api";
+import { releaseAPI, adminAPI } from "@/services/api";
 import { useColorMode } from '@/context/ColorModeContext';
 import {
   getAcrCloudProviderMetadata,
@@ -61,6 +63,7 @@ import { resolveMediaUrl } from '@/lib/urlConfig';
 import { uploadDirectlyToR2 } from '@/lib/directUpload';
 import { getNormalizedReleaseStatus, getReleaseRejectionReason, getReleaseStatusLabel } from '@/lib/releaseStatus';
 import { toast } from 'sonner';
+import SocialPlatformUploadDialog from '@/components/dsp/SocialPlatformUploadDialog';
 
 const formatAcrProbability = (value?: number) => {
   if (typeof value !== 'number' || !Number.isFinite(value)) return 'n/a';
@@ -129,6 +132,10 @@ export default function AdminReleaseDetailPage() {
   const [selectedTakedownProviders, setSelectedTakedownProviders] = useState<string[]>([]);
   const [takedownNote, setTakedownNote] = useState('');
 
+  const [socialDialogOpen, setSocialDialogOpen] = useState<'youtube' | 'facebook' | null>(null);
+  const [deliveryJobs, setDeliveryJobs] = useState<any[]>([]);
+  const [socialDeliveries, setSocialDeliveries] = useState<any[]>([]);
+
   const [editOpen, setEditOpen] = useState(false);
   const [editSaving, setEditSaving] = useState(false);
   const [editArtworkFile, setEditArtworkFile] = useState<File | null>(null);
@@ -190,6 +197,59 @@ export default function AdminReleaseDetailPage() {
       mounted = false;
     };
   }, [releaseId]);
+
+  const extractDeliveryJobs = useCallback((resp: any): any[] => {
+    if (Array.isArray(resp?.data)) return resp.data;
+    if (resp?.data?.data && Array.isArray(resp.data.data)) return resp.data.data;
+    return [];
+  }, []);
+
+  const refetchDeliveries = useCallback(async () => {
+    const resp = await adminAPI.getSocialDeliveries(releaseId);
+    if (resp?.success) {
+      setDeliveryJobs(extractDeliveryJobs(resp));
+    }
+  }, [releaseId, extractDeliveryJobs]);
+
+  const terminalStates = new Set(['delivered', 'failed', 'deadLettered']);
+  const hasActiveJobs = Array.isArray(deliveryJobs) && deliveryJobs.some(j => !terminalStates.has(j.state));
+
+  useEffect(() => {
+    let mounted = true;
+    const doFetch = async () => {
+      const resp = await adminAPI.getSocialDeliveries(releaseId);
+      if (mounted && resp?.success) {
+        setDeliveryJobs(extractDeliveryJobs(resp));
+      }
+    };
+    if (releaseId) doFetch();
+    return () => { mounted = false; };
+  }, [releaseId, extractDeliveryJobs]);
+
+  useEffect(() => {
+    if (!releaseId) return;
+    let mounted = true;
+    adminAPI.getSocialUploadStatus(releaseId).then(resp => {
+      if (mounted && resp?.success) setSocialDeliveries(resp.data || []);
+    }).catch(() => {});
+    return () => { mounted = false; };
+  }, [releaseId]);
+
+  useEffect(() => {
+    if (!releaseId || !hasActiveJobs) return;
+    let mounted = true;
+    const id = setInterval(async () => {
+      const resp = await adminAPI.getSocialDeliveries(releaseId);
+      if (!mounted) return;
+      if (resp?.success) {
+        const jobs = extractDeliveryJobs(resp);
+        setDeliveryJobs(jobs);
+        const allDone = jobs.every((j: any) => terminalStates.has(j.state));
+        if (allDone) clearInterval(id);
+      }
+    }, 5000);
+    return () => { mounted = false; clearInterval(id); };
+  }, [releaseId, hasActiveJobs, extractDeliveryJobs]);
 
   useEffect(() => {
     if (!Array.isArray(release?.tracks)) return;
@@ -1317,6 +1377,198 @@ export default function AdminReleaseDetailPage() {
                 );
               })()}
             </Box>
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, mt: 2 }}>
+              <Box>
+                <Button
+                  variant="outlined"
+                  color="error"
+                  startIcon={<YouTube />}
+                  onClick={() => setSocialDialogOpen('youtube')}
+                  sx={{ minWidth: 170 }}
+                >
+                  Deliver to YouTube
+                </Button>
+                {/* YouTube delivery status — shown below the button */}
+                {(() => {
+                  const ytJobs = Array.isArray(deliveryJobs) ? deliveryJobs.filter((j: any) => j.providerKey === 'youtube') : [];
+                  const ytDeliveries = socialDeliveries.filter((t: any) => t.deliveries?.some((d: any) => d.platform === 'youtube'));
+                  const latestYtJob = ytJobs.length > 0 ? ytJobs.reduce((latest: any, j: any) => latest.createdAt > j.createdAt ? latest : j) : null;
+
+                  // If there's a job in non-terminal state, show its status
+                  if (latestYtJob && ['queued', 'processing'].includes(latestYtJob.state)) {
+                    return (
+                      <Box sx={{ mt: 0.5 }}>
+                        <Typography variant="caption" display="block" color="info.main">
+                          <Box component="span" sx={{ display: 'inline-flex', alignItems: 'center', gap: 0.5 }}>
+                            <Box sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: '#4caf50', animation: 'pulse-dot 1.5s ease-in-out infinite' }} />
+                            YouTube: {latestYtJob.state}
+                            {latestYtJob.retryCount ? ` (retry ${latestYtJob.retryCount})` : ''}
+                          </Box>
+                        </Typography>
+                      </Box>
+                    );
+                  }
+
+                  // Show delivered videos with links
+                  if (ytDeliveries.length > 0) {
+                    return (
+                      <Box sx={{ mt: 0.5 }}>
+                        {ytDeliveries.map((t: any) => {
+                          const yt = t.deliveries.find((d: any) => d.platform === 'youtube');
+                          return (
+                            <Typography key={t.trackId} variant="caption" display="block" color="success.main">
+                              <CheckCircle sx={{ fontSize: 12, mr: 0.5, verticalAlign: 'middle' }} />
+                              {t.title}:{' '}
+                              <Link href={yt.videoUrl} target="_blank" style={{ color: 'inherit' }}>
+                                {yt.videoUrl}
+                              </Link>
+                            </Typography>
+                          );
+                        })}
+                        {latestYtJob && latestYtJob.state === 'failed' && (
+                          <Typography variant="caption" display="block" color="error.main" sx={{ mt: 0.5 }}>
+                            Last delivery failed: {latestYtJob.errorMessage || 'Unknown error'}
+                          </Typography>
+                        )}
+                      </Box>
+                    );
+                  }
+
+                  // Show failed state if last job failed
+                  if (latestYtJob && latestYtJob.state === 'failed') {
+                    return (
+                      <Box sx={{ mt: 0.5 }}>
+                        <Typography variant="caption" display="block" color="error.main">
+                          YouTube: failed — {latestYtJob.errorMessage || 'Unknown error'}
+                        </Typography>
+                      </Box>
+                    );
+                  }
+
+                  // Default: not delivered
+                  return (
+                    <Box sx={{ mt: 0.5 }}>
+                      <Typography variant="caption" display="block" color="text.disabled">
+                        Not delivered to YouTube
+                      </Typography>
+                    </Box>
+                  );
+                })()}
+              </Box>
+              <Box>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  startIcon={<Facebook />}
+                  onClick={() => setSocialDialogOpen('facebook')}
+                  sx={{ minWidth: 170 }}
+                >
+                  Deliver to Facebook
+                </Button>
+                {(() => {
+                  const fbJobs = Array.isArray(deliveryJobs) ? deliveryJobs.filter((j: any) => j.providerKey === 'facebook') : [];
+                  const fbDeliveries = socialDeliveries.filter((t: any) => t.deliveries?.some((d: any) => d.platform === 'facebook'));
+                  const latestFbJob = fbJobs.length > 0 ? fbJobs.reduce((latest: any, j: any) => latest.createdAt > j.createdAt ? latest : j) : null;
+
+                  if (latestFbJob && ['queued', 'processing'].includes(latestFbJob.state)) {
+                    return (
+                      <Box sx={{ mt: 0.5 }}>
+                        <Typography variant="caption" display="block" color="info.main">
+                          <Box component="span" sx={{ display: 'inline-flex', alignItems: 'center', gap: 0.5 }}>
+                            <Box sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: '#4caf50', animation: 'pulse-dot 1.5s ease-in-out infinite' }} />
+                            Facebook: {latestFbJob.state}
+                          </Box>
+                        </Typography>
+                      </Box>
+                    );
+                  }
+                  if (fbDeliveries.length > 0) {
+                    return (
+                      <Box sx={{ mt: 0.5 }}>
+                        {fbDeliveries.map((t: any) => {
+                          const fb = t.deliveries.find((d: any) => d.platform === 'facebook');
+                          return (
+                            <Typography key={t.trackId} variant="caption" display="block" color="success.main">
+                              <CheckCircle sx={{ fontSize: 12, mr: 0.5, verticalAlign: 'middle' }} />
+                              {t.title}:{' '}
+                              <Link href={fb.videoUrl} target="_blank" style={{ color: 'inherit' }}>
+                                {fb.videoUrl}
+                              </Link>
+                            </Typography>
+                          );
+                        })}
+                        {latestFbJob && latestFbJob.state === 'failed' && (
+                          <Typography variant="caption" display="block" color="error.main" sx={{ mt: 0.5 }}>
+                            Last delivery failed: {latestFbJob.errorMessage || 'Unknown error'}
+                          </Typography>
+                        )}
+                      </Box>
+                    );
+                  }
+                  if (latestFbJob && latestFbJob.state === 'failed') {
+                    return (
+                      <Box sx={{ mt: 0.5 }}>
+                        <Typography variant="caption" display="block" color="error.main">
+                          Facebook: failed — {latestFbJob.errorMessage || 'Unknown error'}
+                        </Typography>
+                      </Box>
+                    );
+                  }
+                  return (
+                    <Box sx={{ mt: 0.5 }}>
+                      <Typography variant="caption" display="block" color="text.disabled">
+                        Not delivered to Facebook
+                      </Typography>
+                    </Box>
+                  );
+                })()}
+              </Box>
+            </Box>
+
+            {deliveryJobs.length > 0 && (
+              <Box sx={{ mt: 2 }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                  <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 600 }}>
+                    Delivery Jobs
+                  </Typography>
+                  {hasActiveJobs && (
+                    <Box
+                      sx={{
+                        width: 6, height: 6, borderRadius: '50%', bgcolor: '#4caf50',
+                        animation: 'pulse-dot 1.5s ease-in-out infinite',
+                        '@keyframes pulse-dot': { '0%, 100%': { opacity: 1 }, '50%': { opacity: 0.3 } },
+                      }}
+                    />
+                  )}
+                </Box>
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, mt: 0.5 }}>
+                  {Array.isArray(deliveryJobs) && deliveryJobs.map((job: any) => (
+                    <Tooltip
+                      key={job._id}
+                      title={job.errorMessage || `${job.providerKey} — ${job.state}`}
+                    >
+                      <Chip
+                        size="small"
+                        label={`${job.providerKey === 'youtube' ? 'YouTube' : 'Facebook'}: ${job.state}${job.retryCount ? ` (${job.retryCount})` : ''}`}
+                        color={job.state === 'delivered' ? 'success' : job.state === 'failed' || job.state === 'deadLettered' ? 'error' : job.state === 'processing' || job.state === 'queued' ? 'info' : 'warning'}
+                        variant="outlined"
+                        onDelete={['failed', 'deadLettered'].includes(job.state) ? async () => {
+                          const resp = await adminAPI.retrySocialDelivery(job._id);
+                          if (resp?.success) {
+                            toast.success('Delivery retry queued');
+                            const refreshed = await adminAPI.getSocialDeliveries(releaseId);
+                            if (refreshed?.success) setDeliveryJobs(extractDeliveryJobs(refreshed));
+                          } else {
+                            toast.error(resp?.message || 'Retry failed');
+                          }
+                        } : undefined}
+                        deleteIcon={['failed', 'deadLettered'].includes(job.state) ? <Replay fontSize="small" /> : undefined}
+                      />
+                    </Tooltip>
+                  ))}
+                </Box>
+              </Box>
+            )}
           </Box>
         </Box>
       </Paper>
@@ -1745,6 +1997,15 @@ export default function AdminReleaseDetailPage() {
           </Button>
         </DialogActions>
       </Dialog>
+
+      <SocialPlatformUploadDialog
+        open={socialDialogOpen !== null}
+        onClose={() => setSocialDialogOpen(null)}
+        platform={socialDialogOpen || 'youtube'}
+        release={release || {}}
+        tracks={Array.isArray(release?.tracks) ? release.tracks : []}
+        onSuccess={() => { refetchDeliveries(); setSocialDialogOpen(null); }}
+      />
     </Container>
   );
 }

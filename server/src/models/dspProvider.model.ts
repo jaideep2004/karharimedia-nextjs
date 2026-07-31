@@ -56,7 +56,7 @@ const DspProviderSchema = new Schema<IDspProvider>(
     },
     integrationMode: {
       type: String,
-      enum: ['shell', 'sandbox', 'live'],
+      enum: ['shell', 'sandbox', 'live', 'api'],
       default: 'shell',
       index: true,
     },

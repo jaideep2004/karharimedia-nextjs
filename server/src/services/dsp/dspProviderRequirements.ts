@@ -76,6 +76,15 @@ const REQUIREMENTS: Record<string, DspProviderRequirement> = {
   youtube_art_track: baseRequirement('youtube_art_track', 'YouTube Art Track', {
     docsUrl: 'https://support.google.com/youtube/answer/2822002?hl=en-GB',
   }),
+  youtube: baseRequirement('youtube', 'YouTube', {
+    docsStatus: 'official_public',
+    docsUrl: 'https://developers.google.com/youtube/v3/docs/videos/insert',
+    payloadStandard: 'platform_api',
+    requiredCredentialKeys: ['accessToken', 'refreshToken'],
+    requiredConfigKeys: [],
+    readinessChecks: ['credentials'],
+    notes: 'Direct video upload to YouTube channel using the Data API v3. Requires OAuth token with youtube.upload scope.',
+  }),
   tiktok: baseRequirement('tiktok', 'TikTok', {
     docsUrl: 'https://newsroom.tiktok.com/sound-on-the-new-platform-for-tiktok-music-marketing-and-global-track-distribution?lang=en',
     payloadStandard: 'platform_api',
@@ -107,6 +116,15 @@ const REQUIREMENTS: Record<string, DspProviderRequirement> = {
     payloadStandard: 'rights_feed',
     requiredCredentialKeys: ['partnerContractId', 'apiKey'],
     requiredConfigKeys: ['baseUrl', 'webhookSecret', 'defaultPolicy'],
+  }),
+  facebook: baseRequirement('facebook', 'Facebook', {
+    docsStatus: 'official_public',
+    docsUrl: 'https://developers.facebook.com/docs/video-api/',
+    payloadStandard: 'platform_api',
+    requiredCredentialKeys: ['pageAccessToken', 'pageId'],
+    requiredConfigKeys: [],
+    readinessChecks: ['credentials', 'page_connected'],
+    notes: 'Direct video upload to Facebook Page using the Graph API. Requires page access token with video upload permission.',
   }),
   instagram: baseRequirement('instagram', 'Instagram Music', {
     docsUrl: 'https://www.facebook.com/help/348831205149904/',

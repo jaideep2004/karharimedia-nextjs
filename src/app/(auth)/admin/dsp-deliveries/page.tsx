@@ -249,6 +249,7 @@ export default function AdminDspDeliveriesPage() {
   const searchTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [diagnosing, setDiagnosing] = useState(false);
   const [diagnoseResult, setDiagnoseResult] = useState<any>(null);
+  const [youtubeStatus, setYoutubeStatus] = useState<{ loading: boolean; connected: boolean; channelName?: string | null; error?: string; hasRefreshToken?: boolean }>({ loading: false, connected: false });
   const [cleaningUp, setCleaningUp] = useState<'idle' | 'listing' | 'deleting' | 'resuming'>('idle');
   const [cleanupResult, setCleanupResult] = useState<any>(null);
   const [draftCleanupOpen, setDraftCleanupOpen] = useState(false);
@@ -806,6 +807,44 @@ export default function AdminDspDeliveriesPage() {
           </Stack>
         </Paper>
       )}
+
+      {/* Social Platform Connections */}
+      <Paper sx={{ p: 2, mb: 2.5 }} variant="outlined">
+        <Stack direction="row" justifyContent="space-between" alignItems="center">
+          <Typography variant="subtitle2" fontWeight={600}>Social Platform Connections</Typography>
+          <Button size="small" variant="text" onClick={async () => {
+            setYoutubeStatus({ loading: true, connected: false, channelName: null });
+            try {
+              const resp = await adminAPI.verifyYoutubeConnection();
+              if (resp?.success && resp.data) {
+                setYoutubeStatus({ loading: false, ...resp.data });
+              } else {
+                setYoutubeStatus({ loading: false, connected: false, channelName: null, error: resp?.message || 'Verify failed' });
+              }
+            } catch (e: any) {
+              setYoutubeStatus({ loading: false, connected: false, channelName: null, error: e?.message || 'Verify failed' });
+            }
+          }} disabled={youtubeStatus?.loading}>
+            {youtubeStatus?.loading ? <CircularProgress size={14} /> : 'Verify'}
+          </Button>
+        </Stack>
+        <Stack direction="row" spacing={2} sx={{ mt: 1 }}>
+          <Chip
+            size="small"
+            icon={youtubeStatus?.loading ? <CircularProgress size={12} /> : youtubeStatus?.connected ? <CheckCircleIcon /> : <CancelIcon />}
+            label={`YouTube: ${youtubeStatus?.channelName || (youtubeStatus?.connected ? 'Connected' : youtubeStatus?.error || 'Unknown')}`}
+            color={youtubeStatus?.connected ? 'success' : youtubeStatus?.error ? 'error' : 'default'}
+            variant="outlined"
+          />
+          <Chip
+            size="small"
+            icon={youtubeStatus?.hasRefreshToken ? <CheckCircleIcon /> : <CancelIcon />}
+            label={`Refresh Token: ${youtubeStatus?.hasRefreshToken ? 'Yes' : 'No'}`}
+            color={youtubeStatus?.hasRefreshToken ? 'success' : 'warning'}
+            variant="outlined"
+          />
+        </Stack>
+      </Paper>
 
       {/* API Diagnostic */}
       {diagnoseResult && (

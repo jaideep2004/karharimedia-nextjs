@@ -13,7 +13,12 @@ export function listStandaloneTracks(query: Record<string, unknown>) {
 }
 
 export function findTrackById(id: string) {
+  if (!id || !id.trim()) return null;
   return Track.findById(id);
+}
+
+export function findTrackByIsrc(isrc: string) {
+  return Track.findOne({ isrc });
 }
 
 export async function saveTrack(track: ITrack) {

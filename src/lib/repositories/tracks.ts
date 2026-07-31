@@ -147,6 +147,15 @@ function buildReleaseTrackQuery(
   return clauses.length === 1 ? clauses[0] : { $and: clauses };
 }
 
+function resolveTrackRowMedia(row: Record<string, any>) {
+  const next = { ...row };
+  const audio = String(next.audioUrl || '').trim();
+  const artwork = String(next.artworkUrl || '').trim();
+  next.audioUrl = /^https?:\/\//i.test(audio) ? audio : getFileUrl(audio || null, 'audio');
+  next.artworkUrl = /^https?:\/\//i.test(artwork) ? artwork : getFileUrl(artwork || null, 'image');
+  return next;
+}
+
 function projectTrackRowStage() {
   return {
     $project: {
@@ -239,7 +248,7 @@ export async function listTracksPage(
   });
 
   return {
-    tracks: first?.data || [],
+    tracks: (first?.data || []).map(resolveTrackRowMedia),
     pagination: {
       total,
       page,
@@ -423,10 +432,10 @@ export async function hydrateReleasesWithCanonicalTracks<T extends ReleaseLike>(
 
     const resolvedTracks = tracks.map((t: Record<string, any>) => ({
       ...t,
-      audioUrl: t.audioUrl || getFileUrl(t.audioFile, 'audio') || t.audio,
-      artworkUrl: t.artworkUrl || getFileUrl(t.artwork, 'image'),
+      audioUrl: getFileUrl(t.audioFile, 'audio') || t.audioUrl || t.audio,
+      artworkUrl: getFileUrl(t.artwork, 'image') || t.artworkUrl,
     }));
-    const resolvedArtworkUrl = release.artworkUrl || getFileUrl(release.artwork || release.artworkFile, 'image');
+    const resolvedArtworkUrl = getFileUrl(release.artwork || release.artworkFile, 'image') || release.artworkUrl;
     return {
       ...release,
       ownerUserId: release.ownerUserId || getReleaseOwnerId(release),

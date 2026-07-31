@@ -19,7 +19,6 @@ export const validateDdexPayload = (
   if (!payload.title?.trim()) errors.push('DDEX: title required');
   if (!payload.artistName?.trim()) errors.push('DDEX: artistName required');
   if (!payload.audioFile?.trim()) errors.push('DDEX: audioFile required');
-  if (!payload.artwork?.trim()) errors.push('DDEX: artwork required');
 
   if (!payload.isrc || !ISRC_REGEX.test(payload.isrc.replace(/-/g, '').toUpperCase())) {
     errors.push('DDEX: valid ISRC required');

@@ -29,7 +29,9 @@ import {
   LightMode,
   MarkEmailRead,
   Shield as ShieldIcon,
+  YouTube as YouTubeIcon,
 } from '@mui/icons-material';
+import { useEffect } from 'react';
 import { useNotifications } from '@/context/NotificationsContext';
 import { useColorMode } from '@/context/ColorModeContext';
 import { useAuth } from '@/context/AppContext';
@@ -38,6 +40,7 @@ import { removeAuthTokenCookie } from '@/lib/authCookie';
 import { getNotificationTitle } from '@/lib/notificationTitles';
 import { getNotificationRoute } from '@/lib/notificationRoutes';
 import DashboardSearch from '@/components/navigation/DashboardSearch';
+import GlobalSocialUploadDialog from '@/components/dsp/GlobalSocialUploadDialog';
 
 export default function AdminHeader() {
   const router = useRouter();
@@ -161,6 +164,9 @@ export default function AdminHeader() {
               {isDark ? <LightMode sx={{ fontSize: 19 }} /> : <DarkMode sx={{ fontSize: 19 }} />}
             </IconButton>
           </Tooltip>
+
+          {/* Social Upload Status */}
+          <SocialUploadBadge />
 
           {/* Notifications */}
           <Tooltip title="Notifications">
@@ -436,5 +442,51 @@ export default function AdminHeader() {
         </MenuItem>
       </Menu>
     </AppBar>
+  );
+}
+
+function SocialUploadBadge() {
+  const [activeCount, setActiveCount] = useState(0);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    const check = () => {
+      try {
+        const raw = localStorage.getItem('social_upload_session');
+        if (!raw) { setActiveCount(0); return; }
+        const data = JSON.parse(raw);
+        const expired = Date.now() - (data.savedAt || 0) > 2 * 60 * 60 * 1000;
+        if (expired) { localStorage.removeItem('social_upload_session'); setActiveCount(0); return; }
+        setActiveCount(1);
+      } catch { setActiveCount(0); }
+    };
+    check();
+    const id = setInterval(check, 10000);
+    return () => clearInterval(id);
+  }, []);
+
+  if (!activeCount) return null;
+
+  return (
+    <>
+      <Tooltip title="Active social upload">
+        <IconButton
+          size="small"
+          onClick={() => setDialogOpen(true)}
+          sx={{
+            width: 36, height: 36,
+            color: '#ef4444',
+            animation: 'pulse 2s infinite',
+            '@keyframes pulse': { '0%,100%': { opacity: 1 }, '50%': { opacity: 0.5 } },
+          }}
+        >
+          <Badge badgeContent={activeCount} color="error" overlap="circular">
+            <YouTubeIcon sx={{ fontSize: 20 }} />
+          </Badge>
+        </IconButton>
+      </Tooltip>
+      <GlobalSocialUploadDialog open={dialogOpen} onClose={() => setDialogOpen(false)} />
+    </>
   );
 }

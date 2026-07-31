@@ -15,7 +15,7 @@ export type DspCapability =
   | 'takedown';
 
 export type DspDeliveryOperation = 'deliver' | 'update' | 'takedown';
-export type DspIntegrationMode = 'shell' | 'sandbox' | 'live';
+export type DspIntegrationMode = 'shell' | 'sandbox' | 'live' | 'api';
 export type DspReadinessState =
   | 'shell_ready'
   | 'missing_contract'
@@ -73,6 +73,7 @@ export interface DspConnectorContext {
   operation?: DspDeliveryOperation;
   jobId?: string;
   jobMetadata?: Record<string, unknown>;
+  onProgress?: (pct: number, bytes?: number, total?: number) => void;
 }
 
 export interface DspDeliveryResult {

@@ -78,6 +78,12 @@ export interface ITrack extends Document {
   legacyTrackKey?: string;
   legacyMetadata?: Record<string, unknown>;
   rejectionReason?: string;
+  socialDeliveries?: Array<{
+    platform: string;
+    externalId: string;
+    videoUrl: string;
+    uploadedAt: Date;
+  }>;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -270,6 +276,15 @@ const TrackSchema: Schema = new Schema(
     },
     rejectionReason: {
       type: String
+    },
+    socialDeliveries: {
+      type: [{
+        platform: { type: String, required: true },
+        externalId: { type: String, required: true },
+        videoUrl: { type: String, required: true },
+        uploadedAt: { type: Date, default: Date.now }
+      }],
+      default: []
     }
   },
   {

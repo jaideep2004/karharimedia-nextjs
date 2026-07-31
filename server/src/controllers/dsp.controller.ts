@@ -1,8 +1,12 @@
 import crypto from 'crypto';
+import mongoose from 'mongoose';
 import { Response } from 'express';
 import { AuthRequest } from '../middleware/auth.middleware';
 import { errorResponse, successResponse } from '../utils/apiResponse';
+import { decryptCredentialMap, encryptCredentialMap } from '../services/dsp/dspCredentialVault';
 import { dspDeliveryService, getSyncProgress as getBromaSyncProgress } from '../services/dsp/dspDelivery.service';
+import DspProvider from '../models/dspProvider.model';
+import { findTrackByIsrc } from '../repositories/track.repository';
 
 export const listProviders = async (_req: AuthRequest, res: Response): Promise<void> => {
   try {
@@ -109,24 +113,76 @@ export const deleteBromaStatisticsReport = async (req: AuthRequest, res: Respons
 
 export const dispatchDelivery = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
-    const { trackId, providerKey, operation = 'deliver' } = req.body;
+    let { trackId, releaseId, trackIds, isrc, providerKey, operation = 'deliver', config } = req.body;
+
+    if (config?.albumMode === 'album' && releaseId && Array.isArray(trackIds) && trackIds.length > 0) {
+      const resolvedIds: string[] = [];
+      for (const id of trackIds) {
+        if (mongoose.Types.ObjectId.isValid(id)) {
+          resolvedIds.push(id);
+        } else {
+          const track = await findTrackByIsrc(id);
+          resolvedIds.push(track ? String(track._id) : id);
+        }
+      }
+      const job = await dspDeliveryService.dispatchAlbumDelivery(
+        releaseId, resolvedIds, providerKey, operation,
+        req.user?._id?.toString(), config
+      );
+      successResponse(res, job, 'Album delivery job queued', 201);
+      return;
+    }
+
+    if (!trackId && isrc) {
+      const track = await findTrackByIsrc(isrc);
+      if (track) trackId = String(track._id);
+    }
+
+    if (!trackId) {
+      errorResponse(res, 'trackId or isrc is required for non-album deliveries', null, 400);
+      return;
+    }
+
     const job = await dspDeliveryService.dispatchDelivery(trackId, providerKey, operation, req.user?._id?.toString());
     successResponse(res, job, 'Delivery job queued', 201);
   } catch (error) {
+    console.error('[dispatchDelivery]', error);
     errorResponse(res, 'Failed to queue delivery job', error);
   }
 };
 
 export const listDeliveries = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
+    const releaseId = typeof req.query.releaseId === 'string' ? req.query.releaseId : undefined;
+    let trackIds: string[] | undefined;
+    if (releaseId) {
+      const releaseObjId = new mongoose.Types.ObjectId(releaseId);
+      const canonicalTracks = await mongoose.connection.collection('tracks').find(
+        { releaseId: releaseObjId, source: 'release_embed' },
+        { projection: { _id: 1 } }
+      ).toArray();
+      trackIds = canonicalTracks.map(t => String(t._id));
+      const release = await mongoose.connection.collection('releases').findOne(
+        { _id: releaseObjId },
+        { projection: { tracks: 1 } }
+      );
+      const subdocIds = ((release?.tracks || []) as any[])
+        .map((t: any) => t._id?.toString())
+        .filter(Boolean);
+      trackIds.push(...subdocIds);
+      trackIds = [...new Set(trackIds)];
+    }
     const result = await dspDeliveryService.listJobs({
       providerKey: typeof req.query.providerKey === 'string' ? req.query.providerKey : undefined,
       state: typeof req.query.state === 'string' ? req.query.state : undefined,
       page: req.query.page ? Number(req.query.page) : undefined,
       limit: req.query.limit ? Number(req.query.limit) : undefined,
+      releaseId,
+      trackIds,
     });
     successResponse(res, result, 'Delivery jobs fetched');
   } catch (error) {
+    console.error('[listDeliveries]', error);
     errorResponse(res, 'Failed to fetch delivery jobs', error);
   }
 };
@@ -333,6 +389,86 @@ export const addFingerprintMatch = async (req: AuthRequest, res: Response): Prom
   }
 };
 
+export const verifyYoutubeConnection = async (_req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    const provider = await DspProvider.findOne({ key: 'youtube' }).select('+credentials +credentialEnvelopeVersion');
+    if (!provider) {
+      successResponse(res, { connected: false, channelName: null, error: 'YouTube provider not found' });
+      return;
+    }
+
+    let credentials = decryptCredentialMap(provider.get('credentials') || {});
+    if (!credentials.accessToken) {
+      successResponse(res, { connected: false, channelName: null, error: 'No YouTube credentials configured' });
+      return;
+    }
+
+    // Auto-refresh if token expired
+    if (credentials.refreshToken) {
+      const expiresAt = Number(credentials.tokenExpiresAt || 0);
+      if (!expiresAt || Date.now() >= expiresAt) {
+        try {
+          const clientId = process.env.YOUTUBE_CLIENT_ID;
+          const clientSecret = process.env.YOUTUBE_CLIENT_SECRET;
+          if (clientId && clientSecret) {
+            const tokenRes = await fetch('https://oauth2.googleapis.com/token', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+              body: new URLSearchParams({
+                client_id: clientId,
+                client_secret: clientSecret,
+                refresh_token: String(credentials.refreshToken),
+                grant_type: 'refresh_token',
+              }),
+            });
+            if (tokenRes.ok) {
+              const newTokens = await tokenRes.json() as Record<string, any>;
+              credentials.accessToken = newTokens.access_token;
+              credentials.tokenExpiresAt = String(Date.now() + Number(newTokens.expires_in || 3600) * 1000);
+              if (newTokens.refresh_token) credentials.refreshToken = newTokens.refresh_token;
+              await DspProvider.updateOne(
+                { key: 'youtube' },
+                { $set: { credentials: encryptCredentialMap({ ...credentials }) } }
+              );
+            }
+          }
+        } catch { /* refresh failure is non-fatal for verify */ }
+      }
+    }
+
+    const response = await fetch('https://www.googleapis.com/youtube/v3/channels?part=snippet&mine=true', {
+      headers: { 'Authorization': `Bearer ${credentials.accessToken}` },
+    });
+
+    if (!response.ok) {
+      successResponse(res, { connected: false, channelName: null, error: `YouTube API error: ${response.status}`, hasStoredToken: true, hasRefreshToken: !!credentials.refreshToken, tokenExpiresAt: credentials.tokenExpiresAt || null });
+      return;
+    }
+
+    const data = await response.json() as { items?: Array<{ id?: string; snippet?: { title?: string; customUrl?: string; thumbnails?: Record<string, { url: string }> } }> };
+    const channel = data.items?.[0];
+
+    // Store channelId if missing from provider config
+    if (channel?.id) {
+      await DspProvider.updateOne(
+        { key: 'youtube', 'config.channelId': { $exists: false } },
+        { $set: { 'config.channelId': channel.id } }
+      );
+    }
+
+    successResponse(res, {
+      connected: true,
+      channelName: channel?.snippet?.title || 'Unknown',
+      channelUrl: channel?.snippet?.customUrl ? `https://youtube.com/${channel.snippet.customUrl}` : null,
+      avatarUrl: channel?.snippet?.thumbnails?.default?.url || null,
+      hasRefreshToken: !!credentials.refreshToken,
+      tokenExpiresAt: credentials.tokenExpiresAt || null,
+    });
+  } catch (error) {
+    errorResponse(res, 'Failed to verify YouTube connection', error);
+  }
+};
+
 export const cleanupOldDeliveryJobs = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const retentionDays = req.body?.retentionDays ? Number(req.body.retentionDays) : undefined;
@@ -341,5 +477,119 @@ export const cleanupOldDeliveryJobs = async (req: AuthRequest, res: Response): P
     successResponse(res, result, dryRun ? 'Dry-run complete' : 'Old delivery jobs cleaned up');
   } catch (error) {
     errorResponse(res, 'Failed to clean up old delivery jobs', error);
+  }
+};
+
+export const youtubeAuthUrl = async (_req: AuthRequest, res: Response): Promise<void> => {
+  const clientId = process.env.YOUTUBE_CLIENT_ID;
+  if (!clientId) {
+    errorResponse(res, 'YOUTUBE_CLIENT_ID not configured', null, 500);
+    return;
+  }
+
+  const redirectUri = `${process.env.API_URL || 'http://localhost:5000'}/api/dsp/auth/youtube/callback`;
+  const url = `https://accounts.google.com/o/oauth2/v2/auth?` +
+    `client_id=${encodeURIComponent(clientId)}` +
+    `&redirect_uri=${encodeURIComponent(redirectUri)}` +
+    `&response_type=code` +
+    `&scope=${encodeURIComponent('https://www.googleapis.com/auth/youtube.upload https://www.googleapis.com/auth/youtube')}` +
+    `&access_type=offline` +
+    `&prompt=consent`;
+
+  res.redirect(url);
+};
+
+export const youtubeAuthCallback = async (req: AuthRequest, res: Response): Promise<void> => {
+  const { code, error: authError } = req.query;
+  if (authError) {
+    res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:3000'}/admin/releases?error=youtube_auth_denied`);
+    return;
+  }
+  if (!code) {
+    res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:3000'}/admin/releases?error=youtube_no_code`);
+    return;
+  }
+
+  const clientId = process.env.YOUTUBE_CLIENT_ID;
+  const clientSecret = process.env.YOUTUBE_CLIENT_SECRET;
+  if (!clientId || !clientSecret) {
+    errorResponse(res, 'YouTube OAuth credentials not configured', null, 500);
+    return;
+  }
+
+  const redirectUri = `${process.env.API_URL || 'http://localhost:5000'}/api/dsp/auth/youtube/callback`;
+
+  try {
+    const tokenResponse = await fetch('https://oauth2.googleapis.com/token', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({
+        code: String(code),
+        client_id: clientId,
+        client_secret: clientSecret,
+        redirect_uri: redirectUri,
+        grant_type: 'authorization_code',
+      }),
+    });
+
+    const tokens = await tokenResponse.json() as Record<string, unknown>;
+
+    if (!tokenResponse.ok) {
+      res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:3000'}/admin/releases?error=youtube_token_exchange_failed`);
+      return;
+    }
+
+    const creds: Record<string, unknown> = {
+      accessToken: tokens.access_token,
+      tokenExpiresAt: tokens.expires_in ? String(Date.now() + Number(tokens.expires_in) * 1000) : String(Date.now() + 3600 * 1000),
+    };
+    if (tokens.refresh_token) creds.refreshToken = tokens.refresh_token;
+
+    // Fetch channel info to populate channelId
+    let channelId: string | undefined;
+    try {
+      const channelRes = await fetch('https://www.googleapis.com/youtube/v3/channels?part=snippet&mine=true', {
+        headers: { 'Authorization': `Bearer ${creds.accessToken}` },
+      });
+      if (channelRes.ok) {
+        const channelData = await channelRes.json() as { items?: Array<{ id?: string }> };
+        channelId = channelData.items?.[0]?.id;
+      }
+    } catch { /* non-fatal */ }
+
+    const updateConfig: Record<string, unknown> = {};
+    if (channelId) updateConfig.channelId = channelId;
+
+    await DspProvider.updateOne(
+      { key: 'youtube' },
+      {
+        $set: {
+          enabled: true,
+          credentials: creds,
+          credentialEnvelopeVersion: '',
+        },
+        $setOnInsert: {
+          displayName: 'YouTube',
+          capabilities: ['video_delivery'],
+          region: 'global',
+          integrationMode: 'api',
+          config: updateConfig,
+          createdAt: new Date(),
+        },
+      },
+      { upsert: true }
+    );
+
+    // If provider already existed, update config separately
+    if (channelId) {
+      await DspProvider.updateOne(
+        { key: 'youtube', 'config.channelId': { $exists: false } },
+        { $set: { 'config.channelId': channelId } }
+      );
+    }
+
+    res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:3000'}/admin/releases?youtube_connected=true`);
+  } catch (error) {
+    res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:3000'}/admin/releases?error=youtube_callback_error`);
   }
 };
