@@ -411,9 +411,22 @@ export async function generateVideo(input: GenerateVideoInput): Promise<Generate
         console.log(`[ffmpeg] start: ${cmdLine}`);
       })
       .on('progress', (info: any) => {
-        if (info.percent) {
-          console.log(`[ffmpeg] ${input.outputPath.split(path.sep).pop()} ${info.percent.toFixed(1)}% (fps=${info.fps || '?'}, ${(info.currentKbps || 0).toFixed(0)}kbps)`);
-          input.onProgress?.(info.percent);
+        // fluent-ffmpeg only computes `percent` when its internal ffprobe metadata
+        // is available; fall back to out_time_us against the known audio duration.
+        let pct = Number(info?.percent);
+        if (!isFinite(pct) || pct <= 0) {
+          const outUs = Number(
+            info?.out_time_us ??
+            (info?.out_time_ms != null ? Number(info.out_time_ms) * 1000 : NaN)
+          );
+          if (isFinite(outUs) && outUs > 0 && audioDuration > 0) {
+            pct = (outUs / 1_000_000) / audioDuration * 100;
+          }
+        }
+        if (isFinite(pct) && pct >= 0) {
+          const clamped = Math.min(100, Math.max(0, pct));
+          console.log(`[ffmpeg] ${input.outputPath.split(path.sep).pop()} ${clamped.toFixed(1)}% (fps=${info.fps || '?'}, ${(info.currentKbps || 0).toFixed(0)}kbps)`);
+          input.onProgress?.(clamped);
         }
       })
       .on('stderr', (line: string) => {
